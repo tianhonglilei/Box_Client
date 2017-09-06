@@ -9,18 +9,18 @@
         android:id="@+id/adbanner_b_item_img"
         android:layout_width="40dp"
         android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:scaleType="centerInside"
-        app:srcCompat="@mipmap/ic_launcher" />
+        android:src="@drawable/goods_glc_dft"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/adbanner_b_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/adbanner_b_item_img"
-        android:layout_centerHorizontal="true"
         android:textColor="@android:color/white"
         android:text="TextView"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/adbanner_b_item_img" />
 </RelativeLayout>

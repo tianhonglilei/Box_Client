@@ -11,5 +11,5 @@ public interface ADBannerView {
     //导航至更多商品展示
     void navigateToMoreGoods();
     //广告缩略图滚动
-
+    void scrollAD(int position);
 }

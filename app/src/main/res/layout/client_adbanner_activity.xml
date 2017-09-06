@@ -4,52 +4,79 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="3"
+    android:weightSum="4"
+    android:padding="10dp"
     >
+
+    <box.lilei.box_client.client.widget.CoverFlowViewPager
+        android:id="@+id/adviewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3">
+
+    </box.lilei.box_client.client.widget.CoverFlowViewPager>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:weightSum="4"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:background="@android:color/holo_orange_light"
-        >
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/adbanner_img"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/banner_forever_bu" />
-
-        <VideoView
-            android:id="@+id/adbanner_video"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:visibility="gone" />
+        <RelativeLayout
+            android:layout_width="22dp"
+            android:layout_height="match_parent">
 
 
+            <ImageView
+                android:id="@+id/home_king_logo"
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/home_king_logo" />
+
+            <TextView
+                android:id="@+id/home_txt_recommend"
+                android:layout_width="9dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/home_king_logo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/holo_orange_dark"
+                android:ems="1"
+                android:text="点创推荐" />
+
+        </RelativeLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/adbanner_r_rv"
-            android:layout_width="0dp"
+            android:id="@+id/adbanner_b_rv"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scrollbars="none" />
+            android:background="@android:color/holo_blue_light"
+            android:scrollbars="none">
 
+        </android.support.v7.widget.RecyclerView>
 
+        <RelativeLayout
+            android:layout_width="40dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="28dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:ems="2"
+                android:textColor="@android:color/holo_orange_dark"
+                android:textSize="14sp"
+                android:text="更多商品" />
+        </RelativeLayout>
     </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/adbanner_b_rv"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scrollbars="none"
-        android:background="@android:color/holo_blue_light"/>
 
 
 </LinearLayout>
