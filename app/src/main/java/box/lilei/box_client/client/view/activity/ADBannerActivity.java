@@ -1,27 +1,23 @@
 package box.lilei.box_client.client.view.activity;
 
 import android.app.Activity;
-import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import android.widget.ListView;
+import android.widget.MediaController;
+import android.widget.VideoView;
 
 import box.lilei.box_client.R;
-import box.lilei.box_client.client.adapter.ADViewPagerAdapter;
-import box.lilei.box_client.client.adapter.RvBottomAdapter;
-import box.lilei.box_client.client.listener.OnPageSelectListener;
+import box.lilei.box_client.client.model.ADInfo;
+import box.lilei.box_client.client.presenter.ADBannerPresenter;
+import box.lilei.box_client.client.presenter.impl.ADBannerPresenterImpl;
 import box.lilei.box_client.client.view.ADBannerView;
-import box.lilei.box_client.client.widget.CoverFlowViewPager;
-import box.lilei.box_client.client.widget.ScrollSpeedLinearLayoutManager;
+import box.lilei.box_client.util.LogUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -33,92 +29,65 @@ import butterknife.ButterKnife;
 
 public class ADBannerActivity extends Activity implements ADBannerView, View.OnClickListener {
 
+    private static final String TAG = "ADBannerActivity";
 
-    //底部商品导航栏
-    @BindView(R.id.adbanner_b_rv)
-    RecyclerView bRv;
-    //广告轮播ViewPager
-    @BindView(R.id.adviewpager)
-    CoverFlowViewPager adviewpager;
 
-    //底部导航栏适配器
-    private RecyclerView.Adapter bAdapter;
+    //右侧广告栏
+    @BindView(R.id.adbanner_ad_lv)
+    ListView adbannerAdLv;
 
-    //底部布局管理
-    private ScrollSpeedLinearLayoutManager bLayoutManager;
+    //底部商品栏
+    @BindView(R.id.adbanner_goods_gv)
+    GridView adbannerGoodsGv;
 
-    //广告缩略图数据
-    private List<Integer> aDList;
+    //视频广告
+    @BindView(R.id.ad_videoView)
+    VideoView adVideoView;
 
-    private ADViewPagerAdapter mAdapter;
+    //图片广告
+    @BindView(R.id.ad_imageView)
+    ImageView adImageView;
+
+
+
+
+    //广告页中间层
+    private ADBannerPresenter adPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.client_adbanner_activity);
+        try {
+            setContentView(R.layout.client_adbanner_activity);
+        } catch (Exception e) {
+            LogUtil.e(TAG, "onCreate: " + e.toString() + "");
+        }
         //绑定控件
         ButterKnife.bind(this);
-        initData();
+        //初始化部分对象
+        init();
 
+        //调用中间层业务
+        adPresenter.initAdData(adbannerAdLv);
+        adPresenter.initGoodsData(adbannerGoodsGv);
 
     }
 
-
-
-
-    /**
-     * 初始化数据
-     */
-    private void initData() {
-        aDList = new ArrayList<Integer>();
-        for (int i = 0; i < 6; i++) {
-            aDList.add(R.drawable.banner_forever_bu);
-        }
-
-        //底部左右方向轮播
-        bAdapter = new RvBottomAdapter(aDList);
-        bLayoutManager = new ScrollSpeedLinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        bLayoutManager.setSpeedSlow();
-        bRv.setLayoutManager(bLayoutManager);
-        bRv.setAdapter(bAdapter);
-
-        // 初始化数据
-        List<View> list = new ArrayList<>();
-        for(int i = 0;i<10;i++){
-            ImageView img = new ImageView(this);
-            img.setBackgroundColor(Color.parseColor("#"+getRandColorCode()));
-            list.add(img);
-        }
-        //设置显示的数据
-        adviewpager.setViewList(list);
-        // 设置滑动的监听，该监听为当前页面滑动到中央时的索引
-        adviewpager.setOnPageSelectListener(new OnPageSelectListener() {
+    //实例化对象
+    private void init() {
+        adPresenter = new ADBannerPresenterImpl(this, this);
+        // 隐藏媒体控制条
+        MediaController mc = new MediaController(this);
+        mc.setVisibility(View.INVISIBLE);
+        adVideoView.setMediaController(mc);
+        adVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
-            public void select(int position) {
-                Toast.makeText(getApplicationContext(),position+"", Toast.LENGTH_SHORT).show();
+            public void onCompletion(MediaPlayer mp) {
+                
             }
         });
 
     }
-
-    /**
-     * 获取随机颜色，便于区分
-     * @return
-     */
-    public static String getRandColorCode(){
-        String r,g,b;
-        Random random = new Random();
-        r = Integer.toHexString(random.nextInt(256)).toUpperCase();
-        g = Integer.toHexString(random.nextInt(256)).toUpperCase();
-        b = Integer.toHexString(random.nextInt(256)).toUpperCase();
-
-        r = r.length()==1 ? "0" + r : r ;
-        g = g.length()==1 ? "0" + g : g ;
-        b = b.length()==1 ? "0" + b : b ;
-
-        return r+g+b;
-    }
-
 
 
     /**
@@ -149,7 +118,30 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     @Override
     public void scrollAD(int position) {
-
-
+        adbannerAdLv.smoothScrollToPosition(position);
     }
+
+    @Override
+    public void changeAD(ADInfo adInfo) {
+        if(adInfo.getAdType() == ADInfo.ADTYPE_IMG){
+            showImg();
+            adImageView.setImageResource(R.drawable.ad_test_img1);
+        }else if(adInfo.getAdType() == ADInfo.ADTYPE_VIDEO){
+            showVideo();
+            Uri uri = Uri.parse("android.resource://"+getApplicationContext().getPackageName()+"/"+R.raw.ad_test_video1);
+            adVideoView.setVideoURI(uri);
+            adVideoView.start();
+        }
+    }
+    public void showImg() {
+        adImageView.setVisibility(View.VISIBLE);
+        adVideoView.setVisibility(View.GONE);
+    }
+
+    public void showVideo() {
+        adImageView.setVisibility(View.GONE);
+        adVideoView.setVisibility(View.VISIBLE);
+    }
+
+
 }

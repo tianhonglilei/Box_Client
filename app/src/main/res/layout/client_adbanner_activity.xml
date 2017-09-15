@@ -3,78 +3,180 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorDemoBg"
     android:orientation="vertical"
-    android:weightSum="4"
-    android:padding="10dp"
-    >
+    android:weightSum="4">
 
-    <box.lilei.box_client.client.widget.CoverFlowViewPager
-        android:id="@+id/adviewpager"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3">
+        android:layout_marginBottom="2dp"
+        android:layout_weight="3"
+        android:background="@android:color/background_light"
+        android:orientation="horizontal"
+        android:weightSum="4">
 
-    </box.lilei.box_client.client.widget.CoverFlowViewPager>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="1dp"
+            android:layout_weight="3">
+
+            <RelativeLayout
+                android:id="@+id/adbanner_play_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_purple">
+
+                <VideoView
+                    android:id="@+id/ad_videoView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@+id/ad_imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ad_test_img1" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/adbanner_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/ic_launcher_round" />
+        </FrameLayout>
+
+        <ListView
+            android:id="@+id/adbanner_ad_lv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:divider="#00000000"
+            android:dividerHeight="1.5dp"
+            android:scrollbars="none"
+            android:cacheColorHint="#00000000"
+            android:listSelector="#00000000"
+            android:overScrollMode="never"
+            />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@android:color/holo_orange_light"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="10">
 
         <RelativeLayout
-            android:layout_width="22dp"
-            android:layout_height="match_parent">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/home_date_bg_color">
 
 
             <ImageView
                 android:id="@+id/home_king_logo"
-                android:layout_width="16dp"
+                android:layout_width="23dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:layout_centerHorizontal="true"
-                app:srcCompat="@drawable/home_king_logo" />
+                android:layout_marginTop="6dp"
+                android:src="@drawable/home_king_logo"
+                android:scaleType="centerCrop"/>
 
             <TextView
-                android:id="@+id/home_txt_recommend"
-                android:layout_width="9dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/home_txt_wd"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
                 android:layout_below="@+id/home_king_logo"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="2dp"
-                android:textSize="9sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/holo_orange_dark"
-                android:ems="1"
-                android:text="点创推荐" />
+                android:gravity="center"
+                android:text="晴 28℃"
+                android:textColor="@color/colorWhiteTxt"
+                android:textSize="15sp"
+                android:padding="0dp"
+                android:includeFontPadding="false"
+                />
+            <TextView
+                android:id="@+id/home_txt_date"
+                android:layout_width="wrap_content"
+                android:layout_height="9dp"
+                android:text="9月16日 星期一"
+                android:layout_below="@+id/home_txt_wd"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/colorWhiteTxt"
+                android:textSize="8sp"
+                android:gravity="center"
+                android:padding="0dp"
+                android:includeFontPadding="false"
+                />
+            <TextView
+                android:id="@+id/home_txt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="09:15"
+                android:layout_below="@+id/home_txt_date"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/colorWhiteTxt"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                />
 
         </RelativeLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/adbanner_b_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/holo_blue_light"
-            android:scrollbars="none">
 
-        </android.support.v7.widget.RecyclerView>
+        <HorizontalScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="8"
+            android:scrollbars="none"
+            android:overScrollMode="never">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <GridView
+                    android:id="@+id/adbanner_goods_gv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white"
+                    android:columnWidth="64dp"
+                    android:scrollbars="none"
+                    android:stretchMode="columnWidth"
+                    android:cacheColorHint="#00000000"
+                    android:listSelector="#00000000"
+                    android:overScrollMode="never"
+                    ></GridView>
+            </LinearLayout>
+        </HorizontalScrollView>
 
         <RelativeLayout
-            android:layout_width="40dp"
-            android:layout_height="match_parent">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/home_txt_more"
                 android:layout_width="28dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:ems="2"
-                android:textColor="@android:color/holo_orange_dark"
-                android:textSize="14sp"
-                android:text="更多商品" />
+                android:text="@string/client_home_more"
+                android:textColor="@android:color/white"
+                android:textSize="14sp" />
         </RelativeLayout>
     </LinearLayout>
 

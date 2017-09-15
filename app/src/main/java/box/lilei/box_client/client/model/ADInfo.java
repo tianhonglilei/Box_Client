@@ -14,6 +14,8 @@ public class ADInfo {
     private String adUrl;
     private String adMemo;
 
+    public ADInfo(){}
+
     public ADInfo(int adId, int adType, String adTitle, String adUrl, String adMemo) {
         this.adId = adId;
         this.adType = adType;
@@ -61,5 +63,11 @@ public class ADInfo {
     public void setAdMemo(String adMemo) {
         this.adMemo = adMemo;
     }
+
+    //图片广告
+    public static final int ADTYPE_IMG = 1;
+    //视频广告
+    public static final int ADTYPE_VIDEO = 2;
+
 
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/adbanner_b_item_bg_rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="1dp">
+
+
+    <ImageView
+        android:id="@+id/adbanner_b_item_img"
+        android:layout_width="50dp"
+        android:layout_height="57dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/goods_glc_dft" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/adbanner_b_item_price"
+        android:layout_marginRight="1dp"
+        android:layout_toLeftOf="@+id/adbanner_b_item_price"
+        android:gravity="center"
+        android:text="¥"
+        android:textColor="@color/colorDemoLogo"
+        android:textSize="7sp" />
+
+    <TextView
+        android:id="@+id/adbanner_b_item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="15sp"
+        android:layout_alignEnd="@+id/adbanner_b_item_img"
+        android:layout_below="@+id/adbanner_b_item_img"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="9dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:paddingTop="0dp"
+        android:text="2.5"
+        android:textColor="@color/colorDemoLogo"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/adbanner_b_item_img_wd"
+        android:layout_width="11dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_alignStart="@+id/adbanner_b_item_img"
+        android:layout_marginLeft="4dp"
+        android:scaleType="centerInside"
+        android:src="@mipmap/logo_hot"
+        app:srcCompat="@mipmap/logo_hot" />
+
+    <RelativeLayout
+        android:id="@+id/adbanner_b_item_rl_sale"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignEnd="@+id/adbanner_b_item_img"
+        android:layout_alignTop="@+id/adbanner_b_item_img">
+
+    </RelativeLayout>
+</RelativeLayout>

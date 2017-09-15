@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Box_Client</string>
+    <string name="client_home_more">更多商品</string>
+    <string name="client_home_recommend">点创推荐</string>
 </resources>
