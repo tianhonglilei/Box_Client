@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/adbanner_b_item_bg_rl"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="8dp">
+    android:layout_height="175dp">
 
 
     <ImageView
@@ -12,7 +11,7 @@
         android:layout_width="104dp"
         android:layout_height="125dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="10dp"
         android:scaleType="centerInside"
         android:src="@drawable/goods_glc_dft" />
 
@@ -22,10 +21,11 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/adbanner_b_item_price"
         android:layout_toLeftOf="@+id/adbanner_b_item_price"
-        android:gravity="center"
+        android:layout_marginRight="2dp"
+        style="@style/MyFontNotPadding"
         android:text="¥"
         android:textColor="@color/colorDemoLogo"
-        android:textSize="15sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/adbanner_b_item_price"
@@ -33,7 +33,7 @@
         android:layout_height="32dp"
         android:layout_alignEnd="@+id/adbanner_b_item_img"
         android:layout_below="@+id/adbanner_b_item_img"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         style="@style/MyFontNotPadding"
         android:text="5.5"
         android:textColor="@color/colorDemoLogo"
@@ -79,7 +79,7 @@
             android:layout_alignParentLeft="true"
             style="@style/MyFontNotPadding"
             android:textSize="13sp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
             android:layout_marginLeft="6dp"
             android:textColor="@color/colorWhiteTxt"
             />

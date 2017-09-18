@@ -90,7 +90,7 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
 
     @Override
     public void initGoodsData(GridView adbannerGoodsGv) {
-        int itemWidth = 256;
+        int itemWidth = 128;
         int size = goodsList.size();//要显示数据的个数
         int allWidth = itemWidth * size;
         LinearLayout.LayoutParams params = new
