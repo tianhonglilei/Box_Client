@@ -7,4 +7,5 @@
     <color name="colorDemoLogo">#ff4d20</color>
     <color name="colorDemoBg">#cbc9c9</color>
     <color name="colorHomeGoodsBg">#ebe8e8</color>
+    <color name="colorHomeGoodsBgWhite">#f3f3f3</color>
 </resources>

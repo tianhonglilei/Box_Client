@@ -45,6 +45,7 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<Goods> {
             goodsSaleState(viewHolder,2);
             viewHolder.getView(R.id.adbanner_b_item_bg_rl).setBackgroundColor(Color.WHITE);
             ((ImageView)viewHolder.getView(R.id.adbanner_b_item_img_wd)).setImageResource(R.mipmap.logo_hot);
+            viewHolder.getView(R.id.adbanner_b_item_bg_rl).setBackgroundColor(ContextCompat.getColor(mContext,R.color.colorHomeGoodsBgWhite));
         }
 //        ((TextView)viewHolder.getView(R.id.adbanner_b_item_price)).setText(goods.getGoodsName());
     }
