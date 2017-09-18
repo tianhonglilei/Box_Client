@@ -13,12 +13,15 @@
         android:layout_marginBottom="7dp"
         android:layout_weight="3"
         android:background="@color/colorDemoBg"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="4"
+        >
 
 
         <FrameLayout
-            android:layout_width="970dp"
-            android:layout_height="match_parent">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
 
             <RelativeLayout
                 android:id="@+id/adbanner_play_layout"
@@ -50,8 +53,9 @@
 
         <ListView
             android:id="@+id/adbanner_ad_lv"
-            android:layout_width="308dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/colorDemoBg"
             android:layout_marginLeft="6dp"
             android:divider="#00000000"
