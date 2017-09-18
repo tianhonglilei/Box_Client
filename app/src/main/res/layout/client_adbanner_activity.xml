@@ -24,12 +24,14 @@
                 android:id="@+id/adbanner_play_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/holo_purple">
+                android:background="@color/colorDemoBg"
+                android:layout_gravity="center">
 
                 <VideoView
                     android:id="@+id/ad_videoView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    />
 
                 <ImageView
                     android:id="@+id/ad_imageView"

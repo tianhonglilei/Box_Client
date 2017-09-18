@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/adbanner_b_item_bg_rl"
     android:layout_width="match_parent"
-    android:layout_height="175dp">
+    android:layout_height="178dp">
 
 
     <ImageView
@@ -46,9 +46,9 @@
         android:layout_alignBottom="@+id/textView"
         android:layout_alignStart="@+id/adbanner_b_item_img"
         android:layout_marginLeft="10dp"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         android:layout_marginBottom="3dp"
-        android:src="@mipmap/logo_hot"/>
+        android:src="@mipmap/logo_cold"/>
 
     <RelativeLayout
         android:id="@+id/adbanner_b_item_rl_sale_state"
@@ -57,7 +57,20 @@
         android:layout_alignEnd="@+id/adbanner_b_item_img"
         android:layout_alignTop="@+id/adbanner_b_item_img"
         android:background="@drawable/shape_sale_state_discount"
+        android:visibility="invisible"
         >
+
+        <TextView
+            android:id="@+id/adbanner_b_item_txt_sale_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:text="售罄"
+            android:textColor="#ffffff"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            style="@style/MyFontNotPadding"
+            />
 
         <TextView
             android:id="@+id/adbanner_b_item_txt_sale"
