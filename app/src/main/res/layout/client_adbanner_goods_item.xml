@@ -91,6 +91,7 @@
             android:layout_below="@+id/adbanner_b_item_txt_sale"
             android:text="5.5"
             android:textSize="20sp"
+            android:textStyle="bold"
             android:textColor="@color/colorWhiteTxt"
             style="@style/MyFontNotPadding"/>
 
