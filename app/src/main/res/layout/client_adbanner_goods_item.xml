@@ -33,7 +33,7 @@
         android:layout_height="32dp"
         android:layout_alignEnd="@+id/adbanner_b_item_img"
         android:layout_below="@+id/adbanner_b_item_img"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         style="@style/MyFontNotPadding"
         android:text="5.5"
         android:textColor="@color/colorDemoLogo"
@@ -47,6 +47,7 @@
         android:layout_alignStart="@+id/adbanner_b_item_img"
         android:layout_marginLeft="10dp"
         android:scaleType="centerCrop"
+        android:layout_marginBottom="3dp"
         android:src="@mipmap/logo_hot"/>
 
     <RelativeLayout
@@ -89,7 +90,7 @@
             android:layout_toRightOf="@+id/adbanner_b_item_discount_rmb"
             android:layout_below="@+id/adbanner_b_item_txt_sale"
             android:text="5.5"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textColor="@color/colorWhiteTxt"
             style="@style/MyFontNotPadding"/>
 
