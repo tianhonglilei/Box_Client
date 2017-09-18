@@ -10,18 +10,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginBottom="6dp"
         android:layout_weight="3"
-        android:background="@android:color/background_light"
-        android:orientation="horizontal"
-        android:weightSum="4">
+        android:background="@color/colorDemoBg"
+        android:orientation="horizontal">
 
 
         <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="1dp"
-            android:layout_weight="3">
+            android:layout_width="725dp"
+            android:layout_height="match_parent">
 
             <RelativeLayout
                 android:id="@+id/adbanner_play_layout"
@@ -51,12 +48,12 @@
 
         <ListView
             android:id="@+id/adbanner_ad_lv"
-            android:layout_width="0dp"
+            android:layout_width="231dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/white"
+            android:background="@color/colorDemoBg"
+            android:layout_marginLeft="5dp"
             android:divider="#00000000"
-            android:dividerHeight="1.5dp"
+            android:dividerHeight="4dp"
             android:scrollbars="none"
             android:cacheColorHint="#00000000"
             android:listSelector="#00000000"
@@ -82,37 +79,37 @@
 
             <ImageView
                 android:id="@+id/home_king_logo"
-                android:layout_width="23dp"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="10dp"
                 android:src="@drawable/home_king_logo"
-                android:scaleType="centerCrop"/>
+                android:scaleType="fitCenter"/>
 
             <TextView
                 android:id="@+id/home_txt_wd"
                 android:layout_width="wrap_content"
-                android:layout_height="15dp"
+                android:layout_height="18dp"
                 android:layout_below="@+id/home_king_logo"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="6dp"
                 android:gravity="center"
                 android:text="晴 28℃"
                 android:textColor="@color/colorWhiteTxt"
-                android:textSize="15sp"
+                android:textSize="18sp"
                 android:padding="0dp"
                 android:includeFontPadding="false"
                 />
             <TextView
                 android:id="@+id/home_txt_date"
                 android:layout_width="wrap_content"
-                android:layout_height="9dp"
+                android:layout_height="12dp"
                 android:text="9月16日 星期一"
                 android:layout_below="@+id/home_txt_wd"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="6dp"
                 android:textColor="@color/colorWhiteTxt"
-                android:textSize="8sp"
+                android:textSize="11sp"
                 android:gravity="center"
                 android:padding="0dp"
                 android:includeFontPadding="false"
@@ -120,13 +117,13 @@
             <TextView
                 android:id="@+id/home_txt_time"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="32dp"
                 android:text="09:15"
                 android:layout_below="@+id/home_txt_date"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="2dp"
                 android:textColor="@color/colorWhiteTxt"
-                android:textSize="20sp"
+                android:textSize="30sp"
                 android:gravity="center"
                 android:includeFontPadding="false"
                 />
@@ -151,7 +148,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/white"
-                    android:columnWidth="64dp"
+                    android:columnWidth="96dp"
                     android:scrollbars="none"
                     android:stretchMode="columnWidth"
                     android:cacheColorHint="#00000000"
@@ -169,14 +166,14 @@
 
             <TextView
                 android:id="@+id/home_txt_more"
-                android:layout_width="28dp"
+                android:layout_width="36dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:ems="2"
                 android:text="@string/client_home_more"
                 android:textColor="@android:color/white"
-                android:textSize="14sp" />
+                android:textSize="18sp" />
         </RelativeLayout>
     </LinearLayout>
 

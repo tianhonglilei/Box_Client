@@ -4,15 +4,15 @@
     android:id="@+id/adbanner_b_item_bg_rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="4dp">
+    android:paddingBottom="8dp">
 
 
     <ImageView
         android:id="@+id/adbanner_b_item_img"
-        android:layout_width="50dp"
-        android:layout_height="57dp"
+        android:layout_width="78dp"
+        android:layout_height="84dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="11dp"
         android:scaleType="centerInside"
         android:src="@drawable/goods_glc_dft" />
 
@@ -25,34 +25,34 @@
         android:gravity="center"
         android:text="¥"
         android:textColor="@color/colorDemoLogo"
-        android:textSize="7sp" />
+        android:textSize="11sp" />
 
     <TextView
         android:id="@+id/adbanner_b_item_price"
-        android:layout_width="25dp"
-        android:layout_height="15dp"
+        android:layout_width="36dp"
+        android:layout_height="22dp"
         android:layout_alignEnd="@+id/adbanner_b_item_img"
         android:layout_below="@+id/adbanner_b_item_img"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="8dp"
         style="@style/MyFontNotPadding"
         android:text="5.5"
         android:textColor="@color/colorDemoLogo"
-        android:textSize="15sp" />
+        android:textSize="22sp" />
 
     <ImageView
         android:id="@+id/adbanner_b_item_img_wd"
-        android:layout_width="11dp"
-        android:layout_height="wrap_content"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
         android:layout_alignBottom="@+id/textView"
         android:layout_alignStart="@+id/adbanner_b_item_img"
-        android:layout_marginLeft="4dp"
-        android:scaleType="centerInside"
+        android:layout_marginLeft="6dp"
+        android:scaleType="fitCenter"
         android:src="@mipmap/logo_hot"/>
 
     <RelativeLayout
         android:id="@+id/adbanner_b_item_rl_sale_state"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_alignEnd="@+id/adbanner_b_item_img"
         android:layout_alignTop="@+id/adbanner_b_item_img"
         android:background="@drawable/shape_sale_state_discount"
@@ -62,11 +62,11 @@
             android:id="@+id/adbanner_b_item_txt_sale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="6sp"
-            android:text="促销:"
+            android:textSize="9sp"
+            android:text="促销"
             android:textColor="#ffffff"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="5dp"
             style="@style/MyFontNotPadding"
             />
         <TextView
@@ -77,19 +77,19 @@
             android:layout_below="@+id/adbanner_b_item_txt_sale"
             android:layout_alignParentLeft="true"
             style="@style/MyFontNotPadding"
-            android:textSize="7sp"
-            android:layout_marginTop="2.5dp"
-            android:layout_marginLeft="4dp"
+            android:textSize="10sp"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="6dp"
             android:textColor="@color/colorWhiteTxt"
             />
         <TextView
             android:id="@+id/adbanner_b_item_txt_discount_price"
-            android:layout_width="15dp"
+            android:layout_width="22dp"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/adbanner_b_item_discount_rmb"
             android:layout_below="@+id/adbanner_b_item_txt_sale"
             android:text="5.5"
-            android:textSize="10sp"
+            android:textSize="13sp"
             android:textColor="@color/colorWhiteTxt"
             style="@style/MyFontNotPadding"/>
 
