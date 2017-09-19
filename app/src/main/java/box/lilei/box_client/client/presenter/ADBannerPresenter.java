@@ -35,5 +35,9 @@ public interface ADBannerPresenter {
      */
     void saveGoodsData();
 
+    /**
+     * 开始滚动
+     */
+//    void startAutoGoodsScroll();
 
 }

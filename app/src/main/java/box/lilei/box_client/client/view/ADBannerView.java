@@ -16,4 +16,9 @@ public interface ADBannerView {
     void scrollAD(int position);
     //广告改变
     void changeAD(ADInfo adInfo);
+
+    /**
+     * 商品自动滚动
+     */
+    void autoScrollGoods();
 }

@@ -59,7 +59,7 @@
             android:background="@color/colorDemoBg"
             android:layout_marginLeft="6dp"
             android:divider="#00000000"
-            android:dividerHeight="6dp"
+            android:dividerHeight="5dp"
             android:scrollbars="none"
             android:cacheColorHint="#00000000"
             android:listSelector="#00000000"
@@ -138,6 +138,7 @@
 
 
         <HorizontalScrollView
+            android:id="@+id/adbanner_b_scroll"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -145,6 +146,7 @@
             android:scrollbars="none"
             android:overScrollMode="never">
             <LinearLayout
+                android:id="@+id/adbanner_b_scroll_ll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"

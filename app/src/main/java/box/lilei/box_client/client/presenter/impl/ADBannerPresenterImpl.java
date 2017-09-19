@@ -52,8 +52,7 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
     //商品数据
     private List<Goods> goodsList;
 
-    private ImageView adImageView;
-    private VideoView adVideoView;
+
 
 
 
@@ -83,14 +82,13 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
                 adBannerView.changeAD(adInfoList.get(position));
             }
         });
-
-
     }
 
 
     @Override
     public void initGoodsData(GridView adbannerGoodsGv) {
         int itemWidth = 128;
+//        int itemWidth = 256;
         int size = goodsList.size();//要显示数据的个数
         int allWidth = itemWidth * size;
         LinearLayout.LayoutParams params = new
@@ -108,7 +106,7 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
         goodsList = new ArrayList<>();
         ADInfo adInfo = null;
         Goods goods = null;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             adInfo = new ADInfo();
             goods = new Goods();
             if(i%2==0){

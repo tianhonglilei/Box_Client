@@ -4,20 +4,25 @@ import android.app.Activity;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import box.lilei.box_client.BuildConfig;
 import box.lilei.box_client.R;
 import box.lilei.box_client.client.model.ADInfo;
 import box.lilei.box_client.client.presenter.ADBannerPresenter;
 import box.lilei.box_client.client.presenter.impl.ADBannerPresenterImpl;
 import box.lilei.box_client.client.view.ADBannerView;
-import box.lilei.box_client.util.LogUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -31,6 +36,10 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     private static final String TAG = "ADBannerActivity";
 
+    private boolean isTouch, isRight;
+    private int x1 = 0;
+    private boolean mAutoScroll = true;
+    private int scrollTotal = 0;
 
     //右侧广告栏
     @BindView(R.id.adbanner_ad_lv)
@@ -48,7 +57,9 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @BindView(R.id.ad_imageView)
     ImageView adImageView;
 
-
+    //商品滚动
+    @BindView(R.id.adbanner_b_scroll)
+    HorizontalScrollView adbannerBScroll;
 
 
     //广告页中间层
@@ -57,11 +68,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            setContentView(R.layout.client_adbanner_activity);
-        } catch (Exception e) {
-            LogUtil.e(TAG, "onCreate: " + e.toString() + "");
-        }
+        setContentView(R.layout.client_adbanner_activity);
         //绑定控件
         ButterKnife.bind(this);
         //初始化部分对象
@@ -71,7 +78,12 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adPresenter.initAdData(adbannerAdLv);
         adPresenter.initGoodsData(adbannerGoodsGv);
 
+        initGoodsScroll();
+        scrollTotal =  256 * (adbannerGoodsGv.getCount() - 8);
+        Log.e(TAG, "scrollTotal:" + scrollTotal);
+        startAutoScroll();
     }
+
 
     //实例化对象
     private void init() {
@@ -83,9 +95,36 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                
+
             }
         });
+
+
+    }
+
+    private void initGoodsScroll() {
+//        scrollTotal = adbannerBScroll.gets
+        //初始化滚动动画
+        adbannerBScroll.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        isTouch = true;
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        isTouch = true;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        isTouch = false;
+                        x1 = adbannerBScroll.getScrollX();
+                        break;
+                }
+                return false;
+            }
+        });
+
 
     }
 
@@ -123,21 +162,81 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     @Override
     public void changeAD(ADInfo adInfo) {
-        if(adInfo.getAdType() == ADInfo.ADTYPE_IMG){
+        if (adInfo.getAdType() == ADInfo.ADTYPE_IMG) {
             showImg();
             adImageView.setImageResource(R.drawable.ad_test_img1);
-        }else if(adInfo.getAdType() == ADInfo.ADTYPE_VIDEO){
+        } else if (adInfo.getAdType() == ADInfo.ADTYPE_VIDEO) {
             showVideo();
-            Uri uri = Uri.parse("android.resource://"+getApplicationContext().getPackageName()+"/"+R.raw.ad_test_video1);
+            Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.ad_test_video1);
             adVideoView.setVideoURI(uri);
             adVideoView.start();
         }
     }
+
+    @Override
+    public void autoScrollGoods() {
+
+
+    }
+
+    private Thread goodsScrollthread;
+
+    private void startAutoScroll() {
+        goodsScrollthread = new Thread() {
+            @Override
+            public void run() {
+                while (mAutoScroll) {
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Message msg = mHandler.obtainMessage(1, 0, 0);
+                    mHandler.sendMessage(msg);
+                }
+            }
+
+        };
+        goodsScrollthread.start();
+    }
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    if (isTouch)
+                        return;
+                    if (isRight) {
+                        x1 = x1 + 1;
+                    } else {
+                        x1 = x1 - 1;
+                    }
+                    if (x1 >= scrollTotal) {
+                        isRight = false;
+                    }
+                    if (x1 <= 0) {
+                        isRight = true;
+                    }
+                    adbannerBScroll.scrollTo(x1, 0);
+                    Log.d(TAG, "x1:" + x1);
+                    break;
+            }
+        }
+    };
+
+
+    /**
+     * 展示图片广告
+     */
     public void showImg() {
         adImageView.setVisibility(View.VISIBLE);
         adVideoView.setVisibility(View.GONE);
     }
 
+    /**
+     * 展示视频广告
+     */
     public void showVideo() {
         adImageView.setVisibility(View.GONE);
         adVideoView.setVisibility(View.VISIBLE);
