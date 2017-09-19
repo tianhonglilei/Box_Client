@@ -17,7 +17,6 @@ import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
-import box.lilei.box_client.BuildConfig;
 import box.lilei.box_client.R;
 import box.lilei.box_client.client.model.ADInfo;
 import box.lilei.box_client.client.presenter.ADBannerPresenter;
@@ -35,6 +34,8 @@ import butterknife.ButterKnife;
 public class ADBannerActivity extends Activity implements ADBannerView, View.OnClickListener {
 
     private static final String TAG = "ADBannerActivity";
+    public int goodsItemWidth = 128;
+
 
     private boolean isTouch, isRight;
     private int x1 = 0;
@@ -79,7 +80,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adPresenter.initGoodsData(adbannerGoodsGv);
 
         initGoodsScroll();
-        scrollTotal =  256 * (adbannerGoodsGv.getCount() - 8);
+        scrollTotal =  goodsItemWidth * (adbannerGoodsGv.getCount() - 8);
         Log.e(TAG, "scrollTotal:" + scrollTotal);
         startAutoScroll();
     }
@@ -117,8 +118,19 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                         isTouch = true;
                         break;
                     case MotionEvent.ACTION_UP:
-                        isTouch = false;
+                        isTouch = true;
+                        new Thread(){
+                            @Override
+                            public void run() {
+                                try {
+                                        Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                }
+                            }
+                        }.start();
                         x1 = adbannerBScroll.getScrollX();
+                        isTouch = false;
                         break;
                 }
                 return false;
@@ -127,6 +139,11 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
 
     }
+
+    public void checkscrollfling(){
+
+    }
+
 
 
     /**
@@ -187,7 +204,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             public void run() {
                 while (mAutoScroll) {
                     try {
-                        Thread.sleep(50);
+                        Thread.sleep(70);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
