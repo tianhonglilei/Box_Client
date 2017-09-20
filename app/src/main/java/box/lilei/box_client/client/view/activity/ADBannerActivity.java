@@ -1,5 +1,6 @@
 package box.lilei.box_client.client.view.activity;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -10,11 +11,14 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.AnimationUtils;
 import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import box.lilei.box_client.R;
@@ -34,10 +38,11 @@ import butterknife.ButterKnife;
 public class ADBannerActivity extends Activity implements ADBannerView, View.OnClickListener {
 
     private static final String TAG = "ADBannerActivity";
-    public int goodsItemWidth = 128;
+    public int goodsItemWidth = 256;
 
 
-    private boolean isTouch, isRight;
+
+    private boolean isTouch = false, isRight;
     private int x1 = 0;
     private boolean mAutoScroll = true;
     private int scrollTotal = 0;
@@ -62,6 +67,9 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @BindView(R.id.adbanner_b_scroll)
     HorizontalScrollView adbannerBScroll;
 
+    //更多商品
+    @BindView(R.id.adbanner_b_more)
+    TextView adbannerBMore;
 
     //广告页中间层
     private ADBannerPresenter adPresenter;
@@ -80,7 +88,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adPresenter.initGoodsData(adbannerGoodsGv);
 
         initGoodsScroll();
-        scrollTotal =  goodsItemWidth * (adbannerGoodsGv.getCount() - 8);
+        scrollTotal = goodsItemWidth * (adbannerGoodsGv.getCount() - 8);
         Log.e(TAG, "scrollTotal:" + scrollTotal);
         startAutoScroll();
     }
@@ -100,11 +108,15 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             }
         });
 
+        AlphaAnimation txtMoreAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(this,R.anim.home_more_txt_alpha_anim);
+        adbannerBMore.setAnimation(txtMoreAlphaAnimation);
+//        ObjectAnimator txtMoreObjAnimation = ObjectAnimator.ofFloat(adbannerBMore,"android:shadowRadius",10f,0f);
+//        txtMoreObjAnimation.setRepeatCount(-1);
 
     }
 
     private void initGoodsScroll() {
-//        scrollTotal = adbannerBScroll.gets
+        adbannerBScroll.fling(0);
         //初始化滚动动画
         adbannerBScroll.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -119,18 +131,49 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                         break;
                     case MotionEvent.ACTION_UP:
                         isTouch = true;
-                        new Thread(){
+                        new Thread() {
                             @Override
                             public void run() {
                                 try {
-                                        Thread.sleep(1000);
+                                    Thread.sleep(1000);
                                 } catch (InterruptedException e) {
-                                        e.printStackTrace();
+                                    e.printStackTrace();
                                 }
+                                x1 = adbannerBScroll.getScrollX();
+                                isTouch = false;
                             }
                         }.start();
-                        x1 = adbannerBScroll.getScrollX();
-                        isTouch = false;
+                        break;
+                }
+                return false;
+            }
+        });
+        adbannerGoodsGv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        isTouch = true;
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        isTouch = true;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        isTouch = true;
+
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                x1 = adbannerBScroll.getScrollX();
+                                isTouch = false;
+                            }
+                        }.start();
                         break;
                 }
                 return false;
@@ -139,12 +182,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
 
     }
-
-    public void checkscrollfling(){
-
-    }
-
-
 
     /**
      * 实现点击事件
@@ -190,11 +227,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         }
     }
 
-    @Override
-    public void autoScrollGoods() {
-
-
-    }
 
     private Thread goodsScrollthread;
 
@@ -236,7 +268,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                         isRight = true;
                     }
                     adbannerBScroll.scrollTo(x1, 0);
-                    Log.d(TAG, "x1:" + x1);
                     break;
             }
         }
