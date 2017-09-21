@@ -316,13 +316,19 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                     break;
                 case 2:
                     adPosition++;
-                    if(adPosition>=adCount){
+                    if(adPosition>=adCount) {
                         adPosition = 0;
-                        adbannerAdLv.scrollBy(0,0);
+                        adbannerAdLv.smoothScrollToPositionFromTop(0,0,2000);
+                        adbannerAdLv.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                adbannerAdLv.setSelection(0);
+                            }
+                        }, 2000);
                     }else{
                         adbannerAdLv.smoothScrollToPosition(adPosition);
+                        adbannerAdLv.setSelection(adPosition);
                     }
-
                     changeAD((ADInfo) adbannerAdLv.getItemAtPosition(adPosition),adPosition);
                     Log.e(TAG, "handleMessage: " + adPosition);
                     Log.e(TAG, "adCount:" + adCount);
