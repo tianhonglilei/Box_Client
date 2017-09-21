@@ -21,6 +21,10 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import box.lilei.box_client.BuildConfig;
 import box.lilei.box_client.R;
 import box.lilei.box_client.client.model.ADInfo;
 import box.lilei.box_client.client.presenter.ADBannerPresenter;
@@ -38,14 +42,20 @@ import butterknife.ButterKnife;
 public class ADBannerActivity extends Activity implements ADBannerView, View.OnClickListener {
 
     private static final String TAG = "ADBannerActivity";
-    public int goodsItemWidth = 256;
+    public int goodsItemWidth = 128;
 
 
-
+    //商品滚动模块
     private boolean isTouch = false, isRight;
     private int x1 = 0;
     private boolean mAutoScroll = true;
     private int scrollTotal = 0;
+
+    //广告轮播模块
+    private Timer adTimer;
+    private boolean isContinue;
+    private int adCount;
+
 
     //右侧广告栏
     @BindView(R.id.adbanner_ad_lv)
@@ -74,6 +84,11 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     //广告页中间层
     private ADBannerPresenter adPresenter;
 
+    //更多商品动画
+    private AlphaAnimation txtMoreAlphaAnimation;
+
+    private int adPosition;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +105,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         initGoodsScroll();
         scrollTotal = goodsItemWidth * (adbannerGoodsGv.getCount() - 8);
         Log.e(TAG, "scrollTotal:" + scrollTotal);
+        adCount = adbannerAdLv.getCount();
         startAutoScroll();
     }
 
@@ -104,14 +120,15 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-
+                mHandler.sendEmptyMessage(2);
+                Log.e(TAG, "onCompletion: videofinash");
             }
         });
 
-        AlphaAnimation txtMoreAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(this,R.anim.home_more_txt_alpha_anim);
+        txtMoreAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(this,R.anim.home_more_txt_alpha_anim);
         adbannerBMore.setAnimation(txtMoreAlphaAnimation);
-//        ObjectAnimator txtMoreObjAnimation = ObjectAnimator.ofFloat(adbannerBMore,"android:shadowRadius",10f,0f);
-//        txtMoreObjAnimation.setRepeatCount(-1);
+
+        adbannerAdLv.setSelectionAfterHeaderView();
 
     }
 
@@ -183,6 +200,15 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     }
 
+
+
+    private void initAdScroll(){
+
+    }
+
+
+
+
     /**
      * 实现点击事件
      *
@@ -209,27 +235,46 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     }
 
-    @Override
-    public void scrollAD(int position) {
-        adbannerAdLv.smoothScrollToPosition(position);
+    //图片广告开启定时器
+    public void scrollToNextAD() {
+            //执行定时任务
+            adTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    mHandler.sendEmptyMessage(2);
+                    Log.e(TAG, "scrollToNextAD:imgfinash");
+                }
+            }, 10000);
+
     }
 
     @Override
-    public void changeAD(ADInfo adInfo) {
+    public void changeAD(ADInfo adInfo, int adPosition) {
+        this.adPosition = adPosition;
+        //广告定时器
+        if(adTimer != null){
+            adTimer.cancel();
+        }
+        adTimer = new Timer();
         if (adInfo.getAdType() == ADInfo.ADTYPE_IMG) {
             showImg();
             adImageView.setImageResource(R.drawable.ad_test_img1);
+            scrollToNextAD();
         } else if (adInfo.getAdType() == ADInfo.ADTYPE_VIDEO) {
             showVideo();
             Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.ad_test_video1);
             adVideoView.setVideoURI(uri);
             adVideoView.start();
         }
+//        adPosition = adbannerAdLv.getSelectedItemPosition();
+        Log.e(TAG, "adPosition:" + adPosition);
+
     }
 
 
     private Thread goodsScrollthread;
 
+    //商品自动滚动
     private void startAutoScroll() {
         goodsScrollthread = new Thread() {
             @Override
@@ -269,6 +314,13 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                     }
                     adbannerBScroll.scrollTo(x1, 0);
                     break;
+                case 2:
+                    adPosition++;
+                    if(adPosition>=adCount)adPosition = 0;
+                    adbannerAdLv.smoothScrollToPosition(adPosition);
+                    changeAD((ADInfo) adbannerAdLv.getItemAtPosition(adPosition),adPosition);
+                    Log.e(TAG, "handleMessage: " + adPosition);
+                    Log.e(TAG, "adCount:" + adCount);
             }
         }
     };

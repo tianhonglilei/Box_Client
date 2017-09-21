@@ -75,11 +75,11 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
 
         lvAdImgAdapter = new LvAdImgAdapter(mContext, adInfoList, R.layout.client_adbanner_ad_item_img);
         adbannerAdLv.setAdapter(lvAdImgAdapter);
-        adBannerView.changeAD(adInfoList.get(0));
+        adBannerView.changeAD(adInfoList.get(0),0);
         adbannerAdLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adBannerView.changeAD(adInfoList.get(position));
+                adBannerView.changeAD(adInfoList.get(position),position);
             }
         });
     }
@@ -87,8 +87,8 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
 
     @Override
     public void initGoodsData(GridView adbannerGoodsGv) {
-//        int itemWidth = 128;
-        int itemWidth = 256;
+        int itemWidth = 128;
+//        int itemWidth = 256;
         int size = goodsList.size();//要显示数据的个数
         int allWidth = itemWidth * size;
         LinearLayout.LayoutParams params = new
@@ -104,8 +104,8 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
     public void initTestData(){
         adInfoList = new ArrayList<>();
         goodsList = new ArrayList<>();
-        ADInfo adInfo = null;
-        Goods goods = null;
+        ADInfo adInfo;
+        Goods goods;
         for (int i = 0; i < 20; i++) {
             adInfo = new ADInfo();
             goods = new Goods();

@@ -12,10 +12,8 @@ public interface ADBannerView {
     void navigateToPay();
     //导航至更多商品展示
     void navigateToMoreGoods();
-    //广告缩略图滚动
-    void scrollAD(int position);
     //广告改变
-    void changeAD(ADInfo adInfo);
+    void changeAD(ADInfo adInfo,int position);
 
 
 }

@@ -9,7 +9,7 @@ public class ADInfo {
 
 
     private int adId;
-    private int adType;
+    private int adType = ADTYPE_IMG;
     private String adTitle;
     private String adUrl;
     private String adMemo;

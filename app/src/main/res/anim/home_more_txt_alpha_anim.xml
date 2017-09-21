@@ -8,4 +8,4 @@
     android:repeatCount="-1"
     android:repeatMode="reverse"
     android:startOffset="500"
-    android:toAlpha="0.5"/>
+    android:toAlpha="0.6"/>
