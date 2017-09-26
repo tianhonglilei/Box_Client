@@ -69,7 +69,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.more_goods_nav_rl_return:
-                finish();
+                MoreGoodsActivity.this.finish();
                 break;
         }
     }
