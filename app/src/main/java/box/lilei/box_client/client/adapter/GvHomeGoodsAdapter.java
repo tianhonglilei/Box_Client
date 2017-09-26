@@ -2,6 +2,7 @@ package box.lilei.box_client.client.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -53,6 +56,8 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<Goods> {
     public void goodsSaleState(MyViewHolder viewHolder, int state){
         saleStateView = viewHolder.getView(R.id.adbanner_b_item_rl_sale_state);
         if(state == 1) {
+            //删除线
+            ((TextView)viewHolder.getView(R.id.adbanner_b_item_price)).getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
             saleStateView.setVisibility(View.VISIBLE);
             saleStateView.setBackgroundResource(R.drawable.shape_sale_state_discount);
             viewHolder.getView(R.id.adbanner_b_item_txt_sale_out).setVisibility(View.INVISIBLE);
@@ -64,7 +69,7 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<Goods> {
             viewHolder.getView(R.id.adbanner_b_item_discount_rmb).setVisibility(View.INVISIBLE);
             viewHolder.getView(R.id.adbanner_b_item_txt_discount_price).setVisibility(View.INVISIBLE);
         }else{
-
+            saleStateView.setVisibility(View.INVISIBLE);
         }
     }
 

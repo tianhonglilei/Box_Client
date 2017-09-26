@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    tools:context="box.lilei.box_client.client.view.activity.MoreGoodsActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:text="机器号:"
+            android:textColor="@color/colorMoreTxtTwoOne"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/more_imei_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView6"
+            android:layout_toEndOf="@+id/textView6"
+            android:text="00000000"
+            android:textColor="@color/colorMoreTxtTwoOne"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="85dp"
+            android:layout_height="40dp"
+            android:layout_alignLeft="@+id/textView6"
+            android:layout_below="@+id/textView6"
+            android:layout_marginTop="6dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/dc_logo" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="216dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true">
+
+
+            <TextView
+                android:id="@+id/more_weather_time"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="09:15"
+                android:textColor="@color/colorDemoLogo"
+                android:textSize="44sp" />
+
+            <TextView
+                android:id="@+id/more_weather_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/more_weather_time"
+                android:layout_below="@+id/more_weather_time"
+                android:layout_marginTop="8dp"
+                android:text="10月16日 星期一"
+                android:textColor="@color/colorGaryFiveTwo"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/more_line"
+                android:layout_width="1dp"
+                android:layout_height="52dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="12dp"
+                android:layout_toLeftOf="@+id/more_weather_time"
+                android:background="#e0dede"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/more_weather_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="14dp"
+                android:layout_toLeftOf="@+id/more_line"
+                android:text="晴"
+                android:textColor="@color/colorGaryFiveTwo"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/more_weather_wd_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/more_weather_txt"
+                android:layout_marginRight="12dp"
+                android:layout_toLeftOf="@+id/more_line"
+                android:text="28℃"
+                android:textColor="@color/colorGaryFiveTwo"
+                android:textSize="28sp" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <GridView
+            android:id="@+id/more_goods_gv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:columnWidth="163dp"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:cacheColorHint="#00000000"
+            android:listSelector="#00000000"
+            android:overScrollMode="never"
+            android:horizontalSpacing="7dp"
+            android:verticalSpacing="33dp"
+            android:numColumns="6"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            />
+
+        <LinearLayout
+            android:layout_width="216dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorGaryFiveTwo"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="54dp"
+                android:background="@color/colorDemoLogo">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/more_goods_left"
+                    android:layout_marginLeft="37dp"/>
+
+                <TextView
+                    android:id="@+id/more_nav_txt_allgoods"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/allGoodsTxt"
+                    style="@style/style_txt_more_nav" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="50dp">
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/more_goods_left"
+                    android:layout_marginLeft="37dp"/>
+                <TextView
+                    android:id="@+id/more_nav_txt_drink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="饮品"
+                    android:textSize="20sp"
+                    style="@style/style_txt_more_nav"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="50dp">
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/more_goods_left"
+                    android:layout_marginLeft="37dp"/>
+                <TextView
+                    android:id="@+id/more_nav_txt_food"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="零食"
+                    android:textSize="20sp"
+                    style="@style/style_txt_more_nav"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/more_goods_nav_rl_return"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="50dp"
+                android:clickable="true"
+                android:background="@drawable/more_nav_selector"
+                >
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/return_icon"
+                    android:layout_marginLeft="37dp"/>
+                <TextView
+                    android:id="@+id/more_nav_txt_return"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="返回 "
+                    android:textSize="20sp"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/colorMoreTxtFtwo"
+                    android:layout_toLeftOf="@+id/more_nav_txt_return_time"/>
+                <TextView
+                    android:id="@+id/more_nav_txt_return_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="80S"
+                    android:textSize="20sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="24dp"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/colorDemoLogo"
+                    />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:text="？"
+            android:textColor="#829cbe"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:background="@drawable/more_goods_help"
+            android:clickable="true"
+            android:gravity="center|center_vertical"
+            android:layout_marginLeft="22dp"
+            />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="18dp"
+            android:layout_toEndOf="@+id/textView8"
+            android:text="向上滑动浏览更多商品"
+            android:textColor="@color/colorMoreTxtTwoOne"
+            android:textSize="20sp"/>
+
+
+    </RelativeLayout>
+</LinearLayout>

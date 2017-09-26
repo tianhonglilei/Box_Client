@@ -2,6 +2,8 @@ package box.lilei.box_client.client.view.activity;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,6 +46,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     private static final String TAG = "ADBannerActivity";
     public int goodsItemWidth = 128;
 
+    private Context mContext = this;
 
     //商品滚动模块
     private boolean isTouch = false, isRight;
@@ -55,6 +58,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     private Timer adTimer;
     private boolean isContinue;
     private int adCount;
+    private int errorVideoNum = 0;
 
 
     //右侧广告栏
@@ -117,6 +121,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         MediaController mc = new MediaController(this);
         mc.setVisibility(View.INVISIBLE);
         adVideoView.setMediaController(mc);
+        //视频播放完成监听
         adVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -124,8 +129,29 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 Log.e(TAG, "onCompletion: videofinash");
             }
         });
+        //视频错误监听
+        adVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                if(errorVideoNum == 0) {
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(5000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            mHandler.sendEmptyMessage(2);
+                        }
+                    }.start();
+                    errorVideoNum++;
+                }
+                return true;
+            }
+        });
 
-        txtMoreAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(this,R.anim.home_more_txt_alpha_anim);
+        txtMoreAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(this, R.anim.home_more_txt_alpha_anim);
         adbannerBMore.setAnimation(txtMoreAlphaAnimation);
 
         adbannerAdLv.setSelectionAfterHeaderView();
@@ -201,12 +227,9 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     }
 
 
-
-    private void initAdScroll(){
+    private void initAdScroll() {
 
     }
-
-
 
 
     /**
@@ -216,6 +239,17 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
      */
     @Override
     public void onClick(View v) {
+
+        int id = v.getId();
+        Log.e(TAG, "onClick: " + id);
+        switch (id) {
+            case R.id.adbanner_b_more:
+                Intent intent = new Intent(ADBannerActivity.this, MoreGoodsActivity.class);
+                startActivity(intent);
+                Log.e(TAG, "onClick: " + id);
+                break;
+        }
+
 
     }
 
@@ -237,14 +271,14 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     //图片广告开启定时器
     public void scrollToNextAD() {
-            //执行定时任务
-            adTimer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    mHandler.sendEmptyMessage(2);
-                    Log.e(TAG, "scrollToNextAD:imgfinash");
-                }
-            }, 10000);
+        //执行定时任务
+        adTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(2);
+                Log.e(TAG, "scrollToNextAD:imgfinash");
+            }
+        }, 10000);
 
     }
 
@@ -252,7 +286,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     public void changeAD(ADInfo adInfo, int adPosition) {
         this.adPosition = adPosition;
         //广告定时器
-        if(adTimer != null){
+        if (adTimer != null) {
             adTimer.cancel();
         }
         adTimer = new Timer();
@@ -266,7 +300,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             adVideoView.setVideoURI(uri);
             adVideoView.start();
         }
-//        adPosition = adbannerAdLv.getSelectedItemPosition();
+        errorVideoNum = 0;
         Log.e(TAG, "adPosition:" + adPosition);
 
     }
@@ -276,22 +310,30 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     //商品自动滚动
     private void startAutoScroll() {
-        goodsScrollthread = new Thread() {
+//        goodsScrollthread = new Thread() {
+//            @Override
+//            public void run() {
+//
+//                while (mAutoScroll) {
+//                    try {
+//                        Thread.sleep(70);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    Message msg = mHandler.obtainMessage(1, 0, 0);
+//                    mHandler.sendMessage(msg);
+//                }
+//            }
+//
+//        };
+//        goodsScrollthread.start();
+        new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                while (mAutoScroll) {
-                    try {
-                        Thread.sleep(70);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Message msg = mHandler.obtainMessage(1, 0, 0);
-                    mHandler.sendMessage(msg);
-                }
+                Message msg = mHandler.obtainMessage(1, 0, 0);
+                mHandler.sendMessage(msg);
             }
-
-        };
-        goodsScrollthread.start();
+        }, 500, 70);
     }
 
     Handler mHandler = new Handler() {
@@ -316,22 +358,27 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                     break;
                 case 2:
                     adPosition++;
-                    if(adPosition>=adCount) {
+                    if (adPosition >= adCount) {
                         adPosition = 0;
-                        adbannerAdLv.smoothScrollToPositionFromTop(0,0,2000);
-                        adbannerAdLv.postDelayed(new Runnable() {
+                        adbannerAdLv.smoothScrollToPositionFromTop(0, 0, 2000);
+                        new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 adbannerAdLv.setSelection(0);
                             }
                         }, 2000);
-                    }else{
+                    } else {
                         adbannerAdLv.smoothScrollToPosition(adPosition);
-                        adbannerAdLv.setSelection(adPosition);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                adbannerAdLv.setSelection(adPosition);
+                            }
+                        }, 800);
                     }
-                    changeAD((ADInfo) adbannerAdLv.getItemAtPosition(adPosition),adPosition);
-                    Log.e(TAG, "handleMessage: " + adPosition);
-                    Log.e(TAG, "adCount:" + adCount);
+                    changeAD((ADInfo) adbannerAdLv.getItemAtPosition(adPosition), adPosition);
+//                    Log.e(TAG, "handleMessage: " + adPosition);
+//                    Log.e(TAG, "adCount:" + adCount);
             }
         }
     };
@@ -342,6 +389,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
      */
     public void showImg() {
         adImageView.setVisibility(View.VISIBLE);
+        adVideoView.stopPlayback();
         adVideoView.setVisibility(View.GONE);
     }
 
@@ -353,5 +401,13 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adVideoView.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * 视频错误图片
+     */
+    public void showErrorImg(){
+        adImageView.setVisibility(View.VISIBLE);
+        adVideoView.setVisibility(View.GONE);
+//        adImageView.setImageResource();
+    }
 
 }

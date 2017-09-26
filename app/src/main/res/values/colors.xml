@@ -9,4 +9,7 @@
     <color name="colorHomeGoodsBg">#ebe8e8</color>
     <color name="colorHomeGoodsBgWhite">#f3f3f3</color>
     <color name="colorHomeGoodsMoreTxtBg">#ff7200</color>
+    <color name="colorGaryFiveTwo">#525252</color>
+    <color name="colorMoreTxtFtwo">#f2f2f2</color>
+    <color name="colorMoreTxtTwoOne">#212121</color>
 </resources>
