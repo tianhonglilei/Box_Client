@@ -31,7 +31,7 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<Goods> {
     protected void convert(Goods goods, MyViewHolder viewHolder, int position) {
         ((TextView) viewHolder.getView(R.id.more_goods_item_txt_name)).setText(goods.getGoodsName() + " (" + goods.getGoodsTaste() + ")");
 
-        ImageView goodsImg = ((ImageView) viewHolder.getView(R.id.more_goods_item_img_goods));
+        ImageView goodsImg = viewHolder.getView(R.id.more_goods_item_img_goods);
         ((TextView) viewHolder.getView(R.id.more_goods_item_txt_memo)).setText(goods.getGoodsMemo());
         ((TextView) viewHolder.getView(R.id.more_goods_item_txt_price)).setText("" + goods.getGoodsPrice());
         goodsSaleState(viewHolder, goods.getGoodsSaleState(), goods);
@@ -79,14 +79,17 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<Goods> {
      */
     public void goodsType(MyViewHolder viewHolder, int type, ImageView imageView, int wd) {
         ImageView wdImg = (ImageView) viewHolder.getView(R.id.more_goods_item_img_wd);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
         if (type == Goods.GOODS_TYPE_FOOD) {
-            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
             params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
             params.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             imageView.setLayoutParams(params);
             imageView.setImageResource(R.mipmap.food_ww_wld);
             wdImg.setVisibility(View.INVISIBLE);
         } else if (type == Goods.GOODS_TYPE_DRINK) {
+            params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+            params.removeRule(RelativeLayout.CENTER_VERTICAL);
+            imageView.setLayoutParams(params);
             imageView.setImageResource(R.mipmap.goods_xuebi);
             goodsWd(viewHolder, wd, wdImg);
             wdImg.setVisibility(View.VISIBLE);

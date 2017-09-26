@@ -61,9 +61,13 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<Goods> {
             saleStateView.setVisibility(View.VISIBLE);
             saleStateView.setBackgroundResource(R.drawable.shape_sale_state_discount);
             viewHolder.getView(R.id.adbanner_b_item_txt_sale_out).setVisibility(View.INVISIBLE);
+            viewHolder.getView(R.id.adbanner_b_item_txt_sale).setVisibility(View.VISIBLE);
+            viewHolder.getView(R.id.adbanner_b_item_discount_rmb).setVisibility(View.VISIBLE);
+            viewHolder.getView(R.id.adbanner_b_item_txt_discount_price).setVisibility(View.VISIBLE);
         }else if(state == 2){
             saleStateView.setVisibility(View.VISIBLE);
             saleStateView.setBackgroundResource(R.drawable.shape_sale_state_off);
+            ((TextView)viewHolder.getView(R.id.adbanner_b_item_price)).getPaint().setFlags(0);
             viewHolder.getView(R.id.adbanner_b_item_txt_sale_out).setVisibility(View.VISIBLE);
             viewHolder.getView(R.id.adbanner_b_item_txt_sale).setVisibility(View.INVISIBLE);
             viewHolder.getView(R.id.adbanner_b_item_discount_rmb).setVisibility(View.INVISIBLE);

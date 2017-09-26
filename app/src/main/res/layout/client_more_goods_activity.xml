@@ -144,10 +144,12 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/more_goods_nav_rl_allgoods"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginTop="54dp"
-                android:background="@color/colorDemoLogo">
+                android:clickable="true"
+                android:background="@drawable/more_nav_selector">
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -166,9 +168,12 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/more_goods_nav_rl_drink"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginTop="50dp">
+                android:layout_marginTop="50dp"
+                android:clickable="true"
+                android:background="@drawable/more_nav_selector">
                 <ImageView
                     android:id="@+id/imageView3"
                     android:layout_width="wrap_content"
@@ -186,9 +191,12 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/more_goods_nav_rl_food"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginTop="50dp">
+                android:layout_marginTop="50dp"
+                android:clickable="true"
+                android:background="@drawable/more_nav_selector">
                 <ImageView
                     android:id="@+id/imageView4"
                     android:layout_width="wrap_content"
