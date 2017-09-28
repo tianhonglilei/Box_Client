@@ -12,36 +12,46 @@ import java.util.List;
  */
 
 public abstract class MyBaseAdapter<T> extends BaseAdapter {
-        protected List<T> mDatas = null;
-        protected Context mContext = null;
-        protected int layoutId;
-        public MyBaseAdapter(Context context, List<T> datas, int layoutId)
-        {
-            mDatas = datas;
-            mContext = context;
-            this.layoutId = layoutId;
-        }
-        @Override
-        public int getCount() {
-            return mDatas.size();
-        }
+    protected List<T> mDatas = null;
+    protected Context mContext = null;
+    protected int layoutId;
 
-        @Override
-        public T getItem(int position) {
-            return mDatas.get(position);
-        }
+    public MyBaseAdapter(Context context, List<T> datas, int layoutId) {
+        mDatas = datas;
+        mContext = context;
+        this.layoutId = layoutId;
+    }
 
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
+    public List<T> getmDatas() {
+        return mDatas;
+    }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            MyViewHolder viewHolder = MyViewHolder.get(mContext, parent, layoutId, position, convertView);
-            convert(getItem(position), viewHolder, position);
-            return viewHolder.getConvertView();
-        }
-        protected abstract void convert(T t, MyViewHolder viewHolder, int position);
+    public void setmDatas(List<T> mDatas) {
+        this.mDatas = mDatas;
+    }
+
+    @Override
+    public int getCount() {
+        return mDatas.size();
+    }
+
+    @Override
+    public T getItem(int position) {
+        return mDatas.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        MyViewHolder viewHolder = MyViewHolder.get(mContext, parent, layoutId, position, convertView);
+        convert(getItem(position), viewHolder, position);
+        return viewHolder.getConvertView();
+    }
+
+    protected abstract void convert(T t, MyViewHolder viewHolder, int position);
 
 }

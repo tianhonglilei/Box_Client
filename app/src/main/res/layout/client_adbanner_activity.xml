@@ -47,7 +47,7 @@
 
             <ImageView
                 android:id="@+id/adbanner_logo"
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/dc_logo"
                 android:layout_marginTop="5dp"

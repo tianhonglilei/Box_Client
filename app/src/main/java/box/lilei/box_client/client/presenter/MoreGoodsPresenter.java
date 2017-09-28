@@ -10,5 +10,6 @@ public interface MoreGoodsPresenter {
 
     void initAllGoods(GridView gridView);
 
+    void checkNav(int nav);
 
 }

@@ -20,8 +20,14 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
     private GvMoreGoodsAdapter gvMoreGoodsAdapter;
 
     private List<Goods> goodsList;
+    private List<Goods> drinks = new ArrayList<>();
+    private List<Goods> foods = new ArrayList<>();
 
     private Context mContext;
+
+    private GridView gridView;
+
+
 
     public MoreGoodsPresenterImpl(Context mContext) {
         this.mContext = mContext;
@@ -29,9 +35,28 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
 
     @Override
     public void initAllGoods(GridView gridView) {
+        this.gridView = gridView;
         testGoodsData();
-        GvMoreGoodsAdapter gvMoreGoodsAdapter = new GvMoreGoodsAdapter(mContext, goodsList, R.layout.client_more_goods_item);
+
+        gvMoreGoodsAdapter = new GvMoreGoodsAdapter(mContext, goodsList, R.layout.client_more_goods_item);
         gridView.setAdapter(gvMoreGoodsAdapter);
+
+
+
+
+    }
+
+    @Override
+    public void checkNav(int nav) {
+        if(nav == 0){
+            gvMoreGoodsAdapter.setmDatas(goodsList);
+        }else if (nav == 1){
+            gvMoreGoodsAdapter.setmDatas(drinks);
+        }else if (nav == 2){
+            gvMoreGoodsAdapter.setmDatas(foods);
+        }else{
+        }
+        gvMoreGoodsAdapter.notifyDataSetChanged();
     }
 
 
@@ -84,6 +109,17 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
             goods4.setGoodsType(Goods.GOODS_TYPE_FOOD);
             goods4.setGoodsTaste("听装");
             goodsList.add(goods4);
+        }
+        Goods goods;
+        for (int i = 0; i < goodsList.size(); i++) {
+            goods = goodsList.get(i);
+            if(goods.getGoodsType() == Goods.GOODS_TYPE_DRINK){
+                drinks.add(goods);
+            }else if(goods.getGoodsType() == Goods.GOODS_TYPE_FOOD){
+                foods.add(goods);
+            }else{
+
+            }
         }
 
     }
