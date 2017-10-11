@@ -29,10 +29,10 @@ public class PayActivity extends Activity {
 
     private void initLayoutRadioButton() {
         Drawable drawableWechat = ResourcesCompat.getDrawable(getResources(),R.drawable.pay_wechat_img_selector,null);
-        drawableWechat.setBounds(0, 0, 110, 100);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
+        drawableWechat.setBounds(0, 0, 55, 50);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
         payRbWechat.setCompoundDrawables(null, drawableWechat, null, null);//只放上面
         Drawable drawableAli = ResourcesCompat.getDrawable(getResources(),R.drawable.pay_ali_img_selector,null);
-        drawableAli.setBounds(0, 0, 100, 100);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
+        drawableAli.setBounds(0, 0, 50, 50);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
         payRbAli.setCompoundDrawables(null, drawableAli, null, null);//只放上面
     }
 
