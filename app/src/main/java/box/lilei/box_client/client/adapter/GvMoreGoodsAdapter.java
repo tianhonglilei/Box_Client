@@ -47,9 +47,10 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<Goods> {
      */
     public void goodsSaleState(MyViewHolder viewHolder, int state, Goods goods) {
         saleStateView = viewHolder.getView(R.id.more_goods_item_rl_sale_state);
+        TextView txtPrice = ((TextView) viewHolder.getView(R.id.more_goods_item_txt_price));
         if (state == Goods.SALESTATE_DISCOUNT) {//打折促销
             //删除线
-            ((TextView) viewHolder.getView(R.id.more_goods_item_txt_price)).getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+            txtPrice.getPaint().setStrikeThruText(true);
             saleStateView.setVisibility(View.VISIBLE);
             saleStateView.setBackgroundResource(R.drawable.shape_more_sale_state_discount);
             viewHolder.getView(R.id.more_goods_item_txt_sale_out).setVisibility(View.INVISIBLE);
@@ -58,7 +59,7 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<Goods> {
             viewHolder.getView(R.id.more_goods_item_txt_discount_price).setVisibility(View.VISIBLE);
             ((TextView) viewHolder.getView(R.id.more_goods_item_txt_discount_price)).setText("" + goods.getGoodsDiscountPrice());
         } else if (state == Goods.SALESTATE_OUT) {//售罄
-            ((TextView) viewHolder.getView(R.id.more_goods_item_txt_price)).getPaint().setFlags(0);
+            txtPrice.getPaint().setFlags(0);
             saleStateView.setVisibility(View.VISIBLE);
             saleStateView.setBackgroundResource(R.drawable.shape_more_sale_state_off);
             viewHolder.getView(R.id.more_goods_item_txt_sale_out).setVisibility(View.VISIBLE);
@@ -67,7 +68,9 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<Goods> {
             viewHolder.getView(R.id.more_goods_item_txt_discount_price).setVisibility(View.INVISIBLE);
         } else {
             saleStateView.setVisibility(View.INVISIBLE);
+            txtPrice.getPaint().setFlags(0);
         }
+        txtPrice.getPaint().setAntiAlias(true);
     }
 
     /**

@@ -13,13 +13,16 @@
             android:name=".client.view.activity.ADBannerActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape">
+
+        </activity>
+        <activity android:name=".client.view.activity.MoreGoodsActivity" />
+        <activity android:name=".client.view.activity.PayActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".client.view.activity.MoreGoodsActivity"></activity>
     </application>
 
 </manifest>
