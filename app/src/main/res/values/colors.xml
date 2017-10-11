@@ -12,7 +12,8 @@
     <color name="colorGaryFiveTwo">#525252</color>
     <color name="colorMoreTxtFtwo">#f2f2f2</color>
     <color name="colorMoreTxtTwoOne">#212121</color>
-    <color name="colorbebebe">#bebebe</color>
+    <color name="colorbebebe">#d6dbe0</color>
+    <color name="colorGoodsDetailsThreeSeven">#373737</color>
     <color name="colorGoodsDetailsSix">#666666</color>
     <color name="colorGoodsDetailsMemoOne">#111111</color>
 </resources>

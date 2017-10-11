@@ -26,7 +26,7 @@
     <style name="style_txt_pay_goods_details">
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/colorMoreTxtTwoOne</item>
+        <item name="android:textColor">@color/colorGoodsDetailsSix</item>
         <item name="android:textSize">16sp</item>
     </style>
 

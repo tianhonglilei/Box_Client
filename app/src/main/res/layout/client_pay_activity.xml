@@ -49,8 +49,8 @@
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:text=" 产品详情 "
-                            android:textColor="@color/colorGoodsDetailsSix"
-                            android:textSize="18sp" />
+                            android:textColor="@color/colorGoodsDetailsThreeSeven"
+                            android:textSize="20sp" />
 
                         <TextView
                             android:layout_width="90dp"
@@ -74,7 +74,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="项目"
-                            android:textColor="@color/colorMoreTxtTwoOne"
+                            android:textColor="@color/colorGoodsDetailsSix"
                             android:textSize="20dp" />
 
                         <TextView
@@ -83,7 +83,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="每100ml"
-                            android:textColor="@color/colorMoreTxtTwoOne"
+                            android:textColor="@color/colorGoodsDetailsSix"
                             android:textSize="20dp" />
 
                         <TextView
@@ -92,7 +92,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="NRV%"
-                            android:textColor="@color/colorMoreTxtTwoOne"
+                            android:textColor="@color/colorGoodsDetailsSix"
                             android:textSize="20dp" />
                     </LinearLayout>
 
@@ -232,12 +232,13 @@
                     </LinearLayout>
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/pay_txt_goods_details_memo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="精选喜马拉雅山麓红茶"
+                        android:textStyle="bold"
                         android:textColor="@color/colorGoodsDetailsMemoOne"
                         android:textSize="24sp" />
 
@@ -390,8 +391,9 @@
                     android:background="@drawable/pay_demo_qrcode"
                     android:gravity="center"
                     android:text="正在加载二维码..."
-                    android:textColor="#fff"
-                    android:textSize="14sp" />
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:textSize="20sp" />
 
 
                 <TextView
