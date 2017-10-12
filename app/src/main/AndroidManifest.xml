@@ -16,7 +16,9 @@
 
         </activity>
         <activity android:name=".client.view.activity.MoreGoodsActivity" />
-        <activity android:name=".client.view.activity.PayActivity">
+        <activity android:name=".client.view.activity.PayActivity"
+            android:screenOrientation="landscape"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

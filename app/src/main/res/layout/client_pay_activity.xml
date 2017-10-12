@@ -440,17 +440,18 @@
                         android:id="@+id/imageView5"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_centerVertical="true"
+                        android:layout_marginTop="29dp"
                         android:layout_marginRight="5dp"
                         android:layout_toLeftOf="@+id/pay_txt_return"
-                        android:src="@mipmap/return_icon" />
+                        android:src="@drawable/pay_ic_return" />
 
                     <TextView
                         android:id="@+id/pay_txt_return"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginLeft="5dp"
                         android:text="返回"
                         android:textColor="#ffffff"
                         android:textSize="30sp" />
@@ -459,11 +460,23 @@
                         android:id="@+id/pay_txt_return_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_marginTop="25dp"
                         android:layout_toRightOf="@+id/pay_txt_return"
-                        android:text="80S"
+                        android:text="80s"
                         android:textColor="#ffffff"
                         android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView5"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="2dp"
+                        android:text="(支付成功前请勿返回)"
+                        android:letterSpacing="0"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
 
                 </RelativeLayout>
 
@@ -503,16 +516,7 @@
                         android:textColor="@drawable/pay_rb_txt_check_color_selector"
                         android:textSize="16sp" />
                 </RadioGroup>
-                <TextView
-                    android:id="@+id/textView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/pay_rbgrp_qrcode"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="22dp"
-                    android:text="支付成功前请勿返回"
-                    android:textColor="@color/colorMoreTxtTwoOne"
-                    android:textSize="20sp" />
+
 
             </RelativeLayout>
         </LinearLayout>
