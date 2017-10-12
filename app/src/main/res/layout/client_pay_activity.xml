@@ -375,7 +375,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView3"
-                    android:layout_marginStart="20dp"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="22dp"
                     android:text="扫描二维码进行支付"
                     android:textColor="@color/colorMoreTxtTwoOne"
@@ -393,7 +393,7 @@
                     android:text="正在加载二维码..."
                     android:textStyle="bold"
                     android:textColor="#000"
-                    android:textSize="20sp" />
+                    android:textSize="14sp" />
 
 
                 <TextView
@@ -468,6 +468,7 @@
                 </RelativeLayout>
 
                 <RadioGroup
+                    android:id="@+id/pay_rbgrp_qrcode"
                     android:layout_width="match_parent"
                     android:layout_height="85dp"
                     android:layout_below="@+id/pay_txt_qrcode"
@@ -502,7 +503,16 @@
                         android:textColor="@drawable/pay_rb_txt_check_color_selector"
                         android:textSize="16sp" />
                 </RadioGroup>
-
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/pay_rbgrp_qrcode"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="22dp"
+                    android:text="支付成功前请勿返回"
+                    android:textColor="@color/colorMoreTxtTwoOne"
+                    android:textSize="20sp" />
 
             </RelativeLayout>
         </LinearLayout>
