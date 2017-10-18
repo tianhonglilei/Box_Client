@@ -78,6 +78,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     private boolean isContinue;
     private int adCount;
     private int errorVideoNum = 0;
+    private boolean videoPlay = false;
 
 
     //右侧广告栏
@@ -159,7 +160,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             public void run() {
                 weatherPresenter.getWeatherInfo();
             }
-        },0,1000*30);
+        }, 0, 1000 * 30);
 //        new Timer().schedule(new TimerTask() {
 //            @Override
 //            public void run() {
@@ -365,6 +366,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.ad_test_video1);
             adVideoView.setVideoURI(uri);
             adVideoView.start();
+            videoPlay = true;
         }
         errorVideoNum = 0;
         Log.e(TAG, "adPosition:" + adPosition);
@@ -501,11 +503,37 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         }
     }
 
+    @Override
+    protected void onPause() {
+        if (adVideoView != null && videoPlay) {
+            adVideoView.pause();
+            videoPlay = false;
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        if (adVideoView != null && videoPlay == false) {
+            adVideoView.start();
+            videoPlay = true;
+        }
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        if (adVideoView != null && videoPlay) {
+            adVideoView.pause();
+            videoPlay = false;
+        }
+        super.onStop();
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mTimeReceiver!=null){
+        if (mTimeReceiver != null) {
             unregisterReceiver(mTimeReceiver);
         }
 
