@@ -2,9 +2,11 @@ package box.lilei.box_client.client.view.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -56,7 +58,19 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener 
 
         initControl();
 
+        initGoodsGridView();
 
+    }
+
+    private void initGoodsGridView() {
+        //设置gv item 点击事件
+        moreGoodsGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MoreGoodsActivity.this, PayActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initControl() {

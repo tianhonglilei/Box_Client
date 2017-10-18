@@ -15,8 +15,7 @@
         android:layout_weight="3"
         android:background="@color/colorDemoBg"
         android:orientation="horizontal"
-        android:weightSum="4"
-        >
+        android:weightSum="4">
 
 
         <FrameLayout
@@ -28,14 +27,13 @@
                 android:id="@+id/adbanner_play_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorDemoBg"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:background="@color/colorDemoBg">
 
                 <VideoView
                     android:id="@+id/ad_videoView"
                     android:layout_width="970dp"
-                    android:layout_height="match_parent"
-                    />
+                    android:layout_height="match_parent" />
 
                 <ImageView
                     android:id="@+id/ad_imageView"
@@ -49,26 +47,24 @@
                 android:id="@+id/adbanner_logo"
                 android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/dc_logo"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
-                />
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/dc_logo" />
         </FrameLayout>
 
         <ListView
             android:id="@+id/adbanner_ad_lv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginLeft="6dp"
             android:layout_weight="1"
             android:background="@color/colorDemoBg"
-            android:layout_marginLeft="6dp"
+            android:cacheColorHint="#00000000"
             android:divider="#00000000"
             android:dividerHeight="5dp"
-            android:scrollbars="none"
-            android:cacheColorHint="#00000000"
             android:listSelector="#00000000"
             android:overScrollMode="never"
-            />
+            android:scrollbars="none" />
 
     </LinearLayout>
 
@@ -88,55 +84,55 @@
 
 
             <ImageView
-                android:id="@+id/home_king_logo"
+                android:id="@+id/home_img_weather"
                 android:layout_width="46dp"
                 android:layout_height="46dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="12dp"
-                android:src="@drawable/home_king_logo"
-                android:scaleType="fitCenter"/>
+                android:scaleType="fitCenter"
+                android:src="@drawable/weather_duoyun" />
 
             <TextView
-                android:id="@+id/home_txt_wd"
+                android:id="@+id/home_txt_weather_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
-                android:layout_below="@+id/home_king_logo"
+                android:layout_below="@+id/home_img_weather"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="7dp"
                 android:gravity="center"
-                android:text="晴 28℃"
-                android:textColor="@color/colorWhiteTxt"
-                android:textSize="24sp"
-                android:padding="0dp"
                 android:includeFontPadding="false"
-                />
+                android:padding="0dp"
+                android:text="多云 20℃"
+                android:textColor="@color/colorWhiteTxt"
+                android:textSize="24sp" />
+
+
             <TextView
                 android:id="@+id/home_txt_date"
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
-                android:text="9月16日 星期一"
-                android:layout_below="@+id/home_txt_wd"
+                android:layout_below="@+id/home_txt_weather_temp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="12dp"
-                android:textColor="@color/colorWhiteTxt"
-                android:textSize="15sp"
                 android:gravity="center"
-                android:padding="0dp"
                 android:includeFontPadding="false"
-                />
+                android:padding="0dp"
+                android:text="2017-12-12 星期一"
+                android:textColor="@color/colorWhiteTxt"
+                android:textSize="14sp" />
+
             <TextView
                 android:id="@+id/home_txt_time"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="09:15"
                 android:layout_below="@+id/home_txt_date"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="4dp"
-                android:textColor="@color/colorWhiteTxt"
-                android:textSize="40sp"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                />
+                android:text="09:15"
+                android:textColor="@color/colorWhiteTxt"
+                android:textSize="40sp" />
 
         </RelativeLayout>
 
@@ -147,26 +143,26 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="8"
-            android:scrollbars="none"
-            android:overScrollMode="never">
+            android:overScrollMode="never"
+            android:scrollbars="none">
+
             <LinearLayout
                 android:id="@+id/adbanner_b_scroll_ll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <GridView
                     android:id="@+id/adbanner_goods_gv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/white"
-                    android:columnWidth="128dp"
-                    android:scrollbars="none"
-                    android:stretchMode="columnWidth"
                     android:cacheColorHint="#00000000"
+                    android:columnWidth="128dp"
                     android:listSelector="#00000000"
                     android:overScrollMode="never"
-                    ></GridView>
+                    android:scrollbars="none"
+                    android:stretchMode="columnWidth"></GridView>
             </LinearLayout>
         </HorizontalScrollView>
 
@@ -175,8 +171,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/home_more_btn_bg"
-            >
+            android:background="@drawable/home_more_btn_bg">
 
             <TextView
                 android:id="@+id/adbanner_b_more"
@@ -184,19 +179,18 @@
                 android:layout_height="84dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="@string/client_home_more"
-                android:textColor="@android:color/white"
-                android:padding="10dp"
-                android:textSize="24sp"
                 android:background="@drawable/home_more_btn"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="onClick"
+                android:padding="10dp"
                 android:shadowColor="#ffffff"
                 android:shadowDx="0"
                 android:shadowDy="0"
                 android:shadowRadius="10"
-                android:clickable="true"
-                android:onClick="onClick"
-                />
+                android:text="@string/client_home_more"
+                android:textColor="@android:color/white"
+                android:textSize="24sp" />
         </RelativeLayout>
     </LinearLayout>
 

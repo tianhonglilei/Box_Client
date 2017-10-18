@@ -14,17 +14,33 @@
             android:launchMode="singleTask"
             android:screenOrientation="landscape">
 
-        </activity>
-        <activity android:name=".client.view.activity.MoreGoodsActivity" />
-        <activity android:name=".client.view.activity.PayActivity"
-            android:screenOrientation="landscape"
-            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".client.view.activity.MoreGoodsActivity"
+            android:screenOrientation="landscape"
+            />
+        <activity android:name=".client.view.activity.PayActivity"
+            android:screenOrientation="landscape"
+            >
+
+        </activity>
+        <receiver android:name=".client.receiver.DateTimeReceiver"
+            android:enabled="true"
+            android:exported="true"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.TIME_TICK"/>
+            </intent-filter>
+        </receiver>
     </application>
+
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 </manifest>

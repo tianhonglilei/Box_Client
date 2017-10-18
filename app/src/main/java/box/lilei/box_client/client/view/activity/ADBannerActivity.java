@@ -1,9 +1,9 @@
 package box.lilei.box_client.client.view.activity;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,22 +15,28 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import box.lilei.box_client.BuildConfig;
 import box.lilei.box_client.R;
 import box.lilei.box_client.client.model.ADInfo;
+import box.lilei.box_client.client.model.MyTime;
+import box.lilei.box_client.client.model.MyWeather;
 import box.lilei.box_client.client.presenter.ADBannerPresenter;
+import box.lilei.box_client.client.presenter.WeatherPresenter;
 import box.lilei.box_client.client.presenter.impl.ADBannerPresenterImpl;
+import box.lilei.box_client.client.presenter.impl.WeatherPresenterImpl;
+import box.lilei.box_client.client.receiver.DateTimeReceiver;
 import box.lilei.box_client.client.view.ADBannerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +51,19 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     private static final String TAG = "ADBannerActivity";
     public int goodsItemWidth = 128;
+
+    //时间模块。天气
+    @BindView(R.id.home_img_weather)
+    ImageView homeImgWeather;
+    //温度
+    @BindView(R.id.home_txt_weather_temp)
+    TextView homeTxtWeatherTemp;
+    //日期
+    @BindView(R.id.home_txt_date)
+    TextView homeTxtDate;
+    //小时
+    @BindView(R.id.home_txt_time)
+    TextView homeTxtTime;
 
     private Context mContext = this;
 
@@ -88,10 +107,17 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     //广告页中间层
     private ADBannerPresenter adPresenter;
 
-    //更多商品动画
+    //天气时间中间层
+    private WeatherPresenter weatherPresenter;
+
+    //更多商品按钮动画
     private AlphaAnimation txtMoreAlphaAnimation;
 
+    //广告位置
     private int adPosition;
+
+    //刷新时间的广播
+    DateTimeReceiver mTimeReceiver;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,12 +137,43 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         Log.e(TAG, "scrollTotal:" + scrollTotal);
         adCount = adbannerAdLv.getCount();
         startAutoScroll();
+
+        initDateReceiver();
+    }
+
+    /**
+     * 实例化时间广播和时间控件
+     */
+    private void initDateReceiver() {
+        //控制每分钟刷新时间
+        weatherPresenter.getDateInfo();
+
+        IntentFilter mTimeFilter = null;
+        mTimeReceiver = new DateTimeReceiver(weatherPresenter);
+        mTimeFilter = new IntentFilter();
+        mTimeFilter.addAction(Intent.ACTION_TIME_TICK);
+        registerReceiver(mTimeReceiver, mTimeFilter);
+        //每小时刷新温度。每天刷新天气
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                weatherPresenter.getWeatherInfo();
+            }
+        },0,1000*30);
+//        new Timer().schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                weatherPresenter.getNowTemp();
+//            }
+//        },0,1000*30);
+
     }
 
 
     //实例化对象
     private void init() {
         adPresenter = new ADBannerPresenterImpl(this, this);
+        weatherPresenter = new WeatherPresenterImpl(this, this);
         // 隐藏媒体控制条
         MediaController mc = new MediaController(this);
         mc.setVisibility(View.INVISIBLE);
@@ -133,7 +190,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
-                if(errorVideoNum == 0) {
+                if (errorVideoNum == 0) {
                     new Thread() {
                         @Override
                         public void run() {
@@ -223,6 +280,15 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             }
         });
 
+
+        //设置gv item 点击事件
+        adbannerGoodsGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -404,10 +470,45 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     /**
      * 视频错误图片
      */
-    public void showErrorImg(){
+    public void showErrorImg() {
         adImageView.setVisibility(View.VISIBLE);
         adVideoView.setVisibility(View.GONE);
 //        adImageView.setImageResource();
     }
 
+
+    @Override
+    public void changeWeather(MyWeather myWeather) {
+//        Toast.makeText(mContext, "myWeather:" + myWeather, Toast.LENGTH_SHORT).show();
+        if (myWeather != null) {
+            homeImgWeather.setImageResource(myWeather.getWeatherIcon());
+            homeTxtWeatherTemp.setText(myWeather.getWeather() + " " + myWeather.getTemp());
+        }
+    }
+
+    @Override
+    public void changeTemp(MyWeather myWeather) {
+        if (myWeather != null) {
+            homeTxtWeatherTemp.setText(myWeather.getWeather() + " " + myWeather.getTemp() + "℃");
+        }
+    }
+
+    @Override
+    public void updateDate(MyTime myTime) {
+        if (myTime != null) {
+            homeTxtDate.setText(myTime.getTimeDay() + " " + myTime.getTimeWeek());
+            homeTxtTime.setText(myTime.getTimeMinute());
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mTimeReceiver!=null){
+            unregisterReceiver(mTimeReceiver);
+        }
+
+
+    }
 }
