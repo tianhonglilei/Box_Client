@@ -14,7 +14,20 @@ public class DateTimeReceiver extends BroadcastReceiver {
 
     private WeatherPresenter weatherPresenter;
 
-    public DateTimeReceiver(WeatherPresenter weatherPresenter) {
+    private static DateTimeReceiver dateTimeReceiver=null;
+
+    public static DateTimeReceiver getInstance() {
+        if (dateTimeReceiver == null) {
+            synchronized (DateTimeReceiver.class) {
+                if (dateTimeReceiver == null) {
+                    dateTimeReceiver = new DateTimeReceiver();
+                }
+            }
+        }
+        return dateTimeReceiver;
+    }
+
+    public void setWeatherPresenter(WeatherPresenter weatherPresenter) {
         this.weatherPresenter = weatherPresenter;
     }
 
@@ -23,6 +36,8 @@ public class DateTimeReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(Intent.ACTION_TIME_TICK)) {
             //更新时间的方法
             weatherPresenter.getDateInfo();
+            System.gc();
         }
     }
+
 }

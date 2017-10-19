@@ -15,9 +15,4 @@ public interface WeatherPresenter {
      */
     void getWeatherInfo();
 
-    /**
-     * 获取实时温度
-     */
-    void getNowTemp();
-
 }

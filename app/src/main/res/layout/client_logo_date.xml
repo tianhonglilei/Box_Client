@@ -76,9 +76,9 @@
             android:layout_alignRight="@+id/more_weather_time"
             android:layout_below="@+id/more_weather_time"
             android:layout_marginTop="6dp"
-            android:text="10月16日 星期一"
+            android:text="2017-10-16 星期一"
             android:textColor="@color/colorGaryFiveTwo"
-            android:textSize="15sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/more_line"

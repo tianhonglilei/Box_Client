@@ -150,7 +150,8 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         weatherPresenter.getDateInfo();
 
         IntentFilter mTimeFilter = null;
-        mTimeReceiver = new DateTimeReceiver(weatherPresenter);
+        mTimeReceiver = DateTimeReceiver.getInstance();
+        mTimeReceiver.setWeatherPresenter(weatherPresenter);
         mTimeFilter = new IntentFilter();
         mTimeFilter.addAction(Intent.ACTION_TIME_TICK);
         registerReceiver(mTimeReceiver, mTimeFilter);
@@ -160,21 +161,25 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             public void run() {
                 weatherPresenter.getWeatherInfo();
             }
-        }, 0, 1000 * 30);
-//        new Timer().schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                weatherPresenter.getNowTemp();
-//            }
-//        },0,1000*30);
-
+        }, 0, 1000 * 60 * 60);
     }
 
+    private void refreshDate() {
+        weatherPresenterIsNUll();
+        mTimeReceiver = DateTimeReceiver.getInstance();
+        mTimeReceiver.setWeatherPresenter(weatherPresenter);
+    }
+
+    private void weatherPresenterIsNUll() {
+        if (weatherPresenter == null) {
+            weatherPresenter = new WeatherPresenterImpl(this,this);
+        }
+    }
 
     //实例化对象
     private void init() {
         adPresenter = new ADBannerPresenterImpl(this, this);
-        weatherPresenter = new WeatherPresenterImpl(this, this);
+        weatherPresenterIsNUll();
         // 隐藏媒体控制条
         MediaController mc = new MediaController(this);
         mc.setVisibility(View.INVISIBLE);
@@ -211,7 +216,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
         txtMoreAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(this, R.anim.home_more_txt_alpha_anim);
         adbannerBMore.setAnimation(txtMoreAlphaAnimation);
-
         adbannerAdLv.setSelectionAfterHeaderView();
 
     }
@@ -286,15 +290,9 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adbannerGoodsGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
-                startActivity(intent);
+                navigateToPay();
             }
         });
-
-    }
-
-
-    private void initAdScroll() {
 
     }
 
@@ -311,9 +309,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         Log.e(TAG, "onClick: " + id);
         switch (id) {
             case R.id.adbanner_b_more:
-                Intent intent = new Intent(ADBannerActivity.this, MoreGoodsActivity.class);
-                startActivity(intent);
-                Log.e(TAG, "onClick: " + id);
+                navigateToMoreGoods();
                 break;
         }
 
@@ -325,7 +321,9 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
      */
     @Override
     public void navigateToPay() {
-
+        Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
+        intentDateWeather(intent);
+        startActivity(intent);
     }
 
     /**
@@ -333,7 +331,22 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
      */
     @Override
     public void navigateToMoreGoods() {
+        Intent intent = new Intent(ADBannerActivity.this, MoreGoodsActivity.class);
+        intentDateWeather(intent);
+        startActivity(intent);
+        Log.e(TAG, "onClick: ");
+    }
 
+    //时间天气传递
+    public void intentDateWeather(Intent intent) {
+        if (myTime != null) {
+            intent.putExtra("date", myTime.getTimeDay() + " " + myTime.getTimeWeek());
+            intent.putExtra("minute", myTime.getTimeMinute());
+        }
+        if (myWeather != null) {
+            intent.putExtra("temp", myWeather.getTemp());
+            intent.putExtra("weather", myWeather.getWeather());
+        }
     }
 
     //图片广告开启定时器
@@ -374,27 +387,8 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     }
 
 
-    private Thread goodsScrollthread;
-
     //商品自动滚动
     private void startAutoScroll() {
-//        goodsScrollthread = new Thread() {
-//            @Override
-//            public void run() {
-//
-//                while (mAutoScroll) {
-//                    try {
-//                        Thread.sleep(70);
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                    Message msg = mHandler.obtainMessage(1, 0, 0);
-//                    mHandler.sendMessage(msg);
-//                }
-//            }
-//
-//        };
-//        goodsScrollthread.start();
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -479,8 +473,11 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     }
 
 
+    MyWeather myWeather;
+
     @Override
     public void changeWeather(MyWeather myWeather) {
+        this.myWeather = myWeather;
 //        Toast.makeText(mContext, "myWeather:" + myWeather, Toast.LENGTH_SHORT).show();
         if (myWeather != null) {
             homeImgWeather.setImageResource(myWeather.getWeatherIcon());
@@ -488,15 +485,12 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         }
     }
 
-    @Override
-    public void changeTemp(MyWeather myWeather) {
-        if (myWeather != null) {
-            homeTxtWeatherTemp.setText(myWeather.getWeather() + " " + myWeather.getTemp() + "℃");
-        }
-    }
+
+    MyTime myTime;
 
     @Override
     public void updateDate(MyTime myTime) {
+        this.myTime = myTime;
         if (myTime != null) {
             homeTxtDate.setText(myTime.getTimeDay() + " " + myTime.getTimeWeek());
             homeTxtTime.setText(myTime.getTimeMinute());
@@ -518,6 +512,8 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             adVideoView.start();
             videoPlay = true;
         }
+        refreshDate();
+        weatherPresenter.getDateInfo();
         super.onResume();
     }
 

@@ -23,8 +23,5 @@ public interface ADBannerView {
      */
     void changeWeather(MyWeather myWeather);
 
-    void changeTemp(MyWeather myWeather);
-
-
     void updateDate(MyTime myTime);
 }

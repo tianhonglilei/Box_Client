@@ -43,13 +43,7 @@
                     app:srcCompat="@drawable/ad_test_img1" />
             </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/adbanner_logo"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:src="@mipmap/dc_logo" />
+
         </FrameLayout>
 
         <ListView

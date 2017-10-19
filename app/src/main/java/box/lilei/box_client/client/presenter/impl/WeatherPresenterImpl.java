@@ -12,7 +12,6 @@ import java.util.Date;
 
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.MyWeather;
-import box.lilei.box_client.client.model.WeatherInfoT;
 import box.lilei.box_client.client.model.WeatherInfo;
 import box.lilei.box_client.client.okhttp.CommonOkHttpClient;
 import box.lilei.box_client.client.okhttp.exception.OkHttpException;
@@ -21,7 +20,9 @@ import box.lilei.box_client.client.okhttp.listener.OkHttpDisposeListener;
 import box.lilei.box_client.client.okhttp.request.CommonRequest;
 import box.lilei.box_client.client.presenter.WeatherPresenter;
 import box.lilei.box_client.client.view.ADBannerView;
-import box.lilei.box_client.util.APIList;
+import box.lilei.box_client.client.view.MoreGoodsView;
+import box.lilei.box_client.client.view.PayView;
+import box.lilei.box_client.contants.Contants;
 import box.lilei.box_client.util.TimeUtil;
 import box.lilei.box_client.util.httputil.ResponseEntityToModule;
 
@@ -35,11 +36,22 @@ public class WeatherPresenterImpl implements WeatherPresenter {
     private ADBannerView adBannerView;
     private Context mContext;
     private MyWeather myWeather;
+    private MoreGoodsView moreGoodsView;
+    private PayView payView;
+
 
     public WeatherPresenterImpl(ADBannerView adBannerView, Context mContext) {
         this.adBannerView = adBannerView;
         this.mContext = mContext;
         myWeather = new MyWeather();
+    }
+
+    public WeatherPresenterImpl(MoreGoodsView moreGoodsView) {
+        this.moreGoodsView = moreGoodsView;
+    }
+
+    public WeatherPresenterImpl(PayView payView) {
+        this.payView = payView;
     }
 
     @Override
@@ -48,24 +60,38 @@ public class WeatherPresenterImpl implements WeatherPresenter {
         Date timeNow = new Date();
         long time = timeNow.getTime();
         String dateDay = TimeUtil.dateString(time);
-//        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-//        int minute = calendar.get(Calendar.MINUTE);
         String dateMinute = new SimpleDateFormat("HH:mm").format(timeNow);
         String dateWeek = TimeUtil.dayForWeek(calendar);
-        MyTime myTime = new MyTime(dateDay,dateWeek,dateMinute);
-        adBannerView.updateDate(myTime);
+        MyTime myTime = new MyTime(dateDay, dateWeek, dateMinute);
+        if (adBannerView != null) {
+            adBannerView.updateDate(myTime);
+            moreGoodsView = null;
+            payView = null;
+            return;
+        }
+        if (moreGoodsView != null) {
+            moreGoodsView.updateDate(myTime);
+            payView = null;
+            return;
+        }
+        if (payView != null) {
+            payView.updateDate(myTime);
+            moreGoodsView = null;
+            return;
+        }
+
     }
 
     @Override
     public void getWeatherInfo() {
-        CommonOkHttpClient.get(CommonRequest.createGetRequest(APIList.WEATHER_INFO_URL,null),
+        CommonOkHttpClient.get(CommonRequest.createGetRequest(Contants.WEATHER_INFO_URL, null),
                 new OkHttpDisposeHandler(new OkHttpDisposeListener() {
                     @Override
                     public void onSuccess(Object responseObject) {
                         JSONObject jsonObject = (JSONObject) responseObject;
                         WeatherInfo weatherInfo = null;
                         try {
-                            weatherInfo = (WeatherInfo) ResponseEntityToModule.parseJsonObjectToModule(jsonObject.getJSONObject("weatherinfo"),WeatherInfo.class);
+                            weatherInfo = (WeatherInfo) ResponseEntityToModule.parseJsonObjectToModule(jsonObject.getJSONObject("weatherinfo"), WeatherInfo.class);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -77,29 +103,10 @@ public class WeatherPresenterImpl implements WeatherPresenter {
 
                     @Override
                     public void onFail(Object errorObject) {
-                        Log.e(TAG, "onFail: w" + ((OkHttpException)errorObject).getEcode());
+                        Log.e(TAG, "onFail: w" + ((OkHttpException) errorObject).getEcode());
                     }
                 }));
 
     }
 
-    @Override
-    public void getNowTemp() {
-        CommonOkHttpClient.get(CommonRequest.createGetRequest(APIList.TEMP_INFO_URL,null),
-                new OkHttpDisposeHandler(new OkHttpDisposeListener() {
-                    @Override
-                    public void onSuccess(Object responseObject) {
-                        WeatherInfoT weatherInfoT = (WeatherInfoT) responseObject;
-                        myWeather.setTemp(weatherInfoT.getTemp());
-//                        adBannerView.changeTemp(myWeather);
-                        Log.e(TAG, "temp-onSuccess: " + myWeather.getTemp());
-                    }
-
-                    @Override
-                    public void onFail(Object errorObject) {
-                        Log.e(TAG, "onFail: t" + ((OkHttpException)errorObject).getEcode());
-                    }
-                }, WeatherInfoT.class));
-
-    }
 }
