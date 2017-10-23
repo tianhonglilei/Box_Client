@@ -12,7 +12,7 @@ import java.util.Date;
 
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.MyWeather;
-import box.lilei.box_client.client.model.WeatherInfo;
+import box.lilei.box_client.client.model.jsonmodel.WeatherInfo;
 import box.lilei.box_client.client.okhttp.CommonOkHttpClient;
 import box.lilei.box_client.client.okhttp.exception.OkHttpException;
 import box.lilei.box_client.client.okhttp.handler.OkHttpDisposeHandler;

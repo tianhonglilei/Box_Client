@@ -5,11 +5,16 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.client.model.MyTime;
@@ -43,7 +48,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     TextView moreWeatherWdNum;
     private Intent dataIntent;
     private WeatherPresenter weatherPresenter;
-    private DateTimeReceiver mTimeReceiver;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,16 +84,33 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
      * 初始化时间和天气
      */
     private void initDateAndWeather() {
-        weatherPresenter = new WeatherPresenterImpl(this);
-        mTimeReceiver = DateTimeReceiver.getInstance();
-        mTimeReceiver.setWeatherPresenter(weatherPresenter);
+        weatherPresenterIsNUll();
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(3);
+            }
+        }, 0, 1000 * 30);
         if (dataIntent != null) {
-            moreWeatherTime.setText(dataIntent.getStringExtra("minute"));
-            moreWeatherDate.setText(dataIntent.getStringExtra("date"));
             moreWeatherTxt.setText(dataIntent.getStringExtra("weather"));
             moreWeatherWdNum.setText(dataIntent.getStringExtra("temp"));
         }
     }
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 3:
+                    weatherPresenter.getDateInfo();
+                    break;
+            }
+
+
+        }
+    };
 
 
     @Override
@@ -96,7 +118,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         switch (v.getId()) {
             case R.id.pay_rl_return:
                 PayActivity.this.finish();
-                System.gc();
                 break;
         }
     }
@@ -113,5 +134,11 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     protected void onDestroy() {
         super.onDestroy();
         System.gc();
+    }
+
+    private void weatherPresenterIsNUll() {
+        if (weatherPresenter == null) {
+            weatherPresenter = new WeatherPresenterImpl(this);
+        }
     }
 }

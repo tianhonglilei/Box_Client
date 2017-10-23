@@ -15,6 +15,9 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import box.lilei.box_client.R;
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.MyWeather;
@@ -69,6 +72,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     TextView moreWeatherWdNum;
     private WeatherPresenter weatherPresenter;
     private DateTimeReceiver mTimeReceiver;
+    private Timer timer;
 
 
     @Override
@@ -89,10 +93,15 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
      * 初始化时间和温度
      */
     private void initDateAndWeather() {
-        refreshDate();
+        weatherPresenterIsNUll();
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(3);
+            }
+        }, 0, 1000 * 30);
         if (dataIntent != null) {
-            moreWeatherTime.setText(dataIntent.getStringExtra("minute"));
-            moreWeatherDate.setText(dataIntent.getStringExtra("date"));
             moreWeatherTxt.setText(dataIntent.getStringExtra("weather"));
             moreWeatherWdNum.setText(dataIntent.getStringExtra("temp"));
         }
@@ -105,12 +114,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         }
     }
 
-    private void refreshDate() {
-        weatherPresenterIsNUll();
-        mTimeReceiver = DateTimeReceiver.getInstance();
-        mTimeReceiver.setWeatherPresenter(weatherPresenter);
-
-    }
 
     private void initGoodsGridView() {
         //设置gv item 点击事件
@@ -175,21 +178,27 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
     @Override
     protected void onResume() {
-        refreshDate();
-        weatherPresenter.getDateInfo();
         super.onResume();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        timer.cancel();
+        timer = null;
     }
 
     //处理handler消息
-    Handler handler = new Handler() {
+    Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            switch (msg.what) {
+                case 3:
+                    weatherPresenter.getDateInfo();
+                    break;
+            }
+
 
         }
     };
