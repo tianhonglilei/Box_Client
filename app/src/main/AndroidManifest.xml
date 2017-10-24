@@ -5,9 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -20,11 +20,6 @@
             android:name=".client.view.activity.ADBannerActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
@@ -32,21 +27,21 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".client.view.activity.PayActivity"
+            android:screenOrientation="landscape" />
+
+
+
+        <activity
+            android:name=".manager.view.activity.LoginActivity"
             android:screenOrientation="landscape"></activity>
-
-        <receiver
-            android:name=".client.receiver.DateTimeReceiver"
-            android:enabled="true"
-            android:exported="true">
+        <activity android:name=".manager.view.activity.ManagerNavgationActivity"
+            android:screenOrientation="landscape"
+            >
             <intent-filter>
-                <action android:name="android.intent.action.TIME_TICK" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </receiver>
-
-        <activity android:name=".manager.view.activity.LoginActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="landscape">
-
 
         </activity>
     </application>

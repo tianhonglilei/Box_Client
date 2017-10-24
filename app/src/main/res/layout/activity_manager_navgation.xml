@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhiteTxt"
+    tools:context="box.lilei.box_client.manager.view.activity.ManagerNavgationActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/manager_head"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <LinearLayout
+        android:layout_width="230dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/include"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="123dp"
+            android:background="@color/colorbebebe">
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="81dp"
+                android:layout_height="77dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/manager_dc_logo_black" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="点创科技"
+                android:layout_centerHorizontal="true"
+                android:textSize="19sp"
+                android:textColor="@color/colorGaryFiveTwo"
+                android:layout_below="@+id/imageView3"
+                android:layout_marginTop="5dp"/>
+        </RelativeLayout>
+
+        <RadioGroup
+            android:id="@+id/manager_nav_grp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="7"
+            android:orientation="vertical"
+            >
+            <RadioButton
+                android:id="@+id/manager_nav_rdo_btn_goods"
+                android:drawableLeft="@drawable/manager_nav_goods"
+                android:text="商品管理"
+                android:checked="true"
+                style="@style/manager_nav_rdo_btn_style" />
+            <RadioButton
+                android:id="@+id/manager_nav_rdo_btn_road_test"
+                android:drawableLeft="@drawable/manager_nav_road"
+                android:text="货道测试"
+                style="@style/manager_nav_rdo_btn_style" />
+            <RadioButton
+                android:id="@+id/manager_nav_rdo_btn_temp"
+                android:drawableLeft="@drawable/manager_nav_temp"
+                android:text="温区控制"
+                style="@style/manager_nav_rdo_btn_style" />
+            <RadioButton
+                android:id="@+id/manager_nav_rdo_btn_version"
+                android:drawableLeft="@drawable/manager_nav_version"
+                android:text="软件版本"
+                style="@style/manager_nav_rdo_btn_style" />
+            <RadioButton
+                android:id="@+id/manager_nav_rdo_btn_continue"
+                android:drawableLeft="@drawable/manager_nav_continue"
+                android:text="继续销售"
+                style="@style/manager_nav_rdo_btn_style" />
+            <RadioButton
+                android:id="@+id/manager_nav_rdo_btn_restart"
+                android:drawableLeft="@drawable/manager_nav_restart"
+                android:text="重新启动"
+                style="@style/manager_nav_rdo_btn_style" />
+            <RadioButton
+                android:id="@+id/manager_nav_rdo_btn_exit"
+                android:drawableLeft="@drawable/manager_nav_exit"
+                android:text="退出程序"
+                style="@style/manager_nav_rdo_btn_style" />
+
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/manager_nav_main_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/include">
+        <include layout="@layout/fragment_nav_temp"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

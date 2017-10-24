@@ -3,4 +3,7 @@
     <string name="client_home_more">更多商品</string>
     <string name="client_home_recommend">点创推荐</string>
     <string name="allGoodsTxt">全部商品</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

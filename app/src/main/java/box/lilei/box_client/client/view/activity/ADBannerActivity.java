@@ -148,8 +148,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
      */
     private void initDateReceiver() {
         //控制每分钟刷新时间
-
-
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -157,12 +155,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             }
         }, 0, 1000 * 60);
 
-//        IntentFilter mTimeFilter = null;
-//        mTimeReceiver = DateTimeReceiver.getInstance();
-//        mTimeReceiver.setWeatherPresenter(weatherPresenter);
-//        mTimeFilter = new IntentFilter();
-//        mTimeFilter.addAction(Intent.ACTION_TIME_TICK);
-//        registerReceiver(mTimeReceiver, mTimeFilter);
         //每小时刷新温度。每天刷新天气
         new Timer().schedule(new TimerTask() {
             @Override

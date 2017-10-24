@@ -21,11 +21,11 @@
         android:layout_centerHorizontal="true"
         android:background="@color/colorHomeGoodsBg"
         android:id="@+id/relativeLayout3">
-        <TextView
+        <ImageView
             android:id="@+id/imageView1"
             android:layout_width="110dp"
             android:layout_height="103dp"
-            android:background="@color/colorDemoLogo"
+            android:src="@drawable/manager_login_logo_org"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="22dp"
             />

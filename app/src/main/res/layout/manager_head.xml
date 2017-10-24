@@ -39,4 +39,13 @@
         android:layout_toRightOf="@+id/textView1"
         />
 
+    <TextView
+        android:id="@+id/manager_head_txt_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="后台管理"
+        android:textColor="@color/colorWhiteTxt"
+        android:layout_centerInParent="true"
+        />
+
 </RelativeLayout>

@@ -1,0 +1,236 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhiteTxt"
+    tools:context="box.lilei.box_client.manager.view.fragment.NavTempFragment">
+
+    <TextView
+        android:id="@+id/nav_temp_txt_robot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="310dp"
+        android:layout_marginTop="75dp"
+        android:text="当前机器："
+        android:textColor="@color/colorGaryFiveTwo"
+        android:textSize="30dp" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_marginTop="70dp"
+        android:layout_toRightOf="@+id/nav_temp_txt_robot"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <RadioButton
+            android:id="@+id/nav_temp_rdo_robot_main"
+            android:layout_marginRight="10dp"
+            android:text="主机"
+            android:checked="true"
+            style="@style/nav_robot_check_style" />
+
+        <RadioButton
+            android:id="@+id/nav_temp_rdo_robot_add_one"
+            android:text="托机一"
+            style="@style/nav_robot_check_style"/>
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/nav_temp_txt_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="左温室"
+        android:layout_below="@+id/nav_temp_txt_robot"
+        android:layout_marginTop="35dp"
+        android:textSize="25sp"
+        android:textColor="@color/colorGaryFiveTwo"
+        android:layout_marginLeft="260dp"
+        />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nav_temp_txt_left"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="150dp"
+        >
+
+
+    </RadioGroup>
+
+
+    <RelativeLayout
+        android:id="@+id/nav_temp_set_left_rl"
+
+        android:layout_width="307dp"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/manager_nav_temp_set_layout_selector"
+        android:paddingBottom="15dp">
+
+        <RadioGroup
+            android:id="@+id/nav_temp_rdo_group_left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <RadioButton
+                android:id="@+id/nav_temp_rdo_close"
+                android:text="关闭"
+                android:layout_marginTop="25dp"
+                style="@style/nav_rdo_temp_set_style"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/nav_temp_rdo_cold"
+                android:text="制冷"
+                android:layout_marginTop="20dp"
+                style="@style/nav_rdo_temp_set_style" />
+            <RadioButton
+                android:id="@+id/nav_temp_rdo_hot"
+                android:text="制热"
+                android:layout_marginTop="20dp"
+                style="@style/nav_rdo_temp_set_style" />
+            <TextView
+                android:id="@+id/nav_temp_txt_left_now_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前温度：10℃"
+                android:layout_below="@+id/nav_temp_rdo_group_left"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:textColor="@color/colorDemoLogo"
+                />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/nav_temp_txt_left_max_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="制热最高温度：60℃"
+            android:layout_below="@+id/nav_temp_rdo_group_left"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:textColor="@color/colorGaryFiveTwo"
+            />
+        <ImageView
+            android:id="@+id/nav_temp_set_left_img"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/nav_temp_set_hot"
+            android:scaleType="centerInside"
+            android:layout_toLeftOf="@+id/nav_temp_txt_left_max_temp"
+            android:layout_alignBottom="@+id/nav_temp_txt_left_max_temp"
+            />
+
+        <Button
+            android:layout_width="110dp"
+            android:layout_height="37dp"
+            android:layout_below="@+id/nav_temp_txt_left_max_temp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:text="设 置"
+            android:background="@drawable/manager_login_btn_selector"
+            android:textSize="20dp"
+            android:textColor="@color/colorWhiteTxt"/>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/nav_temp_txt_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="右温室"
+        android:layout_alignBottom="@+id/nav_temp_txt_left"
+        android:textSize="25sp"
+        android:textColor="@color/colorGaryFiveTwo"
+        android:layout_toRightOf="@+id/nav_temp_txt_left"
+        android:layout_marginLeft="380dp"
+        />
+
+    <RelativeLayout
+        android:layout_below="@+id/nav_temp_txt_right"
+        android:layout_width="307dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="140dp"
+        android:layout_toRightOf="@+id/nav_temp_set_left_rl"
+        android:background="@drawable/manager_nav_temp_set_layout_selector"
+        android:paddingBottom="15dp">
+
+        <RadioGroup
+            android:id="@+id/nav_temp_rdo_group_right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <RadioButton
+                android:text="关闭"
+                android:layout_marginTop="25dp"
+                style="@style/nav_rdo_temp_set_style"
+                android:checked="true"/>
+            <RadioButton
+                android:text="制冷"
+                android:layout_marginTop="20dp"
+                style="@style/nav_rdo_temp_set_style" />
+            <RadioButton
+                android:text="制热"
+                android:layout_marginTop="20dp"
+                style="@style/nav_rdo_temp_set_style" />
+            <TextView
+                android:id="@+id/nav_temp_txt_right_now_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前温度：10℃"
+                android:layout_below="@+id/nav_temp_rdo_group_right"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:textColor="@color/colorDemoLogo"
+                />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/nav_temp_txt_right_max_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="制热最高温度：60℃"
+            android:layout_below="@+id/nav_temp_rdo_group_right"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:textColor="@color/colorGaryFiveTwo"
+            />
+        <ImageView
+            android:id="@+id/nav_temp_set_right_img"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/nav_temp_set_cold"
+            android:scaleType="centerInside"
+            android:layout_toLeftOf="@+id/nav_temp_txt_right_max_temp"
+            android:layout_alignBottom="@+id/nav_temp_txt_right_max_temp"
+            />
+
+        <Button
+            android:layout_width="110dp"
+            android:layout_height="37dp"
+            android:layout_below="@+id/nav_temp_txt_right_max_temp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:text="设 置"
+            android:background="@drawable/manager_login_btn_selector"
+            android:textSize="20dp"
+            android:textColor="@color/colorWhiteTxt"/>
+
+        </RelativeLayout>
+
+
+
+
+</RelativeLayout>
