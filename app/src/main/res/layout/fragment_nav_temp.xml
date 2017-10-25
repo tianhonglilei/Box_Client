@@ -17,7 +17,7 @@
 
     <RadioGroup
         android:layout_width="wrap_content"
-        android:layout_height="42dp"
+        android:layout_height="40dp"
         android:layout_marginTop="70dp"
         android:layout_toRightOf="@+id/nav_temp_txt_robot"
         android:orientation="horizontal"
@@ -49,26 +49,19 @@
         android:layout_marginLeft="260dp"
         />
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/nav_temp_txt_left"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="150dp"
-        >
-
-
-    </RadioGroup>
 
 
     <RelativeLayout
         android:id="@+id/nav_temp_set_left_rl"
-
         android:layout_width="307dp"
         android:layout_height="wrap_content"
-
+        android:layout_below="@+id/nav_temp_txt_left"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="150dp"
         android:background="@drawable/manager_nav_temp_set_layout_selector"
-        android:paddingBottom="15dp">
+        android:paddingBottom="15dp"
+        android:focusableInTouchMode="true"
+        >
 
         <RadioGroup
             android:id="@+id/nav_temp_rdo_group_left"
@@ -77,18 +70,18 @@
             android:orientation="vertical"
             >
             <RadioButton
-                android:id="@+id/nav_temp_rdo_close"
+                android:id="@+id/nav_temp_left_rdo_close"
                 android:text="关闭"
                 android:layout_marginTop="25dp"
                 style="@style/nav_rdo_temp_set_style"
                 android:checked="true"/>
             <RadioButton
-                android:id="@+id/nav_temp_rdo_cold"
+                android:id="@+id/nav_temp_left_rdo_cold"
                 android:text="制冷"
                 android:layout_marginTop="20dp"
                 style="@style/nav_rdo_temp_set_style" />
             <RadioButton
-                android:id="@+id/nav_temp_rdo_hot"
+                android:id="@+id/nav_temp_left_rdo_hot"
                 android:text="制热"
                 android:layout_marginTop="20dp"
                 style="@style/nav_rdo_temp_set_style" />
@@ -96,7 +89,7 @@
                 android:id="@+id/nav_temp_txt_left_now_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="当前温度：10℃"
+                android:text="当前室温：10℃"
                 android:layout_below="@+id/nav_temp_rdo_group_left"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
@@ -110,7 +103,7 @@
             android:id="@+id/nav_temp_txt_left_max_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="制热最高温度：60℃"
+            android:text="当前设置温度：60℃"
             android:layout_below="@+id/nav_temp_rdo_group_left"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
@@ -131,7 +124,7 @@
             android:layout_width="110dp"
             android:layout_height="37dp"
             android:layout_below="@+id/nav_temp_txt_left_max_temp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:text="设 置"
             android:background="@drawable/manager_login_btn_selector"
@@ -161,7 +154,8 @@
         android:layout_marginLeft="140dp"
         android:layout_toRightOf="@+id/nav_temp_set_left_rl"
         android:background="@drawable/manager_nav_temp_set_layout_selector"
-        android:paddingBottom="15dp">
+        android:paddingBottom="15dp"
+        >
 
         <RadioGroup
             android:id="@+id/nav_temp_rdo_group_right"
@@ -170,23 +164,31 @@
             android:orientation="vertical"
             >
             <RadioButton
+                android:id="@+id/nav_temp_right_rdo_close"
                 android:text="关闭"
                 android:layout_marginTop="25dp"
                 style="@style/nav_rdo_temp_set_style"
-                android:checked="true"/>
+                android:checked="true"
+                />
             <RadioButton
+                android:id="@+id/nav_temp_right_rdo_cold"
                 android:text="制冷"
                 android:layout_marginTop="20dp"
                 style="@style/nav_rdo_temp_set_style" />
             <RadioButton
+                android:id="@+id/nav_temp_right_rdo_hot"
                 android:text="制热"
                 android:layout_marginTop="20dp"
-                style="@style/nav_rdo_temp_set_style" />
+                style="@style/nav_rdo_temp_set_style"
+                android:enabled="false"
+                android:textColor="@color/colorDemoBg"
+                android:background="@drawable/manager_nav_robot_enable"
+                />
             <TextView
                 android:id="@+id/nav_temp_txt_right_now_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="当前温度：10℃"
+                android:text="当前室温：10℃"
                 android:layout_below="@+id/nav_temp_rdo_group_right"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
@@ -200,7 +202,7 @@
             android:id="@+id/nav_temp_txt_right_max_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="制热最高温度：60℃"
+            android:text="当前设置温度：10℃"
             android:layout_below="@+id/nav_temp_rdo_group_right"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
@@ -221,7 +223,7 @@
             android:layout_width="110dp"
             android:layout_height="37dp"
             android:layout_below="@+id/nav_temp_txt_right_max_temp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:text="设 置"
             android:background="@drawable/manager_login_btn_selector"

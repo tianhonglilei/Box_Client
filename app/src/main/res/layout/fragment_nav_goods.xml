@@ -1,13 +1,64 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="1050dp"
     android:layout_height="match_parent"
+    android:background="@color/colorWhiteTxt"
     tools:context="box.lilei.box_client.manager.view.fragment.NavGoodsFragment">
-
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/nav_goods_txt_robot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="310dp"
+        android:layout_marginTop="75dp"
+        android:text="当前机器："
+        android:textColor="@color/colorGaryFiveTwo"
+        android:textSize="30dp" />
 
-</FrameLayout>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="70dp"
+        android:layout_toRightOf="@+id/nav_goods_txt_robot"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <RadioButton
+            android:id="@+id/nav_goods_rdo_robot_main"
+            android:layout_marginRight="10dp"
+            android:text="主机"
+            android:checked="true"
+            style="@style/nav_robot_check_style" />
+
+        <RadioButton
+            android:id="@+id/nav_goods_rdo_robot_add_one"
+            android:text="托机一"
+            style="@style/nav_robot_check_style"/>
+
+    </RadioGroup>
+
+
+    <GridView
+        android:id="@+id/nav_goods_gv"
+        android:layout_width="match_parent"
+        android:layout_height="530dp"
+        android:layout_below="@+id/nav_goods_txt_robot"
+        android:numColumns="5"
+        android:layout_marginTop="30dp"
+        android:verticalSpacing="20dp"
+        android:horizontalSpacing="17dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+         />
+
+    <Button
+        android:layout_width="138dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/nav_goods_gv"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:text="一键补满"
+        android:background="@drawable/manager_login_btn_selector"
+        android:textSize="24dp"
+        android:textColor="@color/colorWhiteTxt"/>
+
+</RelativeLayout>

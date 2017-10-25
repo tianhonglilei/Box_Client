@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhiteTxt"
     tools:context="box.lilei.box_client.manager.view.activity.ManagerNavgationActivity">
+    <FrameLayout
+        android:id="@+id/manager_nav_main_fragment_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhiteTxt">
+
+    </FrameLayout>
 
     <include
         android:id="@+id/include"
@@ -91,14 +98,7 @@
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/manager_nav_main_rl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/include">
-        <include layout="@layout/fragment_nav_temp"/>
 
-    </RelativeLayout>
 
 
 </RelativeLayout>
