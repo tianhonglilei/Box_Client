@@ -12,7 +12,7 @@ import java.util.Date;
 
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.MyWeather;
-import box.lilei.box_client.client.model.jsonmodel.WeatherInfo;
+import box.lilei.box_client.client.model.jsonmodel.WeatherTestInfo;
 import box.lilei.box_client.client.okhttp.CommonOkHttpClient;
 import box.lilei.box_client.client.okhttp.exception.OkHttpException;
 import box.lilei.box_client.client.okhttp.handler.OkHttpDisposeHandler;
@@ -89,14 +89,10 @@ public class WeatherPresenterImpl implements WeatherPresenter {
                     @Override
                     public void onSuccess(Object responseObject) {
                         JSONObject jsonObject = (JSONObject) responseObject;
-                        WeatherInfo weatherInfo = null;
-                        try {
-                            weatherInfo = (WeatherInfo) ResponseEntityToModule.parseJsonObjectToModule(jsonObject.getJSONObject("weatherinfo"), WeatherInfo.class);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        myWeather.setWeather(weatherInfo.getWeather());
-                        myWeather.setTemp(weatherInfo.getTemp2());
+                        WeatherTestInfo weatherInfo = null;
+                        weatherInfo = (WeatherTestInfo) ResponseEntityToModule.parseJsonObjectToModule(jsonObject, WeatherTestInfo.class);
+                        myWeather.setWeather(weatherInfo.getData().getForecast().get(0).getType());
+                        myWeather.setTemp(weatherInfo.getData().getWendu()+"℃");
                         adBannerView.changeWeather(myWeather);
                         Log.e(TAG, "weather-onSuccess: " + responseObject.toString());
                     }

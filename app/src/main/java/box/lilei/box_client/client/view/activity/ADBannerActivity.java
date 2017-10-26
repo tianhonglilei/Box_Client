@@ -140,20 +140,20 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adCount = adbannerAdLv.getCount();
         startAutoScroll();
 
-        initDateReceiver();
+        initDateAndWeather();
     }
 
     /**
      * 实例化时间控件
      */
-    private void initDateReceiver() {
+    private void initDateAndWeather() {
         //控制每分钟刷新时间
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 mHandler.sendEmptyMessage(3);
             }
-        }, 0, 1000 * 60);
+        }, 0, 1000 * 30);
 
         //每小时刷新温度。每天刷新天气
         new Timer().schedule(new TimerTask() {
@@ -162,7 +162,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 mHandler.sendEmptyMessage(4);
 
             }
-        }, 0, 1000 * 60 * 60);
+        }, 0, 1000 * 60 * 60 * 2);
     }
 
     private void refreshDate() {

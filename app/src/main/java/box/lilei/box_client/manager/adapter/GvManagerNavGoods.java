@@ -1,9 +1,11 @@
-package box.lilei.box_client.client.adapter;
+package box.lilei.box_client.manager.adapter;
 
 import android.content.Context;
 
 import java.util.List;
 
+import box.lilei.box_client.client.adapter.MyBaseAdapter;
+import box.lilei.box_client.client.adapter.MyViewHolder;
 import box.lilei.box_client.client.model.NavRoadGoods;
 
 /**

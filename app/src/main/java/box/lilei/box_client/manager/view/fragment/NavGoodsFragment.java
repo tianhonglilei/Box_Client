@@ -26,8 +26,19 @@ public class NavGoodsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        initGoodsInfo();
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_nav_goods, container, false);
+    }
+
+    //初始化补货商品信息
+    private void initGoodsInfo() {
+
+
+
     }
 
 }

@@ -5,11 +5,20 @@ package box.lilei.box_client.contants;
  */
 
 public class Contants {
-//    private String MAIN_URL="60.205.218.33";
-    private String MAIN_URL="16p98712s5.iask.in";
-
+    //    public String MAIN_URL="http://60.205.218.33";
+    public static final String MAIN_URL = "http://16p98712s5.iask.in";
 
 
     //天气接口获取weather接口
-    public static final String WEATHER_INFO_URL = "http://www.weather.com.cn/data/cityinfo/101010100.html";
+    public static final String WEATHER_INFO_URL = "http://www.sojson.com/open/api/weather/json.shtml?city=%E5%8C%97%E4%BA%AC";
+
+
+    /**
+     * 前端模块接口
+     */
+
+    //首页展示广告获取
+    public static final String BANNER_AD_URL = MAIN_URL + "/dc/boxapp/?c=app&m=get_machineid_adv";
+
+
 }
