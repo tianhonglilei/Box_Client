@@ -1,21 +1,40 @@
 package box.lilei.box_client.manager.view.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import box.lilei.box_client.R;
+import box.lilei.box_client.biz.GoodsBiz;
+import box.lilei.box_client.biz.RoadBiz;
+import box.lilei.box_client.biz.impl.GoodsBizImpl;
+import box.lilei.box_client.biz.impl.RoadBizImpl;
+import box.lilei.box_client.client.model.Goods;
+import box.lilei.box_client.client.model.NavRoadGoods;
+import box.lilei.box_client.client.model.RoadInfo;
+import box.lilei.box_client.manager.adapter.NavGoodsAdapter;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
  * 后台商品管理界面
- *
  */
 public class NavGoodsFragment extends Fragment {
+
+    List<NavRoadGoods> navRoadGoodsList;
+    GoodsBiz goodsBiz;
+    RoadBiz roadBiz;
+    private NavGoodsAdapter navGoodsAdapter;
+
+    GridView navGoodsGv;
 
 
     public NavGoodsFragment() {
@@ -26,19 +45,53 @@ public class NavGoodsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        initGoodsInfo();
-
-
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_nav_goods, container, false);
+        View view = inflater.inflate(R.layout.fragment_nav_goods, container, false);
+        initView(view);
+
+
+        goodsBiz = new GoodsBizImpl();
+        roadBiz = new RoadBizImpl();
+        initGoodsInfo();
+        initNavGoodsGv();
+
+
+        return view;
     }
+
+    private void initView(View view) {
+        navGoodsGv = (GridView) view.findViewById(R.id.nav_goods_gv);
+
+    }
+
 
     //初始化补货商品信息
     private void initGoodsInfo() {
-
-
+        navRoadGoodsList = new ArrayList<>();
+        List<Goods> goodsList = goodsBiz.getGoodsListInfo();
+        List<RoadInfo> roadInfoList = roadBiz.getRoadList();
+        NavRoadGoods navRoadGoods;
+        for (int i = 0; i < roadInfoList.size(); i++) {
+            RoadInfo roadInfo = roadInfoList.get(i);
+            Goods goods;
+            if (i >= goodsList.size()) {
+                goods = goodsList.get(i - (i + 1 - goodsList.size()));
+            } else {
+                goods = goodsList.get(i);
+            }
+            navRoadGoods = new NavRoadGoods(i, goods, roadInfo);
+            navRoadGoodsList.add(navRoadGoods);
+        }
 
     }
 
+    private void initNavGoodsGv() {
+        navGoodsAdapter = new NavGoodsAdapter(this.getContext(),navRoadGoodsList,R.layout.nav_goods_gv_item);
+        navGoodsGv.setAdapter(navGoodsAdapter);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
 }

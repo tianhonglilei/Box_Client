@@ -44,7 +44,7 @@
         android:layout_below="@+id/nav_goods_txt_robot"
         android:numColumns="5"
         android:layout_marginTop="30dp"
-        android:verticalSpacing="20dp"
+        android:verticalSpacing="15dp"
         android:horizontalSpacing="17dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"

@@ -10,6 +10,13 @@ public class NavRoadGoods {
     private Goods goods;
     private RoadInfo roadInfo;
 
+    public NavRoadGoods(int roadGoodsId, Goods goods, RoadInfo roadInfo) {
+        this.roadGoodsId = roadGoodsId;
+        this.goods = goods;
+        this.roadInfo = roadInfo;
+    }
+    public NavRoadGoods(){}
+
     public int getRoadGoodsId() {
         return roadGoodsId;
     }

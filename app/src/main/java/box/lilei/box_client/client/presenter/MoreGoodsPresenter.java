@@ -12,4 +12,5 @@ public interface MoreGoodsPresenter {
 
     void checkNav(int nav);
 
+
 }
