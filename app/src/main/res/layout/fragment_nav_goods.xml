@@ -48,6 +48,7 @@
         android:horizontalSpacing="17dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
+        android:listSelector="@android:color/transparent"
          />
 
     <Button

@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="190dp" android:layout_height="90dp"
     android:background="@drawable/nav_goods_gv_item_bg_selector"
-    android:clickable="true"
     >
     <TextView
         android:id="@+id/nav_goods_gv_item_road_num"
