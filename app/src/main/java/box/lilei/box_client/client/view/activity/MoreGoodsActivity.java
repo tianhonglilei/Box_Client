@@ -20,19 +20,21 @@ import java.util.TimerTask;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.client.model.MyTime;
-import box.lilei.box_client.client.model.MyWeather;
 import box.lilei.box_client.client.presenter.MoreGoodsPresenter;
 import box.lilei.box_client.client.presenter.WeatherPresenter;
 import box.lilei.box_client.client.presenter.impl.MoreGoodsPresenterImpl;
 import box.lilei.box_client.client.presenter.impl.WeatherPresenterImpl;
 import box.lilei.box_client.client.receiver.DateTimeReceiver;
 import box.lilei.box_client.client.view.MoreGoodsView;
+import box.lilei.box_client.manager.view.activity.ManagerNavgationActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MoreGoodsActivity extends Activity implements View.OnClickListener, MoreGoodsView {
 
 
+    @BindView(R.id.more_imei_num)
+    TextView moreImeiNum;
     private MoreGoodsPresenter moreGoodsPresenter;
     private Context mContext;
 
@@ -107,8 +109,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         }
     }
 
-    private void weatherPresenterIsNUll()
-    {
+    private void weatherPresenterIsNUll() {
         if (weatherPresenter == null) {
             weatherPresenter = new WeatherPresenterImpl(this);
         }
@@ -131,6 +132,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     }
 
     private void initControl() {
+        moreImeiNum.setOnClickListener(this);
         mContext = this;
         moreGoodsPresenter = new MoreGoodsPresenterImpl(mContext);
         moreGoodsPresenter.initAllGoods(moreGoodsGv);
@@ -168,6 +170,9 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             case R.id.more_goods_nav_rl_return:
                 MoreGoodsActivity.this.finish();
                 break;
+            case R.id.more_imei_num:
+                Intent intent = new Intent(MoreGoodsActivity.this, ManagerNavgationActivity.class);
+                startActivity(intent);
         }
     }
 
