@@ -1,39 +1,45 @@
 package box.lilei.box_client.client.presenter.impl;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
-import android.net.Uri;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.VideoView;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import box.lilei.box_client.BuildConfig;
 import box.lilei.box_client.R;
 import box.lilei.box_client.client.adapter.GvHomeGoodsAdapter;
 import box.lilei.box_client.client.adapter.LvAdImgAdapter;
 import box.lilei.box_client.client.listener.OnADBannerLoadListener;
 import box.lilei.box_client.client.model.ADInfo;
 import box.lilei.box_client.client.model.Goods;
+import box.lilei.box_client.client.model.jsonmodel.AdJsonInfo;
+import box.lilei.box_client.client.okhttp.CommonOkHttpClient;
+import box.lilei.box_client.client.okhttp.exception.OkHttpException;
+import box.lilei.box_client.client.okhttp.handler.OkHttpDisposeHandler;
+import box.lilei.box_client.client.okhttp.listener.OkHttpDisposeListener;
+import box.lilei.box_client.client.okhttp.request.CommonRequest;
 import box.lilei.box_client.client.presenter.ADBannerPresenter;
 import box.lilei.box_client.client.view.ADBannerView;
+import box.lilei.box_client.contants.Constants;
+import box.lilei.box_client.db.GoodsBean;
+import box.lilei.box_client.db.PercentBean;
+import box.lilei.box_client.db.RoadBean;
+import box.lilei.box_client.util.JsonListUtil;
 
 /**
  * Created by lilei on 2017/9/12.
  */
 
-public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadListener{
+public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadListener {
 
     //首页界面View
     private ADBannerView adBannerView;
@@ -53,13 +59,6 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
     private List<Goods> goodsList;
 
 
-
-
-
-
-
-
-
     public ADBannerPresenterImpl(ADBannerView adBannerView, Context mContext) {
         this.adBannerView = adBannerView;
         this.mContext = mContext;
@@ -67,19 +66,16 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
     }
 
 
-
-
-
     @Override
     public void initAdData(ListView adbannerAdLv) {
 
         lvAdImgAdapter = new LvAdImgAdapter(mContext, adInfoList, R.layout.client_adbanner_ad_item_img);
         adbannerAdLv.setAdapter(lvAdImgAdapter);
-        adBannerView.changeAD(adInfoList.get(0),0);
+        adBannerView.changeAD(adInfoList.get(0), 0);
         adbannerAdLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adBannerView.changeAD(adInfoList.get(position),position);
+                adBannerView.changeAD(adInfoList.get(position), position);
             }
         });
     }
@@ -92,7 +88,7 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
         int size = goodsList.size();//要显示数据的个数
         int allWidth = itemWidth * size;
         LinearLayout.LayoutParams params = new
-                LinearLayout.LayoutParams(allWidth,LinearLayout.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams(allWidth, LinearLayout.LayoutParams.MATCH_PARENT);
         adbannerGoodsGv.setLayoutParams(params);
         adbannerGoodsGv.setStretchMode(GridView.NO_STRETCH);
         adbannerGoodsGv.setNumColumns(size);
@@ -101,7 +97,7 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
 
     }
 
-    public void initTestData(){
+    public void initTestData() {
         adInfoList = new ArrayList<>();
         goodsList = new ArrayList<>();
         ADInfo adInfo;
@@ -109,20 +105,17 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
         for (int i = 0; i < 20; i++) {
             adInfo = new ADInfo();
             goods = new Goods();
-            if(i%2==0){
+            if (i % 2 == 0) {
                 adInfo.setAdType(ADInfo.ADTYPE_IMG);
                 goods.setGoodsName("饮品");
-            }else{
+            } else {
                 adInfo.setAdType(ADInfo.ADTYPE_VIDEO);
                 goods.setGoodsName("零食");
             }
             adInfoList.add(adInfo);
             goodsList.add(goods);
         }
-
-
     }
-
 
 
     @Override
@@ -135,25 +128,83 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
 
     }
 
-
-
     @Override
-    public void loadAdFail() {
+    public void getAdInfoFromUrl(String imei) {
+        StringBuilder url = new StringBuilder(Constants.BANNER_AD_URL);
+        url.append("&machineid=" + imei);
+        CommonOkHttpClient.get(CommonRequest.createGetRequest(url.toString(), null), new OkHttpDisposeHandler(new OkHttpDisposeListener() {
+            @Override
+            public void onSuccess(Object responseObject) {
+                JSONObject mainJson = JSONObject.parseObject(responseObject.toString());
+                String urlString = "";
+                JSONArray adJsonArray = null;
+                JSONArray roadJsonArray = null;
+                JSONArray goodsJsonArray = null;
+                JSONObject percentJsonObject = null;
+                if (mainJson != null) {
+                    try {
+                        urlString = mainJson.getString("img_url");
+                        adJsonArray = mainJson.getJSONArray("adv");
+                        roadJsonArray = mainJson.getJSONArray("huodao");
+                        goodsJsonArray = mainJson.getJSONArray("machine_goods");
+                        percentJsonObject = mainJson.getJSONObject("product_info");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (adJsonArray != null) {
+                    List<AdJsonInfo> adJsonList = JsonListUtil.getListByArray(AdJsonInfo.class, adJsonArray.toString());
+                    Log.e("ADBannerPresenterImpl", "adjsonList.size():" + adJsonList.size());
+                }
+                if (roadJsonArray != null) {
+                    List<RoadBean> roadBeanList = JsonListUtil.getListByArray(RoadBean.class, roadJsonArray.toString());
+                    Log.e("ADBannerPresenterImpl", "roadBeanList.size():" + roadBeanList.size());
+                }
+                if (goodsJsonArray != null) {
+                    List<GoodsBean> goodsBeanList = JsonListUtil.getListByArray(GoodsBean.class, goodsJsonArray.toString());
+                    if (goodsBeanList != null) {
+                        Log.e("ADBannerPresenterImpl", "goodsBeanList.size():" + goodsBeanList.size());
+                        List<List<PercentBean>> listPercentList = new ArrayList<List<PercentBean>>();
+                        for (GoodsBean goodsBean :
+                                goodsBeanList) {
+                            if (goodsBean != null && goodsBean.getId() != null) {
+                                JSONArray jsonArray = percentJsonObject.getJSONArray(goodsBean.getId().toString());
+                                List<PercentBean> percentList = JsonListUtil.getListByArray(PercentBean.class, jsonArray.toString());
+                                listPercentList.add(percentList);
+                            }
+                        }
+                        Log.e("ADBannerPresenterImpl", "listPercentList.size():" + listPercentList.size());
+                    }
+                }
+            }
+
+            @Override
+            public void onFail(Object errorObject) {
+                Log.e("ADBannerPresenterImpl", "errorObject:" + ((OkHttpException) errorObject).getEmsg());
+                ((Exception) errorObject).printStackTrace();
+            }
+        }));
 
     }
 
-    @Override
-    public void loadAdSuccess() {
 
-    }
-
-    @Override
-    public void loadGoodsFail() {
-
-    }
-
-    @Override
-    public void loadGoodsSuccess() {
-
-    }
+//    @Override
+//    public void loadAdFail() {
+//
+//    }
+//
+//    @Override
+//    public void loadAdSuccess() {
+//
+//    }
+//
+//    @Override
+//    public void loadGoodsFail() {
+//
+//    }
+//
+//    @Override
+//    public void loadGoodsSuccess() {
+//
+//    }
 }

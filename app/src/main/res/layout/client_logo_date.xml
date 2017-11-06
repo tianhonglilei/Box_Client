@@ -65,7 +65,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="09:15"
+            android:text="--:--"
             android:textColor="@color/colorDemoLogo"
             android:textSize="44sp" />
 
@@ -76,7 +76,7 @@
             android:layout_alignRight="@+id/more_weather_time"
             android:layout_below="@+id/more_weather_time"
             android:layout_marginTop="6dp"
-            android:text="2017-10-16 星期一"
+            android:text="0000-00-00 XXX"
             android:textColor="@color/colorGaryFiveTwo"
             android:textSize="13sp" />
 
@@ -108,7 +108,7 @@
             android:layout_below="@+id/more_weather_txt"
             android:layout_marginRight="12dp"
             android:layout_toLeftOf="@+id/more_line"
-            android:text="28℃"
+            android:text="--℃"
             android:textColor="@color/colorGaryFiveTwo"
             android:textSize="28sp" />
     </RelativeLayout>

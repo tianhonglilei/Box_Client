@@ -40,4 +40,7 @@ public interface ADBannerPresenter {
      */
 //    void startAutoGoodsScroll();
 
+    //通过网络获取广告信息
+    void getAdInfoFromUrl(String imei);
+
 }

@@ -96,7 +96,7 @@
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:padding="0dp"
-                android:text="多云 20℃"
+                android:text="多云 --℃"
                 android:textColor="@color/colorWhiteTxt"
                 android:textSize="24sp" />
 
@@ -111,7 +111,7 @@
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:padding="0dp"
-                android:text="2017-12-12 星期一"
+                android:text="0000-00-00 XXX"
                 android:textColor="@color/colorWhiteTxt"
                 android:textSize="14sp" />
 
@@ -124,7 +124,7 @@
                 android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="09:15"
+                android:text="--:--"
                 android:textColor="@color/colorWhiteTxt"
                 android:textSize="40sp" />
 

@@ -5,26 +5,26 @@ package box.lilei.box_client.client.listener;
  */
 
 public interface OnADBannerLoadListener {
-
-    /**
-     * 加载广告失败
-     */
-    void loadAdFail();
-
-    /**
-     * 加载广告成功
-     */
-    void loadAdSuccess();
-
-    /**
-     * 加载商品失败
-     */
-    void loadGoodsFail();
-
-    /**
-     * 加载商品成功
-     */
-    void loadGoodsSuccess();
+//
+//    /**
+//     * 加载广告失败
+//     */
+//    void loadAdFail();
+//
+//    /**
+//     * 加载广告成功
+//     */
+//    void loadAdSuccess();
+//
+//    /**
+//     * 加载商品失败
+//     */
+//    void loadGoodsFail();
+//
+//    /**
+//     * 加载商品成功
+//     */
+//    void loadGoodsSuccess();
 
 
 }

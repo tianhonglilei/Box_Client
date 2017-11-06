@@ -57,7 +57,6 @@ public class CommonJsonCallback implements Callback {
     public void onResponse(Call call, final Response response) throws IOException {
         //在子线程操作
         final String result = response.body().string();
-
         mDisposeHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -68,33 +67,37 @@ public class CommonJsonCallback implements Callback {
     }
 
     private void handlerResponse(String result) {
+
         if (result == null || result.equals("")) {
             listener.onFail(new OkHttpException(NETWORK_ERROR, EMPTY_MSG));
             return;
+        }else{
+            listener.onSuccess(result);
         }
-        try {
-            JSONObject resultObj = new JSONObject(result);
+
+//        try {
+//            JSONObject resultObj = new JSONObject(result);
 //            if (resultObj.has(RESULT_CODE)) {
 //                if (resultObj.optInt(RESULT_CODE) == RESULT_CODE_VALUE) {
-                    if (mClass == null) {
-                        listener.onSuccess(resultObj);
-                    } else {
-                        Object obj = ResponseEntityToModule.parseJsonObjectToModule(resultObj, mClass);
-                        if (obj == null){
-                            listener.onFail(new OkHttpException(JSON_ERROR,EMPTY_MSG));
-                        }else{
-                            listener.onSuccess(obj);
-                        }
-                    }
+//                    if (mClass == null) {
+//                        listener.onSuccess(resultObj);
+//                    } else {
+//                        Object obj = ResponseEntityToModule.parseJsonObjectToModule(resultObj, mClass);
+//                        if (obj == null){
+//                            listener.onFail(new OkHttpException(JSON_ERROR,EMPTY_MSG));
+//                        }else{
+//                            listener.onSuccess(obj);
+//                        }
+//                    }
 //                } else {
 //                    listener.onFail(new OkHttpException(JSON_ERROR, EMPTY_MSG));
 //                }
 //            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            listener.onFail(new OkHttpException(OTHER_ERROR,e.getMessage()));
-
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            listener.onFail(new OkHttpException(OTHER_ERROR,e.getMessage()));
+//
+//        }
 
     }
 }

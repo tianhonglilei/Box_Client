@@ -22,7 +22,7 @@ import box.lilei.box_client.client.presenter.WeatherPresenter;
 import box.lilei.box_client.client.view.ADBannerView;
 import box.lilei.box_client.client.view.MoreGoodsView;
 import box.lilei.box_client.client.view.PayView;
-import box.lilei.box_client.contants.Contants;
+import box.lilei.box_client.contants.Constants;
 import box.lilei.box_client.util.TimeUtil;
 import box.lilei.box_client.util.httputil.ResponseEntityToModule;
 
@@ -84,13 +84,17 @@ public class WeatherPresenterImpl implements WeatherPresenter {
 
     @Override
     public void getWeatherInfo() {
-        CommonOkHttpClient.get(CommonRequest.createGetRequest(Contants.WEATHER_INFO_URL, null),
+        CommonOkHttpClient.get(CommonRequest.createGetRequest(Constants.WEATHER_INFO_URL, null),
                 new OkHttpDisposeHandler(new OkHttpDisposeListener() {
                     @Override
                     public void onSuccess(Object responseObject) {
-                        JSONObject jsonObject = (JSONObject) responseObject;
-                        WeatherTestInfo weatherInfo = null;
-                        weatherInfo = (WeatherTestInfo) ResponseEntityToModule.parseJsonObjectToModule(jsonObject, WeatherTestInfo.class);
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = new JSONObject((String)responseObject);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        WeatherTestInfo weatherInfo = (WeatherTestInfo) ResponseEntityToModule.parseJsonObjectToModule(jsonObject, WeatherTestInfo.class);
                         myWeather.setWeather(weatherInfo.getData().getForecast().get(0).getType());
                         myWeather.setTemp(weatherInfo.getData().getWendu()+"℃");
                         adBannerView.changeWeather(myWeather);

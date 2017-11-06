@@ -1,12 +1,21 @@
 package box.lilei.box_client.contants;
 
+import android.os.Environment;
+
 /**
  * Created by lilei on 2017/10/19.
  */
 
-public class Contants {
+public class Constants {
     //    public String MAIN_URL="http://60.205.218.33";
+    //测试域名
     public static final String MAIN_URL = "http://16p98712s5.iask.in";
+
+    //数据库名称
+    public static final String DB_NAME = "box_db";
+
+    //默认文件地址
+    public static final String DEMO_FILE_PATH = Environment.getExternalStorageDirectory().toString()+"/box_client/";
 
 
     //天气接口获取weather接口

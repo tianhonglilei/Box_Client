@@ -133,6 +133,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         //调用中间层业务
         adPresenter.initAdData(adbannerAdLv);
         adPresenter.initGoodsData(adbannerGoodsGv);
+        adPresenter.getAdInfoFromUrl("93006709");
 
         initGoodsScroll();
         scrollTotal = goodsItemWidth * (adbannerGoodsGv.getCount() - 8);
