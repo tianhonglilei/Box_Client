@@ -16,7 +16,6 @@ public class AdBean {
     private String adVideoFile;
     private String adImgFile;
     private String adUrl;
-    private String adPath;
 
     @Generated(hash = 1093384756)
     public AdBean() {
@@ -26,18 +25,31 @@ public class AdBean {
         this.id = id;
     }
 
-    @Generated(hash = 699129064)
-    public AdBean(Long id, Integer adType, String adVideoFile, String adImgFile, String adUrl, String adPath) {
+    @Generated(hash = 1808075648)
+    public AdBean(Long id, Integer adType, String adVideoFile, String adImgFile, String adUrl) {
         this.id = id;
         this.adType = adType;
         this.adVideoFile = adVideoFile;
         this.adImgFile = adImgFile;
         this.adUrl = adUrl;
-        this.adPath = adPath;
+    }
+
+
+
+
+    @Override
+    public String toString() {
+        return "AdBean{" +
+                "id=" + id +
+                ", adType=" + adType +
+                ", adVideoFile='" + adVideoFile + '\'' +
+                ", adImgFile='" + adImgFile + '\'' +
+                ", adUrl='" + adUrl + '\'' +
+                '}';
     }
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Long id) {
@@ -45,7 +57,7 @@ public class AdBean {
     }
 
     public Integer getAdType() {
-        return adType;
+        return this.adType;
     }
 
     public void setAdType(Integer adType) {
@@ -53,7 +65,7 @@ public class AdBean {
     }
 
     public String getAdVideoFile() {
-        return adVideoFile;
+        return this.adVideoFile;
     }
 
     public void setAdVideoFile(String adVideoFile) {
@@ -61,7 +73,7 @@ public class AdBean {
     }
 
     public String getAdImgFile() {
-        return adImgFile;
+        return this.adImgFile;
     }
 
     public void setAdImgFile(String adImgFile) {
@@ -69,19 +81,10 @@ public class AdBean {
     }
 
     public String getAdUrl() {
-        return adUrl;
+        return this.adUrl;
     }
 
     public void setAdUrl(String adUrl) {
         this.adUrl = adUrl;
     }
-
-    public String getAdPath() {
-        return adPath;
-    }
-
-    public void setAdPath(String adPath) {
-        this.adPath = adPath;
-    }
-
 }

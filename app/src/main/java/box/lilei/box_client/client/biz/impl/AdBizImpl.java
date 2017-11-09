@@ -7,8 +7,8 @@ import box.lilei.box_client.client.biz.AdBiz;
 import box.lilei.box_client.client.model.ADInfo;
 import box.lilei.box_client.client.model.jsonmodel.AdJsonInfo;
 import box.lilei.box_client.client.okhttp.CommonOkHttpClient;
-import box.lilei.box_client.client.okhttp.handler.OkHttpDisposeHandler;
-import box.lilei.box_client.client.okhttp.listener.OkHttpDisposeListener;
+import box.lilei.box_client.client.okhttp.handler.DisposeDataHandle;
+import box.lilei.box_client.client.okhttp.listener.DisposeDataListener;
 import box.lilei.box_client.client.okhttp.request.CommonRequest;
 import box.lilei.box_client.client.okhttp.request.RequestParams;
 import box.lilei.box_client.contants.Constants;
@@ -20,54 +20,43 @@ import box.lilei.box_client.db.AdBean;
 
 public class AdBizImpl implements AdBiz {
     private List<ADInfo> adInfoList;
+    private List<AdBean> adBeanList;
 
 
-    /**
-     * 获取url广告
-     * @param imei
-     * @return
-     */
-    @Override
-    public List<ADInfo> getAdInfoListFromUrl(String imei) {
-        adInfoList = new ArrayList<>();
-        RequestParams params = new RequestParams();
-        params.put("machineid", imei);
-        CommonOkHttpClient.post(CommonRequest.createPostRequest(Constants.BANNER_AD_URL, params), new OkHttpDisposeHandler(new OkHttpDisposeListener() {
-            @Override
-            public void onSuccess(Object responseObject) {
 
-            }
-
-            @Override
-            public void onFail(Object errorObject) {
-
-            }
-        }));
-
-        return adInfoList;
-    }
-
-    /**
-     * 将json对象转化数据库对象
-     * @param adJsonInfoList
-     * @return
-     */
     @Override
     public List<AdBean> parseAdJsonListToAdBean(List<AdJsonInfo> adJsonInfoList) {
-        List<AdBean> adBeanList = new ArrayList<>();
+        adBeanList = new ArrayList<>();
         for (AdJsonInfo adJson :
                 adJsonInfoList) {
             AdBean adBean = new AdBean();
             adBean.setId(Long.parseLong(adJson.getAdv_id()));
-            if(adJson.getVideo()!=null || !adJson.getVideo().equals("")){
+            if(adJson.getVideo().trim().equals("")){
+                adBean.setAdType(ADInfo.ADTYPE_IMG);
+            }else{
                 adBean.setAdType(ADInfo.ADTYPE_VIDEO);
                 adBean.setAdVideoFile(adJson.getVideo());
-            }else{
-                adBean.setAdType(ADInfo.ADTYPE_IMG);
             }
             adBean.setAdImgFile(adJson.getImg());
-            adBean.setAdPath(Constants.DEMO_FILE_PATH);
+            adBeanList.add(adBean);
         }
         return adBeanList;
+    }
+
+    @Override
+    public List<ADInfo> parseAdBeanListToAdInfo(List<AdBean> adBeanList) {
+        adInfoList = new ArrayList<>();
+        for (AdBean bean :
+                adBeanList) {
+            ADInfo adInfo = new ADInfo();
+            adInfo.setAdId(bean.getId());
+            adInfo.setAdType(bean.getAdType());
+            if (bean.getAdType() == ADInfo.ADTYPE_VIDEO){
+                adInfo.setVideoFileName(bean.getAdVideoFile());
+            }
+            adInfo.setImgFileName(bean.getAdImgFile());
+            adInfoList.add(adInfo);
+        }
+        return adInfoList;
     }
 }

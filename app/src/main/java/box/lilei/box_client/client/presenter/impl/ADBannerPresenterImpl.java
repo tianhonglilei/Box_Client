@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
@@ -18,21 +19,32 @@ import java.util.List;
 import box.lilei.box_client.R;
 import box.lilei.box_client.client.adapter.GvHomeGoodsAdapter;
 import box.lilei.box_client.client.adapter.LvAdImgAdapter;
+import box.lilei.box_client.client.biz.AdBiz;
+import box.lilei.box_client.client.biz.RoadBiz;
+import box.lilei.box_client.client.biz.impl.AdBizImpl;
+import box.lilei.box_client.client.biz.impl.RoadBizImpl;
 import box.lilei.box_client.client.listener.OnADBannerLoadListener;
 import box.lilei.box_client.client.model.ADInfo;
 import box.lilei.box_client.client.model.Goods;
+import box.lilei.box_client.client.model.RoadGoods;
+import box.lilei.box_client.client.model.RoadInfo;
 import box.lilei.box_client.client.model.jsonmodel.AdJsonInfo;
 import box.lilei.box_client.client.okhttp.CommonOkHttpClient;
 import box.lilei.box_client.client.okhttp.exception.OkHttpException;
-import box.lilei.box_client.client.okhttp.handler.OkHttpDisposeHandler;
-import box.lilei.box_client.client.okhttp.listener.OkHttpDisposeListener;
+import box.lilei.box_client.client.okhttp.handler.DisposeDataHandle;
+import box.lilei.box_client.client.okhttp.listener.DisposeDataListener;
 import box.lilei.box_client.client.okhttp.request.CommonRequest;
 import box.lilei.box_client.client.presenter.ADBannerPresenter;
 import box.lilei.box_client.client.view.ADBannerView;
 import box.lilei.box_client.contants.Constants;
+import box.lilei.box_client.db.AdBean;
 import box.lilei.box_client.db.GoodsBean;
 import box.lilei.box_client.db.PercentBean;
 import box.lilei.box_client.db.RoadBean;
+import box.lilei.box_client.db.biz.AdBeanService;
+import box.lilei.box_client.db.biz.GoodsBeanService;
+import box.lilei.box_client.db.biz.PercentBeanService;
+import box.lilei.box_client.db.biz.RoadBeanService;
 import box.lilei.box_client.util.JsonListUtil;
 
 /**
@@ -56,19 +68,36 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
     private GvHomeGoodsAdapter gvHomeGoodsAdapter;
 
     //商品数据
-    private List<Goods> goodsList;
+//    private List<Goods> goodsList;
+    private List<RoadGoods> roadGoodsMainList;
+
+    //广告类处理
+    private AdBiz adBiz;
+    //货道商品信息
+    private RoadBiz roadBiz;
+    //数据库处理
+    private AdBeanService adBeanService;
+    private RoadBeanService roadBeanService;
+    private GoodsBeanService goodsBeanService;
+    private PercentBeanService percentBeanService;
 
 
     public ADBannerPresenterImpl(ADBannerView adBannerView, Context mContext) {
         this.adBannerView = adBannerView;
         this.mContext = mContext;
-        initTestData();
+//        initTestData();
+        adBiz = new AdBizImpl();
+        roadBiz = new RoadBizImpl();
+        adBeanService = new AdBeanService(mContext, AdBean.class);
+        roadBeanService = new RoadBeanService(mContext, RoadBean.class);
+        goodsBeanService = new GoodsBeanService(mContext, GoodsBean.class);
+        percentBeanService = new PercentBeanService(mContext, PercentBean.class);
     }
 
 
     @Override
     public void initAdData(ListView adbannerAdLv) {
-
+        getAdInfoFromDB();
         lvAdImgAdapter = new LvAdImgAdapter(mContext, adInfoList, R.layout.client_adbanner_ad_item_img);
         adbannerAdLv.setAdapter(lvAdImgAdapter);
         adBannerView.changeAD(adInfoList.get(0), 0);
@@ -78,133 +107,94 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
                 adBannerView.changeAD(adInfoList.get(position), position);
             }
         });
+        Log.e("ADBannerPresenterImpl", "adInfoList.size():" + adInfoList.size());
     }
 
 
     @Override
     public void initGoodsData(GridView adbannerGoodsGv) {
+        getRoadInfoFromDB();
         int itemWidth = 128;
 //        int itemWidth = 256;
-        int size = goodsList.size();//要显示数据的个数
+        int size = roadGoodsMainList.size();//要显示数据的个数
         int allWidth = itemWidth * size;
         LinearLayout.LayoutParams params = new
                 LinearLayout.LayoutParams(allWidth, LinearLayout.LayoutParams.MATCH_PARENT);
         adbannerGoodsGv.setLayoutParams(params);
         adbannerGoodsGv.setStretchMode(GridView.NO_STRETCH);
         adbannerGoodsGv.setNumColumns(size);
-        gvHomeGoodsAdapter = new GvHomeGoodsAdapter(mContext, goodsList, R.layout.client_adbanner_goods_item);
+        gvHomeGoodsAdapter = new GvHomeGoodsAdapter(mContext, roadGoodsMainList, R.layout.client_adbanner_goods_item);
         adbannerGoodsGv.setAdapter(gvHomeGoodsAdapter);
+        adBannerView.hiddenDialog();
+        adbannerGoodsGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                RoadGoods roadGoods = roadGoodsMainList.get(position);
+                if(roadGoods.getGoods().getGoodsSaleState() != Goods.SALE_STATE_OUT){
+                    adBannerView.navigateToPay(roadGoodsMainList.get(position));
+                }else{
+                    Toast.makeText(mContext, "该商品已售罄，请选择其他商品", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void refreshGoodsData(GridView adbannerGoodsGv) {
 
     }
 
-    public void initTestData() {
-        adInfoList = new ArrayList<>();
-        goodsList = new ArrayList<>();
-        ADInfo adInfo;
-        Goods goods;
-        for (int i = 0; i < 20; i++) {
-            adInfo = new ADInfo();
-            goods = new Goods();
-            if (i % 2 == 0) {
-                adInfo.setAdType(ADInfo.ADTYPE_IMG);
-                goods.setGoodsName("饮品");
-            } else {
-                adInfo.setAdType(ADInfo.ADTYPE_VIDEO);
-                goods.setGoodsName("零食");
+
+    public void getAdInfoFromDB() {
+        List<AdBean> adBeanList = adBeanService.queryAllAdBean();
+        adInfoList = adBiz.parseAdBeanListToAdInfo(adBeanList);
+
+    }
+
+    public void getRoadInfoFromDB() {
+        List<RoadBean> roadBeanList = roadBeanService.queryAllRoadBean();
+        List<RoadGoods> roadGoodsList = roadBiz.parseRoadBeantoRoadAndGoods(roadBeanList);
+
+        roadGoodsMainList = roadGoodsList;
+
+//        getMainShowGoods(roadGoodsList);
+    }
+
+    /**
+     * 筛选一部分商品在首页展示
+     * @param list
+     */
+    public void getMainShowGoods(List<RoadGoods> list){
+        List<RoadGoods> list1 = new ArrayList<>();
+        List<RoadGoods> list2 = new ArrayList<>();
+        for (RoadGoods roadGoods :
+                list) {
+            RoadInfo roadInfo = roadGoods.getRoadInfo();
+            if (roadInfo.getRoadNowNum()>0 && roadInfo.getRoadState() == RoadInfo.ROAD_STATE_NORMAL && roadInfo.getRoadOpen() == RoadInfo.ROAD_OPEN){
+                list1.add(roadGoods);
+            }else{
+                list2.add(roadGoods);
             }
-            adInfoList.add(adInfo);
-            goodsList.add(goods);
+        }
+        if(list1.size()>25){
+            for (int i = 0; i < 25; i++) {
+                roadGoodsMainList.add(list1.get(i));
+            }
+        }else if (list1.size()<20){
+            int num = 20-list1.size();
+            for (RoadGoods roadGoods :
+                    list1) {
+                roadGoodsMainList.add(roadGoods);
+            }
+            for (int i = 0; i < num; i++) {
+                roadGoodsMainList.add(list2.get(i));
+            }
+        }else{
+            for (RoadGoods roadGoods :
+                    list1) {
+                roadGoodsMainList.add(roadGoods);
+            }
         }
     }
 
-
-    @Override
-    public void saveAdData() {
-
-    }
-
-    @Override
-    public void saveGoodsData() {
-
-    }
-
-    @Override
-    public void getAdInfoFromUrl(String imei) {
-        StringBuilder url = new StringBuilder(Constants.BANNER_AD_URL);
-        url.append("&machineid=" + imei);
-        CommonOkHttpClient.get(CommonRequest.createGetRequest(url.toString(), null), new OkHttpDisposeHandler(new OkHttpDisposeListener() {
-            @Override
-            public void onSuccess(Object responseObject) {
-                JSONObject mainJson = JSONObject.parseObject(responseObject.toString());
-                String urlString = "";
-                JSONArray adJsonArray = null;
-                JSONArray roadJsonArray = null;
-                JSONArray goodsJsonArray = null;
-                JSONObject percentJsonObject = null;
-                if (mainJson != null) {
-                    try {
-                        urlString = mainJson.getString("img_url");
-                        adJsonArray = mainJson.getJSONArray("adv");
-                        roadJsonArray = mainJson.getJSONArray("huodao");
-                        goodsJsonArray = mainJson.getJSONArray("machine_goods");
-                        percentJsonObject = mainJson.getJSONObject("product_info");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (adJsonArray != null) {
-                    List<AdJsonInfo> adJsonList = JsonListUtil.getListByArray(AdJsonInfo.class, adJsonArray.toString());
-                    Log.e("ADBannerPresenterImpl", "adjsonList.size():" + adJsonList.size());
-                }
-                if (roadJsonArray != null) {
-                    List<RoadBean> roadBeanList = JsonListUtil.getListByArray(RoadBean.class, roadJsonArray.toString());
-                    Log.e("ADBannerPresenterImpl", "roadBeanList.size():" + roadBeanList.size());
-                }
-                if (goodsJsonArray != null) {
-                    List<GoodsBean> goodsBeanList = JsonListUtil.getListByArray(GoodsBean.class, goodsJsonArray.toString());
-                    if (goodsBeanList != null) {
-                        Log.e("ADBannerPresenterImpl", "goodsBeanList.size():" + goodsBeanList.size());
-                        List<List<PercentBean>> listPercentList = new ArrayList<List<PercentBean>>();
-                        for (GoodsBean goodsBean :
-                                goodsBeanList) {
-                            if (goodsBean != null && goodsBean.getId() != null) {
-                                JSONArray jsonArray = percentJsonObject.getJSONArray(goodsBean.getId().toString());
-                                List<PercentBean> percentList = JsonListUtil.getListByArray(PercentBean.class, jsonArray.toString());
-                                listPercentList.add(percentList);
-                            }
-                        }
-                        Log.e("ADBannerPresenterImpl", "listPercentList.size():" + listPercentList.size());
-                    }
-                }
-            }
-
-            @Override
-            public void onFail(Object errorObject) {
-                Log.e("ADBannerPresenterImpl", "errorObject:" + ((OkHttpException) errorObject).getEmsg());
-                ((Exception) errorObject).printStackTrace();
-            }
-        }));
-
-    }
-
-
-//    @Override
-//    public void loadAdFail() {
-//
-//    }
-//
-//    @Override
-//    public void loadAdSuccess() {
-//
-//    }
-//
-//    @Override
-//    public void loadGoodsFail() {
-//
-//    }
-//
-//    @Override
-//    public void loadGoodsSuccess() {
-//
-//    }
 }

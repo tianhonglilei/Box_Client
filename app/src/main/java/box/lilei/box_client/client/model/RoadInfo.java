@@ -16,20 +16,60 @@ public class RoadInfo {
     public static final int ROAD_OPEN = 0;
     public static final int ROAD_CLOSE = 1;
 
-    private int roadIndex;
+    public static final int BOX_TYPE_DRINK = 11;
+    public static final int BOX_TYPE_FOOD = 9;
+
+
+    private Long roadIndex;
     private int roadState;
     private int roadOpen;
     private int roadMaxNum;
     private int roadNowNum;
+    //货柜类型
+    private int roadBoxType;
+
 
     public RoadInfo(){}
 
-    public RoadInfo(int roadIndex, int roadState, int roadOpen, int roadMaxNum, int roadNowNum) {
+    public RoadInfo(Long roadIndex, int roadState, int roadOpen, int roadMaxNum, int roadNowNum) {
         this.roadIndex = roadIndex;
         this.roadState = roadState;
         this.roadOpen = roadOpen;
         this.roadMaxNum = roadMaxNum;
         this.roadNowNum = roadNowNum;
+    }
+
+    public int getRoadBoxType() {
+        return roadBoxType;
+    }
+
+    public void setRoadBoxType(int roadBoxType) {
+        this.roadBoxType = roadBoxType;
+    }
+
+
+    public Long getRoadIndex() {
+        return roadIndex;
+    }
+
+    public void setRoadIndex(Long roadIndex) {
+        this.roadIndex = roadIndex;
+    }
+
+    public int getRoadState() {
+        return roadState;
+    }
+
+    public void setRoadState(int roadState) {
+        this.roadState = roadState;
+    }
+
+    public int getRoadOpen() {
+        return roadOpen;
+    }
+
+    public void setRoadOpen(int roadOpen) {
+        this.roadOpen = roadOpen;
     }
 
     public int getRoadMaxNum() {
@@ -46,29 +86,5 @@ public class RoadInfo {
 
     public void setRoadNowNum(int roadNowNum) {
         this.roadNowNum = roadNowNum;
-    }
-
-    public int getRoadOpen() {
-        return roadOpen;
-    }
-
-    public void setRoadOpen(int roadOpen) {
-        this.roadOpen = roadOpen;
-    }
-
-    public int getRoadIndex() {
-        return roadIndex;
-    }
-
-    public void setRoadIndex(int roadIndex) {
-        this.roadIndex = roadIndex;
-    }
-
-    public int getRoadState() {
-        return roadState;
-    }
-
-    public void setRoadState(int roadState) {
-        this.roadState = roadState;
     }
 }

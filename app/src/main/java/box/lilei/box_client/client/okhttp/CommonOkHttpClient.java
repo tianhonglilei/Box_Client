@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
 
-import box.lilei.box_client.client.okhttp.handler.OkHttpDisposeHandler;
+import box.lilei.box_client.client.okhttp.handler.DisposeDataHandle;
 import box.lilei.box_client.client.okhttp.response.CommonFileCallback;
 import box.lilei.box_client.client.okhttp.response.CommonJsonCallback;
 import okhttp3.Call;
@@ -46,21 +46,21 @@ public class CommonOkHttpClient {
      * @param request
      * @param
      */
-    public static Call get(Request request, OkHttpDisposeHandler handle)
+    public static Call get(Request request, DisposeDataHandle handle)
     {
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new CommonJsonCallback(handle));
         return call;
     }
 
-    public static Call post(Request request, OkHttpDisposeHandler handle)
+    public static Call post(Request request, DisposeDataHandle handle)
     {
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new CommonJsonCallback(handle));
         return call;
     }
 
-    public static Call downloadFile(Request request, OkHttpDisposeHandler handle)
+    public static Call downloadFile(Request request, DisposeDataHandle handle)
     {
         Call call = mOkHttpClient.newCall(request);
         call.enqueue(new CommonFileCallback(handle));

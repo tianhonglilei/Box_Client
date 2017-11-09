@@ -48,7 +48,7 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<Goods> {
     public void goodsSaleState(MyViewHolder viewHolder, int state, Goods goods) {
         saleStateView = viewHolder.getView(R.id.more_goods_item_rl_sale_state);
         TextView txtPrice = ((TextView) viewHolder.getView(R.id.more_goods_item_txt_price));
-        if (state == Goods.SALESTATE_DISCOUNT) {//打折促销
+        if (state == Goods.SALE_STATE_DISCOUNT) {//打折促销
             //删除线
             txtPrice.getPaint().setStrikeThruText(true);
             saleStateView.setVisibility(View.VISIBLE);
@@ -58,7 +58,7 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<Goods> {
             viewHolder.getView(R.id.more_goods_item_discount_rmb).setVisibility(View.VISIBLE);
             viewHolder.getView(R.id.more_goods_item_txt_discount_price).setVisibility(View.VISIBLE);
             ((TextView) viewHolder.getView(R.id.more_goods_item_txt_discount_price)).setText("" + goods.getGoodsDiscountPrice());
-        } else if (state == Goods.SALESTATE_OUT) {//售罄
+        } else if (state == Goods.SALE_STATE_OUT) {//售罄
             txtPrice.getPaint().setFlags(0);
             saleStateView.setVisibility(View.VISIBLE);
             saleStateView.setBackgroundResource(R.drawable.shape_more_sale_state_off);

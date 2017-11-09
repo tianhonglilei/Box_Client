@@ -12,8 +12,18 @@ import box.lilei.box_client.db.AdBean;
 
 public interface AdBiz {
 
-    List<ADInfo> getAdInfoListFromUrl(String imei);
-
+    /**
+     * 将json对象转化数据库对象
+     * @param adJsonInfoList
+     * @return
+     */
     List<AdBean> parseAdJsonListToAdBean(List<AdJsonInfo> adJsonInfoList);
+
+    /**
+     * 将Bean对象转化为展示对象
+     * @param adBeanList
+     * @return
+     */
+    List<ADInfo> parseAdBeanListToAdInfo(List<AdBean> adBeanList);
 
 }

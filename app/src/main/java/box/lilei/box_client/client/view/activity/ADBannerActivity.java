@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,6 +26,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.bumptech.glide.Glide;
+
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,12 +36,17 @@ import box.lilei.box_client.R;
 import box.lilei.box_client.client.model.ADInfo;
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.MyWeather;
+import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.presenter.ADBannerPresenter;
 import box.lilei.box_client.client.presenter.WeatherPresenter;
 import box.lilei.box_client.client.presenter.impl.ADBannerPresenterImpl;
 import box.lilei.box_client.client.presenter.impl.WeatherPresenterImpl;
 import box.lilei.box_client.client.receiver.DateTimeReceiver;
 import box.lilei.box_client.client.view.ADBannerView;
+import box.lilei.box_client.contants.Constants;
+import box.lilei.box_client.loading.ZLoadingDialog;
+import box.lilei.box_client.loading.Z_TYPE;
+import box.lilei.box_client.util.FileUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -118,8 +127,8 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     //广告位置
     private int adPosition;
 
-    //刷新时间的广播
-//    DateTimeReceiver mTimeReceiver;
+    //Loading
+    ZLoadingDialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -127,21 +136,19 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         setContentView(R.layout.client_adbanner_activity);
         //绑定控件
         ButterKnife.bind(this);
+        showDialog("加载中...");
         //初始化部分对象
         init();
-
         //调用中间层业务
         adPresenter.initAdData(adbannerAdLv);
         adPresenter.initGoodsData(adbannerGoodsGv);
-        adPresenter.getAdInfoFromUrl("93006709");
-
+//        adPresenter.getAdInfoFromUrl("93006709");
         initGoodsScroll();
         scrollTotal = goodsItemWidth * (adbannerGoodsGv.getCount() - 8);
-        Log.e(TAG, "scrollTotal:" + scrollTotal);
         adCount = adbannerAdLv.getCount();
         startAutoScroll();
-
         initDateAndWeather();
+
     }
 
     /**
@@ -191,7 +198,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             @Override
             public void onCompletion(MediaPlayer mp) {
                 mHandler.sendEmptyMessage(2);
-                Log.e(TAG, "onCompletion: videofinash");
             }
         });
         //视频错误监听
@@ -216,6 +222,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             }
         });
 
+        //更多商品动画
         txtMoreAlphaAnimation = (AlphaAnimation) AnimationUtils.loadAnimation(this, R.anim.home_more_txt_alpha_anim);
         adbannerBMore.setAnimation(txtMoreAlphaAnimation);
         adbannerAdLv.setSelectionAfterHeaderView();
@@ -288,14 +295,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         });
 
 
-        //设置gv item 点击事件
-        adbannerGoodsGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                navigateToPay();
-            }
-        });
-
     }
 
 
@@ -308,7 +307,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     public void onClick(View v) {
 
         int id = v.getId();
-        Log.e(TAG, "onClick: " + id);
         switch (id) {
             case R.id.adbanner_b_more:
                 navigateToMoreGoods();
@@ -322,7 +320,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
      * 导航至支付界面
      */
     @Override
-    public void navigateToPay() {
+    public void navigateToPay(RoadGoods roadGoods) {
         Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
         intentDateWeather(intent);
         startActivity(intent);
@@ -336,7 +334,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         Intent intent = new Intent(ADBannerActivity.this, MoreGoodsActivity.class);
         intentDateWeather(intent);
         startActivity(intent);
-        Log.e(TAG, "onClick: ");
     }
 
     //时间天气传递
@@ -355,7 +352,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             public void run() {
                 mHandler.sendEmptyMessage(2);
             }
-        }, 10000);
+        }, 5000);
 
     }
 
@@ -369,18 +366,28 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adTimer = new Timer();
         if (adInfo.getAdType() == ADInfo.ADTYPE_IMG) {
             showImg();
-            adImageView.setImageResource(R.drawable.ad_test_img1);
+            File file = new File(Constants.DEMO_FILE_PATH + "/" + adInfo.getImgFileName());
+            Glide.with(mContext)
+                    .load(file)
+                    .error(R.drawable.ad_test_img1)
+                    .into(adImageView);
             scrollToNextAD();
         } else if (adInfo.getAdType() == ADInfo.ADTYPE_VIDEO) {
-            showVideo();
-            Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.ad_test_video1);
-            adVideoView.setVideoURI(uri);
-            adVideoView.start();
-            videoPlay = true;
+            if (FileUtils.exist(Constants.DEMO_FILE_PATH + "/" + adInfo.getVideoFileName())){
+                showVideo();
+                Uri videoUri = Uri.parse(Constants.DEMO_FILE_PATH + "/" + adInfo.getVideoFileName());
+                adVideoView.setVideoURI(videoUri);
+                adVideoView.start();
+                videoPlay = true;
+            }else{
+                showImg();
+                Glide.with(mContext)
+                        .load(R.drawable.ad_test_img1)
+                        .into(adImageView);
+                scrollToNextAD();
+            }
         }
         errorVideoNum = 0;
-        Log.e(TAG, "adPosition:" + adPosition);
-
     }
 
 
@@ -499,6 +506,23 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             homeTxtDate.setText(myTime.getTimeDay() + " " + myTime.getTimeWeek());
             homeTxtTime.setText(myTime.getTimeMinute());
         }
+    }
+
+    @Override
+    public void showDialog(String text) {
+        dialog = new ZLoadingDialog(ADBannerActivity.this);
+        dialog.setLoadingBuilder(Z_TYPE.TEXT)
+                .setLoadingColor(Color.parseColor("#ff5307"))
+                .setHintText(text)
+                .setHintTextSize(16) // 设置字体大小
+                .setHintTextColor(Color.parseColor("#525252"))  // 设置字体颜色
+                .setCanceledOnTouchOutside(false)
+                .show();
+    }
+
+    @Override
+    public void hiddenDialog() {
+        dialog.cancel();
     }
 
     @Override

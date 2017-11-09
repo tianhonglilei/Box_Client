@@ -38,10 +38,11 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/more_goods_item_txt_price"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
         android:textSize="14sp"
         android:textColor="#b1b1b1"
-        android:text="清爽碳酸饮品" />
+        android:text="清爽碳酸饮品"
+        android:maxWidth="150dp"
+        style="@style/TextViewOutStyle" />
 
     <TextView
         android:id="@+id/more_goods_item_txt_name"
@@ -52,6 +53,8 @@
         android:text="雪碧 (听装)"
         android:textColor="@color/colorMoreTxtTwoOne"
         android:textSize="14sp"
+        style="@style/TextViewOutStyle"
+        android:maxWidth="150dp"
         />
 
 
@@ -63,14 +66,14 @@
 
         <ImageView
             android:id="@+id/more_goods_item_img_wd"
-            android:layout_width="23dp"
+            android:layout_width="40dp"
             android:layout_height="25dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="3dp"
             android:src="@mipmap/logo_cold"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="6dp"
-            android:scaleType="fitEnd"/>
+            android:layout_marginLeft="4dp"
+            android:scaleType="centerCrop"/>
         <ImageView
             android:id="@+id/more_goods_item_img_goods"
             android:layout_width="wrap_content"

@@ -10,6 +10,7 @@ import box.lilei.box_client.box.BoxSetting;
 import box.lilei.box_client.contants.Constants;
 import box.lilei.box_client.db.DaoMaster;
 import box.lilei.box_client.db.DaoSession;
+import box.lilei.box_client.db.MySQLiteOpenHelper;
 import box.lilei.box_client.db.biz.AdBeanService;
 import box.lilei.box_client.util.FileUtils;
 
@@ -31,8 +32,8 @@ public class BaseApplication extends Application {
         
         //初始化SDK配置文件
         initSDKiniFile();
-        AdBeanService adBeanService = AdBeanService.getInstance(getApplicationContext());
-        
+        //创建资源文件夹
+        FileUtils.creatSDDir("Box_client");
     }
 
     private void initSDKiniFile() {
@@ -69,7 +70,8 @@ public class BaseApplication extends Application {
      */
     public static DaoMaster getDaoMaster(Context context) {
         if (daoMaster == null) {
-            DaoMaster.OpenHelper helper = new DaoMaster.DevOpenHelper(context, Constants.DB_NAME, null);
+            MySQLiteOpenHelper helper = new MySQLiteOpenHelper(context, Constants.DB_NAME, null);
+//            DaoMaster.OpenHelper helper = new DaoMaster.DevOpenHelper(context, Constants.DB_NAME, null);
             daoMaster = new DaoMaster(helper.getWritableDatabase());
         }
         return daoMaster;

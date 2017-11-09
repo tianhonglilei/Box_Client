@@ -27,7 +27,6 @@ public class AdBeanDao extends AbstractDao<AdBean, Long> {
         public final static Property AdVideoFile = new Property(2, String.class, "adVideoFile", false, "AD_VIDEO_FILE");
         public final static Property AdImgFile = new Property(3, String.class, "adImgFile", false, "AD_IMG_FILE");
         public final static Property AdUrl = new Property(4, String.class, "adUrl", false, "AD_URL");
-        public final static Property AdPath = new Property(5, String.class, "adPath", false, "AD_PATH");
     }
 
 
@@ -47,8 +46,7 @@ public class AdBeanDao extends AbstractDao<AdBean, Long> {
                 "\"AD_TYPE\" INTEGER," + // 1: adType
                 "\"AD_VIDEO_FILE\" TEXT," + // 2: adVideoFile
                 "\"AD_IMG_FILE\" TEXT," + // 3: adImgFile
-                "\"AD_URL\" TEXT," + // 4: adUrl
-                "\"AD_PATH\" TEXT);"); // 5: adPath
+                "\"AD_URL\" TEXT);"); // 4: adUrl
     }
 
     /** Drops the underlying database table. */
@@ -85,11 +83,6 @@ public class AdBeanDao extends AbstractDao<AdBean, Long> {
         if (adUrl != null) {
             stmt.bindString(5, adUrl);
         }
- 
-        String adPath = entity.getAdPath();
-        if (adPath != null) {
-            stmt.bindString(6, adPath);
-        }
     }
 
     @Override
@@ -120,11 +113,6 @@ public class AdBeanDao extends AbstractDao<AdBean, Long> {
         if (adUrl != null) {
             stmt.bindString(5, adUrl);
         }
- 
-        String adPath = entity.getAdPath();
-        if (adPath != null) {
-            stmt.bindString(6, adPath);
-        }
     }
 
     @Override
@@ -139,8 +127,7 @@ public class AdBeanDao extends AbstractDao<AdBean, Long> {
             cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // adType
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // adVideoFile
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // adImgFile
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // adUrl
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // adPath
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // adUrl
         );
         return entity;
     }
@@ -152,7 +139,6 @@ public class AdBeanDao extends AbstractDao<AdBean, Long> {
         entity.setAdVideoFile(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setAdImgFile(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setAdUrl(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setAdPath(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
      }
     
     @Override

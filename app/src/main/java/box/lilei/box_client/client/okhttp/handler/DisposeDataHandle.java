@@ -1,0 +1,28 @@
+package box.lilei.box_client.client.okhttp.handler;
+
+import box.lilei.box_client.client.okhttp.listener.DisposeDataListener;
+
+/**
+ * Created by lilei on 2017/10/13.
+ */
+
+public class DisposeDataHandle {
+    public DisposeDataListener mListener;
+    public Class<?> mClass;
+    public String mSource;
+
+    public DisposeDataHandle(DisposeDataListener mListener) {
+        this.mListener = mListener;
+    }
+
+    public DisposeDataHandle(DisposeDataListener mListener, Class<?> mClass) {
+        this.mListener = mListener;
+        this.mClass = mClass;
+    }
+
+    public DisposeDataHandle(DisposeDataListener mListener, String mSource) {
+        this.mListener = mListener;
+        this.mSource = mSource;
+    }
+
+}

@@ -3,6 +3,7 @@ package box.lilei.box_client.client.view;
 import box.lilei.box_client.client.model.ADInfo;
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.MyWeather;
+import box.lilei.box_client.client.model.RoadGoods;
 
 /**
  * Created by lilei on 2017/9/4.
@@ -11,7 +12,7 @@ import box.lilei.box_client.client.model.MyWeather;
 
 public interface ADBannerView {
     //导航至支付页面
-    void navigateToPay();
+    void navigateToPay(RoadGoods roadGoods);
     //导航至更多商品展示
     void navigateToMoreGoods();
     //广告改变
@@ -24,5 +25,9 @@ public interface ADBannerView {
     void changeWeather(MyWeather myWeather);
 
     void updateDate(MyTime myTime);
+
+    void showDialog(String text);
+
+    void hiddenDialog();
 
 }

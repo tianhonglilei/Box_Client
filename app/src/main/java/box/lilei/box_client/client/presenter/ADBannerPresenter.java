@@ -25,22 +25,11 @@ public interface ADBannerPresenter {
      */
     void initGoodsData(GridView adbannerGoodsGv);
 
-    /**
-     * 保存广告数据
-     */
-    void saveAdData();
 
     /**
-     * 保存商品数据
+     * 刷新商品信息
+     * @param adbannerGoodsGv
      */
-    void saveGoodsData();
-
-    /**
-     * 开始滚动
-     */
-//    void startAutoGoodsScroll();
-
-    //通过网络获取广告信息
-    void getAdInfoFromUrl(String imei);
+    void refreshGoodsData(GridView adbannerGoodsGv);
 
 }

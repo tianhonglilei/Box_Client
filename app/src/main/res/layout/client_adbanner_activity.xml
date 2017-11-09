@@ -33,14 +33,15 @@
                 <VideoView
                     android:id="@+id/ad_videoView"
                     android:layout_width="970dp"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@color/colorHomeGoodsBgWhite"/>
 
                 <ImageView
                     android:id="@+id/ad_imageView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ad_test_img1" />
+                    src="@drawable/ad_test_img1" />
             </RelativeLayout>
 
 

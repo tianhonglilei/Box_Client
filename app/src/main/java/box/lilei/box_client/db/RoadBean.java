@@ -25,10 +25,10 @@ public class RoadBean {
      * zhifubao : 250
      * huogui_num : 11
      */
-
     @Id
-    private Long hid;//货道id
-
+    private Long id;
+    //货道id
+    private Long hid;
     //商品id
     private Long pid;
     @ToOne(joinProperty = "pid")
@@ -62,9 +62,10 @@ public class RoadBean {
 
     @Generated(hash = 108351054)
     private transient Long goodsBean__resolvedKey;
-    @Generated(hash = 586633148)
-    public RoadBean(Long hid, Long pid, int main, int max, int price, int weixin,
-            int zhifubao, String huogui_num, int nowNum) {
+    @Generated(hash = 1106426884)
+    public RoadBean(Long id, Long hid, Long pid, int main, int max, int price, int weixin,
+            int zhifubao, String huogui_num, int nowNum, int tempState, int saleState) {
+        this.id = id;
         this.hid = hid;
         this.pid = pid;
         this.main = main;
@@ -74,6 +75,8 @@ public class RoadBean {
         this.zhifubao = zhifubao;
         this.huogui_num = huogui_num;
         this.nowNum = nowNum;
+        this.tempState = tempState;
+        this.saleState = saleState;
     }
     @Generated(hash = 2100317740)
     public RoadBean() {
@@ -198,6 +201,24 @@ public class RoadBean {
     }
     public void setNowNum(int nowNum) {
         this.nowNum = nowNum;
+    }
+    public int getTempState() {
+        return this.tempState;
+    }
+    public void setTempState(int tempState) {
+        this.tempState = tempState;
+    }
+    public int getSaleState() {
+        return this.saleState;
+    }
+    public void setSaleState(int saleState) {
+        this.saleState = saleState;
+    }
+    public Long getId() {
+        return this.id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
 
 

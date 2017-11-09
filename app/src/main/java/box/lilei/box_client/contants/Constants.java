@@ -15,7 +15,7 @@ public class Constants {
     public static final String DB_NAME = "box_db";
 
     //默认文件地址
-    public static final String DEMO_FILE_PATH = Environment.getExternalStorageDirectory().toString()+"/box_client/";
+    public static final String DEMO_FILE_PATH = Environment.getExternalStorageDirectory().toString()+"/Box_client";
 
 
     //天气接口获取weather接口
@@ -26,8 +26,8 @@ public class Constants {
      * 前端模块接口
      */
 
-    //首页展示广告获取
-    public static final String BANNER_AD_URL = MAIN_URL + "/dc/boxapp/?c=app&m=get_machineid_adv";
+    //初始化数据获取
+    public static final String BANNER_AD_URL = MAIN_URL + "/dc/boxapp/?c=app&m=initialize_data";
 
 
 }

@@ -7,13 +7,13 @@ package box.lilei.box_client.client.model;
 public class Goods {
 
     //销售状态0正常1打折2售罄
-    public static final int SALESTATE_NORMAL = 0;
-    public static final int SALESTATE_DISCOUNT = 1;
-    public static final int SALESTATE_OUT = 2;
+    public static final int SALE_STATE_NORMAL = 0;
+    public static final int SALE_STATE_DISCOUNT = 1;
+    public static final int SALE_STATE_OUT = 2;
 
     //商品类型0饮料1零食
-    public static final int GOODS_TYPE_DRINK = 0;
-    public static final int GOODS_TYPE_FOOD = 1;
+    public static final int GOODS_TYPE_DRINK = 1;
+    public static final int GOODS_TYPE_FOOD = 2;
 
     //商品温度0正常1制冷2制热
     public static final int GOODS_WD_NORMAL = 0;
@@ -22,7 +22,7 @@ public class Goods {
 
 
     //商品ID
-    private int goodsId;
+    private Long goodsId;
 
     //商品名称
     private String goodsName;
@@ -48,27 +48,21 @@ public class Goods {
     //商品打折价格
     private double goodsDiscountPrice;
 
-    //商品图片路径
-    private String goodsImgUrl;
+    //商品小图名称
+    private String goodsSImgName;
 
-    public Goods(){}
+    //商品大图展示
+    private String goodsBImgName;
 
-    public Goods(int goodsId, String goodsName, double goodsPrice, int goodsType, int goodsWd, int goodsSaleState, double goodsDiscountPrice, String goodsImgUrl) {
-        this.goodsId = goodsId;
-        this.goodsName = goodsName;
-        this.goodsPrice = goodsPrice;
-        this.goodsType = goodsType;
-        this.goodsWd = goodsWd;
-        this.goodsSaleState = goodsSaleState;
-        this.goodsDiscountPrice = goodsDiscountPrice;
-        this.goodsImgUrl = goodsImgUrl;
-    }
+    //商品售罄图
+    private String goodsOutImgName;
 
-    public int getGoodsId() {
+
+    public Long getGoodsId() {
         return goodsId;
     }
 
-    public void setGoodsId(int goodsId) {
+    public void setGoodsId(Long goodsId) {
         this.goodsId = goodsId;
     }
 
@@ -80,20 +74,20 @@ public class Goods {
         this.goodsName = goodsName;
     }
 
-    public int getGoodsType() {
-        return goodsType;
-    }
-
-    public void setGoodsType(int goodsType) {
-        this.goodsType = goodsType;
-    }
-
     public double getGoodsPrice() {
         return goodsPrice;
     }
 
     public void setGoodsPrice(double goodsPrice) {
         this.goodsPrice = goodsPrice;
+    }
+
+    public int getGoodsType() {
+        return goodsType;
+    }
+
+    public void setGoodsType(int goodsType) {
+        this.goodsType = goodsType;
     }
 
     public int getGoodsWd() {
@@ -104,12 +98,28 @@ public class Goods {
         this.goodsWd = goodsWd;
     }
 
+    public String getGoodsTaste() {
+        return goodsTaste;
+    }
+
+    public void setGoodsTaste(String goodsTaste) {
+        this.goodsTaste = goodsTaste;
+    }
+
     public int getGoodsSaleState() {
         return goodsSaleState;
     }
 
     public void setGoodsSaleState(int goodsSaleState) {
         this.goodsSaleState = goodsSaleState;
+    }
+
+    public String getGoodsMemo() {
+        return goodsMemo;
+    }
+
+    public void setGoodsMemo(String goodsMemo) {
+        this.goodsMemo = goodsMemo;
     }
 
     public double getGoodsDiscountPrice() {
@@ -120,27 +130,27 @@ public class Goods {
         this.goodsDiscountPrice = goodsDiscountPrice;
     }
 
-    public String getGoodsImgUrl() {
-        return goodsImgUrl;
+    public String getGoodsSImgName() {
+        return goodsSImgName;
     }
 
-    public void setGoodsImgUrl(String goodsImgUrl) {
-        this.goodsImgUrl = goodsImgUrl;
+    public void setGoodsSImgName(String goodsSImgName) {
+        this.goodsSImgName = goodsSImgName;
     }
 
-    public String getGoodsTaste() {
-        return goodsTaste;
+    public String getGoodsBImgName() {
+        return goodsBImgName;
     }
 
-    public void setGoodsTaste(String goodsTaste) {
-        this.goodsTaste = goodsTaste;
+    public void setGoodsBImgName(String goodsBImgName) {
+        this.goodsBImgName = goodsBImgName;
     }
 
-    public String getGoodsMemo() {
-        return goodsMemo;
+    public String getGoodsOutImgName() {
+        return goodsOutImgName;
     }
 
-    public void setGoodsMemo(String goodsMemo) {
-        this.goodsMemo = goodsMemo;
+    public void setGoodsOutImgName(String goodsOutImgName) {
+        this.goodsOutImgName = goodsOutImgName;
     }
 }

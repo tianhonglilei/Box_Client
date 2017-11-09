@@ -4,27 +4,24 @@ package box.lilei.box_client.manager.view.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import box.lilei.box_client.R;
-import box.lilei.box_client.biz.GoodsBiz;
-import box.lilei.box_client.biz.RoadBiz;
-import box.lilei.box_client.biz.impl.GoodsBizImpl;
-import box.lilei.box_client.biz.impl.RoadBizImpl;
+import box.lilei.box_client.client.biz.GoodsBiz;
+import box.lilei.box_client.client.biz.RoadBiz;
+import box.lilei.box_client.client.biz.impl.GoodsBizImpl;
+import box.lilei.box_client.client.biz.impl.RoadBizImpl;
 import box.lilei.box_client.client.model.Goods;
-import box.lilei.box_client.client.model.NavRoadGoods;
+import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.model.RoadInfo;
-import box.lilei.box_client.manager.adapter.NavGoodsAdapter;
 import box.lilei.box_client.manager.adapter.NavRoadAdapter;
 
 /**
@@ -32,7 +29,7 @@ import box.lilei.box_client.manager.adapter.NavRoadAdapter;
  */
 public class NavRoadFragment extends Fragment {
 
-    List<NavRoadGoods> navRoadGoodsList;
+    List<RoadGoods> roadGoodsList;
     GoodsBiz goodsBiz;
     RoadBiz roadBiz;
     private NavRoadAdapter navRoadAdapter;
@@ -75,12 +72,12 @@ public class NavRoadFragment extends Fragment {
 
     private void initNavRoadGv() {
 
-        navRoadAdapter = new NavRoadAdapter(this.getContext(), navRoadGoodsList, R.layout.nav_road_gv_item);
+        navRoadAdapter = new NavRoadAdapter(this.getContext(), roadGoodsList, R.layout.nav_road_gv_item);
         navRoadGv.setAdapter(navRoadAdapter);
         navRoadGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                RoadInfo roadInfo = navRoadGoodsList.get(position).getRoadInfo();
+                RoadInfo roadInfo = roadGoodsList.get(position).getRoadInfo();
                 String roadTestTxt = navRoadTestBtn.getText().toString();
                 String s1 = roadTestTxt.substring(0, roadTestTxt.indexOf("：") + 1) + roadInfo.getRoadIndex();
                 navRoadTestBtn.setText(s1);
@@ -92,10 +89,10 @@ public class NavRoadFragment extends Fragment {
 
     //初始化补货商品信息
     private void initGoodsInfo() {
-        navRoadGoodsList = new ArrayList<>();
+        roadGoodsList = new ArrayList<>();
         List<Goods> goodsList = goodsBiz.getGoodsListInfo();
         List<RoadInfo> roadInfoList = roadBiz.getRoadList();
-        NavRoadGoods navRoadGoods;
+        RoadGoods roadGoods;
         for (int i = 0; i < roadInfoList.size(); i++) {
             RoadInfo roadInfo = roadInfoList.get(i);
             Goods goods;
@@ -104,8 +101,8 @@ public class NavRoadFragment extends Fragment {
             } else {
                 goods = goodsList.get(i);
             }
-            navRoadGoods = new NavRoadGoods(i, goods, roadInfo);
-            navRoadGoodsList.add(navRoadGoods);
+            roadGoods = new RoadGoods(i, goods, roadInfo);
+            roadGoodsList.add(roadGoods);
         }
 
     }

@@ -25,15 +25,18 @@ public class RoadBeanDao extends AbstractDao<RoadBean, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Hid = new Property(0, Long.class, "hid", true, "_id");
-        public final static Property Pid = new Property(1, Long.class, "pid", false, "PID");
-        public final static Property Main = new Property(2, int.class, "main", false, "MAIN");
-        public final static Property Max = new Property(3, int.class, "max", false, "MAX");
-        public final static Property Price = new Property(4, int.class, "price", false, "PRICE");
-        public final static Property Weixin = new Property(5, int.class, "weixin", false, "WEIXIN");
-        public final static Property Zhifubao = new Property(6, int.class, "zhifubao", false, "ZHIFUBAO");
-        public final static Property Huogui_num = new Property(7, String.class, "huogui_num", false, "HUOGUI_NUM");
-        public final static Property NowNum = new Property(8, int.class, "nowNum", false, "NOW_NUM");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property Hid = new Property(1, Long.class, "hid", false, "HID");
+        public final static Property Pid = new Property(2, Long.class, "pid", false, "PID");
+        public final static Property Main = new Property(3, int.class, "main", false, "MAIN");
+        public final static Property Max = new Property(4, int.class, "max", false, "MAX");
+        public final static Property Price = new Property(5, int.class, "price", false, "PRICE");
+        public final static Property Weixin = new Property(6, int.class, "weixin", false, "WEIXIN");
+        public final static Property Zhifubao = new Property(7, int.class, "zhifubao", false, "ZHIFUBAO");
+        public final static Property Huogui_num = new Property(8, String.class, "huogui_num", false, "HUOGUI_NUM");
+        public final static Property NowNum = new Property(9, int.class, "nowNum", false, "NOW_NUM");
+        public final static Property TempState = new Property(10, int.class, "tempState", false, "TEMP_STATE");
+        public final static Property SaleState = new Property(11, int.class, "saleState", false, "SALE_STATE");
     }
 
     private DaoSession daoSession;
@@ -52,15 +55,18 @@ public class RoadBeanDao extends AbstractDao<RoadBean, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"ROAD_BEAN\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY ," + // 0: hid
-                "\"PID\" INTEGER," + // 1: pid
-                "\"MAIN\" INTEGER NOT NULL ," + // 2: main
-                "\"MAX\" INTEGER NOT NULL ," + // 3: max
-                "\"PRICE\" INTEGER NOT NULL ," + // 4: price
-                "\"WEIXIN\" INTEGER NOT NULL ," + // 5: weixin
-                "\"ZHIFUBAO\" INTEGER NOT NULL ," + // 6: zhifubao
-                "\"HUOGUI_NUM\" TEXT," + // 7: huogui_num
-                "\"NOW_NUM\" INTEGER NOT NULL );"); // 8: nowNum
+                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
+                "\"HID\" INTEGER," + // 1: hid
+                "\"PID\" INTEGER," + // 2: pid
+                "\"MAIN\" INTEGER NOT NULL ," + // 3: main
+                "\"MAX\" INTEGER NOT NULL ," + // 4: max
+                "\"PRICE\" INTEGER NOT NULL ," + // 5: price
+                "\"WEIXIN\" INTEGER NOT NULL ," + // 6: weixin
+                "\"ZHIFUBAO\" INTEGER NOT NULL ," + // 7: zhifubao
+                "\"HUOGUI_NUM\" TEXT," + // 8: huogui_num
+                "\"NOW_NUM\" INTEGER NOT NULL ," + // 9: nowNum
+                "\"TEMP_STATE\" INTEGER NOT NULL ," + // 10: tempState
+                "\"SALE_STATE\" INTEGER NOT NULL );"); // 11: saleState
     }
 
     /** Drops the underlying database table. */
@@ -73,52 +79,66 @@ public class RoadBeanDao extends AbstractDao<RoadBean, Long> {
     protected final void bindValues(DatabaseStatement stmt, RoadBean entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         Long hid = entity.getHid();
         if (hid != null) {
-            stmt.bindLong(1, hid);
+            stmt.bindLong(2, hid);
         }
  
         Long pid = entity.getPid();
         if (pid != null) {
-            stmt.bindLong(2, pid);
+            stmt.bindLong(3, pid);
         }
-        stmt.bindLong(3, entity.getMain());
-        stmt.bindLong(4, entity.getMax());
-        stmt.bindLong(5, entity.getPrice());
-        stmt.bindLong(6, entity.getWeixin());
-        stmt.bindLong(7, entity.getZhifubao());
+        stmt.bindLong(4, entity.getMain());
+        stmt.bindLong(5, entity.getMax());
+        stmt.bindLong(6, entity.getPrice());
+        stmt.bindLong(7, entity.getWeixin());
+        stmt.bindLong(8, entity.getZhifubao());
  
         String huogui_num = entity.getHuogui_num();
         if (huogui_num != null) {
-            stmt.bindString(8, huogui_num);
+            stmt.bindString(9, huogui_num);
         }
-        stmt.bindLong(9, entity.getNowNum());
+        stmt.bindLong(10, entity.getNowNum());
+        stmt.bindLong(11, entity.getTempState());
+        stmt.bindLong(12, entity.getSaleState());
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, RoadBean entity) {
         stmt.clearBindings();
  
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
         Long hid = entity.getHid();
         if (hid != null) {
-            stmt.bindLong(1, hid);
+            stmt.bindLong(2, hid);
         }
  
         Long pid = entity.getPid();
         if (pid != null) {
-            stmt.bindLong(2, pid);
+            stmt.bindLong(3, pid);
         }
-        stmt.bindLong(3, entity.getMain());
-        stmt.bindLong(4, entity.getMax());
-        stmt.bindLong(5, entity.getPrice());
-        stmt.bindLong(6, entity.getWeixin());
-        stmt.bindLong(7, entity.getZhifubao());
+        stmt.bindLong(4, entity.getMain());
+        stmt.bindLong(5, entity.getMax());
+        stmt.bindLong(6, entity.getPrice());
+        stmt.bindLong(7, entity.getWeixin());
+        stmt.bindLong(8, entity.getZhifubao());
  
         String huogui_num = entity.getHuogui_num();
         if (huogui_num != null) {
-            stmt.bindString(8, huogui_num);
+            stmt.bindString(9, huogui_num);
         }
-        stmt.bindLong(9, entity.getNowNum());
+        stmt.bindLong(10, entity.getNowNum());
+        stmt.bindLong(11, entity.getTempState());
+        stmt.bindLong(12, entity.getSaleState());
     }
 
     @Override
@@ -135,42 +155,48 @@ public class RoadBeanDao extends AbstractDao<RoadBean, Long> {
     @Override
     public RoadBean readEntity(Cursor cursor, int offset) {
         RoadBean entity = new RoadBean( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // hid
-            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // pid
-            cursor.getInt(offset + 2), // main
-            cursor.getInt(offset + 3), // max
-            cursor.getInt(offset + 4), // price
-            cursor.getInt(offset + 5), // weixin
-            cursor.getInt(offset + 6), // zhifubao
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // huogui_num
-            cursor.getInt(offset + 8) // nowNum
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // hid
+            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // pid
+            cursor.getInt(offset + 3), // main
+            cursor.getInt(offset + 4), // max
+            cursor.getInt(offset + 5), // price
+            cursor.getInt(offset + 6), // weixin
+            cursor.getInt(offset + 7), // zhifubao
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // huogui_num
+            cursor.getInt(offset + 9), // nowNum
+            cursor.getInt(offset + 10), // tempState
+            cursor.getInt(offset + 11) // saleState
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, RoadBean entity, int offset) {
-        entity.setHid(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setPid(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
-        entity.setMain(cursor.getInt(offset + 2));
-        entity.setMax(cursor.getInt(offset + 3));
-        entity.setPrice(cursor.getInt(offset + 4));
-        entity.setWeixin(cursor.getInt(offset + 5));
-        entity.setZhifubao(cursor.getInt(offset + 6));
-        entity.setHuogui_num(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setNowNum(cursor.getInt(offset + 8));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setHid(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
+        entity.setPid(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
+        entity.setMain(cursor.getInt(offset + 3));
+        entity.setMax(cursor.getInt(offset + 4));
+        entity.setPrice(cursor.getInt(offset + 5));
+        entity.setWeixin(cursor.getInt(offset + 6));
+        entity.setZhifubao(cursor.getInt(offset + 7));
+        entity.setHuogui_num(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setNowNum(cursor.getInt(offset + 9));
+        entity.setTempState(cursor.getInt(offset + 10));
+        entity.setSaleState(cursor.getInt(offset + 11));
      }
     
     @Override
     protected final Long updateKeyAfterInsert(RoadBean entity, long rowId) {
-        entity.setHid(rowId);
+        entity.setId(rowId);
         return rowId;
     }
     
     @Override
     public Long getKey(RoadBean entity) {
         if(entity != null) {
-            return entity.getHid();
+            return entity.getId();
         } else {
             return null;
         }
@@ -178,7 +204,7 @@ public class RoadBeanDao extends AbstractDao<RoadBean, Long> {
 
     @Override
     public boolean hasKey(RoadBean entity) {
-        return entity.getHid() != null;
+        return entity.getId() != null;
     }
 
     @Override

@@ -15,8 +15,8 @@ import box.lilei.box_client.client.model.MyWeather;
 import box.lilei.box_client.client.model.jsonmodel.WeatherTestInfo;
 import box.lilei.box_client.client.okhttp.CommonOkHttpClient;
 import box.lilei.box_client.client.okhttp.exception.OkHttpException;
-import box.lilei.box_client.client.okhttp.handler.OkHttpDisposeHandler;
-import box.lilei.box_client.client.okhttp.listener.OkHttpDisposeListener;
+import box.lilei.box_client.client.okhttp.handler.DisposeDataHandle;
+import box.lilei.box_client.client.okhttp.listener.DisposeDataListener;
 import box.lilei.box_client.client.okhttp.request.CommonRequest;
 import box.lilei.box_client.client.presenter.WeatherPresenter;
 import box.lilei.box_client.client.view.ADBannerView;
@@ -85,7 +85,7 @@ public class WeatherPresenterImpl implements WeatherPresenter {
     @Override
     public void getWeatherInfo() {
         CommonOkHttpClient.get(CommonRequest.createGetRequest(Constants.WEATHER_INFO_URL, null),
-                new OkHttpDisposeHandler(new OkHttpDisposeListener() {
+                new DisposeDataHandle(new DisposeDataListener() {
                     @Override
                     public void onSuccess(Object responseObject) {
                         JSONObject jsonObject = null;
@@ -98,7 +98,6 @@ public class WeatherPresenterImpl implements WeatherPresenter {
                         myWeather.setWeather(weatherInfo.getData().getForecast().get(0).getType());
                         myWeather.setTemp(weatherInfo.getData().getWendu()+"℃");
                         adBannerView.changeWeather(myWeather);
-                        Log.e(TAG, "weather-onSuccess: " + responseObject.toString());
                     }
 
                     @Override

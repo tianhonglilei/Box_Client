@@ -3,14 +3,11 @@ package box.lilei.box_client.client.okhttp.response;
 import android.os.Handler;
 import android.os.Looper;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
 
 import box.lilei.box_client.client.okhttp.exception.OkHttpException;
-import box.lilei.box_client.client.okhttp.handler.OkHttpDisposeHandler;
-import box.lilei.box_client.client.okhttp.listener.OkHttpDisposeListener;
-import box.lilei.box_client.util.httputil.ResponseEntityToModule;
+import box.lilei.box_client.client.okhttp.handler.DisposeDataHandle;
+import box.lilei.box_client.client.okhttp.listener.DisposeDataListener;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -31,11 +28,11 @@ public class CommonJsonCallback implements Callback {
     protected final int JSON_ERROR = -2;
     protected final int OTHER_ERROR = -3;
 
-    private OkHttpDisposeListener listener;
+    private DisposeDataListener listener;
     private Class<?> mClass;
     private Handler mDisposeHandler;
 
-    public CommonJsonCallback(OkHttpDisposeHandler disposeHandler) {
+    public CommonJsonCallback(DisposeDataHandle disposeHandler) {
         listener = disposeHandler.mListener;
         mClass = disposeHandler.mClass;
         mDisposeHandler = new Handler(Looper.getMainLooper());

@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import box.lilei.box_client.R;
-import box.lilei.box_client.biz.GoodsBiz;
-import box.lilei.box_client.biz.impl.GoodsBizImpl;
+import box.lilei.box_client.client.biz.GoodsBiz;
+import box.lilei.box_client.client.biz.impl.GoodsBizImpl;
 import box.lilei.box_client.client.adapter.GvMoreGoodsAdapter;
 import box.lilei.box_client.client.model.Goods;
 import box.lilei.box_client.client.presenter.MoreGoodsPresenter;

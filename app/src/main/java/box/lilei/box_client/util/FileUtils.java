@@ -35,10 +35,15 @@ public class FileUtils {
 		return dir;
 	}
 
-	/** 判断SD卡上的文件夹是否存在 */
-	public static boolean isFileExist(String fileName) {
-		File file = new File(SDCARD + fileName);
-		return file.exists();
+	/**
+	 * 判断某目录下文件是否存在
+	 *
+	 * @param dir      目录
+	 * @param fileName 文件名
+	 * @return
+	 */
+	public static boolean isFileExists(File dir, String fileName) {
+		return new File(dir, fileName).exists();
 	}
 
 

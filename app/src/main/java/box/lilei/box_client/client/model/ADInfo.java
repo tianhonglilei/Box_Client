@@ -11,27 +11,18 @@ public class ADInfo {
     //视频广告
     public static final int ADTYPE_VIDEO = 2;
 
-    private int adId;
+    private Long adId;
     private int adType = ADTYPE_IMG;
-    private String adTitle;
-    private String adUrl;
-    private String adMemo;
+    private String imgFileName;
+    private String videoFileName;
 
     public ADInfo(){}
 
-    public ADInfo(int adId, int adType, String adTitle, String adUrl, String adMemo) {
-        this.adId = adId;
-        this.adType = adType;
-        this.adTitle = adTitle;
-        this.adUrl = adUrl;
-        this.adMemo = adMemo;
-    }
-
-    public int getAdId() {
+    public Long getAdId() {
         return adId;
     }
 
-    public void setAdId(int adId) {
+    public void setAdId(Long adId) {
         this.adId = adId;
     }
 
@@ -43,31 +34,19 @@ public class ADInfo {
         this.adType = adType;
     }
 
-    public String getAdTitle() {
-        return adTitle;
+    public String getImgFileName() {
+        return imgFileName;
     }
 
-    public void setAdTitle(String adTitle) {
-        this.adTitle = adTitle;
+    public void setImgFileName(String imgFileName) {
+        this.imgFileName = imgFileName;
     }
 
-    public String getAdUrl() {
-        return adUrl;
+    public String getVideoFileName() {
+        return videoFileName;
     }
 
-    public void setAdUrl(String adUrl) {
-        this.adUrl = adUrl;
+    public void setVideoFileName(String videoFileName) {
+        this.videoFileName = videoFileName;
     }
-
-    public String getAdMemo() {
-        return adMemo;
-    }
-
-    public void setAdMemo(String adMemo) {
-        this.adMemo = adMemo;
-    }
-
-
-
-
 }
