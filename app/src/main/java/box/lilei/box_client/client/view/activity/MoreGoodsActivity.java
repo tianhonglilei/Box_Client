@@ -110,13 +110,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         }
     }
 
-    private void weatherPresenterIsNUll() {
-        if (weatherPresenter == null) {
-            weatherPresenter = new WeatherPresenterImpl(this);
-        }
-    }
-
-
     private void initGoodsGridView() {
         //设置gv item 点击事件
         moreGoodsGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -128,7 +121,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 intent.putExtra("temp", moreWeatherWdNum.getText().toString());
                 intent.putExtra("weather", moreWeatherTxt.getText().toString());
                 RoadGoods roadGoods = (RoadGoods) moreGoodsGv.getItemAtPosition(position);
-                intent.putExtra("roadGoods",roadGoods);
+                intent.putExtra("roadGoods", roadGoods);
                 startActivity(intent);
             }
         });
@@ -137,7 +130,9 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     private void initControl() {
         moreImeiNum.setOnClickListener(this);
         mContext = this;
-        moreGoodsPresenter = new MoreGoodsPresenterImpl(mContext);
+        if (moreGoodsPresenter == null) {
+            moreGoodsPresenter = new MoreGoodsPresenterImpl(mContext);
+        }
         moreGoodsPresenter.initAllGoods(moreGoodsGv);
 
         moreGoodsNavRlReturn.setOnClickListener(this);
@@ -193,6 +188,8 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     protected void onDestroy() {
         super.onDestroy();
         timer.cancel();
+        weatherPresenter = null;
+        moreGoodsPresenter = null;
         timer = null;
     }
 
@@ -203,6 +200,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             super.handleMessage(msg);
             switch (msg.what) {
                 case 3:
+                    weatherPresenterIsNUll();
                     weatherPresenter.getDateInfo();
                     break;
             }
@@ -216,6 +214,12 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         if (myTime != null) {
             moreWeatherTime.setText(myTime.getTimeMinute());
             moreWeatherDate.setText(myTime.getTimeDay() + " " + myTime.getTimeWeek());
+        }
+    }
+
+    private void weatherPresenterIsNUll() {
+        if (weatherPresenter == null) {
+            weatherPresenter = new WeatherPresenterImpl(this);
         }
     }
 

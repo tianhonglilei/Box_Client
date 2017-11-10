@@ -43,6 +43,7 @@ import box.lilei.box_client.client.presenter.impl.ADBannerPresenterImpl;
 import box.lilei.box_client.client.presenter.impl.WeatherPresenterImpl;
 import box.lilei.box_client.client.receiver.DateTimeReceiver;
 import box.lilei.box_client.client.view.ADBannerView;
+import box.lilei.box_client.client.widget.FullVideoView;
 import box.lilei.box_client.contants.Constants;
 import box.lilei.box_client.loading.ZLoadingDialog;
 import box.lilei.box_client.loading.Z_TYPE;
@@ -101,7 +102,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     //视频广告
     @BindView(R.id.ad_videoView)
-    VideoView adVideoView;
+    FullVideoView adVideoView;
 
     //图片广告
     @BindView(R.id.ad_imageView)

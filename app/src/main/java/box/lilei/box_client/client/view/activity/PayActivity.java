@@ -181,6 +181,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             super.handleMessage(msg);
             switch (msg.what) {
                 case 3:
+                    weatherPresenterIsNUll();
                     weatherPresenter.getDateInfo();
                     break;
             }
