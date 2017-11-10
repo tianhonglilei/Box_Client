@@ -98,7 +98,6 @@ public class ActivePresenterImpl implements ActivePresenter {
 
             @Override
             public void onFail(Object errorObject) {
-                Log.e("ADBannerPresenterImpl", "errorObject:" + ((OkHttpException) errorObject).getEmsg());
                 ((Exception) errorObject).printStackTrace();
             }
         }));
