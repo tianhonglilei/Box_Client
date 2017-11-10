@@ -84,7 +84,6 @@ public class CommonFileCallback implements Callback {
         if (response == null) {
             return null;
         }
-
         InputStream inputStream = null;
         File file = null;
         FileOutputStream fos = null;

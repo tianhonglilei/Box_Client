@@ -54,18 +54,17 @@ public class CommonSizeCallback implements Callback {
     @Override
     public void onResponse(Call call, final Response response) throws IOException {
         //在子线程操作
-        final String result = response.body().string();
         final long contentLength=response.body().contentLength();
         mDisposeHandler.post(new Runnable() {
             @Override
             public void run() {
-                handlerResponse(contentLength,result);
+                handlerResponse(contentLength);
             }
         });
     }
 
-    private void handlerResponse(Long contentLength,String result) {
-        if (result == null || result.equals("")) {
+    private void handlerResponse(Long contentLength) {
+        if (contentLength == 0) {
             listener.onFail(new OkHttpException(NETWORK_ERROR, EMPTY_MSG));
             return;
         }else{

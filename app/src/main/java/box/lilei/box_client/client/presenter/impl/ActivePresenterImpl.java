@@ -144,12 +144,12 @@ public class ActivePresenterImpl implements ActivePresenter {
             }
 
         }
-        for (String name:
-             existFileNames) {
-            File file = new File(Constants.DEMO_FILE_PATH+"/"+name);
-            Long size = FileUtils.getFileSize(file);
-            compareFileSize(size,name);
-        }
+//        for (String name:
+//             existFileNames) {
+//            File file = new File(Constants.DEMO_FILE_PATH+"/"+name);
+//            Long size = FileUtils.getFileSize(file);
+//            compareFileSize(size,name);
+//        }
         startDownload();
     }
 
@@ -267,7 +267,7 @@ public class ActivePresenterImpl implements ActivePresenter {
     int other = 0;
     private void compareFileSize(Long fileSize, final String fileName){
         if (fileName != null && !fileName.equals("")){
-            CommonOkHttpClient.get(CommonRequest.createGetRequest(urlString + fileName, null),new DisposeDataHandle(new DisposeSizeListener() {
+            CommonOkHttpClient.compareSize(CommonRequest.createGetRequest(urlString + fileName, null),new DisposeDataHandle(new DisposeSizeListener() {
                 @Override
                 public void difference() {
                     ++dif;
@@ -283,6 +283,7 @@ public class ActivePresenterImpl implements ActivePresenter {
                     if(dif+same+other == existFileNames.size()){
                         startDownload();
                     }
+                    Log.w("ActivePresenterImpl", "same:" + same);
                 }
 
                 @Override

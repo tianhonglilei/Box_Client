@@ -300,6 +300,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        payPresenter = null;
+        weatherPresenter = null;
         System.gc();
     }
 

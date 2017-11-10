@@ -16,10 +16,10 @@
             android:weightSum="3">
 
             <RelativeLayout
+
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:background="@drawable/pay_goods_bg">
+                android:layout_weight="2">
 
                 <LinearLayout
                     android:id="@+id/pay_tl_goods_details"
@@ -357,7 +357,7 @@
                         android:src="@mipmap/logo_hot"
                         android:layout_toRightOf="@+id/pay_txt_goods_name"
                         android:layout_alignTop="@+id/pay_txt_goods_name"
-                        android:scaleType="center"
+                        android:scaleType="centerInside"
                         android:visibility="invisible"
                         />
 

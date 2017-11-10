@@ -8,6 +8,7 @@ import javax.net.ssl.SSLSession;
 import box.lilei.box_client.client.okhttp.handler.DisposeDataHandle;
 import box.lilei.box_client.client.okhttp.response.CommonFileCallback;
 import box.lilei.box_client.client.okhttp.response.CommonJsonCallback;
+import box.lilei.box_client.client.okhttp.response.CommonSizeCallback;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -67,7 +68,12 @@ public class CommonOkHttpClient {
         return call;
     }
 
-
+    public static Call compareSize(Request request, DisposeDataHandle handle)
+    {
+        Call call = mOkHttpClient.newCall(request);
+        call.enqueue(new CommonSizeCallback(handle));
+        return call;
+    }
 
 
 

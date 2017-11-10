@@ -2,6 +2,7 @@ package box.lilei.box_client.client.okhttp.response;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import java.io.IOException;
 
@@ -60,7 +61,6 @@ public class CommonJsonCallback implements Callback {
                 handlerResponse(result);
             }
         });
-
     }
 
     private void handlerResponse(String result) {
