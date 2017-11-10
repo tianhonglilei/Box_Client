@@ -2,6 +2,7 @@ package box.lilei.box_client.client.view.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -9,19 +10,33 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import box.lilei.box_client.R;
+import box.lilei.box_client.client.model.Goods;
 import box.lilei.box_client.client.model.MyTime;
+import box.lilei.box_client.client.model.PercentInfo;
+import box.lilei.box_client.client.model.RoadGoods;
+import box.lilei.box_client.client.model.RoadInfo;
+import box.lilei.box_client.client.presenter.PayPresenter;
 import box.lilei.box_client.client.presenter.WeatherPresenter;
+import box.lilei.box_client.client.presenter.impl.PayPresenterImpl;
 import box.lilei.box_client.client.presenter.impl.WeatherPresenterImpl;
-import box.lilei.box_client.client.receiver.DateTimeReceiver;
 import box.lilei.box_client.client.view.PayView;
+import box.lilei.box_client.contants.Constants;
+import box.lilei.box_client.loading.ZLoadingDialog;
+import box.lilei.box_client.loading.Z_TYPE;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -46,9 +61,60 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     TextView moreWeatherTxt;
     @BindView(R.id.more_weather_wd_num)
     TextView moreWeatherWdNum;
+    //营养成分
+    @BindView(R.id.pay_percent_energy1)
+    TextView payPercentEnergy1;
+    @BindView(R.id.pay_percent_energy2)
+    TextView payPercentEnergy2;
+    @BindView(R.id.pay_percent_protein1)
+    TextView payPercentProtein1;
+    @BindView(R.id.pay_percent_protein2)
+    TextView payPercentProtein2;
+    @BindView(R.id.pay_percent_fat1)
+    TextView payPercentFat1;
+    @BindView(R.id.pay_percent_fat2)
+    TextView payPercentFat2;
+    @BindView(R.id.pay_percent_cwater1)
+    TextView payPercentCwater1;
+    @BindView(R.id.pay_percent_cwater2)
+    TextView payPercentCwater2;
+    @BindView(R.id.pay_percent_na1)
+    TextView payPercentNa1;
+    @BindView(R.id.pay_percent_na2)
+    TextView payPercentNa2;
+    //商品信息
+    @BindView(R.id.pay_img_goods)
+    ImageView payImgGoods;
+    @BindView(R.id.pay_txt_goods_name)
+    TextView payTxtGoodsName;
+    @BindView(R.id.pay_img_wd)
+    ImageView payImgWd;
+    //数量
+    @BindView(R.id.pay_rb_num_one)
+    RadioButton payRbNumOne;
+    @BindView(R.id.pay_rb_num_two)
+    RadioButton payRbNumTwo;
+    //价格
+    @BindView(R.id.pay_txt_goods_price)
+    TextView payTxtGoodsPrice;
+    @BindView(R.id.pay_txt_goods_price_count)
+    TextView payTxtGoodsPriceCount;
+    //二维码
+    @BindView(R.id.pay_txt_qrcode)
+    TextView payTxtQrcode;
+
     private Intent dataIntent;
     private WeatherPresenter weatherPresenter;
     private Timer timer;
+
+    private ZLoadingDialog dialog;
+
+    //业务处理
+    private PayPresenter payPresenter;
+    //商品货道信息
+    private RoadGoods roadGoods;
+    private RoadInfo roadInfo;
+    private Goods goods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +122,22 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         setContentView(R.layout.client_pay_activity);
         ButterKnife.bind(this);
         dataIntent = this.getIntent();
+        showDialog("...");
+        roadGoods = dataIntent.getParcelableExtra("roadGoods");
+        payPresenter = new PayPresenterImpl(this, this);
         initLayoutRadioButton();
         initFont();
         initDateAndWeather();
 
+        //初始化营养成分
+        payPresenter.initPercenterInfo(roadGoods.getGoods().getGoodsId());
+
+        //初始化商品信息
+        initGoodsInfo();
+        hiddenDialog();
     }
+
+
 
 
     private void initFont() {
@@ -113,11 +190,65 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     };
 
 
+    /**
+     * 初始化商品信息
+     */
+    public void initGoodsInfo() {
+        roadInfo = roadGoods.getRoadInfo();
+        goods = roadGoods.getGoods();
+        payTxtGoodsDetailsMemo.setText(goods.getGoodsMemo());
+        File file = new File(Constants.DEMO_FILE_PATH+"/"+goods.getGoodsBImgName());
+        Glide.with(this).load(file).into(payImgGoods);
+        payTxtGoodsName.setText(goods.getGoodsName());
+        switch (goods.getGoodsWd()){
+            case Goods.GOODS_WD_COLD:
+                payImgWd.setVisibility(View.VISIBLE);
+                payImgWd.setImageResource(R.mipmap.logo_cold);
+                break;
+            case Goods.GOODS_WD_HOT:
+                payImgWd.setVisibility(View.VISIBLE);
+                payImgWd.setImageResource(R.mipmap.logo_hot);
+                break;
+            case Goods.GOODS_WD_NORMAL:
+                payImgWd.setVisibility(View.INVISIBLE);
+                break;
+        }
+        payTxtGoodsPrice.setText(""+goods.getGoodsPrice());
+        initRadioNum();
+        payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice());
+    }
+
+    /**
+     *初始化数量选择
+     */
+    private void initRadioNum() {
+        payRbNumTwo.setOnClickListener(this);
+        payRbNumOne.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice());
+                }else{
+                    payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice() * 2);
+                }
+            }
+        });
+
+    }
+
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay_rl_return:
                 PayActivity.this.finish();
+                break;
+            case R.id.pay_rb_num_two:
+//                if(roadInfo.getRoadNowNum()<2){
+//                    Toast.makeText(this, "选购商品数量不足2瓶", Toast.LENGTH_SHORT).show();
+//                    payRbNumOne.setChecked(true);
+//                }
                 break;
         }
     }
@@ -128,6 +259,42 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             moreWeatherTime.setText(myTime.getTimeMinute());
             moreWeatherDate.setText(myTime.getTimeDay() + " " + myTime.getTimeWeek());
         }
+    }
+
+    @Override
+    public void showDialog(String text) {
+        dialog = new ZLoadingDialog(PayActivity.this);
+        dialog.setLoadingBuilder(Z_TYPE.TEXT)
+                .setLoadingColor(Color.parseColor("#ff5307"))
+                .setHintText(text)
+                .setHintTextSize(16) // 设置字体大小
+                .setHintTextColor(Color.parseColor("#525252"))  // 设置字体颜色
+                .setCanceledOnTouchOutside(false)
+                .show();
+    }
+
+    @Override
+    public void hiddenDialog() {
+        dialog.cancel();
+    }
+
+    @Override
+    public void showPercentInfo(PercentInfo percentInfo) {
+        String[]ss1 = percentInfo.getEnergy().split("-");
+        payPercentEnergy1.setText(ss1[0]);
+        payPercentEnergy2.setText(ss1[1]);
+        String[]ss2 = percentInfo.getProtein().split("-");
+        payPercentProtein1.setText(ss2[0]);
+        payPercentProtein2.setText(ss2[1]);
+        String[]ss3 = percentInfo.getFat().split("-");
+        payPercentFat1.setText(ss3[0]);
+        payPercentFat2.setText(ss3[1]);
+        String[]ss4 = percentInfo.getcWater().split("-");
+        payPercentCwater1.setText(ss4[0]);
+        payPercentCwater2.setText(ss4[1]);
+        String[]ss5 = percentInfo.getNa().split("-");
+        payPercentNa1.setText(ss5[0]);
+        payPercentNa2.setText(ss5[1]);
     }
 
     @Override

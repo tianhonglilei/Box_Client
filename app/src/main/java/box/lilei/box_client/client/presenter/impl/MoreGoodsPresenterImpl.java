@@ -8,10 +8,15 @@ import java.util.List;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.client.biz.GoodsBiz;
+import box.lilei.box_client.client.biz.RoadBiz;
 import box.lilei.box_client.client.biz.impl.GoodsBizImpl;
 import box.lilei.box_client.client.adapter.GvMoreGoodsAdapter;
+import box.lilei.box_client.client.biz.impl.RoadBizImpl;
 import box.lilei.box_client.client.model.Goods;
+import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.presenter.MoreGoodsPresenter;
+import box.lilei.box_client.db.RoadBean;
+import box.lilei.box_client.db.biz.RoadBeanService;
 
 /**
  * Created by lilei on 2017/9/26.
@@ -21,28 +26,33 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
 
     private GvMoreGoodsAdapter gvMoreGoodsAdapter;
 
-    private List<Goods> goodsList;
-    private List<Goods> drinks = new ArrayList<>();
-    private List<Goods> foods = new ArrayList<>();
+    private List<RoadGoods> goodsList;
+    private List<RoadGoods> drinks = new ArrayList<>();
+    private List<RoadGoods> foods = new ArrayList<>();
 
     private Context mContext;
-
     private GridView gridView;
-
     private GoodsBiz goodsBiz;
+    private RoadBeanService roadBeanService;
+    private RoadBiz roadBiz;
+
 
 
     public MoreGoodsPresenterImpl(Context mContext) {
 
         this.mContext = mContext;
         goodsBiz = new GoodsBizImpl();
+
+        roadBeanService = new RoadBeanService(mContext, RoadBean.class);
+        roadBiz = new RoadBizImpl();
+
     }
 
     @Override
     public void initAllGoods(GridView gridView) {
         this.gridView = gridView;
-        goodsList = goodsBiz.getGoodsListInfo();
-        testGoodsData();
+        goodsList = roadBiz.parseRoadBeantoRoadAndGoods(roadBeanService.queryAllRoadBean());
+        getFoodAndDrink();
         gvMoreGoodsAdapter = new GvMoreGoodsAdapter(mContext, goodsList, R.layout.client_more_goods_item);
         gridView.setAdapter(gvMoreGoodsAdapter);
     }
@@ -61,16 +71,14 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
     }
 
 
-    public void testGoodsData() {
-        Goods goods;
-        for (int i = 0; i < goodsList.size(); i++) {
-            goods = goodsList.get(i);
-            if (goods.getGoodsType() == Goods.GOODS_TYPE_DRINK) {
-                drinks.add(goods);
-            } else if (goods.getGoodsType() == Goods.GOODS_TYPE_FOOD) {
-                foods.add(goods);
-            } else {
 
+    public void getFoodAndDrink() {
+        for (RoadGoods roadGoods:
+                goodsList) {
+            if (roadGoods.getGoods().getGoodsType() == Goods.GOODS_TYPE_DRINK){
+                drinks.add(roadGoods);
+            }else{
+                foods.add(roadGoods);
             }
         }
 

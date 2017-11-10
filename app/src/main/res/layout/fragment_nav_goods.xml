@@ -54,9 +54,9 @@
     <Button
         android:layout_width="138dp"
         android:layout_height="40dp"
-        android:layout_below="@+id/nav_goods_gv"
-        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
         android:text="一键补满"
         android:background="@drawable/manager_login_btn_selector"
         android:textSize="24dp"

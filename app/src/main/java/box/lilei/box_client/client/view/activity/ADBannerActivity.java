@@ -75,6 +75,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     TextView homeTxtTime;
 
     private Context mContext = this;
+    private Context appContext;
 
     //商品滚动模块
     private boolean isTouch = false, isRight;
@@ -88,7 +89,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     private int adCount;
     private int errorVideoNum = 0;
     private boolean videoPlay = false;
-    private Timer errorTimer;
 
 
     //右侧广告栏
@@ -134,21 +134,19 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_adbanner_activity);
-        //绑定控件
         ButterKnife.bind(this);
+        appContext = getApplicationContext();
         showDialog("加载中...");
         //初始化部分对象
         init();
         //调用中间层业务
         adPresenter.initAdData(adbannerAdLv);
         adPresenter.initGoodsData(adbannerGoodsGv);
-//        adPresenter.getAdInfoFromUrl("93006709");
         initGoodsScroll();
         scrollTotal = goodsItemWidth * (adbannerGoodsGv.getCount() - 8);
         adCount = adbannerAdLv.getCount();
         startAutoScroll();
         initDateAndWeather();
-
     }
 
     /**
@@ -181,7 +179,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     private void weatherPresenterIsNUll() {
         if (weatherPresenter == null) {
-            weatherPresenter = new WeatherPresenterImpl(this,this);
+            weatherPresenter = new WeatherPresenterImpl(this, this);
         }
     }
 
@@ -201,22 +199,17 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             }
         });
         //视频错误监听
-        errorTimer = new Timer();
         adVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
 
                 if (errorVideoNum == 0) {
-                    if (errorTimer != null) {
-                        errorTimer.schedule(new TimerTask() {
-                            @Override
-                            public void run() {
-                                mHandler.sendEmptyMessage(2);
-                            }
-                        }, 5000);
-//
-                        errorVideoNum++;
-                    }
+                    Glide.with(appContext)
+                            .load(R.drawable.ad_test_img1)
+                            .into(adImageView);
+                    showImg();
+                    scrollToNextAD();
+                    errorVideoNum++;
                 }
                 return true;
             }
@@ -322,6 +315,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @Override
     public void navigateToPay(RoadGoods roadGoods) {
         Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
+        intent.putExtra("roadGoods", roadGoods);
         intentDateWeather(intent);
         startActivity(intent);
     }
@@ -353,41 +347,46 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 mHandler.sendEmptyMessage(2);
             }
         }, 5000);
-
+        errorVideoNum = 0;
     }
 
     @Override
     public void changeAD(ADInfo adInfo, int adPosition) {
         this.adPosition = adPosition;
+        errorVideoNum = 0;
         //广告定时器
         if (adTimer != null) {
             adTimer.cancel();
         }
         adTimer = new Timer();
         if (adInfo.getAdType() == ADInfo.ADTYPE_IMG) {
-            showImg();
+
             File file = new File(Constants.DEMO_FILE_PATH + "/" + adInfo.getImgFileName());
-            Glide.with(mContext)
+            Glide.with(appContext)
                     .load(file)
                     .error(R.drawable.ad_test_img1)
                     .into(adImageView);
+            showImg();
             scrollToNextAD();
         } else if (adInfo.getAdType() == ADInfo.ADTYPE_VIDEO) {
-            if (FileUtils.exist(Constants.DEMO_FILE_PATH + "/" + adInfo.getVideoFileName())){
-                showVideo();
-                Uri videoUri = Uri.parse(Constants.DEMO_FILE_PATH + "/" + adInfo.getVideoFileName());
-                adVideoView.setVideoURI(videoUri);
+            Log.e(TAG, "exist:" + FileUtils.exist(Constants.DEMO_FILE_PATH + "/" + adInfo.getVideoFileName()).toString());
+            if (FileUtils.exist(Constants.DEMO_FILE_PATH + "/" + adInfo.getVideoFileName())) {
+
+                File file = new File(Constants.DEMO_FILE_PATH + "/" + adInfo.getVideoFileName());
+                adVideoView.setVideoURI(Uri.fromFile(file));
                 adVideoView.start();
+                showVideo();
                 videoPlay = true;
-            }else{
-                showImg();
-                Glide.with(mContext)
+            } else {
+
+                Glide.with(appContext)
                         .load(R.drawable.ad_test_img1)
                         .into(adImageView);
+                showImg();
                 scrollToNextAD();
             }
         }
-        errorVideoNum = 0;
+
     }
 
 
@@ -474,15 +473,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adVideoView.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * 视频错误图片
-     */
-    public void showErrorImg() {
-        adImageView.setVisibility(View.VISIBLE);
-        adVideoView.setVisibility(View.GONE);
-//        adImageView.setImageResource();
-    }
-
 
     MyWeather myWeather;
 
@@ -522,7 +512,8 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     @Override
     public void hiddenDialog() {
-        dialog.cancel();
+
+        if (dialog != null) dialog.cancel();
     }
 
     @Override
@@ -531,6 +522,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             adVideoView.pause();
             videoPlay = false;
         }
+
         super.onPause();
     }
 
@@ -555,5 +547,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        adTimer.cancel();
+        adTimer = null;
     }
 }

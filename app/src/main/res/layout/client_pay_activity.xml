@@ -111,16 +111,18 @@
                             android:text="能量" />
 
                         <TextView
+                            android:id="@+id/pay_percent_energy1"
                             style="@style/style_txt_pay_goods_details"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="230kj" />
+                            android:text="0" />
 
                         <TextView
+                            android:id="@+id/pay_percent_energy2"
                             style="@style/style_txt_pay_goods_details"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="3%" />
+                            android:text="0" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -138,16 +140,18 @@
                             android:text="蛋白质" />
 
                         <TextView
+                            android:id="@+id/pay_percent_protein1"
                             style="@style/style_txt_pay_goods_details"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="0.6g" />
+                            android:text="0" />
 
                         <TextView
+                            android:id="@+id/pay_percent_protein2"
                             style="@style/style_txt_pay_goods_details"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="1%" />
+                            android:text="0" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -165,16 +169,18 @@
                             android:text="脂肪" />
 
                         <TextView
+                            android:id="@+id/pay_percent_fat1"
                             style="@style/style_txt_pay_goods_details"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="1.7g" />
+                            android:text="0" />
 
                         <TextView
+                            android:id="@+id/pay_percent_fat2"
                             style="@style/style_txt_pay_goods_details"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="1%" />
+                            android:text="0" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -192,16 +198,18 @@
                             android:text="碳水化合物" />
 
                         <TextView
+                            android:id="@+id/pay_percent_cwater1"
                             style="@style/style_txt_pay_goods_details"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="9.2g" />
+                            android:text="0" />
 
                         <TextView
+                            android:id="@+id/pay_percent_cwater2"
                             style="@style/style_txt_pay_goods_details"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="3%" />
+                            android:text="0" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -219,16 +227,18 @@
                             android:text="钠" />
 
                         <TextView
+                            android:id="@+id/pay_percent_na1"
                             style="@style/style_txt_pay_goods_details"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="50mg" />
+                            android:text="0" />
 
                         <TextView
+                            android:id="@+id/pay_percent_na2"
                             style="@style/style_txt_pay_goods_details"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="3%" />
+                            android:text="0" />
                     </LinearLayout>
 
                     <TextView
@@ -237,7 +247,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="精选喜马拉雅山麓红茶"
+                        android:text=""
                         android:textStyle="bold"
                         android:textColor="@color/colorGoodsDetailsMemoOne"
                         android:textSize="24sp" />
@@ -257,9 +267,8 @@
 
                     <ImageView
                         android:id="@+id/pay_img_goods"
-                        android:layout_width="wrap_content"
-                        android:layout_height="310dp"
-                        android:src="@drawable/pay_goods_drink_asamu" />
+                        android:layout_width="match_parent"
+                        android:layout_height="310dp" />
 
                     <TextView
                         android:id="@+id/pay_txt_num"
@@ -326,7 +335,7 @@
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/pay_lbl_price"
-                        android:text="5.5"
+                        android:text=""
                         android:textColor="@color/colorDemoLogo"
                         android:layout_toRightOf="@+id/pay_txt_rmb"
                         android:textSize="40sp" />
@@ -335,19 +344,21 @@
                         android:id="@+id/pay_txt_goods_name"
                         android:layout_width="wrap_content"
                         android:layout_height="38dp"
-                        android:text="阿萨姆奶茶"
+                        android:text=""
                         android:textSize="33sp"
                         android:textColor="@color/colorMoreTxtTwoOne"
                         android:layout_centerHorizontal="true"
                         android:layout_alignParentBottom="true"
                         />
                     <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="34dp"
+                        android:id="@+id/pay_img_wd"
+                        android:layout_width="50dp"
+                        android:layout_height="30dp"
                         android:src="@mipmap/logo_hot"
                         android:layout_toRightOf="@+id/pay_txt_goods_name"
-                        android:layout_alignBottom="@+id/pay_txt_goods_name"
-                        android:layout_marginLeft="5dp"
+                        android:layout_alignTop="@+id/pay_txt_goods_name"
+                        android:scaleType="center"
+                        android:visibility="invisible"
                         />
 
                 </RelativeLayout>
@@ -376,7 +387,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView3"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="22dp"
+                    android:layout_marginTop="20dp"
                     android:text="扫描二维码进行支付"
                     android:textColor="@color/colorMoreTxtTwoOne"
                     android:textSize="20sp" />
@@ -387,7 +398,7 @@
                     android:layout_height="163dp"
                     android:layout_below="@+id/textView4"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="37dp"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/pay_demo_qrcode"
                     android:gravity="center"
                     android:text="正在加载二维码..."
@@ -401,7 +412,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/pay_txt_qrcode"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="15dp"
                     android:text="支付金额："
                     android:textColor="@color/colorMoreTxtTwoOne"
                     android:layout_marginLeft="130dp"
@@ -420,7 +431,7 @@
                     android:id="@+id/pay_txt_goods_price_count"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
-                    android:text="12"
+                    android:text=""
                     android:textColor="@color/colorDemoLogo"
                     android:layout_toRightOf="@+id/pay_txt_count_rmb"
                     android:layout_alignBaseline="@+id/pay_lbl_count_money"
@@ -486,7 +497,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="85dp"
                     android:layout_below="@+id/pay_txt_qrcode"
-                    android:layout_marginTop="70dp"
+                    android:layout_marginTop="50dp"
                     android:orientation="horizontal"
                     android:weightSum="2">
 

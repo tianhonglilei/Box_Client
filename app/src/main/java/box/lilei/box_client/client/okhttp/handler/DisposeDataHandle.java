@@ -10,6 +10,7 @@ public class DisposeDataHandle {
     public DisposeDataListener mListener;
     public Class<?> mClass;
     public String mSource;
+    public Long size;
 
     public DisposeDataHandle(DisposeDataListener mListener) {
         this.mListener = mListener;
@@ -24,5 +25,11 @@ public class DisposeDataHandle {
         this.mListener = mListener;
         this.mSource = mSource;
     }
+
+    public DisposeDataHandle(DisposeDataListener mListener, Long size) {
+        this.mListener = mListener;
+        this.size = size;
+    }
+
 
 }

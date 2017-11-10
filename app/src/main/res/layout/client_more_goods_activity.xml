@@ -31,75 +31,81 @@
             android:scrollbars="none"
             android:stretchMode="columnWidth"
             android:cacheColorHint="#00000000"
-            android:listSelector="#00000000"
             android:overScrollMode="never"
             android:horizontalSpacing="7dp"
             android:verticalSpacing="33dp"
             android:numColumns="6"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
+            android:listSelector="@android:color/transparent"
             />
 
-        <RadioGroup
-            android:id="@+id/more_goods_rbtn_group"
+        <RelativeLayout
             android:layout_width="216dp"
-            android:layout_height="match_parent"
-            android:background="@color/colorGaryFiveTwo"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
+            <RadioGroup
+                android:id="@+id/more_goods_rbtn_group"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorGaryFiveTwo"
+                android:orientation="vertical">
 
 
-            <RadioButton
-                android:id="@+id/more_goods_nav_rb_allgoods"
-                android:layout_width="216dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="54dp"
-                android:background="@drawable/more_nav_selector"
-                android:button="@null"
-                android:drawableLeft="@mipmap/more_goods_left"
-                android:text="@string/allGoodsTxt"
-                style="@style/style_txt_more_nav"
-                android:drawablePadding="50dp"
-                android:paddingLeft="37dp"
-                android:checked="true"
-                >
-            </RadioButton>
+                <RadioButton
+                    android:id="@+id/more_goods_nav_rb_allgoods"
+                    android:layout_width="216dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/more_nav_selector"
+                    android:button="@null"
+                    android:drawableLeft="@mipmap/more_goods_left"
+                    android:text="@string/allGoodsTxt"
+                    style="@style/style_txt_more_nav"
+                    android:drawablePadding="50dp"
+                    android:paddingLeft="37dp"
+                    android:checked="true"
+                    >
+                </RadioButton>
 
-            <RadioButton
-                android:id="@+id/more_goods_nav_rb_drink"
-                android:layout_width="216dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="54dp"
-                android:background="@drawable/more_nav_selector"
-                android:button="@null"
-                android:drawableLeft="@mipmap/more_goods_left"
-                android:text="饮品"
-                style="@style/style_txt_more_nav"
-                android:drawablePadding="50dp"
-                android:paddingLeft="37dp"
-                >
-            </RadioButton>
+                <RadioButton
+                    android:id="@+id/more_goods_nav_rb_drink"
+                    android:layout_width="216dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/more_nav_selector"
+                    android:button="@null"
+                    android:drawableLeft="@mipmap/more_goods_left"
+                    android:text="饮品"
+                    style="@style/style_txt_more_nav"
+                    android:drawablePadding="50dp"
+                    android:paddingLeft="37dp"
+                    >
+                </RadioButton>
 
 
-            <RadioButton
-                android:id="@+id/more_goods_nav_rb_food"
-                android:layout_width="216dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="54dp"
-                android:background="@drawable/more_nav_selector"
-                android:button="@null"
-                android:drawableLeft="@mipmap/more_goods_left"
-                android:text="零食"
-                style="@style/style_txt_more_nav"
-                android:drawablePadding="50dp"
-                android:paddingLeft="37dp"
-                >
-            </RadioButton>
+                <RadioButton
+                    android:id="@+id/more_goods_nav_rb_food"
+                    android:layout_width="216dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/more_nav_selector"
+                    android:button="@null"
+                    android:drawableLeft="@mipmap/more_goods_left"
+                    android:text="零食"
+                    style="@style/style_txt_more_nav"
+                    android:drawablePadding="50dp"
+                    android:paddingLeft="37dp"
+                    >
+                </RadioButton>
+
+            </RadioGroup>
 
             <RelativeLayout
                 android:id="@+id/more_goods_nav_rl_return"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:layout_marginTop="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="20dp"
                 android:clickable="true"
                 android:background="@drawable/more_nav_selector"
                 >
@@ -132,7 +138,11 @@
                     />
             </RelativeLayout>
 
-        </RadioGroup>
+
+        </RelativeLayout>
+
+
+
     </LinearLayout>
 
     <RelativeLayout

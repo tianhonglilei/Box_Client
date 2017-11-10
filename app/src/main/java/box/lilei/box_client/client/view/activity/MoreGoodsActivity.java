@@ -20,6 +20,7 @@ import java.util.TimerTask;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.client.model.MyTime;
+import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.presenter.MoreGoodsPresenter;
 import box.lilei.box_client.client.presenter.WeatherPresenter;
 import box.lilei.box_client.client.presenter.impl.MoreGoodsPresenterImpl;
@@ -126,6 +127,8 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 intent.putExtra("date", moreWeatherDate.getText().toString());
                 intent.putExtra("temp", moreWeatherWdNum.getText().toString());
                 intent.putExtra("weather", moreWeatherTxt.getText().toString());
+                RoadGoods roadGoods = (RoadGoods) moreGoodsGv.getItemAtPosition(position);
+                intent.putExtra("roadGoods",roadGoods);
                 startActivity(intent);
             }
         });

@@ -16,6 +16,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 /** 文件管理 */
 public class FileUtils {
 
@@ -218,5 +222,32 @@ public class FileUtils {
 			// 如果没有sd卡，则返回存储目录
 			return Environment.getDownloadCacheDirectory().getPath() + "/";
 	}
+
+	/**
+	 * 获取文件大小，单位为byte（若为目录，则包括所有子目录和文件）
+	 *
+	 * @param file
+	 * @return
+	 */
+	public static long getFileSize(File file) {
+		long size = 0;
+		if (file.exists()) {
+			if (file.isDirectory()) {
+				File[] subFiles = file.listFiles();
+				if (subFiles != null) {
+					int num = subFiles.length;
+					for (int i = 0; i < num; i++) {
+						size += getFileSize(subFiles[i]);
+					}
+				}
+			} else {
+				size += file.length();
+			}
+		}
+		return size;
+	}
+
+
+
 
 }

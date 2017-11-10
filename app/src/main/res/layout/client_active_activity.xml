@@ -9,7 +9,7 @@
     <RelativeLayout
         android:visibility="visible"
         android:layout_width="440dp"
-        android:layout_height="340dp"
+        android:layout_height="300dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:background="@color/colorHomeGoodsBg"
@@ -22,7 +22,7 @@
             android:layout_centerHorizontal="true"
             android:text="点创科技DC-BOX"
             android:textSize="32sp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:textColor="@color/colorDemoLogo"
             />
 
@@ -43,7 +43,7 @@
             android:textColor="@color/colorGaryFiveTwo"
             android:layout_below="@+id/imageView1"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:textSize="18sp"
             />
         <EditText
@@ -52,7 +52,7 @@
             android:layout_height="40dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/textView1"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="5dp"
             android:maxLength="14"
             android:inputType="number"
             android:text=""
@@ -64,10 +64,10 @@
         <Button
             android:id="@+id/active_btn"
             android:layout_width="240dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_below="@+id/edit_active_code"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/manager_login_btn_selector"
             android:textSize="22dp"
             android:textColor="@color/colorWhiteTxt"
@@ -81,7 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/active_rl"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="54dp"
+        android:layout_marginTop="20dp"
         android:text="" />
 
 

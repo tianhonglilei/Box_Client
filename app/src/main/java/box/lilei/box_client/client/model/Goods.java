@@ -1,10 +1,13 @@
 package box.lilei.box_client.client.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by lilei on 2017/9/4.
  */
 
-public class Goods {
+public class Goods implements Parcelable {
 
     //销售状态0正常1打折2售罄
     public static final int SALE_STATE_NORMAL = 0;
@@ -153,4 +156,55 @@ public class Goods {
     public void setGoodsOutImgName(String goodsOutImgName) {
         this.goodsOutImgName = goodsOutImgName;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.goodsId);
+        dest.writeString(this.goodsName);
+        dest.writeDouble(this.goodsPrice);
+        dest.writeInt(this.goodsType);
+        dest.writeInt(this.goodsWd);
+        dest.writeString(this.goodsTaste);
+        dest.writeInt(this.goodsSaleState);
+        dest.writeString(this.goodsMemo);
+        dest.writeDouble(this.goodsDiscountPrice);
+        dest.writeString(this.goodsSImgName);
+        dest.writeString(this.goodsBImgName);
+        dest.writeString(this.goodsOutImgName);
+    }
+
+    public Goods() {
+    }
+
+    protected Goods(Parcel in) {
+        this.goodsId = (Long) in.readValue(Long.class.getClassLoader());
+        this.goodsName = in.readString();
+        this.goodsPrice = in.readDouble();
+        this.goodsType = in.readInt();
+        this.goodsWd = in.readInt();
+        this.goodsTaste = in.readString();
+        this.goodsSaleState = in.readInt();
+        this.goodsMemo = in.readString();
+        this.goodsDiscountPrice = in.readDouble();
+        this.goodsSImgName = in.readString();
+        this.goodsBImgName = in.readString();
+        this.goodsOutImgName = in.readString();
+    }
+
+    public static final Parcelable.Creator<Goods> CREATOR = new Parcelable.Creator<Goods>() {
+        @Override
+        public Goods createFromParcel(Parcel source) {
+            return new Goods(source);
+        }
+
+        @Override
+        public Goods[] newArray(int size) {
+            return new Goods[size];
+        }
+    };
 }

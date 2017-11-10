@@ -10,6 +10,7 @@ import box.lilei.box_client.client.model.Goods;
 
 public interface GoodsBiz {
 
+    //测试数据
     List<Goods> getGoodsListInfo();
 
 

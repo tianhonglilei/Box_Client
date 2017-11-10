@@ -1,11 +1,14 @@
 package box.lilei.box_client.client.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by lilei on 2017/10/25.
  * 货道信息
  */
 
-public class RoadInfo {
+public class RoadInfo implements Parcelable {
 
     //从机器接口获取货道状态
     public static final int ROAD_STATE_NORMAL = 0;
@@ -87,4 +90,40 @@ public class RoadInfo {
     public void setRoadNowNum(int roadNowNum) {
         this.roadNowNum = roadNowNum;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.roadIndex);
+        dest.writeInt(this.roadState);
+        dest.writeInt(this.roadOpen);
+        dest.writeInt(this.roadMaxNum);
+        dest.writeInt(this.roadNowNum);
+        dest.writeInt(this.roadBoxType);
+    }
+
+    protected RoadInfo(Parcel in) {
+        this.roadIndex = (Long) in.readValue(Long.class.getClassLoader());
+        this.roadState = in.readInt();
+        this.roadOpen = in.readInt();
+        this.roadMaxNum = in.readInt();
+        this.roadNowNum = in.readInt();
+        this.roadBoxType = in.readInt();
+    }
+
+    public static final Parcelable.Creator<RoadInfo> CREATOR = new Parcelable.Creator<RoadInfo>() {
+        @Override
+        public RoadInfo createFromParcel(Parcel source) {
+            return new RoadInfo(source);
+        }
+
+        @Override
+        public RoadInfo[] newArray(int size) {
+            return new RoadInfo[size];
+        }
+    };
 }

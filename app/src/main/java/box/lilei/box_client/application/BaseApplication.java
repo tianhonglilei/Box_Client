@@ -33,7 +33,9 @@ public class BaseApplication extends Application {
         //初始化SDK配置文件
         initSDKiniFile();
         //创建资源文件夹
-        FileUtils.creatSDDir("Box_client");
+        if (!FileUtils.exist(Constants.DEMO_FILE_PATH)) {
+            FileUtils.creatSDDir("Box_client");
+        }
     }
 
     private void initSDKiniFile() {
