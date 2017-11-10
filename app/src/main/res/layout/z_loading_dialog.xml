@@ -15,7 +15,7 @@
     <box.lilei.box_client.loading.ZLoadingView
         android:id="@+id/z_loading_view"
         android:layout_width="180dp"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_marginTop="15dp"
         android:contentDescription="@string/app_name"
         android:scaleType="centerInside"
