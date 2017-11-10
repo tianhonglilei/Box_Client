@@ -99,11 +99,11 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<RoadGoods> {
                 break;
         }
 
-        viewHolder.getView(R.id.adbanner_b_item_bg_rl).setBackgroundColor(ContextCompat.getColor(mContext,R.color.colorHomeGoodsBg));
-        viewHolder.getView(R.id.adbanner_b_item_bg_rl).setBackgroundColor(Color.WHITE);
-        viewHolder.getView(R.id.adbanner_b_item_bg_rl).setBackgroundColor(ContextCompat.getColor(mContext,R.color.colorHomeGoodsBgWhite));
-
-
+        if(position%2==0){
+            viewHolder.getView(R.id.adbanner_b_item_bg_rl).setBackgroundResource(R.drawable.more_goods_gv_item_bg_one_selector);
+        }else{
+            viewHolder.getView(R.id.adbanner_b_item_bg_rl).setBackgroundResource(R.drawable.more_goods_gv_item_bg_two_selector);
+        }
 
     }
 }
