@@ -75,7 +75,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="4dp"
-            android:scaleType="center"/>
+            android:scaleType="centerCrop"/>
         <ImageView
             android:id="@+id/more_goods_item_img_goods"
             android:layout_width="wrap_content"

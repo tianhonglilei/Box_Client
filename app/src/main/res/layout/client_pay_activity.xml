@@ -356,7 +356,7 @@
                         android:layout_height="30dp"
                         android:layout_alignTop="@+id/pay_txt_goods_name"
                         android:layout_toRightOf="@+id/pay_txt_goods_name"
-                        android:scaleType="center"
+                        android:scaleType="centerCrop"
                         android:src="@mipmap/logo_hot"
                         android:visibility="invisible" />
 

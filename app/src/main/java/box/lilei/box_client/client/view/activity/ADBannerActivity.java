@@ -341,6 +341,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     //图片广告开启定时器
     public void scrollToNextAD() {
+        errorVideoNum = 0;
         //执行定时任务
         adTimer.schedule(new TimerTask() {
             @Override
@@ -348,13 +349,12 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 mHandler.sendEmptyMessage(2);
             }
         }, 5000);
-        errorVideoNum = 0;
+
     }
 
     @Override
     public void changeAD(ADInfo adInfo, int adPosition) {
         this.adPosition = adPosition;
-        errorVideoNum = 0;
         //广告定时器
         if (adTimer != null) {
             adTimer.cancel();
