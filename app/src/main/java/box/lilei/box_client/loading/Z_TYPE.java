@@ -1,6 +1,7 @@
 package box.lilei.box_client.loading;
 
 
+import box.lilei.box_client.loading.anim.SnakeCircleBuilder;
 import box.lilei.box_client.loading.text.TextBuilder;
 
 /**
@@ -17,11 +18,11 @@ public enum Z_TYPE
 //    ELASTIC_BALL(ElasticBallBuilder.class),
 //    INFECTION_BALL(InfectionBallBuilder.class),
 //    INTERTWINE(IntertwineBuilder.class),
-    TEXT(TextBuilder.class)
+    TEXT(TextBuilder.class),
 //    SEARCH_PATH(SearchPathBuilder.class),
 //    ROTATE_CIRCLE(RotateCircleBuilder.class),
 //    SINGLE_CIRCLE(SingleCircleBuilder.class),
-//    SNAKE_CIRCLE(SnakeCircleBuilder.class),
+    SNAKE_CIRCLE(SnakeCircleBuilder.class)
     ;
 
     private final Class<?> mBuilderClass;

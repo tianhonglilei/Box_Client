@@ -15,7 +15,7 @@
             <!--<enum name="SearchPathBuilder" value="10"/>-->
             <!--<enum name="RotateCircleBuilder" value="11"/>-->
             <!--<enum name="SingleCircleBuilder" value="12"/>-->
-
+            <enum name="SnakeCircleBuilder" value="1"/>
             <enum name="TextBuilder" value="0"/>
         </attr>
         <attr name="z_color" format="color"/>

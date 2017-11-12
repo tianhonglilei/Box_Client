@@ -50,7 +50,7 @@ public class RoadBizImpl implements RoadBiz {
             }else{
                 goods.setGoodsSaleState(Goods.SALE_STATE_OUT);
             }
-            goods.setGoodsPrice(bean.getPrice()/100);
+            goods.setGoodsPrice((double) bean.getPrice()/100);
             goodsBean = bean.getGoodsBean();
             if (goodsBean != null) {
                 goods.setGoodsId(goodsBean.getId());

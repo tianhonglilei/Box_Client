@@ -29,5 +29,17 @@ public class Constants {
     //初始化数据获取
     public static final String BANNER_AD_URL = MAIN_URL + "/dc/boxapp/?c=app&m=initialize_data";
 
+    /**
+     * 微信支付
+     */
+    //微信二维码
+    public static final String WxGetQRUrl = "http://www.dc-box.com/weixin/example/native.php";
+    public static final int PAY_TYPE_WX = 0;
 
+    /**
+     * 支付宝支付
+     */
+    //支付宝二维码
+    public static final String AliGetQRUrl = MAIN_URL + "/dc/f2f/f2fpay/qrpay_test.php";
+    public static final int PAY_TYPE_ALI = 1;
 }

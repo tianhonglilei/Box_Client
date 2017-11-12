@@ -248,9 +248,9 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text=""
-                        android:textStyle="bold"
                         android:textColor="@color/colorGoodsDetailsMemoOne"
-                        android:textSize="24sp" />
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -286,26 +286,25 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/pay_txt_num"
                         android:layout_toRightOf="@+id/pay_txt_num"
-                        android:orientation="horizontal"
-                        >
+                        android:orientation="horizontal">
 
                         <RadioButton
                             android:id="@+id/pay_rb_num_one"
                             android:layout_width="47dp"
                             android:layout_height="31dp"
+                            android:layout_marginTop="3dp"
                             android:background="@drawable/pay_num_one_check_selector"
                             android:button="@null"
-                            android:layout_marginTop="3dp"
-                            android:checked="true"
-                            />
+                            android:checked="true" />
+
                         <RadioButton
                             android:id="@+id/pay_rb_num_two"
                             android:layout_width="47dp"
                             android:layout_height="31dp"
-                            android:background="@drawable/pay_num_two_check_selector"
-                            android:button="@null"
+                            android:layout_marginLeft="10dp"
                             android:layout_marginTop="3dp"
-                            android:layout_marginLeft="10dp"/>
+                            android:background="@drawable/pay_num_two_check_selector"
+                            android:button="@null" />
                     </RadioGroup>
 
                     <TextView
@@ -313,53 +312,53 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
-                        android:text="售价："
-                        android:textColor="@color/colorGaryFiveTwo"
-                        android:layout_toRightOf="@+id/pay_rbgrp_num"
                         android:layout_alignBaseline="@+id/pay_txt_num"
                         android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@+id/pay_rbgrp_num"
+                        android:text="售价："
+                        android:textColor="@color/colorGaryFiveTwo"
                         android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/pay_txt_rmb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/pay_lbl_price"
                         android:layout_marginTop="17dp"
+                        android:layout_toRightOf="@+id/pay_lbl_price"
                         android:text="¥ "
                         android:textColor="@color/colorDemoLogo"
-                        android:layout_toRightOf="@+id/pay_lbl_price"
-                        android:layout_alignBaseline="@+id/pay_lbl_price"
                         android:textSize="20sp" />
+
                     <TextView
                         android:id="@+id/pay_txt_goods_price"
                         android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/pay_lbl_price"
+                        android:layout_toRightOf="@+id/pay_txt_rmb"
                         android:text=""
                         android:textColor="@color/colorDemoLogo"
-                        android:layout_toRightOf="@+id/pay_txt_rmb"
                         android:textSize="40sp" />
 
                     <TextView
                         android:id="@+id/pay_txt_goods_name"
                         android:layout_width="wrap_content"
                         android:layout_height="38dp"
-                        android:text=""
-                        android:textSize="33sp"
-                        android:textColor="@color/colorMoreTxtTwoOne"
-                        android:layout_centerHorizontal="true"
                         android:layout_alignParentBottom="true"
-                        />
+                        android:layout_centerHorizontal="true"
+                        android:text=""
+                        android:textColor="@color/colorMoreTxtTwoOne"
+                        android:textSize="33sp" />
+
                     <ImageView
                         android:id="@+id/pay_img_wd"
                         android:layout_width="50dp"
                         android:layout_height="30dp"
-                        android:src="@mipmap/logo_hot"
-                        android:layout_toRightOf="@+id/pay_txt_goods_name"
                         android:layout_alignTop="@+id/pay_txt_goods_name"
-                        android:scaleType="centerInside"
-                        android:visibility="invisible"
-                        />
+                        android:layout_toRightOf="@+id/pay_txt_goods_name"
+                        android:scaleType="center"
+                        android:src="@mipmap/logo_hot"
+                        android:visibility="invisible" />
 
                 </RelativeLayout>
 
@@ -392,52 +391,72 @@
                     android:textColor="@color/colorMoreTxtTwoOne"
                     android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/pay_txt_qrcode"
+                <FrameLayout
+                    android:id="@+id/pay_fl_qrcode"
                     android:layout_width="163dp"
                     android:layout_height="163dp"
                     android:layout_below="@+id/textView4"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/pay_demo_qrcode"
-                    android:gravity="center"
-                    android:text="正在加载二维码..."
-                    android:textStyle="bold"
-                    android:textColor="#000"
-                    android:textSize="14sp" />
+                    android:layout_marginTop="30dp">
+
+                    <ImageView
+                        android:id="@+id/pay_img_qrcode"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/pay_demo_qrcode"
+                        />
+
+                    <TextView
+                        android:id="@+id/pay_txt_qrcode_loading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="120dp"
+                        android:gravity="center_horizontal"
+                        android:text="二维码正在生成..."
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <box.lilei.box_client.loading.ZLoadingView
+                        android:id="@+id/pay_qrcode_loading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:z_color="#000" />
+
+                </FrameLayout>
 
 
                 <TextView
                     android:id="@+id/pay_lbl_count_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/pay_txt_qrcode"
+                    android:layout_below="@+id/pay_fl_qrcode"
+                    android:layout_marginLeft="130dp"
                     android:layout_marginTop="15dp"
                     android:text="支付金额："
                     android:textColor="@color/colorMoreTxtTwoOne"
-                    android:layout_marginLeft="130dp"
                     android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/pay_txt_count_rmb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/pay_lbl_count_money"
+                    android:layout_toRightOf="@+id/pay_lbl_count_money"
                     android:text="¥ "
                     android:textColor="@color/colorDemoLogo"
-                    android:layout_toRightOf="@+id/pay_lbl_count_money"
-                    android:layout_alignBaseline="@+id/pay_lbl_count_money"
                     android:textSize="20sp" />
+
                 <TextView
                     android:id="@+id/pay_txt_goods_price_count"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/pay_lbl_count_money"
+                    android:layout_toRightOf="@+id/pay_txt_count_rmb"
                     android:text=""
                     android:textColor="@color/colorDemoLogo"
-                    android:layout_toRightOf="@+id/pay_txt_count_rmb"
-                    android:layout_alignBaseline="@+id/pay_lbl_count_money"
                     android:textSize="30sp" />
-
-
 
 
                 <RelativeLayout
@@ -452,8 +471,8 @@
                         android:id="@+id/imageView5"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_marginTop="29dp"
                         android:layout_marginRight="5dp"
+                        android:layout_marginTop="29dp"
                         android:layout_toLeftOf="@+id/pay_txt_return"
                         android:src="@drawable/pay_ic_return" />
 
@@ -462,8 +481,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="25dp"
                         android:layout_marginLeft="5dp"
+                        android:layout_marginTop="25dp"
                         android:text="返回"
                         android:textColor="#ffffff"
                         android:textSize="30sp" />
@@ -485,8 +504,8 @@
                         android:layout_below="@+id/imageView5"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="2dp"
-                        android:text="(支付成功前请勿返回)"
                         android:letterSpacing="0"
+                        android:text="(支付成功前请勿返回)"
                         android:textColor="#ffffff"
                         android:textSize="16sp" />
 
@@ -496,7 +515,7 @@
                     android:id="@+id/pay_rbgrp_qrcode"
                     android:layout_width="match_parent"
                     android:layout_height="85dp"
-                    android:layout_below="@+id/pay_txt_qrcode"
+                    android:layout_below="@+id/pay_fl_qrcode"
                     android:layout_marginTop="50dp"
                     android:orientation="horizontal"
                     android:weightSum="2">

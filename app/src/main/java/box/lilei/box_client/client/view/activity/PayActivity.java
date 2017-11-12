@@ -2,6 +2,7 @@ package box.lilei.box_client.client.view.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -15,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -36,6 +36,7 @@ import box.lilei.box_client.client.presenter.impl.WeatherPresenterImpl;
 import box.lilei.box_client.client.view.PayView;
 import box.lilei.box_client.contants.Constants;
 import box.lilei.box_client.loading.ZLoadingDialog;
+import box.lilei.box_client.loading.ZLoadingView;
 import box.lilei.box_client.loading.Z_TYPE;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -100,8 +101,14 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @BindView(R.id.pay_txt_goods_price_count)
     TextView payTxtGoodsPriceCount;
     //二维码
-    @BindView(R.id.pay_txt_qrcode)
-    TextView payTxtQrcode;
+    @BindView(R.id.pay_img_qrcode)
+    ImageView payImgQrcode;
+    @BindView(R.id.pay_txt_qrcode_loading)
+    TextView payTxtQrcodeLoading;
+    @BindView(R.id.pay_qrcode_loading)
+    ZLoadingView payQrcodeLoading;
+
+
 
     private Intent dataIntent;
     private WeatherPresenter weatherPresenter;
@@ -135,9 +142,12 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         //初始化商品信息
         initGoodsInfo();
         hiddenDialog();
+
+        //初始化微信二维码
+        payPresenter.getQRCode(Constants.WxGetQRUrl,Double.parseDouble(payTxtGoodsPriceCount.getText().toString()),Constants.PAY_TYPE_WX);
+        payQrcodeLoading.setLoadingBuilder(Z_TYPE.values()[1]);
+
     }
-
-
 
 
     private void initFont() {
@@ -198,10 +208,10 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         roadInfo = roadGoods.getRoadInfo();
         goods = roadGoods.getGoods();
         payTxtGoodsDetailsMemo.setText(goods.getGoodsMemo());
-        File file = new File(Constants.DEMO_FILE_PATH+"/"+goods.getGoodsBImgName());
+        File file = new File(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsBImgName());
         Glide.with(this).load(file).into(payImgGoods);
         payTxtGoodsName.setText(goods.getGoodsName());
-        switch (goods.getGoodsWd()){
+        switch (goods.getGoodsWd()) {
             case Goods.GOODS_WD_COLD:
                 payImgWd.setVisibility(View.VISIBLE);
                 payImgWd.setImageResource(R.mipmap.logo_cold);
@@ -214,29 +224,28 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 payImgWd.setVisibility(View.INVISIBLE);
                 break;
         }
-        payTxtGoodsPrice.setText(""+goods.getGoodsPrice());
+        payTxtGoodsPrice.setText("" + goods.getGoodsPrice());
         initRadioNum();
         payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice());
     }
 
     /**
-     *初始化数量选择
+     * 初始化数量选择
      */
     private void initRadioNum() {
         payRbNumTwo.setOnClickListener(this);
         payRbNumOne.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice());
-                }else{
+                } else {
                     payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice() * 2);
                 }
             }
         });
 
     }
-
 
 
     @Override
@@ -250,6 +259,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 //                    Toast.makeText(this, "选购商品数量不足2瓶", Toast.LENGTH_SHORT).show();
 //                    payRbNumOne.setChecked(true);
 //                }
+
                 break;
         }
     }
@@ -281,21 +291,33 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
     @Override
     public void showPercentInfo(PercentInfo percentInfo) {
-        String[]ss1 = percentInfo.getEnergy().split("-");
+        String[] ss1 = percentInfo.getEnergy().split("-");
         payPercentEnergy1.setText(ss1[0]);
         payPercentEnergy2.setText(ss1[1]);
-        String[]ss2 = percentInfo.getProtein().split("-");
+        String[] ss2 = percentInfo.getProtein().split("-");
         payPercentProtein1.setText(ss2[0]);
         payPercentProtein2.setText(ss2[1]);
-        String[]ss3 = percentInfo.getFat().split("-");
+        String[] ss3 = percentInfo.getFat().split("-");
         payPercentFat1.setText(ss3[0]);
         payPercentFat2.setText(ss3[1]);
-        String[]ss4 = percentInfo.getcWater().split("-");
+        String[] ss4 = percentInfo.getcWater().split("-");
         payPercentCwater1.setText(ss4[0]);
         payPercentCwater2.setText(ss4[1]);
-        String[]ss5 = percentInfo.getNa().split("-");
+        String[] ss5 = percentInfo.getNa().split("-");
         payPercentNa1.setText(ss5[0]);
         payPercentNa2.setText(ss5[1]);
+    }
+
+    @Override
+    public void showQRCode(Bitmap bitmap) {
+        payQrcodeLoading.setVisibility(View.INVISIBLE);
+        if (bitmap != null) {
+            payTxtQrcodeLoading.setText("");
+            payImgQrcode.setImageBitmap(bitmap);
+        } else {
+            payTxtQrcodeLoading.setText("二维码生成失败");
+        }
+
     }
 
     @Override
