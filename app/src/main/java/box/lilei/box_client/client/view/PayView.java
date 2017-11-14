@@ -33,4 +33,6 @@ public interface PayView {
      */
     void showQRCode(Bitmap bitmap);
 
+    void loadQRCode();
+
 }

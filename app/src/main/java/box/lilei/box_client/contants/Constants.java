@@ -15,7 +15,7 @@ public class Constants {
     public static final String DB_NAME = "box_db";
 
     //默认文件地址
-    public static final String DEMO_FILE_PATH = Environment.getExternalStorageDirectory().toString()+"/Box_client";
+    public static final String DEMO_FILE_PATH = Environment.getExternalStorageDirectory().toString() + "/Box_client";
 
 
     //天气接口获取weather接口
@@ -33,7 +33,7 @@ public class Constants {
      * 微信支付
      */
     //微信二维码
-    public static final String WxGetQRUrl = "http://www.dc-box.com/weixin/example/native.php";
+    public static final String WxGetQRUrl = MAIN_URL + "/dc/dcbox/weixin/example/native.php";
     public static final int PAY_TYPE_WX = 0;
 
     /**

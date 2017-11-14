@@ -19,8 +19,8 @@ public class QRCodeUtil {
     /** 生成创建二维码 */
     public static Bitmap createQRImage(String url) {
         Bitmap bitmap;
-        int QR_WIDTH = 200;
-        int QR_HEIGHT = 200;
+        int QR_WIDTH = 300;
+        int QR_HEIGHT = 300;
         try {
             // 判断URL合法性
             if (url != null && !"".equals(url) && url.length() > 0) {

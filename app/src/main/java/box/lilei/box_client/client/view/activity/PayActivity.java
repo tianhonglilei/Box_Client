@@ -1,6 +1,7 @@
 package box.lilei.box_client.client.view.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -9,13 +10,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.IdRes;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -32,7 +36,6 @@ import box.lilei.box_client.client.model.RoadInfo;
 import box.lilei.box_client.client.presenter.PayPresenter;
 import box.lilei.box_client.client.presenter.WeatherPresenter;
 import box.lilei.box_client.client.presenter.impl.PayPresenterImpl;
-import box.lilei.box_client.client.presenter.impl.WeatherPresenterImpl;
 import box.lilei.box_client.client.view.PayView;
 import box.lilei.box_client.contants.Constants;
 import box.lilei.box_client.loading.ZLoadingDialog;
@@ -107,9 +110,16 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     TextView payTxtQrcodeLoading;
     @BindView(R.id.pay_qrcode_loading)
     ZLoadingView payQrcodeLoading;
+    private Bitmap bitmapWxPayOne, bitmapWxPayTwo, bitmapAliPayOne, bitmapAliPayTwo;
+
+    //支付和数量的选择按钮
+    @BindView(R.id.pay_rbgrp_num)
+    RadioGroup payRbgrpNum;
+    @BindView(R.id.pay_rbgrp_qrcode)
+    RadioGroup payRbgrpQrcode;
 
 
-
+    private Context mContext;
     private Intent dataIntent;
     private WeatherPresenter weatherPresenter;
     private Timer timer;
@@ -128,8 +138,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_pay_activity);
         ButterKnife.bind(this);
+        mContext = this;
         dataIntent = this.getIntent();
-        showDialog("...");
         roadGoods = dataIntent.getParcelableExtra("roadGoods");
         payPresenter = new PayPresenterImpl(this, this);
         initLayoutRadioButton();
@@ -141,12 +151,99 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
         //初始化商品信息
         initGoodsInfo();
-        hiddenDialog();
-
-        //初始化微信二维码
-        payPresenter.getQRCode(Constants.WxGetQRUrl,Double.parseDouble(payTxtGoodsPriceCount.getText().toString()),Constants.PAY_TYPE_WX);
+        initRadioGroup();
         payQrcodeLoading.setLoadingBuilder(Z_TYPE.values()[1]);
+        payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods.getGoodsName());
 
+
+    }
+
+
+    private int checkNum = 1;
+    private int checkPay = Constants.PAY_TYPE_WX;
+    private String payQRCodeUrl = Constants.WxGetQRUrl;
+
+    /**
+     * 初始化选择按钮
+     */
+    private void initRadioGroup() {
+        payRbgrpNum.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                if (checkedId == R.id.pay_rb_num_one) {
+                    checkNum = 1;
+                    payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice());
+                    if (checkPay == Constants.PAY_TYPE_WX) {
+                        if (bitmapWxPayOne == null) {
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods.getGoodsName());
+                        } else {
+                            showQRCode(bitmapWxPayOne);
+                        }
+                    } else {
+                        if (bitmapAliPayOne == null) {
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods.getGoodsName());
+                        } else {
+                            showQRCode(bitmapAliPayOne);
+                        }
+                    }
+                } else {
+                    checkNum = 2;
+                    payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice() * 2);
+                    if (checkPay == Constants.PAY_TYPE_WX) {
+                        if (bitmapWxPayTwo == null) {
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods.getGoodsName());
+                        } else {
+                            showQRCode(bitmapWxPayTwo);
+                        }
+                    } else {
+                        if (bitmapAliPayTwo == null) {
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods.getGoodsName());
+                        } else {
+                            showQRCode(bitmapAliPayTwo);
+                        }
+                    }
+                }
+
+            }
+        });
+        payRbgrpQrcode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                if (checkedId == R.id.pay_rb_wechat) {
+                    checkPay = Constants.PAY_TYPE_WX;
+                    payQRCodeUrl = Constants.WxGetQRUrl;
+                    if (checkNum == 1) {
+                        if (bitmapWxPayOne == null) {
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods.getGoodsName());
+                        } else {
+                            showQRCode(bitmapWxPayOne);
+                        }
+                    } else {
+                        if (bitmapWxPayTwo == null) {
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods.getGoodsName());
+                        } else {
+                            showQRCode(bitmapWxPayTwo);
+                        }
+                    }
+                } else {
+                    checkPay = Constants.PAY_TYPE_ALI;
+                    payQRCodeUrl = Constants.AliGetQRUrl;
+                    if (checkNum == 1) {
+                        if (bitmapAliPayOne == null) {
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods.getGoodsName());
+                        } else {
+                            showQRCode(bitmapAliPayOne);
+                        }
+                    } else {
+                        if (bitmapAliPayTwo == null) {
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods.getGoodsName());
+                        } else {
+                            showQRCode(bitmapAliPayTwo);
+                        }
+                    }
+                }
+            }
+        });
     }
 
 
@@ -171,7 +268,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
      * 初始化时间和天气
      */
     private void initDateAndWeather() {
-        weatherPresenterIsNUll();
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -191,8 +287,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             super.handleMessage(msg);
             switch (msg.what) {
                 case 3:
-                    weatherPresenterIsNUll();
-                    weatherPresenter.getDateInfo();
+                    payPresenter.getDateInfo();
                     break;
             }
 
@@ -214,11 +309,11 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         switch (goods.getGoodsWd()) {
             case Goods.GOODS_WD_COLD:
                 payImgWd.setVisibility(View.VISIBLE);
-                payImgWd.setImageResource(R.mipmap.logo_cold);
+                Glide.with(mContext).load(R.mipmap.logo_cold).into(payImgWd);
                 break;
             case Goods.GOODS_WD_HOT:
                 payImgWd.setVisibility(View.VISIBLE);
-                payImgWd.setImageResource(R.mipmap.logo_hot);
+                Glide.with(mContext).load(R.mipmap.logo_hot).into(payImgWd);
                 break;
             case Goods.GOODS_WD_NORMAL:
                 payImgWd.setVisibility(View.INVISIBLE);
@@ -234,17 +329,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
      */
     private void initRadioNum() {
         payRbNumTwo.setOnClickListener(this);
-        payRbNumOne.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice());
-                } else {
-                    payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice() * 2);
-                }
-            }
-        });
-
     }
 
 
@@ -310,9 +394,22 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
     @Override
     public void showQRCode(Bitmap bitmap) {
-        payQrcodeLoading.setVisibility(View.INVISIBLE);
+        payQrcodeLoading.setVisibility(View.GONE);
         if (bitmap != null) {
             payTxtQrcodeLoading.setText("");
+            if (checkNum == 1) {
+                if (checkPay == Constants.PAY_TYPE_WX) {
+                    bitmapWxPayOne = bitmap;
+                } else {
+                    bitmapAliPayOne = bitmap;
+                }
+            } else {
+                if (checkPay == Constants.PAY_TYPE_WX) {
+                    bitmapWxPayTwo = bitmap;
+                } else {
+                    bitmapAliPayTwo = bitmap;
+                }
+            }
             payImgQrcode.setImageBitmap(bitmap);
         } else {
             payTxtQrcodeLoading.setText("二维码生成失败");
@@ -321,16 +418,20 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     }
 
     @Override
+    public void loadQRCode() {
+        payImgQrcode.setImageResource(R.drawable.pay_demo_qrcode);
+        payTxtQrcodeLoading.setText("二维码正在生成...");
+        payQrcodeLoading.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         payPresenter = null;
         weatherPresenter = null;
+        timer.cancel();
+        timer = null;
         System.gc();
     }
 
-    private void weatherPresenterIsNUll() {
-        if (weatherPresenter == null) {
-            weatherPresenter = new WeatherPresenterImpl(this);
-        }
-    }
 }

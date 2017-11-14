@@ -73,8 +73,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     TextView moreWeatherTxt;
     @BindView(R.id.more_weather_wd_num)
     TextView moreWeatherWdNum;
-    private WeatherPresenter weatherPresenter;
-    private DateTimeReceiver mTimeReceiver;
     private Timer timer;
 
 
@@ -96,7 +94,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
      * 初始化时间和温度
      */
     private void initDateAndWeather() {
-        weatherPresenterIsNUll();
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -131,7 +128,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         moreImeiNum.setOnClickListener(this);
         mContext = this;
         if (moreGoodsPresenter == null) {
-            moreGoodsPresenter = new MoreGoodsPresenterImpl(mContext);
+            moreGoodsPresenter = new MoreGoodsPresenterImpl(mContext,this);
         }
         moreGoodsPresenter.initAllGoods(moreGoodsGv);
 
@@ -188,7 +185,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     protected void onDestroy() {
         super.onDestroy();
         timer.cancel();
-        weatherPresenter = null;
         moreGoodsPresenter = null;
         timer = null;
     }
@@ -200,8 +196,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             super.handleMessage(msg);
             switch (msg.what) {
                 case 3:
-                    weatherPresenterIsNUll();
-                    weatherPresenter.getDateInfo();
+                    moreGoodsPresenter.getDateInfo();
                     break;
             }
 
@@ -216,12 +211,5 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             moreWeatherDate.setText(myTime.getTimeDay() + " " + myTime.getTimeWeek());
         }
     }
-
-    private void weatherPresenterIsNUll() {
-        if (weatherPresenter == null) {
-            weatherPresenter = new WeatherPresenterImpl(this);
-        }
-    }
-
 
 }

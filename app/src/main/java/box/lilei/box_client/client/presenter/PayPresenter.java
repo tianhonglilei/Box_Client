@@ -8,6 +8,8 @@ public interface PayPresenter {
 
     void initPercenterInfo(Long goodsId);
 
-    void getQRCode(String url,double price,int payType);
+    void getQRCode(String url,double price,int payType,int payNum,String goodsName);
+
+    void getDateInfo();
 
 }

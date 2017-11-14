@@ -261,9 +261,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
                 switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        isTouch = true;
-                        break;
                     case MotionEvent.ACTION_MOVE:
                         isTouch = true;
                         break;
@@ -447,7 +444,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 //                    Log.e(TAG, "adCount:" + adCount);
                     break;
                 case 3:
-                    weatherPresenter.getDateInfo();
+                    adPresenter.getDateInfo();
                     break;
                 case 4:
                     weatherPresenter.getWeatherInfo();

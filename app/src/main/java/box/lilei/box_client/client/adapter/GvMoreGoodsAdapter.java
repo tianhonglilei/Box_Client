@@ -122,10 +122,10 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
     public void goodsWd(MyViewHolder viewHolder, int wd, ImageView imageView) {
         if (wd == Goods.GOODS_WD_COLD) {
             imageView.setVisibility(View.VISIBLE);
-            imageView.setImageResource(R.mipmap.logo_cold);
+            Glide.with(mContext).load(R.mipmap.logo_cold).into(imageView);
         } else if (wd == Goods.GOODS_WD_HOT) {
             imageView.setVisibility(View.VISIBLE);
-            imageView.setImageResource(R.mipmap.logo_hot);
+            Glide.with(mContext).load(R.mipmap.logo_hot).into(imageView);
         } else {
             imageView.setVisibility(View.INVISIBLE);
         }

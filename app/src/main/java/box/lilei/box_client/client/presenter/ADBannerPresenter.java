@@ -32,4 +32,6 @@ public interface ADBannerPresenter {
      */
     void refreshGoodsData(GridView adbannerGoodsGv);
 
+    void getDateInfo();
+
 }

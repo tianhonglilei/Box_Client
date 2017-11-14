@@ -46,13 +46,6 @@ public class WeatherPresenterImpl implements WeatherPresenter {
         myWeather = new MyWeather();
     }
 
-    public WeatherPresenterImpl(MoreGoodsView moreGoodsView) {
-        this.moreGoodsView = moreGoodsView;
-    }
-
-    public WeatherPresenterImpl(PayView payView) {
-        this.payView = payView;
-    }
 
     @Override
     public void getDateInfo() {
@@ -65,19 +58,6 @@ public class WeatherPresenterImpl implements WeatherPresenter {
         MyTime myTime = new MyTime(dateDay, dateWeek, dateMinute);
         if (adBannerView != null) {
             adBannerView.updateDate(myTime);
-            moreGoodsView = null;
-            payView = null;
-            return;
-        }
-        if (moreGoodsView != null) {
-            moreGoodsView.updateDate(myTime);
-            payView = null;
-            return;
-        }
-        if (payView != null) {
-            payView.updateDate(myTime);
-            moreGoodsView = null;
-            return;
         }
 
     }

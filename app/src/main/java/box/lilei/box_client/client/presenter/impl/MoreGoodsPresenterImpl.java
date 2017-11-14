@@ -3,7 +3,10 @@ package box.lilei.box_client.client.presenter.impl;
 import android.content.Context;
 import android.widget.GridView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import box.lilei.box_client.R;
@@ -13,10 +16,13 @@ import box.lilei.box_client.client.biz.impl.GoodsBizImpl;
 import box.lilei.box_client.client.adapter.GvMoreGoodsAdapter;
 import box.lilei.box_client.client.biz.impl.RoadBizImpl;
 import box.lilei.box_client.client.model.Goods;
+import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.presenter.MoreGoodsPresenter;
+import box.lilei.box_client.client.view.MoreGoodsView;
 import box.lilei.box_client.db.RoadBean;
 import box.lilei.box_client.db.biz.RoadBeanService;
+import box.lilei.box_client.util.TimeUtil;
 
 /**
  * Created by lilei on 2017/9/26.
@@ -36,10 +42,11 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
     private RoadBeanService roadBeanService;
     private RoadBiz roadBiz;
 
+    private MoreGoodsView moreGoodsView;
 
 
-    public MoreGoodsPresenterImpl(Context mContext) {
-
+    public MoreGoodsPresenterImpl(Context mContext , MoreGoodsView moreGoodsView) {
+        this.moreGoodsView = moreGoodsView;
         this.mContext = mContext;
         goodsBiz = new GoodsBizImpl();
 
@@ -83,4 +90,19 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
         }
 
     }
+
+    @Override
+    public void getDateInfo() {
+        Calendar calendar = Calendar.getInstance();
+        Date timeNow = new Date();
+        long time = timeNow.getTime();
+        String dateDay = TimeUtil.dateString(time);
+        String dateMinute = new SimpleDateFormat("HH:mm").format(timeNow);
+        String dateWeek = TimeUtil.dayForWeek(calendar);
+        MyTime myTime = new MyTime(dateDay, dateWeek, dateMinute);
+        if (moreGoodsView != null) {
+            moreGoodsView.updateDate(myTime);
+        }
+    }
+
 }

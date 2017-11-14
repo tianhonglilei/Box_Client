@@ -13,7 +13,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import box.lilei.box_client.R;
@@ -26,6 +29,7 @@ import box.lilei.box_client.client.biz.impl.RoadBizImpl;
 import box.lilei.box_client.client.listener.OnADBannerLoadListener;
 import box.lilei.box_client.client.model.ADInfo;
 import box.lilei.box_client.client.model.Goods;
+import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.model.RoadInfo;
 import box.lilei.box_client.client.model.jsonmodel.AdJsonInfo;
@@ -46,6 +50,7 @@ import box.lilei.box_client.db.biz.GoodsBeanService;
 import box.lilei.box_client.db.biz.PercentBeanService;
 import box.lilei.box_client.db.biz.RoadBeanService;
 import box.lilei.box_client.util.JsonListUtil;
+import box.lilei.box_client.util.TimeUtil;
 
 /**
  * Created by lilei on 2017/9/12.
@@ -196,5 +201,22 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
             }
         }
     }
+
+
+    @Override
+    public void getDateInfo() {
+        Calendar calendar = Calendar.getInstance();
+        Date timeNow = new Date();
+        long time = timeNow.getTime();
+        String dateDay = TimeUtil.dateString(time);
+        String dateMinute = new SimpleDateFormat("HH:mm").format(timeNow);
+        String dateWeek = TimeUtil.dayForWeek(calendar);
+        MyTime myTime = new MyTime(dateDay, dateWeek, dateMinute);
+        if (adBannerView != null) {
+            adBannerView.updateDate(myTime);
+        }
+
+    }
+
 
 }
