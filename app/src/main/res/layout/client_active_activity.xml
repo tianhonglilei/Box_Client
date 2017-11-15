@@ -10,7 +10,7 @@
         android:visibility="visible"
         android:layout_width="440dp"
         android:layout_height="300dp"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="130dp"
         android:layout_centerHorizontal="true"
         android:background="@color/colorHomeGoodsBg"
         android:id="@+id/active_rl">
