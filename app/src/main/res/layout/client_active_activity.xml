@@ -58,7 +58,7 @@
             android:text=""
             android:gravity="center"
             android:hint="请输入激活码"
-            android:textSize="14sp"
+            android:textSize="18sp"
             android:background="@drawable/manager_login_pwd_selector"
             />
         <Button

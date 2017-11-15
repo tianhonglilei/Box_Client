@@ -20,13 +20,11 @@
         />
     <ImageView
         android:id="@+id/nav_road_gv_item_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxWidth="60dp"
-        android:maxHeight="60dp"
-        android:layout_marginTop="5dp"
-        android:layout_centerHorizontal="true"
-        android:scaleType="center"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/nav_road_gv_item_road_num"
+        android:layout_marginLeft="20dp"
         />
 
 

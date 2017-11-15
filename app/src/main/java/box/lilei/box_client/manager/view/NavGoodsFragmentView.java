@@ -1,5 +1,7 @@
 package box.lilei.box_client.manager.view;
 
+import box.lilei.box_client.client.model.RoadGoods;
+
 /**
  * Created by lilei on 2017/11/14.
  */
@@ -7,7 +9,7 @@ package box.lilei.box_client.manager.view;
 public interface NavGoodsFragmentView {
 
 
-    void showInputDialog();
+    void showInputDialog(RoadGoods roadGoods);
 
     void showViceOne();
 

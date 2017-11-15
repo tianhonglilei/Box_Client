@@ -53,4 +53,5 @@ dependencies {
     compile 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile files('libs/zxing.jar')
+    compile project(path: ':CommonAlertPop')
 }

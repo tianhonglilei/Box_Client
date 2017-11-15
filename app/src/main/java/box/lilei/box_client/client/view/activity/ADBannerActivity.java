@@ -319,6 +319,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         intent.putExtra("roadGoods", roadGoods);
         intentDateWeather(intent);
         startActivity(intent);
+        adVideoView.pause();
     }
 
     /**
@@ -329,6 +330,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         Intent intent = new Intent(ADBannerActivity.this, MoreGoodsActivity.class);
         intentDateWeather(intent);
         startActivity(intent);
+        adVideoView.pause();
     }
 
     //时间天气传递
@@ -500,7 +502,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     @Override
     public void hiddenDialog() {
-
         if (dialog != null) dialog.cancel();
     }
 
@@ -510,17 +511,19 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             adVideoView.pause();
             videoPlay = false;
         }
-
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         if (adVideoView != null && videoPlay == false) {
-            adVideoView.start();
-            videoPlay = true;
+            if (!adVideoView.isPlaying()){
+                adVideoView.start();
+                videoPlay = true;
+            }
         }
         super.onResume();
+
     }
 
     @Override

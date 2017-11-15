@@ -1,1 +1,1 @@
-include ':app', ':greendaogenerate', ':greendaogenerate'
+include ':app', ':greendaogenerate', ':greendaogenerate', ':CommonAlertPop'

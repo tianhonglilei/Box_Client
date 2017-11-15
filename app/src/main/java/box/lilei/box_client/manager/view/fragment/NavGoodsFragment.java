@@ -7,15 +7,23 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import com.common.controls.dialog.CommonDialogFactory;
+import com.common.controls.dialog.DialogUtil;
+import com.common.controls.dialog.ICommonDialog;
+import com.common.controls.window.WindowPopUtil;
 
 import java.util.List;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxSetting;
+import box.lilei.box_client.client.model.Goods;
 import box.lilei.box_client.client.model.RoadGoods;
+import box.lilei.box_client.client.model.RoadInfo;
 import box.lilei.box_client.contants.Constants;
 import box.lilei.box_client.manager.adapter.NavGoodsAdapter;
 import box.lilei.box_client.manager.presenter.NavGoodsPresenter;
@@ -37,6 +45,8 @@ public class NavGoodsFragment extends Fragment implements NavGoodsFragmentView {
     private NavGoodsPresenter navGoodsPresenter;
     private Context mContext;
 
+    private LayoutInflater inflater;
+
     public NavGoodsFragment() {
         // Required empty public constructor
     }
@@ -46,6 +56,7 @@ public class NavGoodsFragment extends Fragment implements NavGoodsFragmentView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        this.inflater = inflater;
         View view = inflater.inflate(R.layout.fragment_nav_goods, container, false);
         mContext = getContext();
         initView(view);
@@ -86,8 +97,30 @@ public class NavGoodsFragment extends Fragment implements NavGoodsFragmentView {
     }
 
     @Override
-    public void showInputDialog() {
+    public void showInputDialog(RoadGoods roadGoods) {
+        RoadInfo roadInfo = roadGoods.getRoadInfo();
+        Goods goods = roadGoods.getGoods();
+        final ICommonDialog dialog = CommonDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_104);
+        dialog.setTitleText(roadInfo.getRoadIndex()+"货道："+goods.getGoodsName());
+        dialog.setTitleBgType(WindowPopUtil.TITLE_SAFE_BLUE);
+        dialog.setContentView(R.layout.nav_goods_num_dialog);
+        dialog.setCancelBtn(R.string.cancel, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setOkBtn(R.string.ok, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                dialog.dismiss();
+            }
+        });
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+        View dialogView = inflater.inflate(R.layout.nav_goods_num_dialog,null);
+        ((EditText)dialogView.findViewById(R.id.nav_goods_dialog_edit_max)).setText(""+roadInfo.getRoadMaxNum());
     }
 
     @Override

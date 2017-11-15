@@ -1,6 +1,8 @@
 package box.lilei.box_client.manager.presenter.impl;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.ArrayList;
@@ -58,19 +60,33 @@ public class NavGoodsPresenterImpl implements NavGoodsPresenter {
             if (roadGoodsListViceOne.size()>0){
                 navGoodsFragmentView.showViceOne();
             }
+            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    navGoodsFragmentView.showInputDialog(roadGoodsList.get(position));
+                }
+            });
         }
     }
 
     @Override
     public void checkGoodsData(GridView gridView, String boxType) {
         if (boxType.equals(BoxSetting.BOX_TYPE_DRINK)) {
-            navGoodsAdapter.setmDatas(roadGoodsListMain);
+            roadGoodsList = roadGoodsListMain;
+            navGoodsAdapter.setmDatas(roadGoodsList);
             navGoodsAdapter.notifyDataSetChanged();
         } else if (boxType.equals(BoxSetting.BOX_TYPE_FOOD)) {
             if (roadGoodsListViceOne.size() != 0){
-                navGoodsAdapter.setmDatas(roadGoodsListViceOne);
+                roadGoodsList = roadGoodsListViceOne;
+                navGoodsAdapter.setmDatas(roadGoodsList);
                 navGoodsAdapter.notifyDataSetChanged();
             }
         }
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                navGoodsFragmentView.showInputDialog(roadGoodsList.get(position));
+            }
+        });
     }
 }
