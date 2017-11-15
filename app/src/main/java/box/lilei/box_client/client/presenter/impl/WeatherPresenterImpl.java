@@ -82,7 +82,7 @@ public class WeatherPresenterImpl implements WeatherPresenter {
 
                     @Override
                     public void onFail(Object errorObject) {
-                        Log.e(TAG, "onFail: w" + ((OkHttpException) errorObject).getEcode());
+                        ((Exception) errorObject).printStackTrace();
                     }
                 }));
 

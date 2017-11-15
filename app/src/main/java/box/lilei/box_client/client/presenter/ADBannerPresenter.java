@@ -28,10 +28,18 @@ public interface ADBannerPresenter {
 
     /**
      * 刷新商品信息
+     *
      * @param adbannerGoodsGv
      */
     void refreshGoodsData(GridView adbannerGoodsGv);
 
     void getDateInfo();
+
+    /**
+     * 删除错误广告
+     * @param position 位置
+     * @param
+     */
+    void deleteAdShow(int position);
 
 }

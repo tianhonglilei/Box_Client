@@ -15,6 +15,7 @@
         android:textSize="30dp" />
 
     <RadioGroup
+        android:id="@+id/nav_goods_rdogrp_robot"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="70dp"
@@ -32,6 +33,7 @@
         <RadioButton
             android:id="@+id/nav_goods_rdo_robot_add_one"
             android:text="托机一"
+            android:visibility="invisible"
             style="@style/nav_robot_check_style"/>
 
     </RadioGroup>

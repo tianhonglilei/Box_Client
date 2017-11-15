@@ -55,16 +55,6 @@ public class ManagerNavgationActivity extends FragmentActivity{
         managerNavGrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkId) {
-//                //遍历RadioGroup 里面所有的子控件。
-//                for (int i = 0; i < group.getChildCount(); i++) {
-//                    //获取到指定位置的RadioButton
-//                    RadioButton rb = (RadioButton)group.getChildAt(i);
-//                    //如果被选中
-//                    if (rb.isChecked()) {
-//                        setIndexSelected(i);
-//                        break;
-//                    }
-//                }
                 switch (checkId){
                     case R.id.manager_nav_rdo_btn_goods:
                         setIndexSelected(0);
@@ -86,6 +76,7 @@ public class ManagerNavgationActivity extends FragmentActivity{
                         break;
                     case R.id.manager_nav_rdo_btn_exit:
                         setIndexSelected(6);
+                        finish();
                         break;
                 }
 

@@ -160,6 +160,15 @@
             android:textColor="@color/colorMoreTxtTwoOne"
             android:textSize="20sp"/>
 
+        <ImageView
+            android:id="@+id/more_goods_up_gif"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@+id/textView9"
+            />
+
 
     </RelativeLayout>
 </LinearLayout>

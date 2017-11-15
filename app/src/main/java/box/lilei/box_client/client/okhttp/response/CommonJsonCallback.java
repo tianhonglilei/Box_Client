@@ -53,8 +53,13 @@ public class CommonJsonCallback implements Callback {
 
     @Override
     public void onResponse(Call call, final Response response) throws IOException {
+        final String result;
+        if (response.isSuccessful()) {
+            result = response.body().string();
+        }else{
+            result = "";
+        }
         //在子线程操作
-        final String result = response.body().string();
         mDisposeHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -64,7 +69,6 @@ public class CommonJsonCallback implements Callback {
     }
 
     private void handlerResponse(String result) {
-
         if (result == null || result.equals("")) {
             listener.onFail(new OkHttpException(NETWORK_ERROR, EMPTY_MSG));
             return;

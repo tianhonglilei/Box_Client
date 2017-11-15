@@ -13,7 +13,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:background="@drawable/nav_goods_gv_item_index_normal"
-        android:text="1"
+        android:text=""
         android:gravity="center"
         android:textColor="@color/colorGaryFiveTwo"
         android:textSize="12sp"
@@ -22,7 +22,6 @@
         android:id="@+id/nav_road_gv_item_img"
         android:layout_width="50dp"
         android:layout_height="60dp"
-        android:src="@mipmap/food_ww_wld"
         android:layout_marginTop="5dp"
         android:layout_centerHorizontal="true"
         />

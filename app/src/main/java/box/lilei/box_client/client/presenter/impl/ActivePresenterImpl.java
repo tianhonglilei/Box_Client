@@ -87,7 +87,6 @@ public class ActivePresenterImpl implements ActivePresenter {
         goodsBeanService = new GoodsBeanService(mContext, GoodsBean.class);
         percentBeanService = new PercentBeanService(mContext, PercentBean.class);
 
-
         StringBuilder url = new StringBuilder(Constants.BANNER_AD_URL);
         url.append("&machineid=" + imei);
         CommonOkHttpClient.get(CommonRequest.createGetRequest(url.toString(), null), new DisposeDataHandle(new DisposeDataListener() {
@@ -254,7 +253,6 @@ public class ActivePresenterImpl implements ActivePresenter {
                     if (errorObject instanceof Exception) {
                         ((Exception) errorObject).printStackTrace();
                     }
-                    Log.d("ActivePresenterImpl--downloadFile--fail:", fileName);
                     activeView.changeDownloadProgress(count, successNum, ++failNum);
                 }
             }, Constants.DEMO_FILE_PATH + "/" + fileName));

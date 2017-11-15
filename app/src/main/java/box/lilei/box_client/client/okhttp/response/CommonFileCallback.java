@@ -61,7 +61,12 @@ public class CommonFileCallback implements Callback {
 
     @Override
     public void onResponse(Call call, Response response) throws IOException {
-        final File file = handleResponse(response);
+        final File file;
+        if (response.isSuccessful()) {
+            file = handleResponse(response);
+        }else{
+           file = null;
+        }
         mDeliveryHandler.post(new Runnable() {
             @Override
             public void run() {

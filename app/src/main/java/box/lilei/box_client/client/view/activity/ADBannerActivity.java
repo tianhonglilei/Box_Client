@@ -205,12 +205,15 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             public boolean onError(MediaPlayer mp, int what, int extra) {
 
                 if (errorVideoNum == 0) {
-                    Glide.with(appContext)
-                            .load(R.drawable.ad_test_img1)
-                            .into(adImageView);
-                    showImg();
-                    scrollToNextAD();
-                    errorVideoNum++;
+                    adPresenter.deleteAdShow(adPosition);
+                    adCount = adbannerAdLv.getCount();
+                    mHandler.sendEmptyMessage(2);
+//                    Glide.with(appContext)
+//                            .load(R.drawable.ad_test_img1)
+//                            .into(adImageView);
+//                    showImg();
+//                    scrollToNextAD();
+                    ++errorVideoNum;
                 }
                 return true;
             }
@@ -338,7 +341,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     //图片广告开启定时器
     public void scrollToNextAD() {
-        errorVideoNum = 0;
         //执行定时任务
         adTimer.schedule(new TimerTask() {
             @Override
@@ -367,21 +369,22 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             showImg();
             scrollToNextAD();
         } else if (adInfo.getAdType() == ADInfo.ADTYPE_VIDEO) {
-            Log.e(TAG, "exist:" + FileUtils.exist(Constants.DEMO_FILE_PATH + "/" + adInfo.getVideoFileName()).toString());
+//            Log.e(TAG, "exist:" + FileUtils.exist(Constants.DEMO_FILE_PATH + "/" + adInfo.getVideoFileName()).toString());
             if (FileUtils.exist(Constants.DEMO_FILE_PATH + "/" + adInfo.getVideoFileName())) {
-
                 File file = new File(Constants.DEMO_FILE_PATH + "/" + adInfo.getVideoFileName());
                 adVideoView.setVideoURI(Uri.fromFile(file));
                 adVideoView.start();
                 showVideo();
                 videoPlay = true;
             } else {
-
-                Glide.with(appContext)
-                        .load(R.drawable.ad_test_img1)
-                        .into(adImageView);
-                showImg();
-                scrollToNextAD();
+//                Glide.with(appContext)
+//                        .load(R.drawable.ad_test_img1)
+//                        .into(adImageView);
+//                showImg();
+//                scrollToNextAD();
+                adPresenter.deleteAdShow(adPosition);
+                adCount = adbannerAdLv.getCount();
+                mHandler.sendEmptyMessage(2);
             }
         }
 
@@ -424,24 +427,11 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                     if (adPosition >= adCount) {
                         adPosition = 0;
                         adbannerAdLv.smoothScrollToPositionFromTop(0, 0, 2000);
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                adbannerAdLv.setSelection(0);
-                            }
-                        }, 2000);
                     } else {
                         adbannerAdLv.smoothScrollToPosition(adPosition);
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                adbannerAdLv.setSelection(adPosition);
-                            }
-                        }, 800);
                     }
                     changeAD((ADInfo) adbannerAdLv.getItemAtPosition(adPosition), adPosition);
-//                    Log.e(TAG, "handleMessage: " + adPosition);
-//                    Log.e(TAG, "adCount:" + adCount);
+                    errorVideoNum = 0;
                     break;
                 case 3:
                     adPresenter.getDateInfo();

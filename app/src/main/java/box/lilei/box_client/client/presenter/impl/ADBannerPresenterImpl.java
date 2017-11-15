@@ -218,5 +218,12 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
 
     }
 
+    @Override
+    public void deleteAdShow(int position) {
+        adInfoList.remove(position);
+        lvAdImgAdapter.setmDatas(adInfoList);
+        lvAdImgAdapter.notifyDataSetChanged();
+    }
+
 
 }

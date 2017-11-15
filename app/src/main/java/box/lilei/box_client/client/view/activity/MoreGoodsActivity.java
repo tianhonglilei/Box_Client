@@ -10,10 +10,13 @@ import android.support.annotation.IdRes;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,10 +25,7 @@ import box.lilei.box_client.R;
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.presenter.MoreGoodsPresenter;
-import box.lilei.box_client.client.presenter.WeatherPresenter;
 import box.lilei.box_client.client.presenter.impl.MoreGoodsPresenterImpl;
-import box.lilei.box_client.client.presenter.impl.WeatherPresenterImpl;
-import box.lilei.box_client.client.receiver.DateTimeReceiver;
 import box.lilei.box_client.client.view.MoreGoodsView;
 import box.lilei.box_client.manager.view.activity.ManagerNavgationActivity;
 import butterknife.BindView;
@@ -36,6 +36,9 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
     @BindView(R.id.more_imei_num)
     TextView moreImeiNum;
+    //向上的GIF
+    @BindView(R.id.more_goods_up_gif)
+    ImageView moreGoodsUpGif;
     private MoreGoodsPresenter moreGoodsPresenter;
     private Context mContext;
 
@@ -81,8 +84,10 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_more_goods_activity);
         ButterKnife.bind(this);
-
+        mContext = this;
         dataIntent = this.getIntent();
+        Glide.with(mContext).load(R.drawable.more_goods_up).into(moreGoodsUpGif);
+
         initControl();
 
         initGoodsGridView();
@@ -128,7 +133,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         moreImeiNum.setOnClickListener(this);
         mContext = this;
         if (moreGoodsPresenter == null) {
-            moreGoodsPresenter = new MoreGoodsPresenterImpl(mContext,this);
+            moreGoodsPresenter = new MoreGoodsPresenterImpl(mContext, this);
         }
         moreGoodsPresenter.initAllGoods(moreGoodsGv);
 
