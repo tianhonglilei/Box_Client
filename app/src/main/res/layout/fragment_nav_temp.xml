@@ -32,6 +32,7 @@
 
         <RadioButton
             android:id="@+id/nav_temp_rdo_robot_add_one"
+            android:visibility="invisible"
             android:text="托机一"
             style="@style/nav_robot_check_style"/>
 
