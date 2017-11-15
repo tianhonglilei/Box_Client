@@ -38,7 +38,7 @@ public class NavGoodsFragment extends Fragment implements NavGoodsFragmentView {
 
     private List<RoadGoods> roadGoodsList;
     private NavGoodsAdapter navGoodsAdapter;
-    private RadioButton rdoBoxMain,rdoBoxViceOne;
+    private RadioButton rdoBoxMain, rdoBoxViceOne;
     private RadioGroup rdogrpBoxCheck;
 
     private GridView navGoodsGv;
@@ -60,13 +60,8 @@ public class NavGoodsFragment extends Fragment implements NavGoodsFragmentView {
         View view = inflater.inflate(R.layout.fragment_nav_goods, container, false);
         mContext = getContext();
         initView(view);
-        navGoodsPresenter = new NavGoodsPresenterImpl(mContext,this);
+        navGoodsPresenter = new NavGoodsPresenterImpl(mContext, this);
         navGoodsPresenter.initGoodsGridView(navGoodsGv);
-
-
-
-
-
 
 
         return view;
@@ -81,9 +76,9 @@ public class NavGoodsFragment extends Fragment implements NavGoodsFragmentView {
         rdogrpBoxCheck.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                if (checkedId == R.id.nav_goods_rdo_robot_main){
+                if (checkedId == R.id.nav_goods_rdo_robot_main) {
                     navGoodsPresenter.checkGoodsData(navGoodsGv, BoxSetting.BOX_TYPE_DRINK);
-                }else{
+                } else {
                     navGoodsPresenter.checkGoodsData(navGoodsGv, BoxSetting.BOX_TYPE_FOOD);
                 }
             }
@@ -96,20 +91,21 @@ public class NavGoodsFragment extends Fragment implements NavGoodsFragmentView {
         super.onDestroyView();
     }
 
+
+    private EditText edit_now;
+    private EditText edit_max;
     @Override
     public void showInputDialog(RoadGoods roadGoods) {
         RoadInfo roadInfo = roadGoods.getRoadInfo();
         Goods goods = roadGoods.getGoods();
         final ICommonDialog dialog = CommonDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_104);
-        dialog.setTitleText(roadInfo.getRoadIndex()+"货道："+goods.getGoodsName());
-        dialog.setTitleBgType(WindowPopUtil.TITLE_SAFE_BLUE);
-        dialog.setContentView(R.layout.nav_goods_num_dialog);
-        dialog.setCancelBtn(R.string.cancel, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        dialog.setTitleText(roadInfo.getRoadIndex() + "货道：" + goods.getGoodsName());
+        dialog.setTitleColorType(DialogUtil.TITLE_SAFE_BLUE);
+        View dialogView = inflater.inflate(R.layout.nav_goods_num_dialog, null);
+        edit_now = (EditText) dialogView.findViewById(R.id.nav_goods_dialog_edit_now);
+        edit_max = (EditText) dialogView.findViewById(R.id.nav_goods_dialog_edit_max);
+        edit_max.setText("" + roadInfo.getRoadMaxNum());
+        dialog.setContentView(dialogView);
         dialog.setOkBtn(R.string.ok, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,10 +113,15 @@ public class NavGoodsFragment extends Fragment implements NavGoodsFragmentView {
                 dialog.dismiss();
             }
         });
+        dialog.setCancelBtn(R.string.cancel, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
-        View dialogView = inflater.inflate(R.layout.nav_goods_num_dialog,null);
-        ((EditText)dialogView.findViewById(R.id.nav_goods_dialog_edit_max)).setText(""+roadInfo.getRoadMaxNum());
+
     }
 
     @Override

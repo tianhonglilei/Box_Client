@@ -6,55 +6,32 @@
     android:layout_centerInParent="true">
 
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="当前货品数量："
-        android:textSize="18sp"
-        android:textColor="@color/colorGaryFiveTwo"
-        android:layout_alignLeft="@+id/textView12"
-        android:layout_marginTop="20dp"
-        android:layout_alignParentTop="true" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="该货道货品最大数："
-        android:textSize="18sp"
-        android:textColor="@color/colorGaryFiveTwo"
-        android:layout_marginTop="16dp"
-        android:layout_below="@+id/nav_goods_dialog_edit_now"
-        android:layout_alignStart="@+id/textView13" />
-
     <EditText
         android:id="@+id/nav_goods_dialog_edit_now"
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:layout_height="30dp"
         android:ems="10"
         android:inputType="number"
         android:background="@drawable/manager_login_pwd_selector"
         android:gravity="center"
         android:textSize="18sp"
-        android:hint="当前数量"
-        android:layout_alignBaseline="@+id/textView8"
-        android:layout_alignBottom="@+id/textView8"
-        android:layout_toEndOf="@+id/textView8" />
+        android:hint="请输入当前数量"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
 
     <EditText
         android:id="@+id/nav_goods_dialog_edit_max"
-        android:layout_width="80dp"
+        android:layout_width="200dp"
         android:layout_height="30dp"
         android:ems="10"
         android:inputType="number"
-        android:layout_alignBaseline="@+id/textView12"
-        android:layout_alignBottom="@+id/textView12"
-        android:layout_toEndOf="@+id/textView12"
         android:background="@drawable/manager_login_pwd_selector"
         android:gravity="center"
         android:textSize="18sp"
         android:textColor="@color/colorDemoLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/nav_goods_dialog_edit_now"
+        android:layout_marginTop="10dp"
         android:hint="最大数"/>
 
     <TextView
@@ -62,7 +39,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nav_goods_dialog_edit_max"
+        android:layout_marginTop="5dp"
         android:layout_centerHorizontal="true"
         android:text="(最大数与实际情况不符时，请重新输入最大数)"
         android:textColor="@color/colorGoodsDetailsSix"/>
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="25dp"
+        android:text="当前数："
+        android:textColor="@color/colorGaryFiveTwo"
+        android:layout_alignBaseline="@+id/nav_goods_dialog_edit_now"
+        android:layout_alignBottom="@+id/nav_goods_dialog_edit_now"
+        android:layout_toStartOf="@+id/nav_goods_dialog_edit_now" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="最大数："
+        android:textColor="@color/colorGaryFiveTwo"
+        android:layout_alignBaseline="@+id/nav_goods_dialog_edit_max"
+        android:layout_alignBottom="@+id/nav_goods_dialog_edit_max"
+        android:layout_alignStart="@+id/textView14" />
 </RelativeLayout>
