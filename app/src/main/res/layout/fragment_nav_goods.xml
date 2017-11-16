@@ -54,6 +54,7 @@
          />
 
     <Button
+        android:id="@+id/nav_goods_btn_all_full"
         android:layout_width="138dp"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"

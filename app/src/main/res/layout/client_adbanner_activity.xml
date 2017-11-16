@@ -101,7 +101,7 @@
                 android:textSize="24sp" />
 
 
-            <TextView
+            <TextClock
                 android:id="@+id/home_txt_date"
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
@@ -111,11 +111,12 @@
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:padding="0dp"
-                android:text="0000-00-00 XXX"
+                android:format24Hour="yyyy-dd-MM EE"
+                android:format12Hour="yyyy-dd-MM EE"
                 android:textColor="@color/colorWhiteTxt"
                 android:textSize="14sp" />
 
-            <TextView
+            <TextClock
                 android:id="@+id/home_txt_time"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
@@ -124,7 +125,8 @@
                 android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="--:--"
+                android:format24Hour="hh:mm"
+                android:format12Hour="hh:mm"
                 android:textColor="@color/colorWhiteTxt"
                 android:textSize="40sp" />
 

@@ -14,6 +14,11 @@ import android.widget.GridView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.common.controls.dialog.CommonDialogFactory;
+import com.common.controls.dialog.DialogUtil;
+import com.common.controls.dialog.ICommonDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +40,7 @@ import box.lilei.box_client.manager.view.NavRoadFragmentView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NavRoadFragment extends Fragment implements NavRoadFragmentView {
+public class NavRoadFragment extends Fragment implements NavRoadFragmentView ,View.OnClickListener{
 
 
     private NavRoadAdapter navRoadAdapter;
@@ -49,6 +54,8 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView {
     private Context mContext;
     private NavRoadPresenter navRoadPresenter;
     private List<RoadGoods> roadGoodsList;
+    private String name;
+    private int index;
 
 
     public NavRoadFragment() {
@@ -73,7 +80,9 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView {
     private void initView(View view) {
         navRoadGv = (GridView) view.findViewById(R.id.nav_road_gv);
         navRoadTestBtn = (Button) view.findViewById(R.id.nav_road_btn_test);
+        navRoadTestBtn.setOnClickListener(this);
         navRoadClearBtn = (Button) view.findViewById(R.id.nav_road_btn_clear);
+        navRoadClearBtn.setOnClickListener(this);
         navRdoGrp = (RadioGroup) view.findViewById(R.id.nav_road_rdogrp_robot);
         navRdoRobotMain = (RadioButton) view.findViewById(R.id.nav_road_rdo_robot_main);
         navRdoRobotViceOne = (RadioButton) view.findViewById(R.id.nav_road_rdo_robot_add_one);
@@ -103,6 +112,8 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView {
                     boxType = BoxSetting.BOX_TYPE_FOOD;
                     roadGoodsList = navRoadPresenter.checkRobot(BoxSetting.BOX_TYPE_FOOD);
                 }
+                navRoadTestBtn.setText(R.string.string_test_this_road);
+                navRoadClearBtn.setText(R.string.string_clear_this_road);
                 navRoadAdapter.setmDatas(roadGoodsList);
                 navRoadAdapter.notifyDataSetChanged();
             }
@@ -110,12 +121,14 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView {
         navRoadGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView txtRoadIndex = (TextView) view.findViewById(R.id.nav_road_gv_item_road_num);
-                String roadTestTxt = navRoadTestBtn.getText().toString();
-                String s1 = roadTestTxt.substring(0, roadTestTxt.indexOf("：") + 1) + txtRoadIndex.getText().toString();
+                RoadGoods roadGoods = navRoadAdapter.getItem(position);
+                RoadInfo roadInfo = roadGoods.getRoadInfo();
+                Goods goods = roadGoods.getGoods();
+                String s1 = getResources().getString(R.string.string_test_this_road) + roadInfo.getRoadIndex().toString();
                 navRoadTestBtn.setText(s1);
-                String roadClearTxt = navRoadClearBtn.getText().toString();
-                navRoadClearBtn.setText("" + roadClearTxt.substring(0, roadClearTxt.indexOf("：") + 1) + txtRoadIndex.getText().toString());
+                navRoadClearBtn.setText( getResources().getString(R.string.string_clear_this_road) + roadInfo.getRoadIndex().toString());
+                name = goods.getGoodsName();
+                index = Integer.parseInt(roadInfo.getRoadIndex().toString());
             }
         });
     }
@@ -125,5 +138,48 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView {
         navRdoRobotViceOne.setVisibility(View.VISIBLE);
     }
 
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.nav_road_btn_test:
+                //测试该货道
+                if (!((Button)v).getText().toString().equals(getResources().getString(R.string.string_test_this_road))){
+
+                }else{
+                    Toast.makeText(mContext, "请选择货道", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.nav_road_btn_clear:
+                //清空该货道
+                if (!((Button)v).getText().toString().equals(getResources().getString(R.string.string_clear_this_road))){
+                    showOkCancelDialog();
+                }else{
+                    Toast.makeText(mContext, "请选择货道", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    public void showOkCancelDialog(){
+        final ICommonDialog okDialog = CommonDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_1);
+        okDialog.setTitleText("是否清空"+index+"货道商品："+name);
+        okDialog.setOkBtnStyleType(DialogUtil.OK_BTN_LARGE_BLUE_BG_WHITE_TEXT);
+        okDialog.setOkBtn(R.string.ok, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                okDialog.dismiss();
+            }
+        });
+        okDialog.setCancelBtn(R.string.cancel, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                okDialog.dismiss();
+            }
+        });
+        okDialog.setCanceledOnTouchOutside(false);
+        okDialog.show();
+    }
 
 }

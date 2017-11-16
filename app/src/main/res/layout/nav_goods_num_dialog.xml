@@ -64,4 +64,5 @@
         android:layout_alignBaseline="@+id/nav_goods_dialog_edit_max"
         android:layout_alignBottom="@+id/nav_goods_dialog_edit_max"
         android:layout_alignStart="@+id/textView14" />
+
 </RelativeLayout>

@@ -33,13 +33,20 @@ public class Constants {
      * 微信支付
      */
     //微信二维码
-    public static final String WxGetQRUrl = MAIN_URL + "/dc/dcbox/weixin/example/native.php";
+    public static final String WX_GET_QR_URL = MAIN_URL + "/dc/dcbox/weixin/example/native.php";
     public static final int PAY_TYPE_WX = 0;
 
     /**
      * 支付宝支付
      */
     //支付宝二维码
-    public static final String AliGetQRUrl = MAIN_URL + "/dc/f2f/f2fpay/qrpay_test.php";
+    public static final String ALI_GET_QR_URL = MAIN_URL + "/dc/f2f/f2fpay/qrpay_test.php";
     public static final int PAY_TYPE_ALI = 1;
+
+
+    /**
+     * 管理员模块
+     */
+    //补货接口
+    public static final String GOODS_NUM_ADD = MAIN_URL + "/dc/boxapp/?c=app&m=buhuo";
 }

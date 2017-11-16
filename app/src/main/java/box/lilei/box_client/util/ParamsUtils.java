@@ -47,6 +47,20 @@ public class ParamsUtils {
         return params;
     }
 
+    /**
+     * 补货接口参数规则
+     * @param machineid 机器号
+     * @param hid       货道号
+     * @param huodao_num 当前数量
+     * @param hgid      货柜编号
+     * @param pid       商品号
+     * @param huodao_max 货道最大数
+     * @return
+     */
+    public static Map<String,String> goodsNumAdd(String machineid,String hid,String huodao_num,String hgid,String pid,String huodao_max){
+        Map<String,String> params = new HashMap<String,String>();
+        return params;
+    }
 
 
 

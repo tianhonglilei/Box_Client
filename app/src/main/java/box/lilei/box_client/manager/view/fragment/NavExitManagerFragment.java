@@ -12,10 +12,10 @@ import box.lilei.box_client.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NavContinueFragment extends Fragment {
+public class NavExitManagerFragment extends Fragment {
 
 
-    public NavContinueFragment() {
+    public NavExitManagerFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class NavContinueFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_nav_continue, container, false);
+        return inflater.inflate(R.layout.fragment_nav_exit_manager, container, false);
     }
 
 }

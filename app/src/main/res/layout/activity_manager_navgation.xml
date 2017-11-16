@@ -79,17 +79,17 @@
                 style="@style/manager_nav_rdo_btn_style" />
             <RadioButton
                 android:id="@+id/manager_nav_rdo_btn_continue"
-                android:drawableLeft="@drawable/manager_nav_continue"
-                android:text="继续销售"
+                android:drawableLeft="@drawable/manager_nav_setting"
+                android:text="系统设置"
                 style="@style/manager_nav_rdo_btn_style" />
             <RadioButton
                 android:id="@+id/manager_nav_rdo_btn_restart"
-                android:drawableLeft="@drawable/manager_nav_restart"
-                android:text="重新启动"
+                android:drawableLeft="@drawable/manager_nav_exit_manager"
+                android:text="退出后台"
                 style="@style/manager_nav_rdo_btn_style" />
             <RadioButton
                 android:id="@+id/manager_nav_rdo_btn_exit"
-                android:drawableLeft="@drawable/manager_nav_exit"
+                android:drawableLeft="@drawable/manager_nav_exit_application"
                 android:text="退出程序"
                 style="@style/manager_nav_rdo_btn_style" />
 

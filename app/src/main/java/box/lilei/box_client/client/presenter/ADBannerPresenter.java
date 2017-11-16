@@ -33,7 +33,6 @@ public interface ADBannerPresenter {
      */
     void refreshGoodsData(GridView adbannerGoodsGv);
 
-    void getDateInfo();
 
     /**
      * 删除错误广告

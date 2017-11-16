@@ -41,7 +41,6 @@ import box.lilei.box_client.client.presenter.ADBannerPresenter;
 import box.lilei.box_client.client.presenter.WeatherPresenter;
 import box.lilei.box_client.client.presenter.impl.ADBannerPresenterImpl;
 import box.lilei.box_client.client.presenter.impl.WeatherPresenterImpl;
-import box.lilei.box_client.client.receiver.DateTimeReceiver;
 import box.lilei.box_client.client.view.ADBannerView;
 import box.lilei.box_client.client.widget.FullVideoView;
 import box.lilei.box_client.contants.Constants;
@@ -68,12 +67,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     //温度
     @BindView(R.id.home_txt_weather_temp)
     TextView homeTxtWeatherTemp;
-    //日期
-    @BindView(R.id.home_txt_date)
-    TextView homeTxtDate;
-    //小时
-    @BindView(R.id.home_txt_time)
-    TextView homeTxtTime;
+
 
     private Context mContext = this;
     private Context appContext;
@@ -151,32 +145,20 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     }
 
     /**
-     * 实例化时间控件
+     * 实例化天气控件
      */
     private void initDateAndWeather() {
-        //控制每分钟刷新时间
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mHandler.sendEmptyMessage(3);
-            }
-        }, 0, 1000 * 30);
 
-        //每小时刷新温度。每天刷新天气
+        //每3小时刷新温度。每天刷新天气
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 mHandler.sendEmptyMessage(4);
 
             }
-        }, 0, 1000 * 60 * 60 * 2);
+        }, 0, 1000 * 60 * 60 * 3);
     }
 
-    private void refreshDate() {
-        weatherPresenterIsNUll();
-//        mTimeReceiver = DateTimeReceiver.getInstance();
-//        mTimeReceiver.setWeatherPresenter(weatherPresenter);
-    }
 
     private void weatherPresenterIsNUll() {
         if (weatherPresenter == null) {
@@ -436,7 +418,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                     errorVideoNum = 0;
                     break;
                 case 3:
-                    adPresenter.getDateInfo();
+
                     break;
                 case 4:
                     weatherPresenter.getWeatherInfo();
@@ -483,8 +465,8 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     public void updateDate(MyTime myTime) {
         this.myTime = myTime;
         if (myTime != null) {
-            homeTxtDate.setText(myTime.getTimeDay() + " " + myTime.getTimeWeek());
-            homeTxtTime.setText(myTime.getTimeMinute());
+//            homeTxtDate.setText(myTime.getTimeDay() + " " + myTime.getTimeWeek());
+//            homeTxtTime.setText(myTime.getTimeMinute());
         }
     }
 

@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhiteTxt"
+    tools:context="box.lilei.box_client.manager.view.fragment.NavSettingFragment">
+
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:textColor="@color/colorDemoLogo"
+        android:textSize="30sp"
+        android:text="系统设置" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView8"
+        android:layout_marginEnd="250dp"
+        android:layout_toStartOf="@+id/textView8"
+        android:textColor="@color/colorDemoLogo"
+        android:textSize="26sp"
+        android:text="节能设定" />
+
+    <TextClock
+        android:id="@+id/textClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView12"
+        android:layout_below="@+id/textView12"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="108dp" />
+
+
+</RelativeLayout>

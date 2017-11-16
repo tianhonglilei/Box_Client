@@ -15,7 +15,7 @@ public interface RoadBiz {
     List<RoadInfo> getRoadList();
 
 
-    List<RoadGoods> parseRoadBeantoRoadAndGoods(List<RoadBean> roadBeanList);
+    List<RoadGoods> parseRoadBeanToRoadGoods(List<RoadBean> roadBeanList);
 
 
 }

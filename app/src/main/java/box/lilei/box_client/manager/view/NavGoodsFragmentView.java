@@ -9,8 +9,12 @@ import box.lilei.box_client.client.model.RoadGoods;
 public interface NavGoodsFragmentView {
 
 
-    void showInputDialog(RoadGoods roadGoods);
+    void showInputDialog(RoadGoods roadGoods,int position);
 
     void showViceOne();
+
+    void showLoading(String text);
+
+    void fullProgress(int count,Long nowRoad,int position);
 
 }

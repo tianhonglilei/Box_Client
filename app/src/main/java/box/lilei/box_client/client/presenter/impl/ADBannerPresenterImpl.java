@@ -9,10 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONException;
-import com.alibaba.fastjson.JSONObject;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,15 +28,8 @@ import box.lilei.box_client.client.model.Goods;
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.model.RoadInfo;
-import box.lilei.box_client.client.model.jsonmodel.AdJsonInfo;
-import box.lilei.box_client.client.okhttp.CommonOkHttpClient;
-import box.lilei.box_client.client.okhttp.exception.OkHttpException;
-import box.lilei.box_client.client.okhttp.handler.DisposeDataHandle;
-import box.lilei.box_client.client.okhttp.listener.DisposeDataListener;
-import box.lilei.box_client.client.okhttp.request.CommonRequest;
 import box.lilei.box_client.client.presenter.ADBannerPresenter;
 import box.lilei.box_client.client.view.ADBannerView;
-import box.lilei.box_client.contants.Constants;
 import box.lilei.box_client.db.AdBean;
 import box.lilei.box_client.db.GoodsBean;
 import box.lilei.box_client.db.PercentBean;
@@ -49,7 +38,6 @@ import box.lilei.box_client.db.biz.AdBeanService;
 import box.lilei.box_client.db.biz.GoodsBeanService;
 import box.lilei.box_client.db.biz.PercentBeanService;
 import box.lilei.box_client.db.biz.RoadBeanService;
-import box.lilei.box_client.util.JsonListUtil;
 import box.lilei.box_client.util.TimeUtil;
 
 /**
@@ -158,7 +146,7 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
 
     public void getRoadInfoFromDB() {
         List<RoadBean> roadBeanList = roadBeanService.queryAllRoadBean();
-        List<RoadGoods> roadGoodsList = roadBiz.parseRoadBeantoRoadAndGoods(roadBeanList);
+        List<RoadGoods> roadGoodsList = roadBiz.parseRoadBeanToRoadGoods(roadBeanList);
 
         roadGoodsMainList = roadGoodsList;
 
@@ -200,22 +188,6 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
                 roadGoodsMainList.add(roadGoods);
             }
         }
-    }
-
-
-    @Override
-    public void getDateInfo() {
-        Calendar calendar = Calendar.getInstance();
-        Date timeNow = new Date();
-        long time = timeNow.getTime();
-        String dateDay = TimeUtil.dateString(time);
-        String dateMinute = new SimpleDateFormat("HH:mm").format(timeNow);
-        String dateWeek = TimeUtil.dayForWeek(calendar);
-        MyTime myTime = new MyTime(dateDay, dateWeek, dateMinute);
-        if (adBannerView != null) {
-            adBannerView.updateDate(myTime);
-        }
-
     }
 
     @Override

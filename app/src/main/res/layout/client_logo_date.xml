@@ -56,7 +56,7 @@
         android:layout_alignParentTop="true">
 
 
-        <TextView
+        <TextClock
             android:id="@+id/more_weather_time"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
@@ -65,18 +65,20 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="--:--"
+            android:format24Hour="hh:mm"
+            android:format12Hour="hh:mm"
             android:textColor="@color/colorDemoLogo"
-            android:textSize="44sp" />
+            android:textSize="44sp"/>
 
-        <TextView
+        <TextClock
             android:id="@+id/more_weather_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/more_weather_time"
             android:layout_below="@+id/more_weather_time"
             android:layout_marginTop="6dp"
-            android:text="0000-00-00 XXX"
+            android:format24Hour="yyyy-dd-MM EE"
+            android:format12Hour="yyyy-dd-MM EE"
             android:textColor="@color/colorGaryFiveTwo"
             android:textSize="13sp" />
 
@@ -93,7 +95,7 @@
         <TextView
             android:id="@+id/more_weather_txt"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:layout_marginRight="12dp"
             android:layout_marginTop="14dp"
             android:layout_toLeftOf="@+id/more_line"
@@ -104,7 +106,7 @@
         <TextView
             android:id="@+id/more_weather_wd_num"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:layout_below="@+id/more_weather_txt"
             android:layout_marginRight="12dp"
             android:layout_toLeftOf="@+id/more_line"

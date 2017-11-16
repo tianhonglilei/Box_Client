@@ -18,11 +18,6 @@ public class WeatherPresenterImplTest {
 
 
     @Test
-    public void getDateInfo() throws Exception {
-
-    }
-
-    @Test
     public void getWeatherInfo() throws Exception {
 
     }

@@ -6,17 +6,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import box.lilei.box_client.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NavExitFragment extends Fragment {
+public class NavExitApplicationFragment extends Fragment {
 
 
-    public NavExitFragment() {
+    public NavExitApplicationFragment() {
         // Required empty public constructor
     }
 
@@ -25,7 +24,7 @@ public class NavExitFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_nav_exit, container, false);
+        return inflater.inflate(R.layout.fragment_nav_exit_application, container, false);
     }
 
 }

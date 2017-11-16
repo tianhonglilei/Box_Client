@@ -13,19 +13,16 @@ import android.os.Message;
 import android.support.annotation.IdRes;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.client.model.Goods;
@@ -161,7 +158,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
     private int checkNum = 1;
     private int checkPay = Constants.PAY_TYPE_WX;
-    private String payQRCodeUrl = Constants.WxGetQRUrl;
+    private String payQRCodeUrl = Constants.WX_GET_QR_URL;
 
     /**
      * 初始化选择按钮
@@ -211,7 +208,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 if (checkedId == R.id.pay_rb_wechat) {
                     checkPay = Constants.PAY_TYPE_WX;
-                    payQRCodeUrl = Constants.WxGetQRUrl;
+                    payQRCodeUrl = Constants.WX_GET_QR_URL;
                     if (checkNum == 1) {
                         if (bitmapWxPayOne == null) {
                             payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods.getGoodsName());
@@ -227,7 +224,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                     }
                 } else {
                     checkPay = Constants.PAY_TYPE_ALI;
-                    payQRCodeUrl = Constants.AliGetQRUrl;
+                    payQRCodeUrl = Constants.ALI_GET_QR_URL;
                     if (checkNum == 1) {
                         if (bitmapAliPayOne == null) {
                             payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods.getGoodsName());
@@ -265,16 +262,9 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     }
 
     /**
-     * 初始化时间和天气
+     * 初始化天气
      */
     private void initDateAndWeather() {
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mHandler.sendEmptyMessage(3);
-            }
-        }, 0, 1000 * 30);
         if (dataIntent != null) {
             moreWeatherTxt.setText(dataIntent.getStringExtra("weather"));
             moreWeatherWdNum.setText(dataIntent.getStringExtra("temp"));
@@ -287,7 +277,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             super.handleMessage(msg);
             switch (msg.what) {
                 case 3:
-                    payPresenter.getDateInfo();
+
                     break;
             }
 

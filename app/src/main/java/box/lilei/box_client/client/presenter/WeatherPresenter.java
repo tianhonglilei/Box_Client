@@ -5,10 +5,6 @@ package box.lilei.box_client.client.presenter;
  */
 
 public interface WeatherPresenter {
-    /**
-     * 获取时间
-     */
-    void getDateInfo();
 
     /**
      * 获取当天天气信息

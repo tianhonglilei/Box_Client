@@ -28,7 +28,7 @@ public class RoadBizImpl implements RoadBiz {
     }
 
     @Override
-    public List<RoadGoods> parseRoadBeantoRoadAndGoods(List<RoadBean> roadBeanList) {
+    public List<RoadGoods> parseRoadBeanToRoadGoods(List<RoadBean> roadBeanList) {
         List<RoadGoods> roadGoodsList = new ArrayList<>();
 
         for (RoadBean bean:
@@ -37,6 +37,7 @@ public class RoadBizImpl implements RoadBiz {
             RoadInfo roadInfo = new RoadInfo();
             Goods goods = new Goods();
             GoodsBean goodsBean;
+            roadGoods.setRoadGoodsId(bean.getId());
             roadInfo.setRoadIndex(bean.getHid());
             roadInfo.setRoadMaxNum(bean.getMax());
             roadInfo.setRoadNowNum(bean.getNowNum());
@@ -80,4 +81,5 @@ public class RoadBizImpl implements RoadBiz {
 
         return roadGoodsList;
     }
+
 }

@@ -41,7 +41,7 @@ public class NavGoodsPresenterImpl implements NavGoodsPresenter {
 
     @Override
     public void initGoodsGridView(GridView gridView) {
-        roadGoodsList = roadBiz.parseRoadBeantoRoadAndGoods(roadBeanService.queryAllRoadBean());
+        roadGoodsList = roadBiz.parseRoadBeanToRoadGoods(roadBeanService.queryAllRoadBean());
         roadGoodsListMain = new ArrayList<>();
         roadGoodsListViceOne = new ArrayList<>();
         if (roadGoodsList.size() != 0) {
@@ -63,7 +63,7 @@ public class NavGoodsPresenterImpl implements NavGoodsPresenter {
             gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    navGoodsFragmentView.showInputDialog(roadGoodsList.get(position));
+                    navGoodsFragmentView.showInputDialog(roadGoodsList.get(position),position);
                 }
             });
         }
@@ -73,20 +73,54 @@ public class NavGoodsPresenterImpl implements NavGoodsPresenter {
     public void checkGoodsData(GridView gridView, String boxType) {
         if (boxType.equals(BoxSetting.BOX_TYPE_DRINK)) {
             roadGoodsList = roadGoodsListMain;
-            navGoodsAdapter.setmDatas(roadGoodsList);
-            navGoodsAdapter.notifyDataSetChanged();
+            refreshAllRoadNum();
         } else if (boxType.equals(BoxSetting.BOX_TYPE_FOOD)) {
             if (roadGoodsListViceOne.size() != 0){
                 roadGoodsList = roadGoodsListViceOne;
-                navGoodsAdapter.setmDatas(roadGoodsList);
-                navGoodsAdapter.notifyDataSetChanged();
+                refreshAllRoadNum();
             }
         }
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                navGoodsFragmentView.showInputDialog(roadGoodsList.get(position));
+                navGoodsFragmentView.showInputDialog(roadGoodsList.get(position),position);
             }
         });
     }
+
+    @Override
+    public void updateGoodsNum(Long id,int now,int max) {
+        roadBeanService.updateRoadNum(id,now,max);
+    }
+
+    @Override
+    public void refreshGoodsNum(RoadGoods roadGoods, int mPosition) {
+        roadGoodsList.set(mPosition,roadGoods);
+        navGoodsAdapter.setmDatas(roadGoodsList);
+        navGoodsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void allRoadFull() {
+        navGoodsFragmentView.showLoading("一键补满");
+        for (int i = 0; i < roadGoodsList.size(); i++) {
+            RoadGoods roadGoods = roadGoodsList.get(i);
+            RoadInfo roadInfo = roadGoods.getRoadInfo();
+            roadInfo.setRoadNowNum(roadInfo.getRoadMaxNum());
+            roadGoods.setRoadInfo(roadInfo);
+            roadGoodsList.set(i,roadGoods);
+            roadBeanService.updateRoadNum(roadGoods.getRoadGoodsId(),roadInfo.getRoadMaxNum(),roadInfo.getRoadMaxNum());
+            navGoodsFragmentView.fullProgress(roadGoodsList.size(),roadInfo.getRoadIndex(),i+1);
+        }
+    }
+
+    @Override
+    public void refreshAllRoadNum() {
+        navGoodsAdapter.setmDatas(roadGoodsList);
+        navGoodsAdapter.notifyDataSetChanged();
+    }
+
+
+
+
 }

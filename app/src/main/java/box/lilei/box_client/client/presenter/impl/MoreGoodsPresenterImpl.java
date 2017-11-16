@@ -58,7 +58,7 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
     @Override
     public void initAllGoods(GridView gridView) {
         this.gridView = gridView;
-        goodsList = roadBiz.parseRoadBeantoRoadAndGoods(roadBeanService.queryAllRoadBean());
+        goodsList = roadBiz.parseRoadBeanToRoadGoods(roadBeanService.queryAllRoadBean());
         getFoodAndDrink();
         gvMoreGoodsAdapter = new GvMoreGoodsAdapter(mContext, goodsList, R.layout.client_more_goods_item);
         gridView.setAdapter(gvMoreGoodsAdapter);
@@ -89,20 +89,6 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
             }
         }
 
-    }
-
-    @Override
-    public void getDateInfo() {
-        Calendar calendar = Calendar.getInstance();
-        Date timeNow = new Date();
-        long time = timeNow.getTime();
-        String dateDay = TimeUtil.dateString(time);
-        String dateMinute = new SimpleDateFormat("HH:mm").format(timeNow);
-        String dateWeek = TimeUtil.dayForWeek(calendar);
-        MyTime myTime = new MyTime(dateDay, dateWeek, dateMinute);
-        if (moreGoodsView != null) {
-            moreGoodsView.updateDate(myTime);
-        }
     }
 
 }

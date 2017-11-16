@@ -1,22 +1,17 @@
 package box.lilei.box_client.manager.view.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.widget.CompoundButton;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import box.lilei.box_client.BuildConfig;
 import box.lilei.box_client.R;
-import box.lilei.box_client.manager.view.fragment.NavContinueFragment;
-import box.lilei.box_client.manager.view.fragment.NavExitFragment;
+import box.lilei.box_client.manager.view.fragment.NavSettingFragment;
+import box.lilei.box_client.manager.view.fragment.NavExitApplicationFragment;
 import box.lilei.box_client.manager.view.fragment.NavGoodsFragment;
-import box.lilei.box_client.manager.view.fragment.NavRestartFragment;
+import box.lilei.box_client.manager.view.fragment.NavExitManagerFragment;
 import box.lilei.box_client.manager.view.fragment.NavRoadFragment;
 import box.lilei.box_client.manager.view.fragment.NavTempFragment;
 import box.lilei.box_client.manager.view.fragment.NavVersionFragment;
@@ -33,9 +28,9 @@ public class ManagerNavgationActivity extends FragmentActivity{
     private NavRoadFragment navRoadFragment;
     private NavTempFragment navTempFragment;
     private NavVersionFragment navVersionFragment;
-    private NavContinueFragment navContinueFragment;
-    private NavRestartFragment navRestartFragment;
-    private NavExitFragment navExitFragment;
+    private NavSettingFragment navSettingFragment;
+    private NavExitManagerFragment navExitManagerFragment;
+    private NavExitApplicationFragment navExitApplicationFragment;
     private Fragment[] fragments;
     private int mIndex;
 
@@ -92,11 +87,11 @@ public class ManagerNavgationActivity extends FragmentActivity{
         navRoadFragment = new NavRoadFragment();
         navTempFragment = new NavTempFragment();
         navVersionFragment = new NavVersionFragment();
-        navContinueFragment = new NavContinueFragment();
-        navRestartFragment = new NavRestartFragment();
-        navExitFragment = new NavExitFragment();
+        navSettingFragment = new NavSettingFragment();
+        navExitManagerFragment = new NavExitManagerFragment();
+        navExitApplicationFragment = new NavExitApplicationFragment();
         //添加到数组
-        fragments = new Fragment[]{navGoodsFragment,navRoadFragment,navTempFragment,navVersionFragment,navContinueFragment,navRestartFragment,navExitFragment};
+        fragments = new Fragment[]{navGoodsFragment,navRoadFragment,navTempFragment,navVersionFragment, navSettingFragment, navExitManagerFragment, navExitApplicationFragment};
         //开启事务
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();

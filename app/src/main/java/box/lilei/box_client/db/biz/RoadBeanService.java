@@ -2,6 +2,8 @@ package box.lilei.box_client.db.biz;
 
 import android.content.Context;
 
+import org.greenrobot.greendao.query.Query;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,5 +24,16 @@ public class RoadBeanService extends BeanService<RoadBean> {
 
     public void clearAdBean(){
         mDao.deleteAll();
+    }
+
+    public void updateRoadNum(Long roadId ,int now,int max){
+        RoadBean roadBean = mDao.load(roadId);
+        roadBean.setMax(max);
+        roadBean.setNowNum(now);
+        updateBean(roadBean);
+    }
+
+    public void updateRoadNum(Long roadId, int num){
+
     }
 }

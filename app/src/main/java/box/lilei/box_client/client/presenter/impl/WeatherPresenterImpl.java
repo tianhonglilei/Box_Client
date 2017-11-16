@@ -48,21 +48,6 @@ public class WeatherPresenterImpl implements WeatherPresenter {
 
 
     @Override
-    public void getDateInfo() {
-        Calendar calendar = Calendar.getInstance();
-        Date timeNow = new Date();
-        long time = timeNow.getTime();
-        String dateDay = TimeUtil.dateString(time);
-        String dateMinute = new SimpleDateFormat("HH:mm").format(timeNow);
-        String dateWeek = TimeUtil.dayForWeek(calendar);
-        MyTime myTime = new MyTime(dateDay, dateWeek, dateMinute);
-        if (adBannerView != null) {
-            adBannerView.updateDate(myTime);
-        }
-
-    }
-
-    @Override
     public void getWeatherInfo() {
         CommonOkHttpClient.get(CommonRequest.createGetRequest(Constants.WEATHER_INFO_URL, null),
                 new DisposeDataHandle(new DisposeDataListener() {

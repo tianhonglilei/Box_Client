@@ -10,6 +10,5 @@ public interface PayPresenter {
 
     void getQRCode(String url,double price,int payType,int payNum,String goodsName);
 
-    void getDateInfo();
 
 }

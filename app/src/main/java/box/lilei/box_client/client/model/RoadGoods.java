@@ -9,22 +9,23 @@ import android.os.Parcelable;
 
 public class RoadGoods implements Parcelable {
 
-    private int roadGoodsId;
+    private Long roadGoodsId;
     private Goods goods;
     private RoadInfo roadInfo;
 
-    public RoadGoods(int roadGoodsId, Goods goods, RoadInfo roadInfo) {
+    public RoadGoods(Long roadGoodsId, Goods goods, RoadInfo roadInfo) {
         this.roadGoodsId = roadGoodsId;
         this.goods = goods;
         this.roadInfo = roadInfo;
     }
+
     public RoadGoods(){}
 
-    public int getRoadGoodsId() {
+    public Long getRoadGoodsId() {
         return roadGoodsId;
     }
 
-    public void setRoadGoodsId(int roadGoodsId) {
+    public void setRoadGoodsId(Long roadGoodsId) {
         this.roadGoodsId = roadGoodsId;
     }
 
@@ -44,6 +45,7 @@ public class RoadGoods implements Parcelable {
         this.roadInfo = roadInfo;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -51,18 +53,18 @@ public class RoadGoods implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.roadGoodsId);
+        dest.writeValue(this.roadGoodsId);
         dest.writeParcelable(this.goods, flags);
         dest.writeParcelable(this.roadInfo, flags);
     }
 
     protected RoadGoods(Parcel in) {
-        this.roadGoodsId = in.readInt();
+        this.roadGoodsId = (Long) in.readValue(Long.class.getClassLoader());
         this.goods = in.readParcelable(Goods.class.getClassLoader());
         this.roadInfo = in.readParcelable(RoadInfo.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<RoadGoods> CREATOR = new Parcelable.Creator<RoadGoods>() {
+    public static final Creator<RoadGoods> CREATOR = new Creator<RoadGoods>() {
         @Override
         public RoadGoods createFromParcel(Parcel source) {
             return new RoadGoods(source);

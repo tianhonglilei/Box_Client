@@ -60,7 +60,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
         android:layout_marginLeft="380dp"
-        android:text="测试该货道：?"
+        android:text="@string/string_test_this_road"
         android:background="@drawable/manager_login_btn_selector"
         android:textSize="16dp"
         android:textColor="@color/colorWhiteTxt"/>
@@ -73,7 +73,7 @@
         android:layout_marginBottom="30dp"
         android:layout_toRightOf="@+id/nav_road_btn_test"
         android:layout_marginLeft="40dp"
-        android:text="出空该货道：?"
+        android:text="@string/string_clear_this_road"
         android:background="@drawable/manager_login_btn_selector"
         android:textSize="16dp"
         android:textColor="@color/colorWhiteTxt"/>

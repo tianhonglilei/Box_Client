@@ -68,10 +68,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
     //温度时间模块
     private Intent dataIntent;
-    @BindView(R.id.more_weather_time)
-    TextView moreWeatherTime;
-    @BindView(R.id.more_weather_date)
-    TextView moreWeatherDate;
     @BindView(R.id.more_weather_txt)
     TextView moreWeatherTxt;
     @BindView(R.id.more_weather_wd_num)
@@ -99,13 +95,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
      * 初始化时间和温度
      */
     private void initDateAndWeather() {
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                mHandler.sendEmptyMessage(3);
-            }
-        }, 0, 1000 * 30);
         if (dataIntent != null) {
             moreWeatherTxt.setText(dataIntent.getStringExtra("weather"));
             moreWeatherWdNum.setText(dataIntent.getStringExtra("temp"));
@@ -118,8 +107,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MoreGoodsActivity.this, PayActivity.class);
-                intent.putExtra("minute", moreWeatherTime.getText().toString());
-                intent.putExtra("date", moreWeatherDate.getText().toString());
                 intent.putExtra("temp", moreWeatherWdNum.getText().toString());
                 intent.putExtra("weather", moreWeatherTxt.getText().toString());
                 RoadGoods roadGoods = (RoadGoods) moreGoodsGv.getItemAtPosition(position);
@@ -189,7 +176,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        timer.cancel();
+//        timer.cancel();
         moreGoodsPresenter = null;
         timer = null;
     }
@@ -201,7 +188,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             super.handleMessage(msg);
             switch (msg.what) {
                 case 3:
-                    moreGoodsPresenter.getDateInfo();
+
                     break;
             }
 
@@ -212,8 +199,8 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     @Override
     public void updateDate(MyTime myTime) {
         if (myTime != null) {
-            moreWeatherTime.setText(myTime.getTimeMinute());
-            moreWeatherDate.setText(myTime.getTimeDay() + " " + myTime.getTimeWeek());
+//            moreWeatherTime.setText(myTime.getTimeMinute());
+//            moreWeatherDate.setText(myTime.getTimeDay() + " " + myTime.getTimeWeek());
         }
     }
 

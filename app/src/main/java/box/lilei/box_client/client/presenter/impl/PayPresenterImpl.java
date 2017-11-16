@@ -103,20 +103,5 @@ public class PayPresenterImpl implements PayPresenter {
         }));
     }
 
-    @Override
-    public void getDateInfo() {
-        Calendar calendar = Calendar.getInstance();
-        Date timeNow = new Date();
-        long time = timeNow.getTime();
-        String dateDay = TimeUtil.dateString(time);
-        String dateMinute = new SimpleDateFormat("HH:mm").format(timeNow);
-        String dateWeek = TimeUtil.dayForWeek(calendar);
-        MyTime myTime = new MyTime(dateDay, dateWeek, dateMinute);
-        if (payView != null) {
-            payView.updateDate(myTime);
-        }
-
-    }
-
 
 }
