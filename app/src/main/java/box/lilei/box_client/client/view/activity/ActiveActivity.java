@@ -31,6 +31,7 @@ import box.lilei.box_client.client.view.ActiveView;
 import box.lilei.box_client.loading.ZLoadingDialog;
 import box.lilei.box_client.loading.ZLoadingView;
 import box.lilei.box_client.loading.Z_TYPE;
+import box.lilei.box_client.util.SharedPreferencesUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -184,7 +185,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
             activeBgTxt.setVisibility(View.VISIBLE);
         }
         if (success) {
-            activePresenter.loadAllDataFromUrl(BoxAction.getBoxId());
+            activePresenter.loadAllDataFromUrl(SharedPreferencesUtil.getString(mContext,"box_id"));
         }
     }
 

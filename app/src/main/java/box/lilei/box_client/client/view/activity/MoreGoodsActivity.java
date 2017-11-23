@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.Timer;
-import java.util.TimerTask;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.client.model.MyTime;
@@ -28,17 +27,18 @@ import box.lilei.box_client.client.presenter.MoreGoodsPresenter;
 import box.lilei.box_client.client.presenter.impl.MoreGoodsPresenterImpl;
 import box.lilei.box_client.client.view.MoreGoodsView;
 import box.lilei.box_client.manager.view.activity.ManagerNavgationActivity;
+import box.lilei.box_client.util.SharedPreferencesUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MoreGoodsActivity extends Activity implements View.OnClickListener, MoreGoodsView {
 
 
-    @BindView(R.id.more_imei_num)
-    TextView moreImeiNum;
     //向上的GIF
     @BindView(R.id.more_goods_up_gif)
     ImageView moreGoodsUpGif;
+    @BindView(R.id.more_imei_num)
+    TextView moreImeiNum;
     private MoreGoodsPresenter moreGoodsPresenter;
     private Context mContext;
 
@@ -125,6 +125,9 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         moreGoodsPresenter.initAllGoods(moreGoodsGv);
 
         moreGoodsNavRlReturn.setOnClickListener(this);
+
+        //显示机器号
+        moreImeiNum.setText(SharedPreferencesUtil.getString(mContext,"box_id"));
 
         moreGoodsRbtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

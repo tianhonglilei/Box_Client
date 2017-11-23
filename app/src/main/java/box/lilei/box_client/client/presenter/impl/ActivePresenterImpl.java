@@ -318,6 +318,8 @@ public class ActivePresenterImpl implements ActivePresenter {
         String box_id = SharedPreferencesUtil.getString(mContext, "box_id");
         if (box_id != null && !box_id.equals("")) {
             activeView.hiddenActiveLayout(true);
+        } else if(box_id.equals("00000000")){
+            getBoxIdFromBox();
         } else {
             activeView.showActiveLayout();
         }
@@ -354,29 +356,33 @@ public class ActivePresenterImpl implements ActivePresenter {
                     Toast.makeText(mContext, "串口打开时的未知错误", Toast.LENGTH_SHORT).show();
                 } else if (res == CommServiceThread.COMM_SERVICE_START) {
                     Toast.makeText(mContext, "激活启动成功", Toast.LENGTH_SHORT).show();
-                    while (true) {
-                        //获取机器号
-                        String box_id = BoxAction.getBoxId();
-                        if (!TextUtils.isEmpty(box_id)) {
-                            SharedPreferencesUtil.putString(mContext, "box_id", box_id);
-                            Toast.makeText(mContext, box_id, Toast.LENGTH_SHORT).show();
-                            activeView.hiddenActiveLayout(true);
-                            break;
-                        } else {
-                            try {
-                                Thread.sleep(500);
-                                continue;
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
+                    getBoxIdFromBox();
                 } else {
                     Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
                 }
                 activeView.hideDialog();
             }
         }.connect(mContext, code, 1);
+    }
+
+    private void getBoxIdFromBox() {
+        while (true) {
+            //获取机器号
+            String box_id = BoxAction.getBoxId();
+            if (!TextUtils.isEmpty(box_id) && !box_id.equals("00000000")) {
+                SharedPreferencesUtil.putString(mContext, "box_id", box_id);
+                Toast.makeText(mContext, box_id, Toast.LENGTH_SHORT).show();
+                activeView.hiddenActiveLayout(true);
+                break;
+            } else {
+                try {
+                    Thread.sleep(500);
+                    continue;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 

@@ -38,6 +38,7 @@ import box.lilei.box_client.contants.Constants;
 import box.lilei.box_client.loading.ZLoadingDialog;
 import box.lilei.box_client.loading.ZLoadingView;
 import box.lilei.box_client.loading.Z_TYPE;
+import box.lilei.box_client.util.SharedPreferencesUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -107,6 +108,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     TextView payTxtQrcodeLoading;
     @BindView(R.id.pay_qrcode_loading)
     ZLoadingView payQrcodeLoading;
+    @BindView(R.id.more_imei_num)
+    TextView moreImeiNum;
     private Bitmap bitmapWxPayOne, bitmapWxPayTwo, bitmapAliPayOne, bitmapAliPayTwo;
 
     //支付和数量的选择按钮
@@ -142,6 +145,9 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         initLayoutRadioButton();
         initFont();
         initDateAndWeather();
+
+        //显示机器号
+        moreImeiNum.setText(SharedPreferencesUtil.getString(mContext, "box_id"));
 
         //初始化营养成分
         payPresenter.initPercenterInfo(roadGoods.getGoods().getGoodsId());
