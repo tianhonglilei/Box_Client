@@ -3,10 +3,10 @@ package box.lilei.box_client.client.view.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.text.method.KeyListener;
-import android.text.method.NumberKeyListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,15 +14,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import box.lilei.box_client.R;
+import box.lilei.box_client.box.BoxAction;
+import box.lilei.box_client.box.BoxSetting;
+import box.lilei.box_client.client.listener.NetEvent;
 import box.lilei.box_client.client.presenter.ActivePresenter;
 import box.lilei.box_client.client.presenter.impl.ActivePresenterImpl;
+import box.lilei.box_client.client.receiver.NetBroadcastReceiver;
 import box.lilei.box_client.client.view.ActiveView;
 import box.lilei.box_client.loading.ZLoadingDialog;
+import box.lilei.box_client.loading.ZLoadingView;
 import box.lilei.box_client.loading.Z_TYPE;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ActiveActivity extends Activity implements View.OnClickListener, ActiveView {
+public class ActiveActivity extends Activity implements View.OnClickListener, ActiveView, NetEvent {
 
     //激活码
     @BindView(R.id.edit_active_code)
@@ -44,6 +49,29 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
 
     //提示框
     ZLoadingDialog dialog;
+    @BindView(R.id.active_bg_loading)
+    ZLoadingView activeBgLoading;
+
+    //检测网络
+    private NetBroadcastReceiver netBroadcastReceiver;
+    private int netState;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //注册广播
+        if (netBroadcastReceiver == null) {
+            netBroadcastReceiver = new NetBroadcastReceiver();
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+            registerReceiver(netBroadcastReceiver, filter);
+            /**
+             * 设置监听
+             */
+            netBroadcastReceiver.setNetEvent(this);
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,23 +79,14 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         setContentView(R.layout.client_active_activity);
         ButterKnife.bind(this);
 
+        activeBgLoading.setLoadingBuilder(Z_TYPE.values()[1]);
+
         activeBtn.setOnClickListener(this);
 
         activePresenter = new ActivePresenterImpl(this, this);
 
-        editActiveCode.setKeyListener(new NumberKeyListener() {
-            @Override
-            protected char[] getAcceptedChars() {
-                char[] chars = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-                return chars;
-//                return new char[0];
-            }
+//        activePresenter.getBoxId();
 
-            @Override
-            public int getInputType() {
-                return 3;
-            }
-        });
 
     }
 
@@ -76,8 +95,8 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
 
         switch (v.getId()) {
             case R.id.active_btn:
-                showDialog("加载中...");
-                activePresenter.loadAllDataFromUrl("93006709");
+//                activePresenter.loadAllDataFromUrl(BoxSetting.BOX_TEST_ID);
+                activePresenter.activeBox(editActiveCode.getText().toString());
                 break;
         }
 
@@ -86,8 +105,8 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
     @Override
     public void changeDownloadProgress(int maxNum, int successNum, int failNum) {
         activeDownloadTxt.setText("下载:" + maxNum + "{成功:" + successNum + "，失败:" + failNum + "}");
-        if (maxNum == successNum + failNum){
-            hideDialog();
+        if (maxNum == successNum + failNum) {
+//            hideDialog();
             skipToADBannerActivity();
         }
     }
@@ -113,8 +132,43 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
 
     @Override
     public void skipToADBannerActivity() {
-        Intent intent = new Intent(ActiveActivity.this,ADBannerActivity.class);
+        Intent intent = new Intent(ActiveActivity.this, ADBannerActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void showActiveLayout() {
+        if (activeRl.getVisibility() == View.INVISIBLE) {
+            activeRl.setVisibility(View.VISIBLE);
+            activeBgLoading.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void hiddenActiveLayout(boolean success) {
+        if (activeRl.getVisibility() == View.VISIBLE) {
+            activeRl.setVisibility(View.INVISIBLE);
+            activeBgLoading.setVisibility(View.VISIBLE);
+        }
+        if (success){
+            activePresenter.loadAllDataFromUrl(BoxAction.getBoxId());
+        }
+    }
+
+
+    @Override
+    public void onNetChange(int netMobile) {
+        netState = netMobile;
+        switch (netState) {
+            case 0://移动数据
+            case 1://wifi
+            case 2://以太网
+                activePresenter.getBoxId();
+                break;
+            case -1://没有网络
+
+                break;
+        }
     }
 }

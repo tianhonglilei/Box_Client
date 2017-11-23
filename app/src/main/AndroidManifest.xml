@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="box.lilei.box_client">
+    package="box.lilei.box_client"
+    android:versionCode="16"
+    android:versionName="2.0">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -20,9 +22,7 @@
         <activity
             android:name=".client.view.activity.ADBannerActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="landscape">
-
-        </activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".client.view.activity.MoreGoodsActivity"
             android:screenOrientation="landscape" />
@@ -34,15 +34,33 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".manager.view.activity.ManagerNavgationActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".client.view.activity.ActiveActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".service.HeartService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver
+            android:name=".client.receiver.GoodsBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" />
+        <receiver
+            android:name=".client.receiver.OpenDoorBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true"/>
+        <receiver android:name=".client.receiver.NetBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>

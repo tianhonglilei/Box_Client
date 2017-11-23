@@ -7,34 +7,103 @@
 
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/setting_lbl_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="400dp"
         android:layout_marginTop="70dp"
+        android:text="系统设置"
         android:textColor="@color/colorDemoLogo"
-        android:textSize="30sp"
-        android:text="系统设置" />
+        android:textSize="30sp" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/setting_lbl_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView8"
-        android:layout_marginEnd="250dp"
-        android:layout_toStartOf="@+id/textView8"
+        android:layout_below="@+id/setting_lbl_setting"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="20dp"
+        android:text="节能设定"
         android:textColor="@color/colorDemoLogo"
-        android:textSize="26sp"
-        android:text="节能设定" />
+        android:textSize="26sp" />
 
-    <TextClock
-        android:id="@+id/textClock"
+    <TextView
+        android:id="@+id/setting_lbl_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView12"
-        android:layout_below="@+id/textView12"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="108dp" />
+        android:layout_marginLeft="80dp"
+        android:text="开启时间："
+        android:textColor="@color/colorGaryFiveTwo"
+        android:textSize="20sp"
+        android:layout_alignBaseline="@+id/setting_sp_start_time"
+        android:layout_alignBottom="@+id/setting_sp_start_time"
+        android:layout_toStartOf="@+id/setting_sp_start_time" />
+
+    <TextView
+        android:id="@+id/setting_lbl_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:text="关闭时间："
+        android:textColor="@color/colorGaryFiveTwo"
+        android:textSize="20sp"
+        android:layout_centerVertical="true" />
+
+    <Button
+        android:id="@+id/nav_setting_btn_power_time"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="57dp"
+        android:text="确定"
+        android:textSize="26sp"
+        android:textColor="@color/colorWhiteTxt"
+        android:background="@drawable/manager_login_btn_selector"
+        android:layout_below="@+id/setting_sp_end_time"
+        android:layout_alignEnd="@+id/setting_lbl_light" />
+
+    <TextView
+        android:id="@+id/setting_lbl_now_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="当前设置："
+        android:textColor="@color/colorGaryFiveTwo"
+        android:textSize="16sp"
+        android:layout_below="@+id/setting_lbl_light"
+        android:layout_alignStart="@+id/setting_lbl_end"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:id="@+id/setting_txt_now_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00-00:00"
+        android:textColor="@color/colorGaryFiveTwo"
+        android:textSize="16sp"
+        android:layout_alignBaseline="@+id/setting_lbl_now_time"
+        android:layout_alignBottom="@+id/setting_lbl_now_time"
+        android:layout_toEndOf="@+id/setting_lbl_now_time" />
+
+    <Spinner
+        android:id="@+id/setting_sp_start_time"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="number"
+        android:entries="@array/setting_time_String_array"
+        android:layout_marginTop="55dp"
+        android:layout_below="@+id/setting_txt_now_time"
+        android:layout_alignStart="@+id/setting_sp_end_time" />
+
+    <Spinner
+        android:id="@+id/setting_sp_end_time"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="number"
+        android:entries="@array/setting_time_String_array"
+        android:layout_alignBaseline="@+id/setting_lbl_end"
+        android:layout_alignBottom="@+id/setting_lbl_end"
+        android:layout_toEndOf="@+id/setting_lbl_end" />
 
 
 </RelativeLayout>

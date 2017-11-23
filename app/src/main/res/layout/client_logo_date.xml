@@ -65,7 +65,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:format24Hour="hh:mm"
+            android:format24Hour="kk:mm"
             android:format12Hour="hh:mm"
             android:textColor="@color/colorDemoLogo"
             android:textSize="44sp"/>
@@ -77,8 +77,8 @@
             android:layout_alignRight="@+id/more_weather_time"
             android:layout_below="@+id/more_weather_time"
             android:layout_marginTop="6dp"
-            android:format24Hour="yyyy-dd-MM EE"
-            android:format12Hour="yyyy-dd-MM EE"
+            android:format24Hour="yyyy-MM-dd EE"
+            android:format12Hour="yyyy-MM-dd EE"
             android:textColor="@color/colorGaryFiveTwo"
             android:textSize="13sp" />
 

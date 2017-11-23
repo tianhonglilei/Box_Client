@@ -8,16 +8,12 @@
     tools:context="box.lilei.box_client.manager.view.activity.LoginActivity"
     android:background="@color/colorWhiteTxt">
 
-    <include
-        layout="@layout/manager_head"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        />
+
 
     <RelativeLayout
         android:layout_width="440dp"
         android:layout_height="340dp"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="80dp"
         android:layout_centerHorizontal="true"
         android:background="@color/colorHomeGoodsBg"
         android:id="@+id/relativeLayout3">
@@ -41,14 +37,14 @@
             android:textSize="18sp"
             />
         <EditText
-            android:id="@+id/ed_manager_pwd"
+            android:id="@+id/login_edit_pwd"
             android:layout_width="160dp"
             android:layout_height="40dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/textView1"
             android:layout_marginTop="14dp"
             android:maxLength="8"
-            android:inputType="textPassword"
+            android:inputType="numberPassword"
             android:text=""
             android:gravity="center"
             android:hint="请输入管理员密码"
@@ -56,16 +52,30 @@
             android:background="@drawable/manager_login_pwd_selector"
             />
         <Button
-            android:id="@+id/button"
-            android:layout_width="340dp"
+            android:id="@+id/login_btn"
+            android:layout_width="240dp"
             android:layout_height="60dp"
-            android:layout_below="@+id/ed_manager_pwd"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_below="@+id/login_edit_pwd"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/manager_login_btn_selector"
             android:textSize="22dp"
             android:textColor="@color/colorWhiteTxt"
             android:text="登 陆" />
+
+        <Button
+            android:id="@+id/login_cancel"
+            android:layout_width="140dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/login_edit_pwd"
+            android:layout_toRightOf="@+id/login_btn"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/manager_login_btn_selector"
+            android:textSize="22dp"
+            android:textColor="@color/colorWhiteTxt"
+            android:text="取消" />
+
 
     </RelativeLayout>
 

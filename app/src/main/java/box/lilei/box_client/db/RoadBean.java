@@ -5,7 +5,6 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.ToOne;
 
-import box.lilei.box_client.client.model.Goods;
 import org.greenrobot.greendao.DaoException;
 
 /**
@@ -46,25 +45,22 @@ public class RoadBean {
     //货柜类型
     private String huogui_num;
     //当前数量
-    private int nowNum;
+    private int huodao_num;
     //温度状态
     private int tempState;
     //销售状态
     private int saleState;
-
     /** Used to resolve relations */
     @Generated(hash = 2040040024)
     private transient DaoSession daoSession;
-
     /** Used for active entity operations. */
     @Generated(hash = 644143118)
     private transient RoadBeanDao myDao;
 
-    @Generated(hash = 108351054)
-    private transient Long goodsBean__resolvedKey;
-    @Generated(hash = 1106426884)
-    public RoadBean(Long id, Long hid, Long pid, int main, int max, int price, int weixin,
-            int zhifubao, String huogui_num, int nowNum, int tempState, int saleState) {
+    @Generated(hash = 282021072)
+    public RoadBean(Long id, Long hid, Long pid, int main, int max, int price,
+            int weixin, int zhifubao, String huogui_num, int huodao_num,
+            int tempState, int saleState) {
         this.id = id;
         this.hid = hid;
         this.pid = pid;
@@ -74,13 +70,16 @@ public class RoadBean {
         this.weixin = weixin;
         this.zhifubao = zhifubao;
         this.huogui_num = huogui_num;
-        this.nowNum = nowNum;
+        this.huodao_num = huodao_num;
         this.tempState = tempState;
         this.saleState = saleState;
     }
     @Generated(hash = 2100317740)
     public RoadBean() {
     }
+    @Generated(hash = 108351054)
+    private transient Long goodsBean__resolvedKey;
+
     public Long getHid() {
         return this.hid;
     }
@@ -128,6 +127,30 @@ public class RoadBean {
     }
     public void setHuogui_num(String huogui_num) {
         this.huogui_num = huogui_num;
+    }
+    public int getHuodao_num() {
+        return this.huodao_num;
+    }
+    public void setHuodao_num(int huodao_num) {
+        this.huodao_num = huodao_num;
+    }
+    public int getTempState() {
+        return this.tempState;
+    }
+    public void setTempState(int tempState) {
+        this.tempState = tempState;
+    }
+    public int getSaleState() {
+        return this.saleState;
+    }
+    public void setSaleState(int saleState) {
+        this.saleState = saleState;
+    }
+    public Long getId() {
+        return this.id;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
     /** To-one relationship, resolved on first access. */
     @Generated(hash = 1201558024)
@@ -195,30 +218,6 @@ public class RoadBean {
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getRoadBeanDao() : null;
-    }
-    public int getNowNum() {
-        return this.nowNum;
-    }
-    public void setNowNum(int nowNum) {
-        this.nowNum = nowNum;
-    }
-    public int getTempState() {
-        return this.tempState;
-    }
-    public void setTempState(int tempState) {
-        this.tempState = tempState;
-    }
-    public int getSaleState() {
-        return this.saleState;
-    }
-    public void setSaleState(int saleState) {
-        this.saleState = saleState;
-    }
-    public Long getId() {
-        return this.id;
-    }
-    public void setId(Long id) {
-        this.id = id;
     }
 
 

@@ -29,6 +29,7 @@ import box.lilei.box_client.box.BoxSetting;
 import box.lilei.box_client.client.model.Goods;
 import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.model.RoadInfo;
+import box.lilei.box_client.client.model.paramsmodel.AddGoods;
 import box.lilei.box_client.client.view.activity.ActiveActivity;
 import box.lilei.box_client.contants.Constants;
 import box.lilei.box_client.loading.ZLoadingDialog;
@@ -112,7 +113,7 @@ public class NavGoodsFragment extends Fragment implements NavGoodsFragmentView,V
     @Override
     public void showInputDialog(final RoadGoods roadGoods, final int position) {
         final RoadInfo roadInfo = roadGoods.getRoadInfo();
-        Goods goods = roadGoods.getGoods();
+        final Goods goods = roadGoods.getGoods();
         final ICommonDialog inputDialog = CommonDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_202);
         View dialogView = inflater.inflate(R.layout.nav_goods_num_dialog, null);
         edit_now = (EditText) dialogView.findViewById(R.id.nav_goods_dialog_edit_now);
@@ -133,9 +134,14 @@ public class NavGoodsFragment extends Fragment implements NavGoodsFragmentView,V
                                 roadInfo.setRoadNowNum(Integer.parseInt(now));
                                 roadInfo.setRoadMaxNum(Integer.parseInt(max));
                                 roadGoods.setRoadInfo(roadInfo);
-                                navGoodsPresenter.updateGoodsNum(roadGoods.getRoadGoodsId(),Integer.parseInt(now),Integer.parseInt(max));
-                                Toast.makeText(mContext, "补货完成", Toast.LENGTH_SHORT).show();
-                                navGoodsPresenter.refreshGoodsNum(roadGoods,position);
+                                AddGoods addGoods = new AddGoods();
+                                addGoods.setHid(roadInfo.getRoadIndex().toString());
+                                addGoods.setMachineid(BoxSetting.BOX_TEST_ID);
+                                addGoods.setPid(goods.getGoodsId().toString());
+                                addGoods.setHgid(roadInfo.getRoadBoxType());
+                                addGoods.setHuodao_num(now);
+                                addGoods.setHuodao_max(max);
+                                navGoodsPresenter.goodsOneToUrl(addGoods,roadGoods,position);
                                 inputDialog.dismiss();
                             }else{
                                 Toast.makeText(mContext, "当前数不能大于最大数", Toast.LENGTH_SHORT).show();
@@ -185,10 +191,10 @@ public class NavGoodsFragment extends Fragment implements NavGoodsFragmentView,V
     }
 
     @Override
-    public void fullProgress(int count, Long nowRoad ,int position) {
+    public void fullProgress(int count, Long nowRoad ,int success,int fail) {
         if (loadingDialog != null){
-            loadingDialog.setHintText("货道总数："+count+"，货道："+nowRoad+"，进度："+position);
-            if (count == position){
+            loadingDialog.setHintText("货道总数："+count+"，货道："+nowRoad+"，成功："+ success + "，失败：" + fail);
+            if (count == success + fail){
                 Toast.makeText(mContext, "补货完成", Toast.LENGTH_SHORT).show();
                 navGoodsPresenter.refreshAllRoadNum();
                 loadingDialog.dismiss();

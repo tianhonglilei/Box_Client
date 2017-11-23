@@ -12,7 +12,6 @@ import box.lilei.box_client.db.RoadBean;
 
 public interface RoadBiz {
 
-    List<RoadInfo> getRoadList();
 
 
     List<RoadGoods> parseRoadBeanToRoadGoods(List<RoadBean> roadBeanList);

@@ -13,7 +13,8 @@ public class RoadInfo implements Parcelable {
     //从机器接口获取货道状态
     public static final int ROAD_STATE_NORMAL = 0;
     public static final int ROAD_STATE_NULL = 1;
-    public static final int ROAD_STATE_ERROR = 9;
+    public static final int ROAD_STATE_ERROR = 2;
+    public static final int ROAD_STATE_DATA_ERROR = 9;
 
     //打开关闭货道
     public static final int ROAD_OPEN = 0;
@@ -29,27 +30,27 @@ public class RoadInfo implements Parcelable {
     private int roadMaxNum;
     private int roadNowNum;
     //货柜类型
-    private int roadBoxType;
+    private String roadBoxType;
 
 
     public RoadInfo(){}
 
-    public RoadInfo(Long roadIndex, int roadState, int roadOpen, int roadMaxNum, int roadNowNum) {
+    public RoadInfo(Long roadIndex, int roadState, int roadOpen, int roadMaxNum, int roadNowNum, String roadBoxType) {
         this.roadIndex = roadIndex;
         this.roadState = roadState;
         this.roadOpen = roadOpen;
         this.roadMaxNum = roadMaxNum;
         this.roadNowNum = roadNowNum;
-    }
-
-    public int getRoadBoxType() {
-        return roadBoxType;
-    }
-
-    public void setRoadBoxType(int roadBoxType) {
         this.roadBoxType = roadBoxType;
     }
 
+    public String getRoadBoxType() {
+        return roadBoxType;
+    }
+
+    public void setRoadBoxType(String roadBoxType) {
+        this.roadBoxType = roadBoxType;
+    }
 
     public Long getRoadIndex() {
         return roadIndex;
@@ -91,6 +92,7 @@ public class RoadInfo implements Parcelable {
         this.roadNowNum = roadNowNum;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -103,7 +105,7 @@ public class RoadInfo implements Parcelable {
         dest.writeInt(this.roadOpen);
         dest.writeInt(this.roadMaxNum);
         dest.writeInt(this.roadNowNum);
-        dest.writeInt(this.roadBoxType);
+        dest.writeString(this.roadBoxType);
     }
 
     protected RoadInfo(Parcel in) {
@@ -112,10 +114,10 @@ public class RoadInfo implements Parcelable {
         this.roadOpen = in.readInt();
         this.roadMaxNum = in.readInt();
         this.roadNowNum = in.readInt();
-        this.roadBoxType = in.readInt();
+        this.roadBoxType = in.readString();
     }
 
-    public static final Parcelable.Creator<RoadInfo> CREATOR = new Parcelable.Creator<RoadInfo>() {
+    public static final Creator<RoadInfo> CREATOR = new Creator<RoadInfo>() {
         @Override
         public RoadInfo createFromParcel(Parcel source) {
             return new RoadInfo(source);

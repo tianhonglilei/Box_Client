@@ -8,4 +8,11 @@ public interface ActivePresenter {
 
     void loadAllDataFromUrl(String imei);
 
+    /**
+     * 获取机器号
+     */
+    void getBoxId();
+
+    void activeBox(String code);
+
 }

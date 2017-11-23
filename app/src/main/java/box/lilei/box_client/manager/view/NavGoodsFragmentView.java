@@ -15,6 +15,6 @@ public interface NavGoodsFragmentView {
 
     void showLoading(String text);
 
-    void fullProgress(int count,Long nowRoad,int position);
+    void fullProgress(int count,Long nowRoad,int success,int fail);
 
 }

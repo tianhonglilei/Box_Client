@@ -15,4 +15,9 @@ public interface ActiveView {
     void hideDialog();
 
     void skipToADBannerActivity();
+
+    void showActiveLayout();
+
+    void hiddenActiveLayout(boolean success);
+
 }

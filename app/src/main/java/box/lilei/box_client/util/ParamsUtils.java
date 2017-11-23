@@ -3,6 +3,8 @@ package box.lilei.box_client.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import box.lilei.box_client.client.model.paramsmodel.AddGoods;
+
 /**
  * Created by lilei on 2017/11/12.
  * 接口参数工具
@@ -49,16 +51,16 @@ public class ParamsUtils {
 
     /**
      * 补货接口参数规则
-     * @param machineid 机器号
-     * @param hid       货道号
-     * @param huodao_num 当前数量
-     * @param hgid      货柜编号
-     * @param pid       商品号
-     * @param huodao_max 货道最大数
-     * @return
+     *
      */
-    public static Map<String,String> goodsNumAdd(String machineid,String hid,String huodao_num,String hgid,String pid,String huodao_max){
+    public static Map<String,String> goodsNumAdd(AddGoods addGoods){
         Map<String,String> params = new HashMap<String,String>();
+        params.put("machineid",addGoods.getMachineid());
+        params.put("hid",addGoods.getHid());
+        params.put("huodao_num",addGoods.getHuodao_num());
+        params.put("hgid",addGoods.getHgid());
+        params.put("pid",addGoods.getPid());
+        params.put("huodao_max",addGoods.getHuodao_max());
         return params;
     }
 

@@ -34,7 +34,7 @@ public class RoadBeanDao extends AbstractDao<RoadBean, Long> {
         public final static Property Weixin = new Property(6, int.class, "weixin", false, "WEIXIN");
         public final static Property Zhifubao = new Property(7, int.class, "zhifubao", false, "ZHIFUBAO");
         public final static Property Huogui_num = new Property(8, String.class, "huogui_num", false, "HUOGUI_NUM");
-        public final static Property NowNum = new Property(9, int.class, "nowNum", false, "NOW_NUM");
+        public final static Property Huodao_num = new Property(9, int.class, "huodao_num", false, "HUODAO_NUM");
         public final static Property TempState = new Property(10, int.class, "tempState", false, "TEMP_STATE");
         public final static Property SaleState = new Property(11, int.class, "saleState", false, "SALE_STATE");
     }
@@ -64,7 +64,7 @@ public class RoadBeanDao extends AbstractDao<RoadBean, Long> {
                 "\"WEIXIN\" INTEGER NOT NULL ," + // 6: weixin
                 "\"ZHIFUBAO\" INTEGER NOT NULL ," + // 7: zhifubao
                 "\"HUOGUI_NUM\" TEXT," + // 8: huogui_num
-                "\"NOW_NUM\" INTEGER NOT NULL ," + // 9: nowNum
+                "\"HUODAO_NUM\" INTEGER NOT NULL ," + // 9: huodao_num
                 "\"TEMP_STATE\" INTEGER NOT NULL ," + // 10: tempState
                 "\"SALE_STATE\" INTEGER NOT NULL );"); // 11: saleState
     }
@@ -103,7 +103,7 @@ public class RoadBeanDao extends AbstractDao<RoadBean, Long> {
         if (huogui_num != null) {
             stmt.bindString(9, huogui_num);
         }
-        stmt.bindLong(10, entity.getNowNum());
+        stmt.bindLong(10, entity.getHuodao_num());
         stmt.bindLong(11, entity.getTempState());
         stmt.bindLong(12, entity.getSaleState());
     }
@@ -136,7 +136,7 @@ public class RoadBeanDao extends AbstractDao<RoadBean, Long> {
         if (huogui_num != null) {
             stmt.bindString(9, huogui_num);
         }
-        stmt.bindLong(10, entity.getNowNum());
+        stmt.bindLong(10, entity.getHuodao_num());
         stmt.bindLong(11, entity.getTempState());
         stmt.bindLong(12, entity.getSaleState());
     }
@@ -164,7 +164,7 @@ public class RoadBeanDao extends AbstractDao<RoadBean, Long> {
             cursor.getInt(offset + 6), // weixin
             cursor.getInt(offset + 7), // zhifubao
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // huogui_num
-            cursor.getInt(offset + 9), // nowNum
+            cursor.getInt(offset + 9), // huodao_num
             cursor.getInt(offset + 10), // tempState
             cursor.getInt(offset + 11) // saleState
         );
@@ -182,7 +182,7 @@ public class RoadBeanDao extends AbstractDao<RoadBean, Long> {
         entity.setWeixin(cursor.getInt(offset + 6));
         entity.setZhifubao(cursor.getInt(offset + 7));
         entity.setHuogui_num(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
-        entity.setNowNum(cursor.getInt(offset + 9));
+        entity.setHuodao_num(cursor.getInt(offset + 9));
         entity.setTempState(cursor.getInt(offset + 10));
         entity.setSaleState(cursor.getInt(offset + 11));
      }

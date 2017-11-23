@@ -43,7 +43,7 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
             for (RoadGoods roadGoods :
                     roadGoodsList) {
                 RoadInfo roadInfo = roadGoods.getRoadInfo();
-                if (roadInfo.getRoadBoxType() == Integer.parseInt(BoxSetting.BOX_TYPE_DRINK)) {
+                if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_DRINK)) {
                     roadGoodsListMain.add(roadGoods);
                 } else {
                     roadGoodsListViceOne.add(roadGoods);

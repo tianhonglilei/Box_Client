@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import java.io.File;
 
 import box.lilei.box_client.box.BoxSetting;
@@ -12,6 +14,7 @@ import box.lilei.box_client.db.DaoMaster;
 import box.lilei.box_client.db.DaoSession;
 import box.lilei.box_client.db.MySQLiteOpenHelper;
 import box.lilei.box_client.db.biz.AdBeanService;
+import box.lilei.box_client.util.ExceptionHandler;
 import box.lilei.box_client.util.FileUtils;
 
 /**
@@ -36,6 +39,12 @@ public class BaseApplication extends Application {
         if (!FileUtils.exist(Constants.DEMO_FILE_PATH)) {
             FileUtils.creatSDDir("Box_client");
         }
+
+        LeakCanary.install(this);
+
+        //初始化异常捕捉
+        ExceptionHandler exceptionHandler = ExceptionHandler.getInstance();
+        exceptionHandler.init(this);
     }
 
     private void initSDKiniFile() {

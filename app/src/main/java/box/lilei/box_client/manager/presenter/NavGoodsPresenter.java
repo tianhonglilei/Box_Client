@@ -3,6 +3,7 @@ package box.lilei.box_client.manager.presenter;
 import android.widget.GridView;
 
 import box.lilei.box_client.client.model.RoadGoods;
+import box.lilei.box_client.client.model.paramsmodel.AddGoods;
 
 /**
  * Created by lilei on 2017/11/14.
@@ -34,5 +35,21 @@ public interface NavGoodsPresenter {
     void allRoadFull();
 
     void refreshAllRoadNum();
+
+
+    /**
+     * 一键补满
+     * @param addGoods
+     * @param dbId
+     */
+    void goodsAllToUrl(AddGoods addGoods,Long dbId);
+
+    /**
+     * 单个补货
+     * @param addGoods
+     * @param roadGoods
+     * @param position
+     */
+    void goodsOneToUrl(AddGoods addGoods,RoadGoods roadGoods,int position);
 
 }

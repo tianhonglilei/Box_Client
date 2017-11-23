@@ -419,9 +419,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         super.onDestroy();
         payPresenter = null;
         weatherPresenter = null;
-        timer.cancel();
-        timer = null;
-        System.gc();
     }
 
 }

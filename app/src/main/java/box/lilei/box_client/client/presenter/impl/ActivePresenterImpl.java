@@ -1,17 +1,24 @@
 package box.lilei.box_client.client.presenter.impl;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.avm.serialport_142.MainHandler;
+import com.avm.serialport_142.service.CommService;
+import com.avm.serialport_142.service.CommServiceThread;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import box.lilei.box_client.box.BoxAction;
 import box.lilei.box_client.client.biz.AdBiz;
 import box.lilei.box_client.client.biz.impl.AdBizImpl;
 import box.lilei.box_client.client.model.jsonmodel.AdJsonInfo;
@@ -35,6 +42,7 @@ import box.lilei.box_client.db.biz.PercentBeanService;
 import box.lilei.box_client.db.biz.RoadBeanService;
 import box.lilei.box_client.util.FileUtils;
 import box.lilei.box_client.util.JsonListUtil;
+import box.lilei.box_client.util.SharedPreferencesUtil;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -131,13 +139,13 @@ public class ActivePresenterImpl implements ActivePresenter {
         saveGoodsAndPercent(goodsJsonArray, percentJsonObject);
         saveRoadBean(roadJsonArray);
         //检查文件是否存在，并下载文件
-        if(!FileUtils.exist(Constants.DEMO_FILE_PATH)){
+        if (!FileUtils.exist(Constants.DEMO_FILE_PATH)) {
             FileUtils.creatSDDir("Box_client");
         }
         for (String name : allFileName) {
             if (!FileUtils.isFileExists(new File(Constants.DEMO_FILE_PATH), name)) {
                 downloadName.add(name);
-            }else{
+            } else {
                 existFileNames.add(name);
             }
 
@@ -157,7 +165,7 @@ public class ActivePresenterImpl implements ActivePresenter {
                 downloadName) {
             downloadFile(name);
         }
-        if (downloadName.size() == 0){
+        if (downloadName.size() == 0) {
             activeView.hideDialog();
             activeView.skipToADBannerActivity();
         }
@@ -180,7 +188,7 @@ public class ActivePresenterImpl implements ActivePresenter {
                         JSONArray jsonArray = percentJsonObject.getJSONArray(goodsBean.getId().toString());
                         if (jsonArray != null) {
                             List<PercentBean> percentList = JsonListUtil.getListByArray(PercentBean.class, jsonArray.toString());
-                            if (percentBeanService.getPercentBeanListByGoodsId(goodsBean.getId()).size()==0) {
+                            if (percentBeanService.getPercentBeanListByGoodsId(goodsBean.getId()).size() == 0) {
                                 percentBeanService.saveBeanList(percentList);
                             }
                             goodsBeanList1.add(goodsBean);
@@ -262,14 +270,15 @@ public class ActivePresenterImpl implements ActivePresenter {
     int dif = 0;
     int same = 0;
     int other = 0;
-    private void compareFileSize(Long fileSize, final String fileName){
-        if (fileName != null && !fileName.equals("")){
-            CommonOkHttpClient.compareSize(CommonRequest.createGetRequest(urlString + fileName, null),new DisposeDataHandle(new DisposeSizeListener() {
+
+    private void compareFileSize(Long fileSize, final String fileName) {
+        if (fileName != null && !fileName.equals("")) {
+            CommonOkHttpClient.compareSize(CommonRequest.createGetRequest(urlString + fileName, null), new DisposeDataHandle(new DisposeSizeListener() {
                 @Override
                 public void difference() {
                     ++dif;
                     downloadName.add(fileName);
-                    if(dif+same+other == existFileNames.size()){
+                    if (dif + same + other == existFileNames.size()) {
                         startDownload();
                     }
                 }
@@ -277,7 +286,7 @@ public class ActivePresenterImpl implements ActivePresenter {
                 @Override
                 public void same() {
                     ++same;
-                    if(dif+same+other == existFileNames.size()){
+                    if (dif + same + other == existFileNames.size()) {
                         startDownload();
                     }
                     Log.w("ActivePresenterImpl", "same:" + same);
@@ -294,13 +303,80 @@ public class ActivePresenterImpl implements ActivePresenter {
                     if (errorObject instanceof Exception) {
                         ((Exception) errorObject).printStackTrace();
                     }
-                    if(dif+same+other == existFileNames.size()){
+                    if (dif + same + other == existFileNames.size()) {
                         startDownload();
                     }
                 }
-            },fileSize));
+            }, fileSize));
 
         }
+    }
+
+
+    @Override
+    public void getBoxId() {
+        String box_id = SharedPreferencesUtil.getString(mContext, "box_id");
+        if (box_id != null && !box_id.equals("")) {
+            activeView.hiddenActiveLayout(true);
+        } else {
+            activeView.showActiveLayout();
+        }
+    }
+
+    @Override
+    public void activeBox(final String code) {
+        activeView.showDialog("激活中...");
+        new CommService() {
+
+            @Override
+            public void result(int res) {
+                if (res == CommService.ERROR_SYSTEM_SERVICE) {
+                    Toast.makeText(mContext, "数据配置或者网络调用错误", Toast.LENGTH_SHORT).show();
+                } else if (res == CommService.ERROR_SYSTEM_TIME) {
+                    Toast.makeText(mContext, "系统时间不正确", Toast.LENGTH_SHORT).show();
+                } else if (res == CommService.ERROR_CODE_NO_EXIST) {
+                    Toast.makeText(mContext, "激活码不存在", Toast.LENGTH_SHORT).show();
+                } else if (res == CommService.ERROR_SYSTEM_CODE) {
+                    Toast.makeText(mContext, "激活码校验失败", Toast.LENGTH_SHORT).show();
+                } else if (res == CommService.ERROR_ACTIVATE_CHECK) {
+                    Toast.makeText(mContext, "激活校验失败", Toast.LENGTH_SHORT).show();
+                } else if (res == CommService.ERROR_CODE_USED) {
+                    Toast.makeText(mContext, "激活码已被使用", Toast.LENGTH_SHORT).show();
+                } else if (res == CommService.ERROR_OTHER) {
+                    Toast.makeText(mContext, "其他错误", Toast.LENGTH_SHORT).show();
+                } else if (res == CommServiceThread.ERROR_IO_PROBLEM) {
+                    Toast.makeText(mContext, "串口打开IO出错", Toast.LENGTH_SHORT).show();
+                } else if (res == CommServiceThread.ERROR_PERMISSION_REJECT) {
+                    Toast.makeText(mContext, "没有打开串口的权限", Toast.LENGTH_SHORT).show();
+                } else if (res == CommServiceThread.ERROR_NOT_CONFIG) {
+                    Toast.makeText(mContext, "系统中没有配置要打开的串口", Toast.LENGTH_SHORT).show();
+                } else if (res == CommServiceThread.ERROR_UNKNOWN) {
+                    Toast.makeText(mContext, "串口打开时的未知错误", Toast.LENGTH_SHORT).show();
+                } else if (res == CommServiceThread.COMM_SERVICE_START) {
+                    Toast.makeText(mContext, "激活启动成功", Toast.LENGTH_SHORT).show();
+                    while (true) {
+                        //获取机器号
+                        String box_id = BoxAction.getBoxId();
+                        if (!TextUtils.isEmpty(box_id)) {
+                            SharedPreferencesUtil.putString(mContext, "box_id", box_id);
+                            Toast.makeText(mContext, box_id, Toast.LENGTH_SHORT).show();
+                            activeView.hiddenActiveLayout(true);
+                            break;
+                        } else {
+                            try {
+                                Thread.sleep(500);
+                                continue;
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                } else {
+                    Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
+                }
+                activeView.hideDialog();
+            }
+        }.connect(mContext, code, 1);
     }
 
 

@@ -19,6 +19,9 @@ public class BoxSetting {
     public static final String BOX_TYPE_DRINK = "11";//饮料机
     public static final String BOX_TYPE_FOOD = "09";//弹簧机
 
+    //测试机器号
+    public static final String BOX_TEST_ID = "93006709";
+
 
     public static boolean setMachineData(int leftStu, int rightStu, String ice, int hot) {
 
@@ -27,4 +30,10 @@ public class BoxSetting {
         boolean tempSet = MainHandler.noticeAvmConfig(info);
         return tempSet;
     }
+
+
+
+
+
+
 }

@@ -2,8 +2,9 @@ package box.lilei.box_client.client.biz.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
+import box.lilei.box_client.box.BoxAction;
+import box.lilei.box_client.box.BoxSetting;
 import box.lilei.box_client.client.biz.RoadBiz;
 import box.lilei.box_client.client.model.Goods;
 import box.lilei.box_client.client.model.RoadGoods;
@@ -16,16 +17,6 @@ import box.lilei.box_client.db.RoadBean;
  */
 
 public class RoadBizImpl implements RoadBiz {
-    @Override
-    public List<RoadInfo> getRoadList() {
-        List<RoadInfo> roadInfoList = new ArrayList<>();
-        RoadInfo roadInfo;
-        for (int i = 1; i < 22; i++) {
-            roadInfo = new RoadInfo(Long.valueOf(i),0,0,21,new Random().nextInt(22));
-            roadInfoList.add(roadInfo);
-        }
-        return roadInfoList;
-    }
 
     @Override
     public List<RoadGoods> parseRoadBeanToRoadGoods(List<RoadBean> roadBeanList) {
@@ -40,10 +31,15 @@ public class RoadBizImpl implements RoadBiz {
             roadGoods.setRoadGoodsId(bean.getId());
             roadInfo.setRoadIndex(bean.getHid());
             roadInfo.setRoadMaxNum(bean.getMax());
-            roadInfo.setRoadNowNum(bean.getNowNum());
-            roadInfo.setRoadBoxType(Integer.parseInt(bean.getHuogui_num()));
+            roadInfo.setRoadNowNum(bean.getHuodao_num());
+            int hgType = Integer.parseInt(bean.getHuogui_num());
+            if (hgType == 9){
+                roadInfo.setRoadBoxType(BoxSetting.BOX_TYPE_FOOD);
+            }else{
+                roadInfo.setRoadBoxType(BoxSetting.BOX_TYPE_DRINK);
+            }
             //货道状态和开关
-            roadInfo.setRoadState(RoadInfo.ROAD_STATE_NORMAL);
+            roadInfo.setRoadState(BoxAction.getRoadState(roadInfo.getRoadBoxType(),roadInfo.getRoadIndex().toString()));
             roadInfo.setRoadOpen(RoadInfo.ROAD_OPEN);
             if (roadInfo.getRoadOpen() == RoadInfo.ROAD_OPEN
                     || roadInfo.getRoadState() == RoadInfo.ROAD_STATE_NORMAL){
@@ -56,7 +52,7 @@ public class RoadBizImpl implements RoadBiz {
             if (goodsBean != null) {
                 goods.setGoodsId(goodsBean.getId());
                 goods.setGoodsType(goodsBean.getType());
-                if (roadInfo.getRoadBoxType() == RoadInfo.BOX_TYPE_DRINK) {
+                if (roadInfo.getRoadBoxType().equals(RoadInfo.BOX_TYPE_DRINK)) {
                     if (roadInfo.getRoadIndex() < 9) {
                         goods.setGoodsWd(Goods.GOODS_WD_HOT);
                     } else if (roadInfo.getRoadIndex() < 17) {
