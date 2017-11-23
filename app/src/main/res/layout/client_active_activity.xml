@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="box.lilei.box_client.client.view.activity.ActiveActivity"
-    android:background="@color/colorWhiteTxt">
+    tools:context="box.lilei.box_client.client.view.activity.ActiveActivity">
 
 
 
     <box.lilei.box_client.loading.ZLoadingView
         android:id="@+id/active_bg_loading"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        app:z_color="@color/colorDemoLogo" />
+        app:z_color="@color/colorWhiteTxt" />
 
     <RelativeLayout
         android:visibility="invisible"
@@ -94,5 +93,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="" />
+
+
 
 </RelativeLayout>
