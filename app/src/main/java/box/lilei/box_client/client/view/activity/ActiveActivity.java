@@ -7,6 +7,8 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ActiveActivity extends Activity implements View.OnClickListener, ActiveView, NetEvent {
+    private static final String TAG = "ActiveActivity";
 
     //激活码
     @BindView(R.id.edit_active_code)
@@ -101,13 +104,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         exitTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Toast.makeText(mContext, "即将退出程序", Toast.LENGTH_SHORT).show();
-                try {
-                    Thread.sleep(2000);
-                    System.exit(0);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                exitApplication();
             }
         },20000);
     }
@@ -129,8 +126,10 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         super.onDestroy();
         unregisterReceiver(netBroadcastReceiver);
         netBroadcastReceiver = null;
-        exitTimer.cancel();
-        exitTimer = null;
+        if (exitTimer!=null) {
+            exitTimer.cancel();
+            exitTimer = null;
+        }
     }
 
     @Override
@@ -197,6 +196,10 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
             case 0://移动数据
             case 1://wifi
             case 2://以太网
+                if (exitTimer!=null) {
+                    exitTimer.cancel();
+                    exitTimer = null;
+                }
                 initBoxCheck();
                 break;
             case -1://没有网络
@@ -220,13 +223,27 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
             Toast.makeText(mContext, "其他错误", Toast.LENGTH_SHORT).show();
         }
         if (loadResult!=MainHandler.LOAD_DATA_SUCCESS){
-            Toast.makeText(mContext, "2秒后退出程序", Toast.LENGTH_SHORT).show();
-            try {
-                Thread.sleep(2000);
-                System.exit(0);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            exitApplication();
         }
+    }
+    public void exitApplication(){
+        //使用Toast来显示异常信息
+        new Thread() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                Toast.makeText(mContext, "启动失败，即将退出.", Toast.LENGTH_LONG).show();
+                Looper.loop();
+            }
+        }.start();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Log.e(TAG, "error : ", e);
+            e.printStackTrace();
+        }
+        //退出程序
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
     }
 }

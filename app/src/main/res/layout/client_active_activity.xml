@@ -11,7 +11,7 @@
     <box.lilei.box_client.loading.ZLoadingView
         android:id="@+id/active_bg_loading"
         android:layout_width="300dp"
-        android:layout_height="200dp"
+        android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         app:z_color="@color/colorDemoLogo" />
