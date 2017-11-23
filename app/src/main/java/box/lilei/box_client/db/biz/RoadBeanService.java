@@ -19,9 +19,6 @@ public class RoadBeanService extends BeanService<RoadBean> {
         return mDao.loadAll();
     }
 
-    public void clearAdBean(){
-        mDao.deleteAll();
-    }
 
     public void updateRoadNum(Long roadId ,int now,int max){
         RoadBean roadBean = mDao.load(roadId);

@@ -46,4 +46,7 @@ public class BeanService<T> {
         mDao.update(t);
     }
 
+    public void clearAdBean(){
+        mDao.deleteAll();
+    }
 }

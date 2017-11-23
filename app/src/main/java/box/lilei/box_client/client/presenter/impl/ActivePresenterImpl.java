@@ -94,7 +94,11 @@ public class ActivePresenterImpl implements ActivePresenter {
         roadBeanService = new RoadBeanService(mContext, RoadBean.class);
         goodsBeanService = new GoodsBeanService(mContext, GoodsBean.class);
         percentBeanService = new PercentBeanService(mContext, PercentBean.class);
-
+        //清空数据
+        adBeanService.clearAdBean();
+        percentBeanService.clearAdBean();
+        roadBeanService.clearAdBean();
+        goodsBeanService.clearAdBean();
         StringBuilder url = new StringBuilder(Constants.BANNER_AD_URL);
         url.append("&machineid=" + imei);
         CommonOkHttpClient.get(CommonRequest.createGetRequest(url.toString(), null), new DisposeDataHandle(new DisposeDataListener() {
@@ -236,9 +240,7 @@ public class ActivePresenterImpl implements ActivePresenter {
                 }
                 allFileName.add(bean.getAdImgFile());
             }
-            //清空广告和货道信息
-            adBeanService.clearAdBean();
-            roadBeanService.clearAdBean();
+
             adBeanService.saveBeanList(adBeanList);
         }
     }

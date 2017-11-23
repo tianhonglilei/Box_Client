@@ -4,6 +4,8 @@ package box.lilei.box_client.manager.view.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -47,6 +49,7 @@ import box.lilei.box_client.manager.view.NavRoadFragmentView;
  */
 public class NavRoadFragment extends Fragment implements NavRoadFragmentView, View.OnClickListener {
 
+    private static final int OUT_GOODS = 1;
 
     private NavRoadAdapter navRoadAdapter;
 
@@ -171,9 +174,20 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
 
     @Override
     public void boxOutGoods() {
-        BoxAction.outGoods(boxType, index);
+        handler.sendEmptyMessage(OUT_GOODS);
     }
 
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case OUT_GOODS:
+                    BoxAction.outGoods(boxType, index);
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onClick(View v) {

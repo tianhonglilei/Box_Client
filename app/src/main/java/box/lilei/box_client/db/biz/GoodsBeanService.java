@@ -18,4 +18,5 @@ public class GoodsBeanService extends BeanService<GoodsBean> {
         super(context, object);
     }
 
+
 }

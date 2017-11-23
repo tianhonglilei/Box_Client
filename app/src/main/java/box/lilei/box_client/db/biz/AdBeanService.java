@@ -26,9 +26,7 @@ public class AdBeanService extends BeanService<AdBean>{
         return mDao.loadAll();
     }
 
-    public void clearAdBean(){
-        mDao.deleteAll();
-    }
+
 
 
 }
