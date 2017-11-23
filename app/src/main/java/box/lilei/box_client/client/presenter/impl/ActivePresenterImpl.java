@@ -236,6 +236,7 @@ public class ActivePresenterImpl implements ActivePresenter {
                 }
                 allFileName.add(bean.getAdImgFile());
             }
+            //清空广告和货道信息
             adBeanService.clearAdBean();
             roadBeanService.clearAdBean();
             adBeanService.saveBeanList(adBeanList);
