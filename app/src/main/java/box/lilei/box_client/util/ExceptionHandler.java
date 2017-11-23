@@ -82,6 +82,7 @@ public class ExceptionHandler implements UncaughtExceptionHandler {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 Log.e(TAG, "error : ", e);
+                e.printStackTrace();
             }
             //退出程序
             android.os.Process.killProcess(android.os.Process.myPid());

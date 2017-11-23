@@ -12,6 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.avm.serialport_142.MainHandler;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxAction;
@@ -57,6 +63,8 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
     private NetBroadcastReceiver netBroadcastReceiver;
     private int netState;
 
+    private Timer exitTimer;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -79,6 +87,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_active_activity);
         ButterKnife.bind(this);
+        mContext = this;
 
         activeBgLoading.setLoadingBuilder(Z_TYPE.values()[0]);
 
@@ -88,7 +97,19 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
 
 //        activePresenter.getBoxId();
 
-
+        exitTimer = new Timer();
+        exitTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Toast.makeText(mContext, "即将退出程序", Toast.LENGTH_SHORT).show();
+                try {
+                    Thread.sleep(2000);
+                    System.exit(0);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        },20000);
     }
 
     @Override
@@ -108,6 +129,8 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         super.onDestroy();
         unregisterReceiver(netBroadcastReceiver);
         netBroadcastReceiver = null;
+        exitTimer.cancel();
+        exitTimer = null;
     }
 
     @Override
@@ -174,11 +197,36 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
             case 0://移动数据
             case 1://wifi
             case 2://以太网
-                activePresenter.getBoxId();
+                initBoxCheck();
                 break;
             case -1://没有网络
 
                 break;
+        }
+    }
+
+    public void initBoxCheck(){
+        int loadResult = MainHandler.load(mContext.getApplicationContext());
+        if (loadResult == MainHandler.ERROR_NO_SDCARD) {
+            Toast.makeText(mContext, "系统没有内存卡", Toast.LENGTH_SHORT).show();
+        } else if (loadResult == MainHandler.ERROR_EMPTY_DATA) {
+            Toast.makeText(mContext, "串口信息没有配置或者读取失败", Toast.LENGTH_SHORT).show();
+        } else if (loadResult == MainHandler.ERROR_NET_NOT_AVAILABLE) {
+            Toast.makeText(mContext, "系统没有连接网络", Toast.LENGTH_SHORT).show();
+        } else if (loadResult == MainHandler.LOAD_DATA_SUCCESS) {
+            Toast.makeText(mContext, "加载成功", Toast.LENGTH_SHORT).show();
+            activePresenter.getBoxId();
+        }else{
+            Toast.makeText(mContext, "其他错误", Toast.LENGTH_SHORT).show();
+        }
+        if (loadResult!=MainHandler.LOAD_DATA_SUCCESS){
+            Toast.makeText(mContext, "2秒后退出程序", Toast.LENGTH_SHORT).show();
+            try {
+                Thread.sleep(2000);
+                System.exit(0);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

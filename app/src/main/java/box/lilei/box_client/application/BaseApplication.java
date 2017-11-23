@@ -3,7 +3,9 @@ package box.lilei.box_client.application;
 import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
+import android.widget.Toast;
 
+import com.avm.serialport_142.MainHandler;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.io.File;
@@ -32,7 +34,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         if(mInstance == null)
             mInstance = this;
-        
+
         //初始化SDK配置文件
         initSDKiniFile();
         //创建资源文件夹
@@ -40,11 +42,13 @@ public class BaseApplication extends Application {
             FileUtils.creatSDDir("Box_client");
         }
 
+//        initBoxCheck();
+
         LeakCanary.install(this);
 
         //初始化异常捕捉
         ExceptionHandler exceptionHandler = ExceptionHandler.getInstance();
-        exceptionHandler.init(this);
+//        exceptionHandler.init(this);
     }
 
     private void initSDKiniFile() {
@@ -103,5 +107,23 @@ public class BaseApplication extends Application {
         }
         return daoSession;
     }
+
+//    public void initBoxCheck(){
+//        int loadResult = MainHandler.load(this);
+//        if (loadResult == MainHandler.ERROR_NO_SDCARD) {
+//            Toast.makeText(mInstance, "系统没有内存卡", Toast.LENGTH_SHORT).show();
+//        } else if (loadResult == MainHandler.ERROR_EMPTY_DATA) {
+//            Toast.makeText(mInstance, "串口信息没有配置或者读取失败", Toast.LENGTH_SHORT).show();
+//        } else if (loadResult == MainHandler.ERROR_NET_NOT_AVAILABLE) {
+//            Toast.makeText(mInstance, "系统没有连接网络", Toast.LENGTH_SHORT).show();
+//        } else if (loadResult == MainHandler.LOAD_DATA_SUCCESS) {
+//            Toast.makeText(mInstance, "加载成功", Toast.LENGTH_SHORT).show();
+//        }else{
+//            Toast.makeText(mInstance, "其他错误", Toast.LENGTH_SHORT).show();
+//        }
+//        if (loadResult!=MainHandler.LOAD_DATA_SUCCESS){
+//            Toast.makeText(mInstance, "2秒后退出程序", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
 }
