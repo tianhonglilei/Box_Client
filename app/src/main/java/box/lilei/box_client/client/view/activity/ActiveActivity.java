@@ -108,7 +108,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
             public void run() {
                 exitApplication();
             }
-        },60000);
+        }, 60000);
     }
 
     @Override
@@ -119,8 +119,9 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
 //                activePresenter.loadAllDataFromUrl(BoxSetting.BOX_TEST_ID);
                 String code = editActiveCode.getText().toString();
                 if (!TextUtils.isEmpty(code)) {
+                    SharedPreferencesUtil.putString(mContext, "active_code", code);
                     activePresenter.activeBox(code);
-                }else{
+                } else {
                     Toast.makeText(mContext, "请输入激活码", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -133,7 +134,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         super.onDestroy();
         unregisterReceiver(netBroadcastReceiver);
         netBroadcastReceiver = null;
-        if (exitTimer!=null) {
+        if (exitTimer != null) {
             exitTimer.cancel();
             exitTimer = null;
         }
@@ -191,7 +192,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
             activeBgTxt.setVisibility(View.VISIBLE);
         }
         if (success) {
-            activePresenter.loadAllDataFromUrl(SharedPreferencesUtil.getString(mContext,"box_id"));
+            activePresenter.loadAllDataFromUrl(SharedPreferencesUtil.getString(mContext, "box_id"));
         }
     }
 
@@ -203,7 +204,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
             case 0://移动数据
             case 1://wifi
             case 2://以太网
-                if (exitTimer!=null) {
+                if (exitTimer != null) {
                     exitTimer.cancel();
                     exitTimer = null;
                 }
@@ -215,7 +216,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         }
     }
 
-    public void initBoxCheck(){
+    public void initBoxCheck() {
         int loadResult = MainHandler.load(mContext.getApplicationContext());
         if (loadResult == MainHandler.ERROR_NO_SDCARD) {
             Toast.makeText(mContext, "系统没有内存卡", Toast.LENGTH_SHORT).show();
@@ -226,14 +227,15 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         } else if (loadResult == MainHandler.LOAD_DATA_SUCCESS) {
             Toast.makeText(mContext, "加载成功", Toast.LENGTH_SHORT).show();
             activePresenter.getBoxId();
-        }else{
+        } else {
             Toast.makeText(mContext, "其他错误", Toast.LENGTH_SHORT).show();
         }
-        if (loadResult!=MainHandler.LOAD_DATA_SUCCESS){
+        if (loadResult != MainHandler.LOAD_DATA_SUCCESS) {
             exitApplication();
         }
     }
-    public void exitApplication(){
+
+    public void exitApplication() {
         //使用Toast来显示异常信息
         new Thread() {
             @Override

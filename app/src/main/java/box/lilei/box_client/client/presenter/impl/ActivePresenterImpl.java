@@ -312,12 +312,14 @@ public class ActivePresenterImpl implements ActivePresenter {
         }
     }
 
-
+    String box_id;
     @Override
     public void getBoxId() {
-        String box_id = SharedPreferencesUtil.getString(mContext, "box_id");
+        box_id = SharedPreferencesUtil.getString(mContext, "box_id");
         if (box_id != null && !box_id.equals("") && !box_id.equals("00000000")) {
             activeView.hiddenActiveLayout(true);
+            String code = SharedPreferencesUtil.getString(mContext,"active_code");
+            activeBox(code);
         } else if(box_id.equals("00000000")){
             getBoxIdFromBox();
         } else {
@@ -327,7 +329,6 @@ public class ActivePresenterImpl implements ActivePresenter {
 
     @Override
     public void activeBox(final String code) {
-
         activeView.showDialog("激活中...");
         new CommService() {
 
@@ -357,7 +358,11 @@ public class ActivePresenterImpl implements ActivePresenter {
                     Toast.makeText(mContext, "串口打开时的未知错误", Toast.LENGTH_SHORT).show();
                 } else if (res == CommServiceThread.COMM_SERVICE_START) {
                     Toast.makeText(mContext, "激活启动成功", Toast.LENGTH_SHORT).show();
-                    getBoxIdFromBox();
+                    if (!TextUtils.isEmpty(box_id) && !box_id.equals("00000000")){
+                        activeView.hiddenActiveLayout(true);
+                    }else{
+                        getBoxIdFromBox();
+                    }
                 } else {
                     Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
                 }
