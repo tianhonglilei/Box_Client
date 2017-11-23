@@ -103,6 +103,13 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(netBroadcastReceiver);
+        netBroadcastReceiver = null;
+    }
+
+    @Override
     public void changeDownloadProgress(int maxNum, int successNum, int failNum) {
         activeDownloadTxt.setText("下载:" + maxNum + "{成功:" + successNum + "，失败:" + failNum + "}");
         if (maxNum == successNum + failNum) {
