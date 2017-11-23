@@ -317,9 +317,12 @@ public class ActivePresenterImpl implements ActivePresenter {
     public void getBoxId() {
         box_id = SharedPreferencesUtil.getString(mContext, "box_id");
         if (box_id != null && !box_id.equals("") && !box_id.equals("00000000")) {
-            activeView.hiddenActiveLayout(true);
             String code = SharedPreferencesUtil.getString(mContext,"active_code");
-            activeBox(code);
+            if (!code.equals("")){
+                activeBox(code);
+            }else{
+                activeView.showActiveLayout();
+            }
         } else if(box_id.equals("00000000")){
             getBoxIdFromBox();
         } else {
@@ -358,6 +361,7 @@ public class ActivePresenterImpl implements ActivePresenter {
                     Toast.makeText(mContext, "串口打开时的未知错误", Toast.LENGTH_SHORT).show();
                 } else if (res == CommServiceThread.COMM_SERVICE_START) {
                     Toast.makeText(mContext, "激活启动成功", Toast.LENGTH_SHORT).show();
+                    SharedPreferencesUtil.putString(mContext, "active_code", code);
                     if (!TextUtils.isEmpty(box_id) && !box_id.equals("00000000")){
                         activeView.hiddenActiveLayout(true);
                     }else{

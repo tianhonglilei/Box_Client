@@ -119,7 +119,6 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
 //                activePresenter.loadAllDataFromUrl(BoxSetting.BOX_TEST_ID);
                 String code = editActiveCode.getText().toString();
                 if (!TextUtils.isEmpty(code)) {
-                    SharedPreferencesUtil.putString(mContext, "active_code", code);
                     activePresenter.activeBox(code);
                 } else {
                     Toast.makeText(mContext, "请输入激活码", Toast.LENGTH_SHORT).show();
