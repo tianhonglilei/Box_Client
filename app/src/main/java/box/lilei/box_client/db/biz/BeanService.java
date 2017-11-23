@@ -11,6 +11,7 @@ import java.util.List;
 
 import box.lilei.box_client.application.BaseApplication;
 import box.lilei.box_client.db.AdBeanDao;
+import box.lilei.box_client.db.DaoMaster;
 import box.lilei.box_client.db.DaoSession;
 import box.lilei.box_client.db.GoodsBean;
 import box.lilei.box_client.db.GoodsBeanDao;
@@ -46,7 +47,8 @@ public class BeanService<T> {
         mDao.update(t);
     }
 
-    public void clearAdBean(){
-        mDao.deleteAll();
+    public void clearBean(){
+        DaoMaster.dropAllTables(mDao.getDatabase(),true);
+        DaoMaster.createAllTables(mDao.getDatabase(),true);
     }
 }
