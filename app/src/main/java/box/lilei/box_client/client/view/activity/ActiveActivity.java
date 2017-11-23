@@ -79,7 +79,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         setContentView(R.layout.client_active_activity);
         ButterKnife.bind(this);
 
-        activeBgLoading.setLoadingBuilder(Z_TYPE.values()[1]);
+        activeBgLoading.setLoadingBuilder(Z_TYPE.values()[0]);
 
         activeBtn.setOnClickListener(this);
 
