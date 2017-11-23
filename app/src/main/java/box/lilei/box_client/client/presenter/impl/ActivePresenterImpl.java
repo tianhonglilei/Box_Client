@@ -214,7 +214,6 @@ public class ActivePresenterImpl implements ActivePresenter {
             for (int i = 0; i < roadBeanList.size(); i++) {
                 roadBeanList.get(i).setId(new Long(i + 1));
             }
-            roadBeanService.clearAdBean();
             roadBeanService.saveBeanList(roadBeanList);
         }
     }
@@ -238,6 +237,7 @@ public class ActivePresenterImpl implements ActivePresenter {
                 allFileName.add(bean.getAdImgFile());
             }
             adBeanService.clearAdBean();
+            roadBeanService.clearAdBean();
             adBeanService.saveBeanList(adBeanList);
         }
     }
