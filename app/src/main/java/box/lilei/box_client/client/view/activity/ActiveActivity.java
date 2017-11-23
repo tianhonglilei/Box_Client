@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -116,7 +117,12 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         switch (v.getId()) {
             case R.id.active_btn:
 //                activePresenter.loadAllDataFromUrl(BoxSetting.BOX_TEST_ID);
-                activePresenter.activeBox(editActiveCode.getText().toString());
+                String code = editActiveCode.getText().toString();
+                if (!TextUtils.isEmpty(code)) {
+                    activePresenter.activeBox(code);
+                }else{
+                    Toast.makeText(mContext, "请输入激活码", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
 

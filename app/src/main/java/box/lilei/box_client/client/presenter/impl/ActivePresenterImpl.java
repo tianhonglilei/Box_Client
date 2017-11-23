@@ -316,7 +316,7 @@ public class ActivePresenterImpl implements ActivePresenter {
     @Override
     public void getBoxId() {
         String box_id = SharedPreferencesUtil.getString(mContext, "box_id");
-        if (box_id != null && !box_id.equals("")) {
+        if (box_id != null && !box_id.equals("") && !box_id.equals("00000000")) {
             activeView.hiddenActiveLayout(true);
         } else if(box_id.equals("00000000")){
             getBoxIdFromBox();
@@ -327,6 +327,7 @@ public class ActivePresenterImpl implements ActivePresenter {
 
     @Override
     public void activeBox(final String code) {
+
         activeView.showDialog("激活中...");
         new CommService() {
 
