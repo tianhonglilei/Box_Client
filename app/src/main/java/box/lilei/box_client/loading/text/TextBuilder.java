@@ -25,7 +25,7 @@ import static com.alibaba.fastjson.util.IdentityHashMap.DEFAULT_SIZE;
  */
 public class TextBuilder extends ZLoadingBuilder
 {
-    private static final long DURATION_TIME = 1000;
+    private static final long DURATION_TIME = 1333;
     private static final int BASE_ALPHA = 100;
     private static final String DEFAULT_TEXT = "DC-BOX";
     private Paint  mTextPaint;

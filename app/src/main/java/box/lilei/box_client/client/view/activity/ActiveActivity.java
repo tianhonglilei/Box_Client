@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxAction;
-import box.lilei.box_client.box.BoxSetting;
 import box.lilei.box_client.client.listener.NetEvent;
 import box.lilei.box_client.client.presenter.ActivePresenter;
 import box.lilei.box_client.client.presenter.impl.ActivePresenterImpl;
@@ -51,6 +50,8 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
     ZLoadingDialog dialog;
     @BindView(R.id.active_bg_loading)
     ZLoadingView activeBgLoading;
+    @BindView(R.id.active_bg_txt)
+    TextView activeBgTxt;
 
     //检测网络
     private NetBroadcastReceiver netBroadcastReceiver;
@@ -79,7 +80,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         setContentView(R.layout.client_active_activity);
         ButterKnife.bind(this);
 
-        activeBgLoading.setLoadingBuilder(Z_TYPE.values()[1]);
+        activeBgLoading.setLoadingBuilder(Z_TYPE.values()[0]);
 
         activeBtn.setOnClickListener(this);
 
@@ -149,6 +150,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         if (activeRl.getVisibility() == View.INVISIBLE) {
             activeRl.setVisibility(View.VISIBLE);
             activeBgLoading.setVisibility(View.INVISIBLE);
+            activeBgTxt.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -157,8 +159,9 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         if (activeRl.getVisibility() == View.VISIBLE) {
             activeRl.setVisibility(View.INVISIBLE);
             activeBgLoading.setVisibility(View.VISIBLE);
+            activeBgTxt.setVisibility(View.VISIBLE);
         }
-        if (success){
+        if (success) {
             activePresenter.loadAllDataFromUrl(BoxAction.getBoxId());
         }
     }
