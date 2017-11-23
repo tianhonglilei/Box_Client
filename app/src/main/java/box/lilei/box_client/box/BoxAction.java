@@ -1,5 +1,7 @@
 package box.lilei.box_client.box;
 
+import android.util.Log;
+
 import com.avm.serialport_142.MainHandler;
 import com.avm.serialport_142.utils.Avm;
 
@@ -29,11 +31,9 @@ public class BoxAction {
             roadIndex = "0" + roadIndex;
         }
         String params = boxType + "1" + roadIndex + "00000010" + Avm.OUT_GOODS_OTHER;
-
         Random r = new Random();
-
         String random = "" + (Math.random() * 100000 + 100000);
-
+        Log.e("BoxAction", params);
         MainHandler.noticeAvmOutGoods(params, random);
     }
 

@@ -130,9 +130,9 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RoadGoods roadGoods = navRoadAdapter.getItem(position);
                 RoadInfo roadInfo = roadGoods.getRoadInfo();
-                if (roadInfo.getRoadIndex()<10){
-                    index = "0"+roadInfo.getRoadIndex();
-                }else{
+                if (roadInfo.getRoadIndex() < 10) {
+                    index = "0" + roadInfo.getRoadIndex();
+                } else {
                     index = roadInfo.getRoadIndex().toString();
                 }
                 Goods goods = roadGoods.getGoods();
@@ -163,7 +163,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
 
     @Override
     public void hiddenLoading() {
-        if (dialog!=null){
+        if (dialog != null) {
             dialog.dismiss();
             dialog = null;
         }
@@ -176,7 +176,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
             case R.id.nav_road_btn_test:
                 //测试该货道
                 if (!((Button) v).getText().toString().equals(getResources().getString(R.string.string_test_this_road))) {
-                    navRoadPresenter.testRoad(boxType,index);
+                    navRoadPresenter.testRoad(boxType, index);
                 } else {
                     Toast.makeText(mContext, "请选择货道", Toast.LENGTH_SHORT).show();
                 }
@@ -200,7 +200,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
         okDialog.setOkBtn(R.string.ok, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                navRoadPresenter.clearRoad(boxType, index);
                 okDialog.dismiss();
             }
         });

@@ -85,9 +85,8 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
                 } else if (num == BoxAction.OUT_GOODS_FAIL) {
                     Toast.makeText(mContext, "出货失败，请重新测试", Toast.LENGTH_SHORT).show();
                     break;
-                } else {
-                    continue;
                 }
+                break;
             }
         } else if (state == RoadInfo.ROAD_STATE_NULL) {
             Toast.makeText(mContext, index + "货道没有检测到货品", Toast.LENGTH_SHORT).show();
@@ -108,15 +107,19 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
                     int num = BoxAction.getOutGoodsState();
                     if (num == BoxAction.OUT_GOODS_SUCCESS) {
                         Toast.makeText(mContext, "出货成功"+ ++i, Toast.LENGTH_SHORT).show();
-                        break;
+                        try {
+                            Thread.sleep(1000);
+                            break;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     } else if (num == BoxAction.OUT_GOODS_NULL) {
                         continue;
                     } else if (num == BoxAction.OUT_GOODS_FAIL) {
                         Toast.makeText(mContext, "出货失败，请重新测试", Toast.LENGTH_SHORT).show();
                         break;
-                    } else {
-                        continue;
                     }
+                    break;
                 }
                 continue;
             } else if (state == RoadInfo.ROAD_STATE_NULL) {
