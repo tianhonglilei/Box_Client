@@ -1,10 +1,12 @@
 package box.lilei.box_client.manager.presenter.impl;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import box.lilei.box_client.box.BoxAction;
 import box.lilei.box_client.box.BoxSetting;
 import box.lilei.box_client.client.biz.RoadBiz;
 import box.lilei.box_client.client.biz.impl.RoadBizImpl;
@@ -51,7 +53,7 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
             }
             roadGoodsList = roadGoodsListMain;
             navRoadFragmentView.initNavRoadGv(roadGoodsList);
-            if (roadGoodsListViceOne.size()>0){
+            if (roadGoodsListViceOne.size() > 0) {
                 navRoadFragmentView.showViceOne();
             }
         }
@@ -59,11 +61,73 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
 
     @Override
     public List<RoadGoods> checkRobot(String boxType) {
-        if (boxType.equals(BoxSetting.BOX_TYPE_DRINK)){
+        if (boxType.equals(BoxSetting.BOX_TYPE_DRINK)) {
             return roadGoodsListMain;
-        }else{
+        } else {
             return roadGoodsListViceOne;
         }
+    }
+
+    @Override
+    public void testRoad(String boxType, String index) {
+        navRoadFragmentView.showLoading("出货中...");
+        int state = BoxAction.getRoadState(boxType, index);
+        if (state == RoadInfo.ROAD_STATE_NORMAL) {
+            BoxAction.outGoods(boxType, index);
+            while (true) {
+                int num = BoxAction.getOutGoodsState();
+                if (num == BoxAction.OUT_GOODS_SUCCESS) {
+                    Toast.makeText(mContext, "出货成功", Toast.LENGTH_SHORT).show();
+                    navRoadFragmentView.hiddenLoading();
+                    break;
+                } else if (num == BoxAction.OUT_GOODS_NULL) {
+                    continue;
+                } else if (num == BoxAction.OUT_GOODS_FAIL) {
+                    Toast.makeText(mContext, "出货失败，请重新测试", Toast.LENGTH_SHORT).show();
+                    break;
+                } else {
+                    continue;
+                }
+            }
+        } else if (state == RoadInfo.ROAD_STATE_NULL) {
+            Toast.makeText(mContext, index + "货道没有检测到货品", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mContext, "货道出现异常，请重启程序", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void clearRoad(String boxType, String index) {
+        navRoadFragmentView.showLoading("出货中...");
+        int i = 0;
+        while (true) {
+            int state = BoxAction.getRoadState(boxType, index);
+            if (state == RoadInfo.ROAD_STATE_NORMAL) {
+                BoxAction.outGoods(boxType, index);
+                while (true) {
+                    int num = BoxAction.getOutGoodsState();
+                    if (num == BoxAction.OUT_GOODS_SUCCESS) {
+                        Toast.makeText(mContext, "出货成功"+ ++i, Toast.LENGTH_SHORT).show();
+                        break;
+                    } else if (num == BoxAction.OUT_GOODS_NULL) {
+                        continue;
+                    } else if (num == BoxAction.OUT_GOODS_FAIL) {
+                        Toast.makeText(mContext, "出货失败，请重新测试", Toast.LENGTH_SHORT).show();
+                        break;
+                    } else {
+                        continue;
+                    }
+                }
+                continue;
+            } else if (state == RoadInfo.ROAD_STATE_NULL) {
+                Toast.makeText(mContext, index + "货道没有检测到货品", Toast.LENGTH_SHORT).show();
+                break;
+            } else {
+                Toast.makeText(mContext, "货道出现异常，请重启程序", Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
+        navRoadFragmentView.hiddenLoading();
     }
 
 

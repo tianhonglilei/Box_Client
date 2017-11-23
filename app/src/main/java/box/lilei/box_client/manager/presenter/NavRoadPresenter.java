@@ -13,4 +13,9 @@ public interface NavRoadPresenter {
     void initRoadInfo();
 
     List<RoadGoods> checkRobot(String boxType);
+
+    void testRoad(String boxType,String index);
+
+    void clearRoad(String boxType,String index);
+
 }

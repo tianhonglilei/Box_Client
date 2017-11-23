@@ -14,4 +14,8 @@ public interface NavRoadFragmentView {
 
     void showViceOne();
 
+    void showLoading(String text);
+
+    void hiddenLoading();
+
 }

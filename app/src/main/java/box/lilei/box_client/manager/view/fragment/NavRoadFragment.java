@@ -2,6 +2,7 @@ package box.lilei.box_client.manager.view.fragment;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import box.lilei.box_client.R;
+import box.lilei.box_client.box.BoxAction;
 import box.lilei.box_client.box.BoxSetting;
 import box.lilei.box_client.client.biz.GoodsBiz;
 import box.lilei.box_client.client.biz.RoadBiz;
@@ -32,6 +34,9 @@ import box.lilei.box_client.client.biz.impl.RoadBizImpl;
 import box.lilei.box_client.client.model.Goods;
 import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.model.RoadInfo;
+import box.lilei.box_client.client.view.activity.ActiveActivity;
+import box.lilei.box_client.loading.ZLoadingDialog;
+import box.lilei.box_client.loading.Z_TYPE;
 import box.lilei.box_client.manager.adapter.NavRoadAdapter;
 import box.lilei.box_client.manager.presenter.NavRoadPresenter;
 import box.lilei.box_client.manager.presenter.impl.NavRoadPresenterImpl;
@@ -40,7 +45,7 @@ import box.lilei.box_client.manager.view.NavRoadFragmentView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NavRoadFragment extends Fragment implements NavRoadFragmentView ,View.OnClickListener{
+public class NavRoadFragment extends Fragment implements NavRoadFragmentView, View.OnClickListener {
 
 
     private NavRoadAdapter navRoadAdapter;
@@ -55,7 +60,9 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView ,Vi
     private NavRoadPresenter navRoadPresenter;
     private List<RoadGoods> roadGoodsList;
     private String name;
-    private int index;
+    private String index;
+
+    private ZLoadingDialog dialog;
 
 
     public NavRoadFragment() {
@@ -123,12 +130,16 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView ,Vi
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RoadGoods roadGoods = navRoadAdapter.getItem(position);
                 RoadInfo roadInfo = roadGoods.getRoadInfo();
+                if (roadInfo.getRoadIndex()<10){
+                    index = "0"+roadInfo.getRoadIndex();
+                }else{
+                    index = roadInfo.getRoadIndex().toString();
+                }
                 Goods goods = roadGoods.getGoods();
-                String s1 = getResources().getString(R.string.string_test_this_road) + roadInfo.getRoadIndex().toString();
+                String s1 = getResources().getString(R.string.string_test_this_road) + index;
                 navRoadTestBtn.setText(s1);
-                navRoadClearBtn.setText( getResources().getString(R.string.string_clear_this_road) + roadInfo.getRoadIndex().toString());
+                navRoadClearBtn.setText(getResources().getString(R.string.string_clear_this_road) + index);
                 name = goods.getGoodsName();
-                index = Integer.parseInt(roadInfo.getRoadIndex().toString());
             }
         });
     }
@@ -138,32 +149,53 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView ,Vi
         navRdoRobotViceOne.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void showLoading(String text) {
+        dialog = new ZLoadingDialog(mContext);
+        dialog.setLoadingBuilder(Z_TYPE.TEXT)
+                .setLoadingColor(Color.parseColor("#ff5307"))
+                .setHintText(text)
+                .setHintTextSize(16) // 设置字体大小
+                .setHintTextColor(Color.parseColor("#525252"))  // 设置字体颜色
+                .setCanceledOnTouchOutside(false)
+                .show();
+    }
+
+    @Override
+    public void hiddenLoading() {
+        if (dialog!=null){
+            dialog.dismiss();
+            dialog = null;
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.nav_road_btn_test:
                 //测试该货道
-                if (!((Button)v).getText().toString().equals(getResources().getString(R.string.string_test_this_road))){
-
-                }else{
+                if (!((Button) v).getText().toString().equals(getResources().getString(R.string.string_test_this_road))) {
+                    navRoadPresenter.testRoad(boxType,index);
+                } else {
                     Toast.makeText(mContext, "请选择货道", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.nav_road_btn_clear:
                 //清空该货道
-                if (!((Button)v).getText().toString().equals(getResources().getString(R.string.string_clear_this_road))){
+                if (!((Button) v).getText().toString().equals(getResources().getString(R.string.string_clear_this_road))) {
                     showOkCancelDialog();
-                }else{
+                } else {
                     Toast.makeText(mContext, "请选择货道", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
     }
 
-    public void showOkCancelDialog(){
+
+    public void showOkCancelDialog() {
         final ICommonDialog okDialog = CommonDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_1);
-        okDialog.setTitleText("是否清空"+index+"货道商品："+name);
+        okDialog.setTitleText("是否清空" + index + "货道商品：" + name);
         okDialog.setOkBtnStyleType(DialogUtil.OK_BTN_LARGE_BLUE_BG_WHITE_TEXT);
         okDialog.setOkBtn(R.string.ok, new View.OnClickListener() {
             @Override

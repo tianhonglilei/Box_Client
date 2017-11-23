@@ -42,7 +42,7 @@ public class RoadBizImpl implements RoadBiz {
             roadInfo.setRoadState(BoxAction.getRoadState(roadInfo.getRoadBoxType(),roadInfo.getRoadIndex().toString()));
             roadInfo.setRoadOpen(RoadInfo.ROAD_OPEN);
             if (roadInfo.getRoadOpen() == RoadInfo.ROAD_OPEN
-                    || roadInfo.getRoadState() == RoadInfo.ROAD_STATE_NORMAL){
+                    && roadInfo.getRoadState() == RoadInfo.ROAD_STATE_NORMAL){
                 goods.setGoodsSaleState(Goods.SALE_STATE_NORMAL);
             }else{
                 goods.setGoodsSaleState(Goods.SALE_STATE_OUT);
