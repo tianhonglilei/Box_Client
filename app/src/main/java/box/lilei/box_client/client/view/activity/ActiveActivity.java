@@ -106,7 +106,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
             public void run() {
                 exitApplication();
             }
-        },20000);
+        },60000);
     }
 
     @Override

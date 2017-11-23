@@ -10,8 +10,8 @@
 
     <box.lilei.box_client.loading.ZLoadingView
         android:id="@+id/active_bg_loading"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
+        android:layout_width="450dp"
+        android:layout_height="150dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:contentDescription="@string/app_name"
@@ -24,9 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/active_bg_loading"
         android:text="启动中..."
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:layout_centerHorizontal="true"
-        android:textColor="@color/colorDemoLogo"
+        android:textColor="@color/colorWhiteTxt"
         />
 
 
