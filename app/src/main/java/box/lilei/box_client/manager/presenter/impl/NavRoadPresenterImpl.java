@@ -70,10 +70,9 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
 
     @Override
     public void testRoad(String boxType, String index) {
-        navRoadFragmentView.showLoading("出货中...");
         int state = BoxAction.getRoadState(boxType, index);
         if (state == RoadInfo.ROAD_STATE_NORMAL) {
-            BoxAction.outGoods(boxType, index);
+            navRoadFragmentView.boxOutGoods();
             while (true) {
                 int num = BoxAction.getOutGoodsState();
                 if (num == BoxAction.OUT_GOODS_SUCCESS) {
@@ -102,7 +101,7 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
         while (true) {
             int state = BoxAction.getRoadState(boxType, index);
             if (state == RoadInfo.ROAD_STATE_NORMAL) {
-                BoxAction.outGoods(boxType, index);
+                navRoadFragmentView.boxOutGoods();
                 while (true) {
                     int num = BoxAction.getOutGoodsState();
                     if (num == BoxAction.OUT_GOODS_SUCCESS) {

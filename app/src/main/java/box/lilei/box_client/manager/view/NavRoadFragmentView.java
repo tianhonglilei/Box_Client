@@ -18,4 +18,7 @@ public interface NavRoadFragmentView {
 
     void hiddenLoading();
 
+    //出货
+    void boxOutGoods();
+
 }

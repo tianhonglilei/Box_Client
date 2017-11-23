@@ -169,6 +169,11 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
         }
     }
 
+    @Override
+    public void boxOutGoods() {
+        BoxAction.outGoods(boxType, index);
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -176,6 +181,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
             case R.id.nav_road_btn_test:
                 //测试该货道
                 if (!((Button) v).getText().toString().equals(getResources().getString(R.string.string_test_this_road))) {
+                    showLoading("出货中...");
                     navRoadPresenter.testRoad(boxType, index);
                 } else {
                     Toast.makeText(mContext, "请选择货道", Toast.LENGTH_SHORT).show();
