@@ -65,7 +65,8 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
     private NavRoadPresenter navRoadPresenter;
     private List<RoadGoods> roadGoodsList;
     private String name;
-    private String index;
+    private String index = "0";
+    private String boxType = BoxSetting.BOX_TYPE_DRINK;
 
     private ZLoadingDialog dialog;
 
@@ -109,7 +110,6 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
         initRdoGrp();
     }
 
-    private String boxType = BoxSetting.BOX_TYPE_DRINK;
 
     /**
      * 初始化选择机器
@@ -125,6 +125,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
                     boxType = BoxSetting.BOX_TYPE_FOOD;
                     roadGoodsList = navRoadPresenter.checkRobot(BoxSetting.BOX_TYPE_FOOD);
                 }
+                index = "0";
                 navRoadTestBtn.setText(R.string.string_test_this_road);
                 navRoadClearBtn.setText(R.string.string_clear_this_road);
                 navRoadAdapter.setmDatas(roadGoodsList);
@@ -173,7 +174,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
             dialog.dismiss();
             dialog = null;
         }
-        if (goodsBroadcastReceiver != null){
+        if (goodsBroadcastReceiver != null) {
             mContext.unregisterReceiver(goodsBroadcastReceiver);
         }
     }
@@ -183,7 +184,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
 //        handler.sendEmptyMessage(OUT_GOODS);
         if (BoxAction.outGoods(boxType, index)) {
             registerGoodsBoradcastReceiver();
-        }else{
+        } else {
             hiddenLoading();
         }
     }
@@ -204,9 +205,9 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.nav_road_btn_test:
-                Toast.makeText(mContext, "测试", Toast.LENGTH_SHORT).show();
                 //测试该货道
-                if (!((Button) v).getText().toString().equals(getResources().getString(R.string.string_test_this_road))) {
+                if (!index.equals("0")) {
+                    Toast.makeText(mContext, "测试", Toast.LENGTH_SHORT).show();
                     navRoadPresenter.testRoad(boxType, index);
                 } else {
                     Toast.makeText(mContext, "请选择货道", Toast.LENGTH_SHORT).show();
@@ -214,7 +215,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
                 break;
             case R.id.nav_road_btn_clear:
                 //清空该货道
-                if (!((Button) v).getText().toString().equals(getResources().getString(R.string.string_clear_this_road))) {
+                if (!index.equals("0")) {
                     showOkCancelDialog();
                 } else {
                     Toast.makeText(mContext, "请选择货道", Toast.LENGTH_SHORT).show();
