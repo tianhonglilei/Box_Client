@@ -70,6 +70,7 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
 
     @Override
     public void testRoad(String boxType, String index) {
+        navRoadFragmentView.showLoading("出货中...");
         int state = BoxAction.getRoadState(boxType, index);
         if (state == RoadInfo.ROAD_STATE_NORMAL) {
             navRoadFragmentView.boxOutGoods();
