@@ -2,6 +2,7 @@ package box.lilei.box_client.manager.view.fragment;
 
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,6 +37,7 @@ import box.lilei.box_client.client.biz.impl.RoadBizImpl;
 import box.lilei.box_client.client.model.Goods;
 import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.model.RoadInfo;
+import box.lilei.box_client.client.receiver.GoodsBroadcastReceiver;
 import box.lilei.box_client.client.view.activity.ActiveActivity;
 import box.lilei.box_client.loading.ZLoadingDialog;
 import box.lilei.box_client.loading.Z_TYPE;
@@ -67,6 +69,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
 
     private ZLoadingDialog dialog;
 
+    private GoodsBroadcastReceiver goodsBroadcastReceiver;
 
     public NavRoadFragment() {
         // Required empty public constructor
@@ -175,6 +178,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
     @Override
     public void boxOutGoods() {
         handler.sendEmptyMessage(OUT_GOODS);
+
     }
 
     Handler handler = new Handler() {
@@ -184,6 +188,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
             switch (msg.what) {
                 case OUT_GOODS:
                     BoxAction.outGoods(boxType, index);
+                    registerGoodsBoradcastReceiver();
                     break;
             }
         }
@@ -212,6 +217,13 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
         }
     }
 
+    // 监听出货广播
+    private void registerGoodsBoradcastReceiver() {
+        goodsBroadcastReceiver = new GoodsBroadcastReceiver(this);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.avm.serialport.OUT_GOODS");
+        mContext.registerReceiver(goodsBroadcastReceiver, filter);
+    }
 
     public void showOkCancelDialog() {
         final ICommonDialog okDialog = CommonDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_1);

@@ -30,9 +30,8 @@ public class BoxAction {
         if (Integer.parseInt(roadIndex) < 10 && roadIndex.length() == 1) {
             roadIndex = "0" + roadIndex;
         }
-        String params = boxType + "1" + roadIndex + "00000010" + Avm.OUT_GOODS_OTHER;
-        Random r = new Random();
-        String random = "" + (Math.random() * 100000 + 100000);
+        String params = boxType + "1" + roadIndex + "00000100" + Avm.OUT_GOODS_OTHER;
+        String random = "" + ((Math.random() * 9 + 1) * 100000);
         Log.e("BoxAction", params);
         MainHandler.noticeAvmOutGoods(params, random);
     }

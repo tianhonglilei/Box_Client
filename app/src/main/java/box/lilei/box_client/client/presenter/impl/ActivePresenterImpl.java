@@ -94,6 +94,11 @@ public class ActivePresenterImpl implements ActivePresenter {
         roadBeanService = new RoadBeanService(mContext, RoadBean.class);
         goodsBeanService = new GoodsBeanService(mContext, GoodsBean.class);
         percentBeanService = new PercentBeanService(mContext, PercentBean.class);
+        //清空数据
+        adBeanService.clearBean();
+        roadBeanService.clearBean();
+        goodsBeanService.clearBean();
+        percentBeanService.clearBean();
 
         StringBuilder url = new StringBuilder(Constants.BANNER_AD_URL);
         url.append("&machineid=" + imei);

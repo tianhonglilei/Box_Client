@@ -16,7 +16,7 @@
         android:layout_centerVertical="true"
         android:contentDescription="@string/app_name"
         android:scaleType="centerInside"
-        app:z_color="@color/colorDemoLogo" />
+        app:z_color="@color/colorWhiteTxt" />
 
     <TextView
         android:id="@+id/active_bg_txt"

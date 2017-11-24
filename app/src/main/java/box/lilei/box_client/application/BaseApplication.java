@@ -88,8 +88,8 @@ public class BaseApplication extends Application {
             MySQLiteOpenHelper helper = new MySQLiteOpenHelper(context, Constants.DB_NAME, null);
 //            DaoMaster.OpenHelper helper = new DaoMaster.DevOpenHelper(context, Constants.DB_NAME, null);
             daoMaster = new DaoMaster(helper.getWritableDatabase());
-            DaoMaster.dropAllTables(daoMaster.getDatabase(),true);
-            DaoMaster.createAllTables(daoMaster.getDatabase(),true);
+//            DaoMaster.dropAllTables(daoMaster.getDatabase(),true);
+//            DaoMaster.createAllTables(daoMaster.getDatabase(),true);
         }
         return daoMaster;
     }

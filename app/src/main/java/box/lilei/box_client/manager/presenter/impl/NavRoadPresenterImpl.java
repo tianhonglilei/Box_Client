@@ -73,20 +73,6 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
         int state = BoxAction.getRoadState(boxType, index);
         if (state == RoadInfo.ROAD_STATE_NORMAL) {
             navRoadFragmentView.boxOutGoods();
-            while (true) {
-                int num = BoxAction.getOutGoodsState();
-                if (num == BoxAction.OUT_GOODS_SUCCESS) {
-                    Toast.makeText(mContext, "出货成功", Toast.LENGTH_SHORT).show();
-                    navRoadFragmentView.hiddenLoading();
-                    break;
-                } else if (num == BoxAction.OUT_GOODS_NULL) {
-                    continue;
-                } else if (num == BoxAction.OUT_GOODS_FAIL) {
-                    Toast.makeText(mContext, "出货失败，请重新测试", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                break;
-            }
         } else if (state == RoadInfo.ROAD_STATE_NULL) {
             Toast.makeText(mContext, index + "货道没有检测到货品", Toast.LENGTH_SHORT).show();
         } else {
@@ -102,24 +88,24 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
             int state = BoxAction.getRoadState(boxType, index);
             if (state == RoadInfo.ROAD_STATE_NORMAL) {
                 navRoadFragmentView.boxOutGoods();
-                while (true) {
-                    int num = BoxAction.getOutGoodsState();
-                    if (num == BoxAction.OUT_GOODS_SUCCESS) {
-                        Toast.makeText(mContext, "出货成功"+ ++i, Toast.LENGTH_SHORT).show();
-                        try {
-                            Thread.sleep(1000);
-                            break;
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    } else if (num == BoxAction.OUT_GOODS_NULL) {
-                        continue;
-                    } else if (num == BoxAction.OUT_GOODS_FAIL) {
-                        Toast.makeText(mContext, "出货失败，请重新测试", Toast.LENGTH_SHORT).show();
-                        break;
-                    }
-                    break;
-                }
+//                while (true) {
+//                    int num = BoxAction.getOutGoodsState();
+//                    if (num == BoxAction.OUT_GOODS_SUCCESS) {
+//                        Toast.makeText(mContext, "出货成功"+ ++i, Toast.LENGTH_SHORT).show();
+//                        try {
+//                            Thread.sleep(1000);
+//                            break;
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                    } else if (num == BoxAction.OUT_GOODS_NULL) {
+//                        continue;
+//                    } else if (num == BoxAction.OUT_GOODS_FAIL) {
+//                        Toast.makeText(mContext, "出货失败，请重新测试", Toast.LENGTH_SHORT).show();
+//                        break;
+//                    }
+//                    break;
+//                }
                 continue;
             } else if (state == RoadInfo.ROAD_STATE_NULL) {
                 Toast.makeText(mContext, index + "货道没有检测到货品", Toast.LENGTH_SHORT).show();
