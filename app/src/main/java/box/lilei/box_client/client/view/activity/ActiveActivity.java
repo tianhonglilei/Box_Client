@@ -208,7 +208,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
                     exitTimer = null;
                 }
                 activePresenter.getBoxId();
-//                initBoxCheck();
+                initBoxCheck();
                 break;
             case -1://没有网络
 

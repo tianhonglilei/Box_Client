@@ -21,13 +21,16 @@ import com.bumptech.glide.Glide;
 import java.util.Timer;
 
 import box.lilei.box_client.R;
+import box.lilei.box_client.box.BoxAction;
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.RoadGoods;
+import box.lilei.box_client.client.model.RoadInfo;
 import box.lilei.box_client.client.presenter.MoreGoodsPresenter;
 import box.lilei.box_client.client.presenter.impl.MoreGoodsPresenterImpl;
 import box.lilei.box_client.client.view.MoreGoodsView;
 import box.lilei.box_client.manager.view.activity.ManagerNavgationActivity;
 import box.lilei.box_client.util.SharedPreferencesUtil;
+import box.lilei.box_client.util.ToastTools;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -106,12 +109,22 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         moreGoodsGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MoreGoodsActivity.this, PayActivity.class);
-                intent.putExtra("temp", moreWeatherWdNum.getText().toString());
-                intent.putExtra("weather", moreWeatherTxt.getText().toString());
                 RoadGoods roadGoods = (RoadGoods) moreGoodsGv.getItemAtPosition(position);
-                intent.putExtra("roadGoods", roadGoods);
-                startActivity(intent);
+                RoadInfo roadInfo = roadGoods.getRoadInfo();
+                Long index = roadInfo.getRoadIndex();
+                int state = BoxAction.getRoadState(roadInfo.getRoadBoxType(), index+"");
+                if (state == RoadInfo.ROAD_STATE_NORMAL) {
+                    Intent intent = new Intent(MoreGoodsActivity.this, PayActivity.class);
+                    intent.putExtra("temp", moreWeatherWdNum.getText().toString());
+                    intent.putExtra("weather", moreWeatherTxt.getText().toString());
+                    intent.putExtra("roadGoods", roadGoods);
+                    startActivity(intent);
+                }else{
+                    ToastTools.showShort(mContext,"该商品已售罄，请选购其他商品");
+                    //刷新商品
+                    moreGoodsPresenter.initAllGoods(moreGoodsGv);
+                }
+
             }
         });
     }
@@ -127,7 +140,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         moreGoodsNavRlReturn.setOnClickListener(this);
 
         //显示机器号
-        moreImeiNum.setText(SharedPreferencesUtil.getString(mContext,"box_id"));
+        moreImeiNum.setText(SharedPreferencesUtil.getString(mContext, "box_id"));
 
         moreGoodsRbtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

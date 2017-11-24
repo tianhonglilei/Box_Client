@@ -33,10 +33,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import box.lilei.box_client.R;
+import box.lilei.box_client.box.BoxAction;
 import box.lilei.box_client.client.model.ADInfo;
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.MyWeather;
 import box.lilei.box_client.client.model.RoadGoods;
+import box.lilei.box_client.client.model.RoadInfo;
 import box.lilei.box_client.client.presenter.ADBannerPresenter;
 import box.lilei.box_client.client.presenter.WeatherPresenter;
 import box.lilei.box_client.client.presenter.impl.ADBannerPresenterImpl;
@@ -47,6 +49,7 @@ import box.lilei.box_client.contants.Constants;
 import box.lilei.box_client.loading.ZLoadingDialog;
 import box.lilei.box_client.loading.Z_TYPE;
 import box.lilei.box_client.util.FileUtils;
+import box.lilei.box_client.util.ToastTools;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -297,11 +300,23 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
      */
     @Override
     public void navigateToPay(RoadGoods roadGoods) {
-        Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
-        intent.putExtra("roadGoods", roadGoods);
-        intentDateWeather(intent);
-        startActivity(intent);
-        adVideoView.pause();
+        RoadInfo roadInfo = roadGoods.getRoadInfo();
+        Long index = roadInfo.getRoadIndex();
+        int state = BoxAction.getRoadState(roadInfo.getRoadBoxType(), index+"");
+        if (state == RoadInfo.ROAD_STATE_NORMAL) {
+            Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
+            intent.putExtra("roadGoods", roadGoods);
+            intentDateWeather(intent);
+            startActivity(intent);
+            adVideoView.pause();
+        }else{
+            ToastTools.showShort(mContext,"该商品已经售罄，请选购其他商品");
+            //刷新商品
+            adPresenter.initGoodsData(adbannerGoodsGv);
+        }
+
+
+
     }
 
     /**

@@ -50,6 +50,9 @@ public class BoxAction {
      * @return
      */
     public static int getRoadState(String boxType, String roadIndex) {
+        if (Integer.parseInt(roadIndex) < 10 && roadIndex.length() == 1) {
+            roadIndex = "0" + roadIndex;
+        }
         String result = MainHandler.getGoodsInfo(Integer.parseInt(boxType), Integer.parseInt(roadIndex));
         int str = Integer.parseInt(result.substring(0, 1));
         return str;

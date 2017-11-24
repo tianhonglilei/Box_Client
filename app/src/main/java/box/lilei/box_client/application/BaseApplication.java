@@ -42,7 +42,7 @@ public class BaseApplication extends Application {
             FileUtils.creatSDDir("Box_client");
         }
 
-        initBoxCheck();
+//        initBoxCheck();
 
         LeakCanary.install(this);
 

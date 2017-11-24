@@ -7,9 +7,9 @@ import android.os.Environment;
  */
 
 public class Constants {
-    //    public String MAIN_URL="http://60.205.218.33";
+    public static final String MAIN_URL="http://60.205.218.33";
     //测试域名
-    public static final String MAIN_URL = "http://16p98712s5.iask.in";
+//    public static final String MAIN_URL = "http://16p98712s5.iask.in";
 
     //数据库名称
     public static final String DB_NAME = "box_db";
