@@ -1,7 +1,11 @@
 package box.lilei.box_client.manager.presenter.impl;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
+
+import com.avm.serialport_142.MainHandler;
+import com.avm.serialport_142.utils.Avm;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,12 +76,24 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
     public void testRoad(String boxType, String index) {
         navRoadFragmentView.showLoading("出货中...");
         int state = BoxAction.getRoadState(boxType, index);
+        Toast.makeText(mContext, "state:" + state, Toast.LENGTH_SHORT).show();
         if (state == RoadInfo.ROAD_STATE_NORMAL) {
-            navRoadFragmentView.boxOutGoods();
+//            navRoadFragmentView.boxOutGoods();
+            String params = boxType + "1" + index + "00000100" + Avm.OUT_GOODS_ALIPAY;
+            String random = "" + ((Math.random() * 9 + 1) * 100000);
+            Log.e("BoxAction", params);
+            if (MainHandler.noticeAvmOutGoods(params, random)){
+                Toast.makeText(mContext, "出货成功", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(mContext, "出货失败", Toast.LENGTH_SHORT).show();
+            }
+            navRoadFragmentView.hiddenLoading();
         } else if (state == RoadInfo.ROAD_STATE_NULL) {
             Toast.makeText(mContext, index + "货道没有检测到货品", Toast.LENGTH_SHORT).show();
+            navRoadFragmentView.hiddenLoading();
         } else {
             Toast.makeText(mContext, "货道出现异常，请重启程序", Toast.LENGTH_SHORT).show();
+            navRoadFragmentView.hiddenLoading();
         }
     }
 
