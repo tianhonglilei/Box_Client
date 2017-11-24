@@ -425,6 +425,18 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         super.onDestroy();
         payPresenter = null;
         weatherPresenter = null;
+        //回收bitmap
+        recycleBitmap(bitmapAliPayOne);
+        recycleBitmap(bitmapAliPayTwo);
+        recycleBitmap(bitmapWxPayOne);
+        recycleBitmap(bitmapWxPayTwo);
+    }
+
+    private void recycleBitmap(Bitmap bitmap){
+        if (bitmap!=null){
+            bitmap.recycle();
+            bitmap = null;
+        }
     }
 
 }

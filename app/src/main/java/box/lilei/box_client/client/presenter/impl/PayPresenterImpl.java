@@ -6,6 +6,7 @@ import android.util.Log;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.zxing.common.StringUtils;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import box.lilei.box_client.box.BoxAction;
+import box.lilei.box_client.box.BoxSetting;
 import box.lilei.box_client.client.biz.PercentBiz;
 import box.lilei.box_client.client.biz.impl.PercenteBizImpl;
 import box.lilei.box_client.client.model.Goods;
@@ -67,9 +69,9 @@ public class PayPresenterImpl implements PayPresenter {
         Timestamp now = new Timestamp(System.currentTimeMillis());
         Long goodsId = goods.getGoodsId();
         String box_id = BoxAction.getBoxIdFromSP(mContext);
-        Long roadIndex = roadInfo.getRoadIndex();
-        String boxType = roadInfo.getRoadBoxType();
-        String tradeno = now + "," + goodsId + ","
+        final Long roadIndex = roadInfo.getRoadIndex();
+        final String boxType = roadInfo.getRoadBoxType();
+        final String tradeno = now + "," + goodsId + ","
                 + box_id + "," + roadIndex + ","
                 + boxType;
         String goodsName = goods.getGoodsName();
@@ -78,28 +80,31 @@ public class PayPresenterImpl implements PayPresenter {
         String subject = des + "|" + goodsId + "|"
                 + roadIndex + "|" + box_id + "|"
                 + boxType;
-
+        final String mchTradeNo = MyStringUtil.getRandonInt(20);
         Map<String, String> params;
         if (payType == Constants.PAY_TYPE_WX) {
-            params = ParamsUtils.wxGetQRParams(Double.toString(price), des, tradeno, subject);
+            params = ParamsUtils.wxGetQRParams(Double.toString(price), des, mchTradeNo, subject);
         } else if (payType == Constants.PAY_TYPE_ALI) {
             params = ParamsUtils.aliGetQRParams(tradeno, Double.toString(price), title, des);
         }else{
             params = new HashMap<>();
         }
-        CommonOkHttpClient.get(CommonRequest.createPostRequest(url, new RequestParams(params)), new DisposeDataHandle(new DisposeDataListener() {
+        CommonOkHttpClient.post(CommonRequest.createPostRequest(url, new RequestParams(params)), new DisposeDataHandle(new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObject) {
                 JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
-                Log.e("PayPresenterImpl", "jsonObject:" + jsonObject);
+//                Log.e("PayPresenterImpl", "jsonObject:" + jsonObject);
                 String url ="";
                 if (payType == Constants.PAY_TYPE_WX){
                     if (jsonObject.getString("error").equals("0")){
                         url = jsonObject.getString("url");
+                        getPayResponse(mchTradeNo, Constants.PAY_TYPE_WX, boxType, roadIndex+"");
                     }
+
                 }else {
                     if (jsonObject.getString("err").equals("0")){
                         url = jsonObject.getString("url");
+                        getPayResponse(tradeno, Constants.PAY_TYPE_ALI, boxType, roadIndex+"");
                     }
                 }
                 Bitmap bitmap;
@@ -118,5 +123,30 @@ public class PayPresenterImpl implements PayPresenter {
         }));
     }
 
+
+    private void getPayResponse(String tradeno, int payType, final String boxType, final String roadIndex){
+        String url = "";
+        if (payType == Constants.PAY_TYPE_WX){
+            url = Constants.WX_GET_PAY_RESPONSE;
+        }else{
+            url = Constants.ALI_GET_PAY_RESPONSE;
+        }
+        Map<String, String> params = ParamsUtils.getPayResponseParams(tradeno,payType);
+        CommonOkHttpClient.post(CommonRequest.createPostRequest(url,new RequestParams(params)), new DisposeDataHandle(new DisposeDataListener() {
+
+            @Override
+            public void onSuccess(Object responseObject) {
+                JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
+                if (jsonObject.getString("error").equals("0")){
+                    BoxAction.outGoods(boxType, roadIndex);
+                }
+            }
+
+            @Override
+            public void onFail(Object errorObject) {
+
+            }
+        }));
+    }
 
 }

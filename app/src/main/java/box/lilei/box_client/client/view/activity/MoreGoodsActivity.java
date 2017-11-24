@@ -22,6 +22,7 @@ import java.util.Timer;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxAction;
+import box.lilei.box_client.client.model.Goods;
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.model.RoadInfo;
@@ -110,6 +111,11 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RoadGoods roadGoods = (RoadGoods) moreGoodsGv.getItemAtPosition(position);
+                Goods goods = roadGoods.getGoods();
+                if (goods.getGoodsSaleState() == Goods.SALE_STATE_OUT){
+                    ToastTools.showShort(mContext,"该商品已售罄，请选购其他商品");
+                    return;
+                }
                 RoadInfo roadInfo = roadGoods.getRoadInfo();
                 Long index = roadInfo.getRoadIndex();
                 int state = BoxAction.getRoadState(roadInfo.getRoadBoxType(), index+"");

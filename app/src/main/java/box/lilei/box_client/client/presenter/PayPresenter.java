@@ -9,6 +9,7 @@ import box.lilei.box_client.client.model.RoadInfo;
 
 public interface PayPresenter {
 
+
     void initPercenterInfo(Long goodsId);
 
     void getQRCode(String url,double price, int payType, int payNum, Goods goods, RoadInfo roadInfo);

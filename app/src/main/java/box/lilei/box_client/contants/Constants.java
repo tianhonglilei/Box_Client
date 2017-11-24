@@ -35,6 +35,9 @@ public class Constants {
     //微信二维码
     public static final String WX_GET_QR_URL = MAIN_URL_ONE + "/dc/dcbox/weixin/example/native.php";
     public static final int PAY_TYPE_WX = 0;
+    //获取微信支付结果
+    public static final String WX_GET_PAY_RESPONSE = MAIN_URL_ONE + "/dc/boxapp/?c=welcome&m=box_weixinuodao";
+
 
     /**
      * 支付宝支付
@@ -42,6 +45,8 @@ public class Constants {
     //支付宝二维码
     public static final String ALI_GET_QR_URL = MAIN_URL_ONE + "/dc/f2f/f2fpay/qrpay_test.php";
     public static final int PAY_TYPE_ALI = 1;
+    //获取支付宝支付结果
+    public static final String ALI_GET_PAY_RESPONSE = MAIN_URL_ONE + "/dc/boxapp/?c=welcome&m=box_zhifubaohuodao";
 
 
     /**

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import box.lilei.box_client.client.model.paramsmodel.AddGoods;
+import box.lilei.box_client.contants.Constants;
 
 /**
  * Created by lilei on 2017/11/12.
@@ -64,6 +65,16 @@ public class ParamsUtils {
         return params;
     }
 
+
+    public static Map<String,String> getPayResponseParams(String tradeno,int payType){
+        Map<String,String> params = new HashMap<String,String>();
+        if (payType == Constants.PAY_TYPE_WX) {
+            params.put("weixintradeno", tradeno);
+        }else{
+            params.put("tradeno", tradeno);
+        }
+        return params;
+    }
 
 
 
