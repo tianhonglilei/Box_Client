@@ -79,7 +79,7 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
         Toast.makeText(mContext, "state:" + state, Toast.LENGTH_SHORT).show();
         if (state == RoadInfo.ROAD_STATE_NORMAL) {
 //            navRoadFragmentView.boxOutGoods();
-            String params = boxType + "1" + index + "00000100" + Avm.OUT_GOODS_ALIPAY;
+            String params = boxType + "1" + index + "00000100" + Avm.OUT_GOODS_ROAD_CHECK;
             String random = "" + ((Math.random() * 9 + 1) * 100000);
             Log.e("BoxAction", params);
             if (MainHandler.noticeAvmOutGoods(params, random)){
