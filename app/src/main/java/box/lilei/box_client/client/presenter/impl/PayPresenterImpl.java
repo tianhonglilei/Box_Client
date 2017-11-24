@@ -63,16 +63,25 @@ public class PayPresenterImpl implements PayPresenter {
     @Override
     public void getQRCode(String url,double price, final int payType, int payNum, Goods goods, RoadInfo roadInfo) {
         payView.loadQRCode();
+        //获取二维码所需参数
         Timestamp now = new Timestamp(System.currentTimeMillis());
-        String tradeno = now + "," + goods.getGoodsId() + ","
-                + BoxAction.getBoxIdFromSP(mContext) + "," + roadInfo.getRoadIndex() + ","
-                + roadInfo.getRoadBoxType();
+        Long goodsId = goods.getGoodsId();
+        String box_id = BoxAction.getBoxIdFromSP(mContext);
+        Long roadIndex = roadInfo.getRoadIndex();
+        String boxType = roadInfo.getRoadBoxType();
+        String tradeno = now + "," + goodsId + ","
+                + box_id + "," + roadIndex + ","
+                + boxType;
         String goodsName = goods.getGoodsName();
         String title = goodsName+"x"+payNum;
         String des = "商品"+goodsName+payNum+"份，共"+price+"元";
+        String subject = des + "|" + goodsId + "|"
+                + roadIndex + "|" + box_id + "|"
+                + boxType;
+
         Map<String, String> params;
         if (payType == Constants.PAY_TYPE_WX) {
-            params = ParamsUtils.wxGetQRParams(Double.toString(price), des, tradeno, "dlskfjghdkjs1234213412");
+            params = ParamsUtils.wxGetQRParams(Double.toString(price), des, tradeno, subject);
         } else if (payType == Constants.PAY_TYPE_ALI) {
             params = ParamsUtils.aliGetQRParams(tradeno, Double.toString(price), title, des);
         }else{

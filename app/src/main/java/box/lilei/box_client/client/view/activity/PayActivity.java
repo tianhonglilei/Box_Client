@@ -156,7 +156,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         initGoodsInfo();
         initRadioGroup();
         payQrcodeLoading.setLoadingBuilder(Z_TYPE.values()[1]);
-        payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods,roadInfo);
+        payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
 
 
     }
@@ -178,13 +178,13 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                     payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice());
                     if (checkPay == Constants.PAY_TYPE_WX) {
                         if (bitmapWxPayOne == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods,roadInfo);
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
                         } else {
                             showQRCode(bitmapWxPayOne);
                         }
                     } else {
                         if (bitmapAliPayOne == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods,roadInfo);
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
                         } else {
                             showQRCode(bitmapAliPayOne);
                         }
@@ -194,13 +194,13 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                     payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice() * 2);
                     if (checkPay == Constants.PAY_TYPE_WX) {
                         if (bitmapWxPayTwo == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods,roadInfo);
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
                         } else {
                             showQRCode(bitmapWxPayTwo);
                         }
                     } else {
                         if (bitmapAliPayTwo == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods,roadInfo);
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
                         } else {
                             showQRCode(bitmapAliPayTwo);
                         }
@@ -217,13 +217,13 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                     payQRCodeUrl = Constants.WX_GET_QR_URL;
                     if (checkNum == 1) {
                         if (bitmapWxPayOne == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods,roadInfo);
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
                         } else {
                             showQRCode(bitmapWxPayOne);
                         }
                     } else {
                         if (bitmapWxPayTwo == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods,roadInfo);
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
                         } else {
                             showQRCode(bitmapWxPayTwo);
                         }
@@ -233,13 +233,13 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                     payQRCodeUrl = Constants.ALI_GET_QR_URL;
                     if (checkNum == 1) {
                         if (bitmapAliPayOne == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods,roadInfo);
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
                         } else {
                             showQRCode(bitmapAliPayOne);
                         }
                     } else {
                         if (bitmapAliPayTwo == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods,roadInfo);
+                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
                         } else {
                             showQRCode(bitmapAliPayTwo);
                         }
