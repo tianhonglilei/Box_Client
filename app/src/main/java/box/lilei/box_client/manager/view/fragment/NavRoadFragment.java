@@ -173,6 +173,9 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
             dialog.dismiss();
             dialog = null;
         }
+        if (goodsBroadcastReceiver != null){
+            mContext.unregisterReceiver(goodsBroadcastReceiver);
+        }
     }
 
     @Override
