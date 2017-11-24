@@ -181,8 +181,11 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
     @Override
     public void boxOutGoods() {
 //        handler.sendEmptyMessage(OUT_GOODS);
-        BoxAction.outGoods(boxType, index);
-        registerGoodsBoradcastReceiver();
+        if (BoxAction.outGoods(boxType, index)) {
+            registerGoodsBoradcastReceiver();
+        }else{
+            hiddenLoading();
+        }
     }
 
     Handler handler = new Handler() {

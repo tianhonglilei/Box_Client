@@ -28,14 +28,19 @@ public class BoxAction {
      * @param roadIndex 货道编号
      * @return
      */
-    public static void outGoods(String boxType, String roadIndex) {
+    public static boolean outGoods(String boxType, String roadIndex) {
         if (Integer.parseInt(roadIndex) < 10 && roadIndex.length() == 1) {
             roadIndex = "0" + roadIndex;
         }
         String params = boxType + "1" + roadIndex + "00000100" + Avm.OUT_GOODS_ALIPAY;
         String random = "" + ((Math.random() * 9 + 1) * 100000);
-        Log.e("BoxAction", params);
-        MainHandler.noticeAvmOutGoods(params, random);
+
+        if (MainHandler.noticeAvmOutGoods(params, random)){
+            Log.e("BoxAction", params);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**
