@@ -7,9 +7,9 @@ import android.os.Environment;
  */
 
 public class Constants {
-    public static final String MAIN_URL="http://60.205.218.33";
+    public static final String MAIN_URL_ONE="http://60.205.218.33";
     //测试域名
-//    public static final String MAIN_URL = "http://16p98712s5.iask.in";
+    public static final String MAIN_URL = "http://16p98712s5.iask.in";
 
     //数据库名称
     public static final String DB_NAME = "box_db";
@@ -33,14 +33,14 @@ public class Constants {
      * 微信支付
      */
     //微信二维码
-    public static final String WX_GET_QR_URL = MAIN_URL + "/dc/dcbox/weixin/example/native.php";
+    public static final String WX_GET_QR_URL = MAIN_URL_ONE + "/dc/dcbox/weixin/example/native.php";
     public static final int PAY_TYPE_WX = 0;
 
     /**
      * 支付宝支付
      */
     //支付宝二维码
-    public static final String ALI_GET_QR_URL = MAIN_URL + "/dc/f2f/f2fpay/qrpay_test.php";
+    public static final String ALI_GET_QR_URL = MAIN_URL_ONE + "/dc/f2f/f2fpay/qrpay_test.php";
     public static final int PAY_TYPE_ALI = 1;
 
 

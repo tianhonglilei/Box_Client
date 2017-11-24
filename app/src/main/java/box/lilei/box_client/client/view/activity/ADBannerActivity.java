@@ -535,7 +535,9 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        adTimer.cancel();
-        adTimer = null;
+        if (adTimer!=null) {
+            adTimer.cancel();
+            adTimer = null;
+        }
     }
 }
