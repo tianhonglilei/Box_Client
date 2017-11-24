@@ -93,7 +93,9 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
         getAdInfoFromDB();
         lvAdImgAdapter = new LvAdImgAdapter(mContext, adInfoList, R.layout.client_adbanner_ad_item_img);
         adbannerAdLv.setAdapter(lvAdImgAdapter);
-        adBannerView.changeAD(adInfoList.get(0), 0);
+        if (adInfoList.size()>0) {
+            adBannerView.changeAD(adInfoList.get(0), 0);
+        }
         adbannerAdLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
