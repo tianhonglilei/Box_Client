@@ -37,6 +37,7 @@ import box.lilei.box_client.util.MyStringUtil;
 import box.lilei.box_client.util.ParamsUtils;
 import box.lilei.box_client.util.QRCodeUtil;
 import box.lilei.box_client.util.TimeUtil;
+import box.lilei.box_client.util.ToastTools;
 
 /**
  * Created by lilei on 2017/11/9.
@@ -99,6 +100,7 @@ public class PayPresenterImpl implements PayPresenter {
                 if (payType == Constants.PAY_TYPE_WX){
                     if (jsonObject.getString("error").equals("0")){
                         url = jsonObject.getString("url");
+                        ToastTools.showShort(mContext,weixinno);
                         getPayResponse(weixinno, Constants.PAY_TYPE_WX, boxType, roadIndex+"");
                     }
 
