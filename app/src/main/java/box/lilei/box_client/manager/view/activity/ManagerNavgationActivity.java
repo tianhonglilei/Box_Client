@@ -148,7 +148,6 @@ public class ManagerNavgationActivity extends FragmentActivity {
                 String signalInfo = signalStrength.toString();
                 String[] params = signalInfo.split(" ");
 
-
                 if (telephonyManager.getNetworkType() == TelephonyManager.NETWORK_TYPE_LTE) {
                     //4G网络 最佳范围   >-90dBm 越大越好
                     int ltedbm = Integer.parseInt(params[9]);

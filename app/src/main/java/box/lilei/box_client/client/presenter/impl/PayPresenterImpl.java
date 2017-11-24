@@ -14,10 +14,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import box.lilei.box_client.box.BoxAction;
 import box.lilei.box_client.client.biz.PercentBiz;
 import box.lilei.box_client.client.biz.impl.PercenteBizImpl;
+import box.lilei.box_client.client.model.Goods;
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.PercentInfo;
+import box.lilei.box_client.client.model.RoadInfo;
 import box.lilei.box_client.client.okhttp.CommonOkHttpClient;
 import box.lilei.box_client.client.okhttp.handler.DisposeDataHandle;
 import box.lilei.box_client.client.okhttp.listener.DisposeDataListener;
@@ -58,10 +61,13 @@ public class PayPresenterImpl implements PayPresenter {
     }
 
     @Override
-    public void getQRCode(String url, double price, final int payType, int payNum, String goodsName) {
+    public void getQRCode(String url,double price, final int payType, int payNum, Goods goods, RoadInfo roadInfo) {
         payView.loadQRCode();
         Timestamp now = new Timestamp(System.currentTimeMillis());
-        String tradeno = now.toString()+ MyStringUtil.getRandonInt(10);
+        String tradeno = now + "," + goods.getGoodsId() + ","
+                + BoxAction.getBoxIdFromSP(mContext) + "," + roadInfo.getRoadIndex() + ","
+                + roadInfo.getRoadBoxType();
+        String goodsName = goods.getGoodsName();
         String title = goodsName+"x"+payNum;
         String des = "商品"+goodsName+payNum+"份，共"+price+"元";
         Map<String, String> params;

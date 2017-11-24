@@ -1,5 +1,6 @@
 package box.lilei.box_client.box;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.avm.serialport_142.MainHandler;
@@ -8,6 +9,7 @@ import com.avm.serialport_142.utils.Avm;
 import java.util.Random;
 
 import box.lilei.box_client.client.model.RoadInfo;
+import box.lilei.box_client.util.SharedPreferencesUtil;
 
 /**
  * Created by lilei on 2017/11/22.
@@ -58,6 +60,10 @@ public class BoxAction {
         return MainHandler.getMachNo();
     }
 
+    public static String getBoxIdFromSP(Context context){
+        return SharedPreferencesUtil.getString(context,"box_id");
+    }
+
 
     public static int getOutGoodsState() {
         String result = MainHandler.getTranResult();
@@ -74,6 +80,7 @@ public class BoxAction {
             return OUT_GOODS_NULL;
         }
     }
+
 
 
 }
