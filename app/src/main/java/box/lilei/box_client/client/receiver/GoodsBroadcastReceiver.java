@@ -11,6 +11,7 @@ import com.avm.serialport_142.MainHandler;
 import box.lilei.box_client.box.BoxAction;
 import box.lilei.box_client.client.view.activity.PayActivity;
 import box.lilei.box_client.manager.view.fragment.NavRoadFragment;
+import box.lilei.box_client.util.ToastTools;
 
 public class GoodsBroadcastReceiver extends BroadcastReceiver {
     private NavRoadFragment roadFragment;
@@ -38,12 +39,11 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
         if (roadFragment != null) {
             mContext = roadFragment.getContext();
         }
-
         if (action.equals("com.avm.serialport.OUT_GOODS")) {
             while (true) {
                 int num = BoxAction.getOutGoodsState();
                 if (num == BoxAction.OUT_GOODS_SUCCESS) {
-                    Toast.makeText(mContext, "出货成功", Toast.LENGTH_SHORT).show();
+                    ToastTools.showShort(mContext,"出货成功");
                     if (payActivity != null) {
 
                     }
@@ -54,7 +54,7 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
                 } else if (num == BoxAction.OUT_GOODS_NULL) {
                     continue;
                 } else if (num == BoxAction.OUT_GOODS_FAIL) {
-                    Toast.makeText(mContext, "出货失败", Toast.LENGTH_SHORT).show();
+                    ToastTools.showShort(mContext,"出货失败");
                     break;
                 }
                 break;

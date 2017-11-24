@@ -20,6 +20,7 @@ import box.lilei.box_client.db.RoadBean;
 import box.lilei.box_client.db.biz.RoadBeanService;
 import box.lilei.box_client.manager.presenter.NavRoadPresenter;
 import box.lilei.box_client.manager.view.NavRoadFragmentView;
+import box.lilei.box_client.util.ToastTools;
 
 /**
  * Created by lilei on 2017/11/14.
@@ -74,26 +75,13 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
 
     @Override
     public void testRoad(String boxType, String index) {
-        navRoadFragmentView.showLoading("出货中...");
         int state = BoxAction.getRoadState(boxType, index);
-        Toast.makeText(mContext, "state:" + state, Toast.LENGTH_SHORT).show();
         if (state == RoadInfo.ROAD_STATE_NORMAL) {
-//            navRoadFragmentView.boxOutGoods();
-            String params = boxType + "1" + index + "00000100" + Avm.OUT_GOODS_ROAD_CHECK;
-            String random = "" + (int)((Math.random() * 9 + 1) * 100000);
-            Log.e("BoxAction", params);
-            if (MainHandler.noticeAvmOutGoods(params, random)){
-                Toast.makeText(mContext, "出货成功", Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(mContext, "出货失败", Toast.LENGTH_SHORT).show();
-            }
-            navRoadFragmentView.hiddenLoading();
+            navRoadFragmentView.boxOutGoods();
         } else if (state == RoadInfo.ROAD_STATE_NULL) {
             Toast.makeText(mContext, index + "货道没有检测到货品", Toast.LENGTH_SHORT).show();
-            navRoadFragmentView.hiddenLoading();
         } else {
             Toast.makeText(mContext, "货道出现异常，请重启程序", Toast.LENGTH_SHORT).show();
-            navRoadFragmentView.hiddenLoading();
         }
     }
 
@@ -105,27 +93,16 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
             int state = BoxAction.getRoadState(boxType, index);
             if (state == RoadInfo.ROAD_STATE_NORMAL) {
                 navRoadFragmentView.boxOutGoods();
-//                while (true) {
-//                    int num = BoxAction.getOutGoodsState();
-//                    if (num == BoxAction.OUT_GOODS_SUCCESS) {
-//                        Toast.makeText(mContext, "出货成功"+ ++i, Toast.LENGTH_SHORT).show();
-//                        try {
-//                            Thread.sleep(1000);
-//                            break;
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
-//                    } else if (num == BoxAction.OUT_GOODS_NULL) {
-//                        continue;
-//                    } else if (num == BoxAction.OUT_GOODS_FAIL) {
-//                        Toast.makeText(mContext, "出货失败，请重新测试", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    }
-//                    break;
-//                }
-                continue;
+                i++;
+                ToastTools.showShort(mContext, "数量：" + i);
+                try {
+                    Thread.sleep(1000);
+                    continue;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             } else if (state == RoadInfo.ROAD_STATE_NULL) {
-                Toast.makeText(mContext, index + "货道没有检测到货品", Toast.LENGTH_SHORT).show();
+                ToastTools.showShort(mContext, index + "货道已清空");
                 break;
             } else {
                 Toast.makeText(mContext, "货道出现异常，请重启程序", Toast.LENGTH_SHORT).show();
