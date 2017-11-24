@@ -100,7 +100,7 @@ public class PayPresenterImpl implements PayPresenter {
                 if (payType == Constants.PAY_TYPE_WX){
                     if (jsonObject.getString("error").equals("0")){
                         url = jsonObject.getString("url");
-                        ToastTools.showShort(mContext,weixinno);
+                        Log.e("PayPresenterImpl", weixinno);
                         getPayResponse(weixinno, Constants.PAY_TYPE_WX, boxType, roadIndex+"");
                     }
 
@@ -149,6 +149,7 @@ public class PayPresenterImpl implements PayPresenter {
             @Override
             public void onFail(Object errorObject) {
                 Log.e("PayPresenterImpl", "errorObject:" + errorObject);
+                ((Exception)errorObject).printStackTrace();
             }
         }));
     }
