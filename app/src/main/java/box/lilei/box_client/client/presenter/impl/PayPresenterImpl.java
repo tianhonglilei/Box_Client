@@ -137,6 +137,7 @@ public class PayPresenterImpl implements PayPresenter {
             @Override
             public void onSuccess(Object responseObject) {
                 JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
+                Log.e("PayPresenterImpl", "responseObject:" + responseObject);
                 if (jsonObject.getString("error").equals("0")){
                     BoxAction.outGoods(boxType, roadIndex);
                 }
@@ -144,7 +145,7 @@ public class PayPresenterImpl implements PayPresenter {
 
             @Override
             public void onFail(Object errorObject) {
-
+                Log.e("PayPresenterImpl", "errorObject:" + errorObject);
             }
         }));
     }
