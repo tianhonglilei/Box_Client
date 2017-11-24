@@ -27,7 +27,7 @@ public class Constants {
      */
 
     //初始化数据获取
-    public static final String BANNER_AD_URL = MAIN_URL + "/dc/boxapp/?c=app&m=initialize_data";
+    public static final String BANNER_AD_URL = MAIN_URL + "/dc/boxapp/?c=app&m=machine_heart";
 
     /**
      * 微信支付
