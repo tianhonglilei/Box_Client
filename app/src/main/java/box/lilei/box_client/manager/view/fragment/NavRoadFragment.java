@@ -180,8 +180,9 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
 
     @Override
     public void boxOutGoods() {
-        handler.sendEmptyMessage(OUT_GOODS);
-
+//        handler.sendEmptyMessage(OUT_GOODS);
+        BoxAction.outGoods(boxType, index);
+        registerGoodsBoradcastReceiver();
     }
 
     Handler handler = new Handler() {
@@ -190,8 +191,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
             super.handleMessage(msg);
             switch (msg.what) {
                 case OUT_GOODS:
-                    BoxAction.outGoods(boxType, index);
-                    registerGoodsBoradcastReceiver();
+
                     break;
             }
         }
