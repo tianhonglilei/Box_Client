@@ -59,7 +59,7 @@ public class BoxParams {
 
 
     public String getLeft_state() {
-        if (avmSetInfo.length() > 42) {
+        if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(18, 20);
         } else {
             return "";
@@ -67,7 +67,7 @@ public class BoxParams {
     }
 
     public String getLeft_temp() {
-        if (avmSetInfo.length() > 42) {
+        if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(34, 36);
         } else {
             return "";
@@ -75,7 +75,7 @@ public class BoxParams {
     }
 
     public String getRight_state() {
-        if (avmSetInfo.length() > 42) {
+        if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(20, 22);
         } else {
             return "";
@@ -83,7 +83,7 @@ public class BoxParams {
     }
 
     public String getRight_temp() {
-        if (avmSetInfo.length() > 42) {
+        if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(40, 42);
         } else {
             return "";
@@ -92,7 +92,7 @@ public class BoxParams {
 
     public String getStart_time() {
 
-        if (avmSetInfo.length() > 42) {
+        if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(22, 26);
         } else {
             return "";
@@ -100,7 +100,7 @@ public class BoxParams {
     }
 
     public String getEnd_time() {
-        if (avmSetInfo.length() > 42) {
+        if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(26, 30);
         } else {
             return "";
@@ -108,7 +108,7 @@ public class BoxParams {
     }
 
     public String getCold_temp() {
-        if (avmSetInfo.length() > 42) {
+        if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(31, 33);
         } else {
             return "";
@@ -116,7 +116,7 @@ public class BoxParams {
     }
 
     public String getHot_temp() {
-        if (avmSetInfo.length() > 42) {
+        if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(37, 39);
         } else {
             return "";
