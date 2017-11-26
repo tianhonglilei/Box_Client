@@ -90,7 +90,7 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_nav_temp, container, false);
         mContext = this.getContext();
-        unbinder = ButterKnife.bind(mContext, view);
+        unbinder = ButterKnife.bind(NavTempFragment.this, view);
 
         navTempPresenter = new NavTempPresenterImpl(mContext, this);
 
