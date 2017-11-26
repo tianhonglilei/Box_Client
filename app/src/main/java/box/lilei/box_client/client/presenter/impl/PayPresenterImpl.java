@@ -64,7 +64,7 @@ public class PayPresenterImpl implements PayPresenter {
     }
 
     @Override
-    public void getQRCode(String url,double price, final int payType, int payNum, Goods goods, RoadInfo roadInfo) {
+    public void getQRCode(String url, double price, final int payType, final int payNum, Goods goods, RoadInfo roadInfo) {
         payView.loadQRCode();
         //获取二维码所需参数
         Timestamp now = new Timestamp(System.currentTimeMillis());
@@ -76,8 +76,8 @@ public class PayPresenterImpl implements PayPresenter {
                 + box_id + "," + roadIndex + ","
                 + boxType;
         String goodsName = goods.getGoodsName();
-        String title = goodsName+"x"+payNum;
-        String des = "商品"+goodsName+payNum+"份，共"+price+"元";
+        String title = goodsName + "x" + payNum;
+        String des = "商品" + goodsName + payNum + "份，共" + price + "元";
         String subject = des + "|" + goodsId + "|"
                 + roadIndex + "|" + box_id + "|"
                 + boxType;
@@ -87,7 +87,7 @@ public class PayPresenterImpl implements PayPresenter {
             params = ParamsUtils.wxGetQRParams(Double.toString(price), des, mchTradeNo, subject);
         } else if (payType == Constants.PAY_TYPE_ALI) {
             params = ParamsUtils.aliGetQRParams(tradeno, Double.toString(price), title, des);
-        }else{
+        } else {
             params = new HashMap<>();
         }
         CommonOkHttpClient.post(CommonRequest.createPostRequest(url, new RequestParams(params)), new DisposeDataHandle(new DisposeDataListener() {
@@ -95,25 +95,24 @@ public class PayPresenterImpl implements PayPresenter {
             public void onSuccess(Object responseObject) {
                 JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
 //                Log.e("PayPresenterImpl", "jsonObject:" + jsonObject);
-                String url ="";
+                String url = "";
                 String weixinno = jsonObject.getString("tradeno");
-                if (payType == Constants.PAY_TYPE_WX){
-                    if (jsonObject.getString("error").equals("0")){
+                if (payType == Constants.PAY_TYPE_WX)
+                    if (jsonObject.getString("error").equals("0")) {
                         url = jsonObject.getString("url");
                         Log.e("PayPresenterImpl", weixinno);
-                        getPayResponse(weixinno, Constants.PAY_TYPE_WX, boxType, roadIndex+"");
+                        getPayResponse(weixinno, Constants.PAY_TYPE_WX, boxType, roadIndex + "", payNum);
                     }
-
-                }else {
-                    if (jsonObject.getString("err").equals("0")){
+                else {
+                    if (jsonObject.getString("err").equals("0")) {
                         url = jsonObject.getString("url");
-                        getPayResponse(tradeno, Constants.PAY_TYPE_ALI, boxType, roadIndex+"");
+                        getPayResponse(tradeno, Constants.PAY_TYPE_ALI, boxType, roadIndex + "", payNum);
                     }
                 }
                 Bitmap bitmap;
-                if (url!=null && !url.equals("")){
+                if (url != null && !url.equals("")) {
                     bitmap = QRCodeUtil.createQRImage(url);
-                }else{
+                } else {
                     bitmap = null;
                 }
                 payView.showQRCode(bitmap);
@@ -127,29 +126,44 @@ public class PayPresenterImpl implements PayPresenter {
     }
 
 
-    private void getPayResponse(String tradeno, int payType, final String boxType, final String roadIndex){
+    /**
+     * 支付结果查询
+     *
+     * @param tradeno
+     * @param payType
+     * @param boxType
+     * @param roadIndex
+     */
+    private void getPayResponse(String tradeno, int payType, final String boxType, final String roadIndex, final int num) {
         String url = "";
-        if (payType == Constants.PAY_TYPE_WX){
+        if (payType == Constants.PAY_TYPE_WX) {
             url = Constants.WX_GET_PAY_RESPONSE;
-        }else{
+        } else {
             url = Constants.ALI_GET_PAY_RESPONSE;
         }
-        Map<String, String> params = ParamsUtils.getPayResponseParams(tradeno,payType);
-        CommonOkHttpClient.post(CommonRequest.createPostRequest(url,new RequestParams(params)), new DisposeDataHandle(new DisposeDataListener() {
+        Map<String, String> params = ParamsUtils.getPayResponseParams(tradeno, payType);
+        CommonOkHttpClient.post(CommonRequest.createPostRequest(url, new RequestParams(params)), new DisposeDataHandle(new DisposeDataListener() {
 
             @Override
             public void onSuccess(Object responseObject) {
                 JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
                 Log.e("PayPresenterImpl", "responseObject:" + responseObject);
-                if (jsonObject.getString("error").equals("0")){
-                    BoxAction.outGoods(boxType, roadIndex);
+                if (jsonObject.getString("error").equals("0")) {
+                    for (int i = 0; i < num; i++) {
+                        BoxAction.outGoods(boxType, roadIndex);
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
 
             @Override
             public void onFail(Object errorObject) {
                 Log.e("PayPresenterImpl", "errorObject:" + errorObject);
-                ((Exception)errorObject).printStackTrace();
+                ((Exception) errorObject).printStackTrace();
             }
         }));
     }
