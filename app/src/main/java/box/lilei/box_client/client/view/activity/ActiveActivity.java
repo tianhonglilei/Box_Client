@@ -144,8 +144,13 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
     public void changeDownloadProgress(int maxNum, int successNum, int failNum) {
         activeDownloadTxt.setText("下载:" + maxNum + "{成功:" + successNum + "，失败:" + failNum + "}");
         if (maxNum == successNum + failNum) {
-//            hideDialog();
-            skipToADBannerActivity();
+            try {
+                Thread.sleep(5000);
+                hideDialog();
+                skipToADBannerActivity();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -170,6 +175,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
 
     @Override
     public void skipToADBannerActivity() {
+
         activePresenter.saveBoxSetting();
         Intent intent = new Intent(ActiveActivity.this, ADBannerActivity.class);
         startActivity(intent);

@@ -172,8 +172,13 @@ public class ActivePresenterImpl implements ActivePresenter {
             downloadFile(name);
         }
         if (downloadName.size() == 0) {
-            activeView.hideDialog();
-            activeView.skipToADBannerActivity();
+            try {
+                Thread.sleep(5000);
+                activeView.hideDialog();
+                activeView.skipToADBannerActivity();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -376,7 +381,6 @@ public class ActivePresenterImpl implements ActivePresenter {
                 } else {
                     Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
                 }
-                activeView.hideDialog();
             }
         }.connect(mContext, code, 1);
     }

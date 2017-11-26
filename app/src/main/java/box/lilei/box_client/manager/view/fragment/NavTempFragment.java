@@ -46,7 +46,7 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
     RadioButton navTempLeftRdoClose;
     @BindView(R.id.nav_temp_btn_refresh)
     Button navTempBtnRefresh;
-    private RadioButton[] leftRdos = {navTempLeftRdoCold, navTempLeftRdoHot, navTempLeftRdoClose};
+
 
 
     @BindView(R.id.nav_temp_right_rdo_cold)
@@ -55,7 +55,7 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
     RadioButton navTempRightRdoHot;
     @BindView(R.id.nav_temp_right_rdo_close)
     RadioButton navTempRightRdoClose;
-    private RadioButton[] rightRdos = {navTempRightRdoCold, navTempRightRdoHot, navTempRightRdoClose};
+
 
     @BindView(R.id.nav_temp_rdo_group_left)
     RadioGroup navTempRdoGroupLeft;
@@ -160,6 +160,8 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
      * 初始化温度显示
      */
     private void initTemp() {
+        RadioButton[] leftRdos = {navTempLeftRdoCold, navTempLeftRdoHot, navTempLeftRdoClose};
+        RadioButton[] rightRdos = {navTempRightRdoCold, navTempRightRdoHot, navTempRightRdoClose};
         BoxParams params = new BoxParams();
         Toast.makeText(mContext, params.getAvmSetInfo(), Toast.LENGTH_LONG).show();
         Log.e("NavTempFragment", params.getAvmSetInfo());
