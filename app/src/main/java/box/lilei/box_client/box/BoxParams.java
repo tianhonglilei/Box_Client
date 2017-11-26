@@ -1,5 +1,7 @@
 package box.lilei.box_client.box;
 
+import android.text.TextUtils;
+
 import com.avm.serialport_142.MainHandler;
 
 import box.lilei.box_client.util.SharedPreferencesUtil;
@@ -18,7 +20,7 @@ public class BoxParams {
 
     private String avmSetInfo;
 
-    public BoxParams(){
+    public BoxParams() {
         setAvmSetInfo();
     }
 
@@ -40,47 +42,84 @@ public class BoxParams {
     private String hot_temp;
 
     private String getAvmSetInfo() {
-        if (avmSetInfo==null||avmSetInfo.equals("")) {
+        if (avmSetInfo == null || avmSetInfo.equals("")) {
             setAvmSetInfo();
         }
         return avmSetInfo;
     }
 
     private void setAvmSetInfo() {
-        this.avmSetInfo = MainHandler.getAVMConfigInfo(Integer.parseInt(BoxSetting.BOX_TYPE_DRINK));
+        String info = MainHandler.getAVMConfigInfo(Integer.parseInt(BoxSetting.BOX_TYPE_DRINK));
+        if (!TextUtils.isEmpty(info)) {
+            this.avmSetInfo = info;
+        } else {
+            this.avmSetInfo = "";
+        }
     }
 
 
     public String getLeft_state() {
-        return avmSetInfo.substring(18,20);
+        if (avmSetInfo.length() > 42) {
+            return avmSetInfo.substring(18, 20);
+        } else {
+            return "";
+        }
     }
 
-
     public String getLeft_temp() {
-        return avmSetInfo.substring(34,36);
+        if (avmSetInfo.length() > 42) {
+            return avmSetInfo.substring(34, 36);
+        } else {
+            return "";
+        }
     }
 
     public String getRight_state() {
-        return avmSetInfo.substring(20,22);
+        if (avmSetInfo.length() > 42) {
+            return avmSetInfo.substring(20, 22);
+        } else {
+            return "";
+        }
     }
 
     public String getRight_temp() {
-        return avmSetInfo.substring(40,42);
+        if (avmSetInfo.length() > 42) {
+            return avmSetInfo.substring(40, 42);
+        } else {
+            return "";
+        }
     }
 
     public String getStart_time() {
-        return avmSetInfo.substring(22,26);
+
+        if (avmSetInfo.length() > 42) {
+            return avmSetInfo.substring(22, 26);
+        } else {
+            return "";
+        }
     }
 
     public String getEnd_time() {
-        return avmSetInfo.substring(26,30);
+        if (avmSetInfo.length() > 42) {
+            return avmSetInfo.substring(26, 30);
+        } else {
+            return "";
+        }
     }
 
     public String getCold_temp() {
-        return avmSetInfo.substring(31,33);
+        if (avmSetInfo.length() > 42) {
+            return avmSetInfo.substring(31, 33);
+        } else {
+            return "";
+        }
     }
 
     public String getHot_temp() {
-        return avmSetInfo.substring(37,39);
+        if (avmSetInfo.length() > 42) {
+            return avmSetInfo.substring(37, 39);
+        } else {
+            return "";
+        }
     }
 }
