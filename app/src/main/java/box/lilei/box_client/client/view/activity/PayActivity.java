@@ -25,6 +25,7 @@ import java.io.File;
 import java.util.Timer;
 
 import box.lilei.box_client.R;
+import box.lilei.box_client.box.BoxParams;
 import box.lilei.box_client.client.model.Goods;
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.PercentInfo;
@@ -147,7 +148,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         initDateAndWeather();
 
         //显示机器号
-        moreImeiNum.setText(SharedPreferencesUtil.getString(mContext, "box_id"));
+        moreImeiNum.setText(SharedPreferencesUtil.getString(mContext, BoxParams.BOX_ID));
 
         //初始化营养成分
         payPresenter.initPercenterInfo(roadGoods.getGoods().getGoodsId());

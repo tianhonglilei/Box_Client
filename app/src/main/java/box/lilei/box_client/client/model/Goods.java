@@ -19,9 +19,9 @@ public class Goods implements Parcelable {
     public static final int GOODS_TYPE_FOOD = 2;
 
     //商品温度0正常1制冷2制热
-    public static final int GOODS_WD_NORMAL = 0;
-    public static final int GOODS_WD_COLD = 1;
-    public static final int GOODS_WD_HOT = 2;
+    public static final int GOODS_WD_NORMAL = 2;
+    public static final int GOODS_WD_COLD = 0;
+    public static final int GOODS_WD_HOT = 1;
 
 
     //商品ID

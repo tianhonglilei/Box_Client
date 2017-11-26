@@ -24,6 +24,7 @@ import java.util.TimerTask;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxAction;
+import box.lilei.box_client.box.BoxParams;
 import box.lilei.box_client.client.listener.NetEvent;
 import box.lilei.box_client.client.presenter.ActivePresenter;
 import box.lilei.box_client.client.presenter.impl.ActivePresenterImpl;
@@ -191,7 +192,8 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
             activeBgTxt.setVisibility(View.VISIBLE);
         }
         if (success) {
-            activePresenter.loadAllDataFromUrl(SharedPreferencesUtil.getString(mContext, "box_id"));
+            activePresenter.saveBoxSetting();
+            activePresenter.loadAllDataFromUrl(SharedPreferencesUtil.getString(mContext, BoxParams.BOX_ID));
         }
     }
 

@@ -11,15 +11,17 @@ import box.lilei.box_client.util.SharedPreferencesUtil;
 
 public class BoxParams {
 
+    public static final String LEFT_STATE = "left_state";
+    public static final String RIGHT_STATE = "right_state";
+    public static final String BOX_ID = "box_id";
+    public static final String LIGHT_TIME = "light_time";
+
     private String avmSetInfo;
 
-    public BoxParams(String box_id){
+    public BoxParams(){
         setAvmSetInfo();
-        this.box_id = box_id;
     }
 
-    //机器号
-    private String box_id;
     //左室状态
     private String left_state;
     //当前左室温度
@@ -48,13 +50,6 @@ public class BoxParams {
         this.avmSetInfo = MainHandler.getAVMConfigInfo(Integer.parseInt(BoxSetting.BOX_TYPE_DRINK));
     }
 
-    public String getBox_id() {
-        return box_id;
-    }
-
-    public void setBox_id(String box_id) {
-        this.box_id = box_id;
-    }
 
     public String getLeft_state() {
         return avmSetInfo.substring(18,20);

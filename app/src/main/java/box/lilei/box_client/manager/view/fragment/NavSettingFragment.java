@@ -15,7 +15,7 @@ import box.lilei.box_client.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NavSettingFragment extends Fragment {
+public class NavSettingFragment extends Fragment implements View.OnClickListener{
 
     private Spinner spinnerStartTime;
     private Spinner spinnerEndTime;
@@ -54,4 +54,8 @@ public class NavSettingFragment extends Fragment {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        
+    }
 }

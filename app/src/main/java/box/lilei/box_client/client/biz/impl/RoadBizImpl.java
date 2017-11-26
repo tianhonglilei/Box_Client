@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import box.lilei.box_client.box.BoxAction;
+import box.lilei.box_client.box.BoxParams;
 import box.lilei.box_client.box.BoxSetting;
 import box.lilei.box_client.client.biz.RoadBiz;
 import box.lilei.box_client.client.model.Goods;
@@ -11,6 +12,7 @@ import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.model.RoadInfo;
 import box.lilei.box_client.db.GoodsBean;
 import box.lilei.box_client.db.RoadBean;
+import box.lilei.box_client.util.SharedPreferencesUtil;
 
 /**
  * Created by lilei on 2017/10/27.
@@ -53,12 +55,13 @@ public class RoadBizImpl implements RoadBiz {
                 goods.setGoodsId(goodsBean.getId());
                 goods.setGoodsType(goodsBean.getType());
                 if (roadInfo.getRoadBoxType().equals(RoadInfo.BOX_TYPE_DRINK)) {
-                    if (roadInfo.getRoadIndex() < 9) {
-                        goods.setGoodsWd(Goods.GOODS_WD_HOT);
-                    } else if (roadInfo.getRoadIndex() < 17) {
-                        goods.setGoodsWd(Goods.GOODS_WD_COLD);
-                    } else {
-                        goods.setGoodsWd(Goods.GOODS_WD_NORMAL);
+                    BoxParams boxParams = new BoxParams();
+                    String leftState = boxParams.getLeft_state();
+                    String rightState = boxParams.getRight_state();
+                    if (roadInfo.getRoadIndex()<9){
+                        goods.setGoodsWd(Integer.parseInt(leftState));
+                    }else{
+                        goods.setGoodsWd(Integer.parseInt(rightState));
                     }
                 } else {
                     goods.setGoodsWd(Goods.GOODS_WD_NORMAL);

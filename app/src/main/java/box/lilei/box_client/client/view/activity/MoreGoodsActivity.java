@@ -22,6 +22,7 @@ import java.util.Timer;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxAction;
+import box.lilei.box_client.box.BoxParams;
 import box.lilei.box_client.client.model.Goods;
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.RoadGoods;
@@ -146,7 +147,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         moreGoodsNavRlReturn.setOnClickListener(this);
 
         //显示机器号
-        moreImeiNum.setText(SharedPreferencesUtil.getString(mContext, "box_id"));
+        moreImeiNum.setText(SharedPreferencesUtil.getString(mContext, BoxParams.BOX_ID));
 
         moreGoodsRbtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

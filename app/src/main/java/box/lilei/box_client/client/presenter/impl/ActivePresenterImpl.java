@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import box.lilei.box_client.box.BoxAction;
+import box.lilei.box_client.box.BoxParams;
 import box.lilei.box_client.client.biz.AdBiz;
 import box.lilei.box_client.client.biz.impl.AdBizImpl;
 import box.lilei.box_client.client.model.jsonmodel.AdJsonInfo;
@@ -317,17 +318,18 @@ public class ActivePresenterImpl implements ActivePresenter {
     }
 
     String box_id;
+
     @Override
     public void getBoxId() {
-        box_id = SharedPreferencesUtil.getString(mContext, "box_id");
+        box_id = SharedPreferencesUtil.getString(mContext, BoxParams.BOX_ID);
         if (box_id != null && !box_id.equals("") && !box_id.equals("00000000")) {
-            String code = SharedPreferencesUtil.getString(mContext,"active_code");
-            if (!code.equals("")){
+            String code = SharedPreferencesUtil.getString(mContext, "active_code");
+            if (!code.equals("")) {
                 activeBox(code);
-            }else{
+            } else {
                 activeView.showActiveLayout();
             }
-        } else if(box_id.equals("00000000")){
+        } else if (box_id.equals("00000000")) {
             getBoxIdFromBox();
         } else {
             activeView.showActiveLayout();
@@ -366,9 +368,9 @@ public class ActivePresenterImpl implements ActivePresenter {
                 } else if (res == CommServiceThread.COMM_SERVICE_START) {
                     Toast.makeText(mContext, "激活启动成功", Toast.LENGTH_SHORT).show();
                     SharedPreferencesUtil.putString(mContext, "active_code", code);
-                    if (!TextUtils.isEmpty(box_id) && !box_id.equals("00000000")){
+                    if (!TextUtils.isEmpty(box_id) && !box_id.equals("00000000")) {
                         activeView.hiddenActiveLayout(true);
-                    }else{
+                    } else {
                         getBoxIdFromBox();
                     }
                 } else {
@@ -379,12 +381,20 @@ public class ActivePresenterImpl implements ActivePresenter {
         }.connect(mContext, code, 1);
     }
 
+    @Override
+    public void saveBoxSetting() {
+        BoxParams boxParams = new BoxParams();
+        SharedPreferencesUtil.putString(mContext, BoxParams.LEFT_STATE, boxParams.getLeft_state());
+        SharedPreferencesUtil.putString(mContext, BoxParams.RIGHT_STATE, boxParams.getRight_state());
+        SharedPreferencesUtil.putString(mContext, BoxParams.LIGHT_TIME, boxParams.getStart_time()+boxParams.getEnd_time());
+    }
+
     private void getBoxIdFromBox() {
         while (true) {
             //获取机器号
             String box_id = BoxAction.getBoxId();
             if (!TextUtils.isEmpty(box_id) && !box_id.equals("00000000")) {
-                SharedPreferencesUtil.putString(mContext, "box_id", box_id);
+                SharedPreferencesUtil.putString(mContext, BoxParams.BOX_ID, box_id);
                 Toast.makeText(mContext, box_id, Toast.LENGTH_SHORT).show();
                 activeView.hiddenActiveLayout(true);
                 break;

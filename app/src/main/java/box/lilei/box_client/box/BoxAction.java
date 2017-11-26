@@ -68,7 +68,7 @@ public class BoxAction {
     }
 
     public static String getBoxIdFromSP(Context context){
-        return SharedPreferencesUtil.getString(context,"box_id");
+        return SharedPreferencesUtil.getString(context, BoxParams.BOX_ID);
     }
 
 

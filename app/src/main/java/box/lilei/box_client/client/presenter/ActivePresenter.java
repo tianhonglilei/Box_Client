@@ -15,4 +15,9 @@ public interface ActivePresenter {
 
     void activeBox(String code);
 
+    /**
+     * 获取保存机器设置
+     */
+    void saveBoxSetting();
+
 }

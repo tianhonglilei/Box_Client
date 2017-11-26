@@ -14,6 +14,8 @@
     <string name="ok">确定</string>
     <string name="string_test_this_road">测试该货道：</string>
     <string name="string_clear_this_road">出空该货道：</string>
+    <string name="string_temp_now">当前室温：</string>
+    <string name="string_set_temp_now">当前设置温度：</string>
     <string-array name="setting_time_String_array">
         <item>00</item>
         <item>01</item>

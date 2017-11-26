@@ -50,11 +50,11 @@
         android:layout_centerVertical="true" />
 
     <Button
-        android:id="@+id/nav_setting_btn_power_time"
+        android:id="@+id/nav_setting_btn_ok"
         android:layout_width="140dp"
         android:layout_height="50dp"
         android:layout_marginTop="57dp"
-        android:text="确定"
+        android:text="确 定"
         android:textSize="26sp"
         android:textColor="@color/colorWhiteTxt"
         android:background="@drawable/manager_login_btn_selector"
