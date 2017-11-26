@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -161,11 +162,10 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
     private void initTemp() {
         BoxParams params = new BoxParams();
         Toast.makeText(mContext, params.getAvmSetInfo(), Toast.LENGTH_LONG).show();
+        Log.e("NavTempFragment", params.getAvmSetInfo());
         if (params.getAvmSetInfo().length() > 40) {
-            RadioButton rdoLeft = leftRdos[Integer.parseInt(params.getLeft_state())];
-            rdoLeft.setChecked(true);
-            RadioButton rdoRight = rightRdos[Integer.parseInt(params.getRight_state())];
-            rdoRight.setChecked(true);
+            leftRdos[Integer.parseInt(params.getLeft_state())].setChecked(true);
+            rightRdos[Integer.parseInt(params.getRight_state())].setChecked(true);
             changeTemp(params.getLeft_temp(), params.getRight_temp());
             navEditSetTempCold.setText(params.getCold_temp());
             navEditSetTempHot.setText(params.getHot_temp());
