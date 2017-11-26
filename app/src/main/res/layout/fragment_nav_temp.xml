@@ -261,5 +261,18 @@
         android:textColor="@color/colorGaryFiveTwo"
         android:textSize="20sp" />
 
+    <Button
+        android:id="@+id/nav_temp_btn_refresh"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="140dp"
+        android:background="@drawable/manager_login_btn_selector"
+        android:text="刷新"
+        android:textColor="@color/colorWhiteTxt"
+        android:textSize="26dp" />
+
+
 
 </RelativeLayout>

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +15,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import box.lilei.box_client.R;
-import box.lilei.box_client.box.BoxAction;
 import box.lilei.box_client.box.BoxParams;
-import box.lilei.box_client.client.view.activity.ActiveActivity;
 import box.lilei.box_client.loading.ZLoadingDialog;
 import box.lilei.box_client.loading.Z_TYPE;
 import box.lilei.box_client.manager.presenter.NavTempPresenter;
@@ -43,6 +43,8 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
     RadioButton navTempLeftRdoHot;
     @BindView(R.id.nav_temp_left_rdo_close)
     RadioButton navTempLeftRdoClose;
+    @BindView(R.id.nav_temp_btn_refresh)
+    Button navTempBtnRefresh;
     private RadioButton[] leftRdos = {navTempLeftRdoCold, navTempLeftRdoHot, navTempLeftRdoClose};
 
 
@@ -94,6 +96,8 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
 
         navTempPresenter = new NavTempPresenterImpl(mContext, this);
 
+        navTempBtnOk.setOnClickListener(this);
+        navTempBtnRefresh.setOnClickListener(this);
         initTemp();
         timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -156,14 +160,16 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
      */
     private void initTemp() {
         BoxParams params = new BoxParams();
-        RadioButton rdoLeft = leftRdos[Integer.parseInt(params.getLeft_state())];
-        rdoLeft.setChecked(true);
-        RadioButton rdoRight = rightRdos[Integer.parseInt(params.getRight_state())];
-        rdoRight.setChecked(true);
-        changeTemp(params.getLeft_temp(), params.getRight_temp());
-        navEditSetTempCold.setText(params.getCold_temp());
-        navEditSetTempHot.setText(params.getHot_temp());
-
+        Toast.makeText(mContext, params.getAvmSetInfo(), Toast.LENGTH_LONG).show();
+        if (!TextUtils.isEmpty(params.getAvmSetInfo())) {
+            RadioButton rdoLeft = leftRdos[Integer.parseInt(params.getLeft_state())];
+            rdoLeft.setChecked(true);
+            RadioButton rdoRight = rightRdos[Integer.parseInt(params.getRight_state())];
+            rdoRight.setChecked(true);
+            changeTemp(params.getLeft_temp(), params.getRight_temp());
+            navEditSetTempCold.setText(params.getCold_temp());
+            navEditSetTempHot.setText(params.getHot_temp());
+        }
     }
 
     @Override
@@ -206,6 +212,9 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
                 String cold = navEditSetTempCold.getText().toString();
                 String hot = navEditSetTempHot.getText().toString();
                 navTempPresenter.setTemp(leftState + "", rightState + "", cold, hot);
+                break;
+            case R.id.nav_temp_btn_refresh:
+                initTemp();
                 break;
         }
     }

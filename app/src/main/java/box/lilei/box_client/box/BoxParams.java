@@ -41,7 +41,7 @@ public class BoxParams {
     //当前设置制热温度
     private String hot_temp;
 
-    private String getAvmSetInfo() {
+    public String getAvmSetInfo() {
         if (avmSetInfo == null || avmSetInfo.equals("")) {
             setAvmSetInfo();
         }
