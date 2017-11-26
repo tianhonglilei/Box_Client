@@ -170,6 +170,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
 
     @Override
     public void skipToADBannerActivity() {
+        activePresenter.saveBoxSetting();
         Intent intent = new Intent(ActiveActivity.this, ADBannerActivity.class);
         startActivity(intent);
         finish();
@@ -192,7 +193,6 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
             activeBgTxt.setVisibility(View.VISIBLE);
         }
         if (success) {
-            activePresenter.saveBoxSetting();
             activePresenter.loadAllDataFromUrl(SharedPreferencesUtil.getString(mContext, BoxParams.BOX_ID));
         }
     }
