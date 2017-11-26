@@ -152,7 +152,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         moreGoodsRbtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                int navPosition = 0;
+                int navPosition;
                 switch (checkedId) {
                     case R.id.more_goods_nav_rb_allgoods:
                         navPosition = 0;

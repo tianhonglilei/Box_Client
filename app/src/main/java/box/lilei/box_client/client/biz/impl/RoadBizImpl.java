@@ -23,9 +23,8 @@ public class RoadBizImpl implements RoadBiz {
     @Override
     public List<RoadGoods> parseRoadBeanToRoadGoods(List<RoadBean> roadBeanList) {
         List<RoadGoods> roadGoodsList = new ArrayList<>();
-
-        for (RoadBean bean:
-             roadBeanList) {
+        for (RoadBean bean :
+                roadBeanList) {
             RoadGoods roadGoods = new RoadGoods();
             RoadInfo roadInfo = new RoadInfo();
             Goods goods = new Goods();
@@ -35,21 +34,21 @@ public class RoadBizImpl implements RoadBiz {
             roadInfo.setRoadMaxNum(bean.getMax());
             roadInfo.setRoadNowNum(bean.getHuodao_num());
             int hgType = Integer.parseInt(bean.getHuogui_num());
-            if (hgType == 9){
+            if (hgType == 9) {
                 roadInfo.setRoadBoxType(BoxSetting.BOX_TYPE_FOOD);
-            }else{
+            } else {
                 roadInfo.setRoadBoxType(BoxSetting.BOX_TYPE_DRINK);
             }
             //货道状态和开关
-            roadInfo.setRoadState(BoxAction.getRoadState(roadInfo.getRoadBoxType(),roadInfo.getRoadIndex().toString()));
+            roadInfo.setRoadState(BoxAction.getRoadState(roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString()));
             roadInfo.setRoadOpen(RoadInfo.ROAD_OPEN);
             if (roadInfo.getRoadOpen() == RoadInfo.ROAD_OPEN
-                    && roadInfo.getRoadState() == RoadInfo.ROAD_STATE_NORMAL){
+                    && roadInfo.getRoadState() == RoadInfo.ROAD_STATE_NORMAL) {
                 goods.setGoodsSaleState(Goods.SALE_STATE_NORMAL);
-            }else{
+            } else {
                 goods.setGoodsSaleState(Goods.SALE_STATE_OUT);
             }
-            goods.setGoodsPrice((double) bean.getPrice()/100);
+            goods.setGoodsPrice((double) bean.getPrice() / 100);
             goodsBean = bean.getGoodsBean();
             if (goodsBean != null) {
                 goods.setGoodsId(goodsBean.getId());
@@ -58,9 +57,9 @@ public class RoadBizImpl implements RoadBiz {
                     BoxParams boxParams = new BoxParams();
                     String leftState = boxParams.getLeft_state();
                     String rightState = boxParams.getRight_state();
-                    if (roadInfo.getRoadIndex()<9){
+                    if (roadInfo.getRoadIndex() < 9) {
                         goods.setGoodsWd(Integer.parseInt(leftState));
-                    }else{
+                    } else {
                         goods.setGoodsWd(Integer.parseInt(rightState));
                     }
                 } else {
