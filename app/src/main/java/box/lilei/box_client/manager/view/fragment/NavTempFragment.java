@@ -80,7 +80,6 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
     TextView navTempTxtRightNowTemp;
 
     private Context mContext;
-    private Timer timer;
     private NavTempPresenter navTempPresenter;
     private ZLoadingDialog dialog;
 
@@ -114,13 +113,6 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
 
 
         initTemp();
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                navTempPresenter.getTempSetting();
-            }
-        }, 0, 20000);
 
         initRdoGroup();
 
@@ -189,10 +181,6 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
     }
 
     @Override
