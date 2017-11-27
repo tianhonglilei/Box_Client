@@ -21,7 +21,7 @@ import box.lilei.box_client.util.SharedPreferencesUtil;
 public class RoadBizImpl implements RoadBiz {
 
     @Override
-    public List<RoadGoods> parseRoadBeanToRoadGoods(List<RoadBean> roadBeanList) {
+    public List<RoadGoods> parseRoadBeanToRoadGoods(List<RoadBean> roadBeanList,String leftState,String rightState) {
         List<RoadGoods> roadGoodsList = new ArrayList<>();
         for (RoadBean bean :
                 roadBeanList) {
@@ -54,13 +54,6 @@ public class RoadBizImpl implements RoadBiz {
                 goods.setGoodsId(goodsBean.getId());
                 goods.setGoodsType(goodsBean.getType());
                 if (roadInfo.getRoadBoxType().equals(RoadInfo.BOX_TYPE_DRINK)) {
-                    BoxParams boxParams = new BoxParams();
-                    String leftState = Goods.GOODS_WD_NORMAL+"";
-                    String rightState = Goods.GOODS_WD_NORMAL+"";
-                    if (!boxParams.getAvmSetInfo().equals("0")) {
-                        leftState = boxParams.getLeft_state();
-                        rightState = boxParams.getRight_state();
-                    }
                     if (roadInfo.getRoadIndex() < 9) {
                         goods.setGoodsWd(Integer.parseInt(leftState));
                     } else {

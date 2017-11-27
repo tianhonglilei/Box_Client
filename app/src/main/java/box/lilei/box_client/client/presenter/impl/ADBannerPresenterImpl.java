@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import box.lilei.box_client.R;
+import box.lilei.box_client.box.BoxParams;
 import box.lilei.box_client.client.adapter.GvHomeGoodsAdapter;
 import box.lilei.box_client.client.adapter.LvAdImgAdapter;
 import box.lilei.box_client.client.biz.AdBiz;
@@ -38,6 +39,7 @@ import box.lilei.box_client.db.biz.AdBeanService;
 import box.lilei.box_client.db.biz.GoodsBeanService;
 import box.lilei.box_client.db.biz.PercentBeanService;
 import box.lilei.box_client.db.biz.RoadBeanService;
+import box.lilei.box_client.util.SharedPreferencesUtil;
 import box.lilei.box_client.util.TimeUtil;
 
 /**
@@ -93,7 +95,7 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
         getAdInfoFromDB();
         lvAdImgAdapter = new LvAdImgAdapter(mContext, adInfoList, R.layout.client_adbanner_ad_item_img);
         adbannerAdLv.setAdapter(lvAdImgAdapter);
-        if (adInfoList.size()>0) {
+        if (adInfoList.size() > 0) {
             adBannerView.changeAD(adInfoList.get(0), 0);
         }
         adbannerAdLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -125,9 +127,9 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RoadGoods roadGoods = roadGoodsMainList.get(position);
-                if(roadGoods.getGoods().getGoodsSaleState() != Goods.SALE_STATE_OUT){
+                if (roadGoods.getGoods().getGoodsSaleState() != Goods.SALE_STATE_OUT) {
                     adBannerView.navigateToPay(roadGoodsMainList.get(position));
-                }else{
+                } else {
 //                    Toast.makeText(mContext, "该商品已售罄，请选购其他商品", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -148,7 +150,9 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
 
     public void getRoadInfoFromDB() {
         List<RoadBean> roadBeanList = roadBeanService.queryAllRoadBean();
-        List<RoadGoods> roadGoodsList = roadBiz.parseRoadBeanToRoadGoods(roadBeanList);
+        String leftState = SharedPreferencesUtil.getString(mContext, BoxParams.LEFT_STATE);
+        String rightState = SharedPreferencesUtil.getString(mContext, BoxParams.RIGHT_STATE);
+        List<RoadGoods> roadGoodsList = roadBiz.parseRoadBeanToRoadGoods(roadBeanList, leftState, rightState);
 
         roadGoodsMainList = roadGoodsList;
 
@@ -157,26 +161,27 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
 
     /**
      * 筛选一部分商品在首页展示
+     *
      * @param list
      */
-    public void getMainShowGoods(List<RoadGoods> list){
+    public void getMainShowGoods(List<RoadGoods> list) {
         List<RoadGoods> list1 = new ArrayList<>();
         List<RoadGoods> list2 = new ArrayList<>();
         for (RoadGoods roadGoods :
                 list) {
             RoadInfo roadInfo = roadGoods.getRoadInfo();
-            if (roadInfo.getRoadNowNum()>0 && roadInfo.getRoadState() == RoadInfo.ROAD_STATE_NORMAL && roadInfo.getRoadOpen() == RoadInfo.ROAD_OPEN){
+            if (roadInfo.getRoadNowNum() > 0 && roadInfo.getRoadState() == RoadInfo.ROAD_STATE_NORMAL && roadInfo.getRoadOpen() == RoadInfo.ROAD_OPEN) {
                 list1.add(roadGoods);
-            }else{
+            } else {
                 list2.add(roadGoods);
             }
         }
-        if(list1.size()>25){
+        if (list1.size() > 25) {
             for (int i = 0; i < 25; i++) {
                 roadGoodsMainList.add(list1.get(i));
             }
-        }else if (list1.size()<20){
-            int num = 20-list1.size();
+        } else if (list1.size() < 20) {
+            int num = 20 - list1.size();
             for (RoadGoods roadGoods :
                     list1) {
                 roadGoodsMainList.add(roadGoods);
@@ -184,7 +189,7 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
             for (int i = 0; i < num; i++) {
                 roadGoodsMainList.add(list2.get(i));
             }
-        }else{
+        } else {
             for (RoadGoods roadGoods :
                     list1) {
                 roadGoodsMainList.add(roadGoods);

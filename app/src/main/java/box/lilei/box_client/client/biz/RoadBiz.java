@@ -13,8 +13,7 @@ import box.lilei.box_client.db.RoadBean;
 public interface RoadBiz {
 
 
-
-    List<RoadGoods> parseRoadBeanToRoadGoods(List<RoadBean> roadBeanList);
+    List<RoadGoods> parseRoadBeanToRoadGoods(List<RoadBean> roadBeanList, String leftState, String rightState);
 
 
 }

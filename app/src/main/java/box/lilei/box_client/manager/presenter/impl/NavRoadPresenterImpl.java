@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import box.lilei.box_client.box.BoxAction;
+import box.lilei.box_client.box.BoxParams;
 import box.lilei.box_client.box.BoxSetting;
 import box.lilei.box_client.client.biz.RoadBiz;
 import box.lilei.box_client.client.biz.impl.RoadBizImpl;
@@ -20,6 +21,7 @@ import box.lilei.box_client.db.RoadBean;
 import box.lilei.box_client.db.biz.RoadBeanService;
 import box.lilei.box_client.manager.presenter.NavRoadPresenter;
 import box.lilei.box_client.manager.view.NavRoadFragmentView;
+import box.lilei.box_client.util.SharedPreferencesUtil;
 import box.lilei.box_client.util.ToastTools;
 
 /**
@@ -43,7 +45,9 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
 
     @Override
     public void initRoadInfo() {
-        roadGoodsList = roadBiz.parseRoadBeanToRoadGoods(roadBeanService.queryAllRoadBean());
+        String leftState = SharedPreferencesUtil.getString(mContext, BoxParams.LEFT_STATE);
+        String rightState = SharedPreferencesUtil.getString(mContext, BoxParams.RIGHT_STATE);
+        roadGoodsList = roadBiz.parseRoadBeanToRoadGoods(roadBeanService.queryAllRoadBean(), leftState, rightState);
         roadGoodsListMain = new ArrayList<>();
         roadGoodsListViceOne = new ArrayList<>();
         if (roadGoodsList.size() != 0) {

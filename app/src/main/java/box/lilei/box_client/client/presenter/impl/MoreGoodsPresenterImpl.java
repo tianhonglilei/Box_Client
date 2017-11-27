@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import box.lilei.box_client.R;
+import box.lilei.box_client.box.BoxParams;
 import box.lilei.box_client.client.biz.GoodsBiz;
 import box.lilei.box_client.client.biz.RoadBiz;
 import box.lilei.box_client.client.biz.impl.GoodsBizImpl;
@@ -22,6 +23,7 @@ import box.lilei.box_client.client.presenter.MoreGoodsPresenter;
 import box.lilei.box_client.client.view.MoreGoodsView;
 import box.lilei.box_client.db.RoadBean;
 import box.lilei.box_client.db.biz.RoadBeanService;
+import box.lilei.box_client.util.SharedPreferencesUtil;
 import box.lilei.box_client.util.TimeUtil;
 
 /**
@@ -45,7 +47,7 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
     private MoreGoodsView moreGoodsView;
 
 
-    public MoreGoodsPresenterImpl(Context mContext , MoreGoodsView moreGoodsView) {
+    public MoreGoodsPresenterImpl(Context mContext, MoreGoodsView moreGoodsView) {
         this.moreGoodsView = moreGoodsView;
         this.mContext = mContext;
         goodsBiz = new GoodsBizImpl();
@@ -58,7 +60,9 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
     @Override
     public void initAllGoods(GridView gridView) {
         this.gridView = gridView;
-        goodsList = roadBiz.parseRoadBeanToRoadGoods(roadBeanService.queryAllRoadBean());
+        String leftState = SharedPreferencesUtil.getString(mContext, BoxParams.LEFT_STATE);
+        String rightState = SharedPreferencesUtil.getString(mContext, BoxParams.RIGHT_STATE);
+        goodsList = roadBiz.parseRoadBeanToRoadGoods(roadBeanService.queryAllRoadBean(), leftState, rightState);
         getFoodAndDrink();
         gvMoreGoodsAdapter = new GvMoreGoodsAdapter(mContext, goodsList, R.layout.client_more_goods_item);
         gridView.setAdapter(gvMoreGoodsAdapter);
@@ -78,13 +82,12 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
     }
 
 
-
     public void getFoodAndDrink() {
-        for (RoadGoods roadGoods:
+        for (RoadGoods roadGoods :
                 goodsList) {
-            if (roadGoods.getGoods().getGoodsType() == Goods.GOODS_TYPE_DRINK){
+            if (roadGoods.getGoods().getGoodsType() == Goods.GOODS_TYPE_DRINK) {
                 drinks.add(roadGoods);
-            }else{
+            } else {
                 foods.add(roadGoods);
             }
         }

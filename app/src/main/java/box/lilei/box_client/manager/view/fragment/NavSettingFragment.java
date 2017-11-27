@@ -134,6 +134,7 @@ public class NavSettingFragment extends Fragment implements View.OnClickListener
             switch (msg.what){
                 case 1:
                     Toast.makeText(mContext, "设置成功", Toast.LENGTH_SHORT).show();
+                    settingTxtNowTime.setText(spinnerStartTime.getSelectedItem().toString()+"00-"+spinnerEndTime.getSelectedItem().toString()+"00");
                     break;
                 case 2:
                     Toast.makeText(mContext, "设置失败，请重新设置", Toast.LENGTH_SHORT).show();

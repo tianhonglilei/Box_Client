@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import box.lilei.box_client.R;
+import box.lilei.box_client.box.BoxParams;
 import box.lilei.box_client.box.BoxSetting;
 import box.lilei.box_client.client.biz.RoadBiz;
 import box.lilei.box_client.client.biz.impl.RoadBizImpl;
@@ -31,6 +32,7 @@ import box.lilei.box_client.manager.adapter.NavGoodsAdapter;
 import box.lilei.box_client.manager.presenter.NavGoodsPresenter;
 import box.lilei.box_client.manager.view.NavGoodsFragmentView;
 import box.lilei.box_client.util.ParamsUtils;
+import box.lilei.box_client.util.SharedPreferencesUtil;
 
 
 /**
@@ -60,7 +62,9 @@ public class NavGoodsPresenterImpl implements NavGoodsPresenter {
 
     @Override
     public void initGoodsGridView(GridView gridView) {
-        roadGoodsList = roadBiz.parseRoadBeanToRoadGoods(roadBeanService.queryAllRoadBean());
+        String leftState = SharedPreferencesUtil.getString(mContext, BoxParams.LEFT_STATE);
+        String rightState = SharedPreferencesUtil.getString(mContext, BoxParams.RIGHT_STATE);
+        roadGoodsList = roadBiz.parseRoadBeanToRoadGoods(roadBeanService.queryAllRoadBean(), leftState, rightState);
         roadGoodsListMain = new ArrayList<>();
         roadGoodsListViceOne = new ArrayList<>();
         if (roadGoodsList.size() != 0) {
@@ -151,6 +155,7 @@ public class NavGoodsPresenterImpl implements NavGoodsPresenter {
 
     /**
      * 一键补满访问网络
+     *
      * @param addGoods
      * @param dbId
      */
@@ -170,6 +175,7 @@ public class NavGoodsPresenterImpl implements NavGoodsPresenter {
                             navGoodsFragmentView.fullProgress(count, index, success, ++fail);
                         }
                     }
+
                     @Override
                     public void onFail(Object errorObject) {
                         navGoodsFragmentView.fullProgress(count, index, success, ++fail);
@@ -187,12 +193,13 @@ public class NavGoodsPresenterImpl implements NavGoodsPresenter {
                         JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
                         if (jsonObject.get("msg").equals("0")) {
                             roadBeanService.updateRoadNum(roadGoods.getRoadGoodsId(), Integer.parseInt(addGoods.getHuodao_num()), Integer.parseInt(addGoods.getHuodao_max()));
-                            refreshGoodsNum(roadGoods,position);
+                            refreshGoodsNum(roadGoods, position);
                             Toast.makeText(mContext, "补货完成", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(mContext, "补货失败,请重新尝试", Toast.LENGTH_SHORT).show();
                         }
                     }
+
                     @Override
                     public void onFail(Object errorObject) {
                         Toast.makeText(mContext, "补货失败,请检查网络", Toast.LENGTH_SHORT).show();
