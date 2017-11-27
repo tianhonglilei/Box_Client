@@ -182,8 +182,6 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
 
     @Override
     public void skipToADBannerActivity() {
-
-
         Intent intent = new Intent(ActiveActivity.this, ADBannerActivity.class);
         startActivity(intent);
         finish();
