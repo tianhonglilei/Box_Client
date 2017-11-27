@@ -409,14 +409,14 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                     if (isTouch)
                         return;
                     if (isRight) {
-                        ++x1;
+                        x1++;
                     } else {
-                        --x1;
+                        x1--;
                     }
-                    if (x1 == scrollTotal) {
+                    if (x1 >= scrollTotal) {
                         isRight = false;
                     }
-                    if (x1 == 0) {
+                    if (x1 < 1) {
                         isRight = true;
                     }
                     adbannerBScroll.scrollTo(x1, 0);
