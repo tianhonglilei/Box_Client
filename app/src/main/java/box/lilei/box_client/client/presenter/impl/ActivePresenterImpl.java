@@ -179,6 +179,7 @@ public class ActivePresenterImpl implements ActivePresenter {
             }, 5000);
             return;
         }
+        activeView.showDialog("下载中...");
         for (String name :
                 downloadName) {
             downloadFile(name);
@@ -346,7 +347,6 @@ public class ActivePresenterImpl implements ActivePresenter {
 
     @Override
     public void activeBox(final String code) {
-        activeView.showDialog("激活中...");
         new CommService() {
 
             @Override
