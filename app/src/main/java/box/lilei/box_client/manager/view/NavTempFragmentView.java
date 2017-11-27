@@ -17,5 +17,7 @@ public interface NavTempFragmentView {
 
     void hiddenDialog();
 
+    void setResult(boolean set);
+
 
 }

@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxParams;
@@ -114,4 +115,33 @@ public class NavSettingFragment extends Fragment implements View.OnClickListener
             dialog = null;
         }
     }
+
+    @Override
+    public void setResult(boolean set) {
+        if (set){
+            Toast.makeText(mContext, "设置成功", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(mContext, "设置失败，请重新设置", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

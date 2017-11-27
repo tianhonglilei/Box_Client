@@ -208,6 +208,15 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
     }
 
     @Override
+    public void setResult(boolean set) {
+        if (set){
+            Toast.makeText(mContext, "设置成功", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(mContext, "设置失败，请重新设置", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.nav_temp_btn_ok:

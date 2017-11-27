@@ -11,4 +11,6 @@ public interface NavSettingFragmentView {
 
     void hiddenDialog();
 
+    void setResult(boolean set);
+
 }

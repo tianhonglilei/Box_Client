@@ -44,16 +44,16 @@ public class NavSettingPresenterImpl implements NavSettingPresenter {
                     int result = BoxSetting.getBoxTempResponse();
                     navSettingFragmentView.hiddenDialog();
                     if (result == 0) {
-                        Toast.makeText(mContext, "设置成功", Toast.LENGTH_LONG).show();
                         SharedPreferencesUtil.putString(mContext, BoxParams.LIGHT_TIME, lightTime);
+                        navSettingFragmentView.setResult(true);
                     } else {
-                        Toast.makeText(mContext, "设置失败，请重新设置", Toast.LENGTH_SHORT).show();
+                        navSettingFragmentView.setResult(false);
                     }
                 }
             }, 1500);
         } else {
             navSettingFragmentView.hiddenDialog();
-            Toast.makeText(mContext, "设置失败，请重新设置", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "数据异常", Toast.LENGTH_SHORT).show();
         }
 
     }

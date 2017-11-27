@@ -52,18 +52,17 @@ public class NavTempPresenterImpl implements NavTempPresenter {
                     int result = BoxSetting.getBoxTempResponse();
                     navTempFragmentView.hiddenDialog();
                     if (result == 0) {
-                        Toast.makeText(mContext, "设置成功", Toast.LENGTH_LONG).show();
                         SharedPreferencesUtil.putString(mContext, BoxParams.LEFT_STATE, leftState);
                         SharedPreferencesUtil.putString(mContext, BoxParams.RIGHT_STATE, rightState);
                         SharedPreferencesUtil.putString(mContext, BoxParams.COLD_TEMP, cold);
                         SharedPreferencesUtil.putString(mContext, BoxParams.HOT_TEMP, hot);
+                        navTempFragmentView.setResult(true);
                     } else {
-                        Toast.makeText(mContext, "设置失败，请重新设置", Toast.LENGTH_SHORT).show();
+                        navTempFragmentView.setResult(false);
                     }
                 }
             }, 1500);
-        }
-        else {
+        } else {
             navTempFragmentView.hiddenDialog();
             Toast.makeText(mContext, "设置失败，请重新设置", Toast.LENGTH_SHORT).show();
         }

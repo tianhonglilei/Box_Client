@@ -76,7 +76,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     private Context appContext;
 
     //商品滚动模块
-    private boolean isTouch = false, isRight;
+    private boolean isTouch = false, isRight = true;
     private int x1 = 0;
     private boolean mAutoScroll = true;
     private int scrollTotal = 0;
@@ -398,7 +398,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 Message msg = mHandler.obtainMessage(1, 0, 0);
                 mHandler.sendMessage(msg);
             }
-        }, 500, 70);
+        }, 1000, 70);
     }
 
     Handler mHandler = new Handler() {
@@ -409,9 +409,9 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                     if (isTouch)
                         return;
                     if (isRight) {
-                        x1++;
+                        ++x1;
                     } else {
-                        x1--;
+                        --x1;
                     }
                     if (x1 >= scrollTotal) {
                         isRight = false;
