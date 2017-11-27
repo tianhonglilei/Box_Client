@@ -35,7 +35,9 @@ public class NavSettingPresenterImpl implements NavSettingPresenter {
         String rightState = SharedPreferencesUtil.getString(mContext, BoxParams.RIGHT_STATE);
         String cold = SharedPreferencesUtil.getString(mContext, BoxParams.COLD_TEMP);
         String hot = SharedPreferencesUtil.getString(mContext, BoxParams.HOT_TEMP);
-        boolean tempParams = BoxSetting.setBoxTemp(leftState, rightState, cold, hot, lightTime);
+        int left = Integer.parseInt(leftState);
+        int right = Integer.parseInt(rightState);
+        boolean tempParams = BoxSetting.setBoxTemp(left+"", right+"", cold, hot, lightTime);
         Toast.makeText(mContext, leftState + "-" + rightState + "-" + cold + "-" + hot + "-" + lightTime, Toast.LENGTH_LONG).show();
         if (tempParams) {
             new Timer().schedule(new TimerTask() {

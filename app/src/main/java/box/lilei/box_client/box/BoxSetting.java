@@ -47,6 +47,7 @@ public class BoxSetting {
         if (Integer.parseInt(cold) < 10 && cold.length() == 1) {
             cold = "0" + cold;
         }
+
         String info = "11000000000" + leftState + rightState + lightTime + cold
                 + hot;
         boolean tempSet = MainHandler.noticeAvmConfig(info);

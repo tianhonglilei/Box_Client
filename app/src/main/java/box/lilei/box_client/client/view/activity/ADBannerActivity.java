@@ -141,7 +141,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adPresenter.initAdData(adbannerAdLv);
 //        adPresenter.initGoodsData(adbannerGoodsGv);
         initGoodsScroll();
-        scrollTotal = goodsItemWidth * (adbannerGoodsGv.getCount() - 8);
+
         adCount = adbannerAdLv.getCount();
         startAutoScroll();
         initDateAndWeather();
@@ -521,6 +521,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         }
         super.onResume();
         adPresenter.initGoodsData(adbannerGoodsGv);
+        scrollTotal = goodsItemWidth * (adbannerGoodsGv.getCount() - 8);
     }
 
     @Override
