@@ -169,19 +169,19 @@ public class ActivePresenterImpl implements ActivePresenter {
 
     private void startDownload() {
         count = downloadName.size();
-        for (String name :
-                downloadName) {
-            downloadFile(name);
-        }
-        if (downloadName.size() == 0) {
+        if (count == 0) {
             activeView.hideDialog();
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-
                     activeView.skipToADBannerActivity();
                 }
-            },5000);
+            }, 5000);
+            return;
+        }
+        for (String name :
+                downloadName) {
+            downloadFile(name);
         }
     }
 

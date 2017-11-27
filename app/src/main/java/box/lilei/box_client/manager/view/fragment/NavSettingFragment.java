@@ -17,6 +17,8 @@ import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxParams;
 import box.lilei.box_client.loading.ZLoadingDialog;
 import box.lilei.box_client.loading.Z_TYPE;
+import box.lilei.box_client.manager.presenter.NavSettingPresenter;
+import box.lilei.box_client.manager.presenter.impl.NavSettingPresenterImpl;
 import box.lilei.box_client.manager.view.NavSettingFragmentView;
 import box.lilei.box_client.util.SharedPreferencesUtil;
 import butterknife.BindView;
@@ -39,6 +41,8 @@ public class NavSettingFragment extends Fragment implements View.OnClickListener
     private Context mContext;
     private ZLoadingDialog dialog;
 
+    private NavSettingPresenter navSettingPresenter;
+
 
     public NavSettingFragment() {
         // Required empty public constructor
@@ -52,6 +56,8 @@ public class NavSettingFragment extends Fragment implements View.OnClickListener
         unbinder = ButterKnife.bind(NavSettingFragment.this, view);
         mContext = getContext();
         initView();
+
+        navSettingPresenter = new NavSettingPresenterImpl(mContext,this);
 
 
         return view;
@@ -78,7 +84,7 @@ public class NavSettingFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.nav_setting_btn_ok:
-
+                navSettingPresenter.setLightTime(spinnerStartTime.getSelectedItem().toString(),spinnerEndTime.getSelectedItem().toString());
                 break;
         }
     }

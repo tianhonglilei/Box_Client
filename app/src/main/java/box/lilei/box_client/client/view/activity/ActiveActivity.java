@@ -170,6 +170,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
     public void hideDialog() {
         if (dialog != null) {
             dialog.cancel();
+            dialog = null;
         }
     }
 
