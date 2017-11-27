@@ -17,6 +17,8 @@ public class BoxParams {
     public static final String RIGHT_STATE = "right_state";
     public static final String BOX_ID = "box_id";
     public static final String LIGHT_TIME = "light_time";
+    public static final String COLD_TEMP = "cold_temp";
+    public static final String HOT_TEMP = "hot_temp";
 
     private String avmSetInfo;
 

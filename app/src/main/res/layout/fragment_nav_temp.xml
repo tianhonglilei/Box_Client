@@ -250,7 +250,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/nav_temp_txt_hot_max_temp"
         android:layout_toEndOf="@+id/nav_edit_set_temp_hot"
-        android:text="℃ (输入范围0-25)"
+        android:text="℃ (输入范围40-63)"
         android:textColor="@color/colorGaryFiveTwo"
         android:textSize="20sp" />
 
@@ -258,7 +258,7 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="℃ (输入范围40-63)"
+        android:text="℃ (输入范围0-25)"
         android:textColor="@color/colorGaryFiveTwo"
         android:textSize="20sp"
         android:layout_alignBaseline="@+id/nav_temp_txt_cold_max_temp"

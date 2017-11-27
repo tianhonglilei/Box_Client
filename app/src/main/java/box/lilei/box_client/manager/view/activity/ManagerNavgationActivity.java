@@ -9,12 +9,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import box.lilei.box_client.R;
+import box.lilei.box_client.box.BoxAction;
 import box.lilei.box_client.manager.view.fragment.NavExitApplicationFragment;
 import box.lilei.box_client.manager.view.fragment.NavExitManagerFragment;
 import box.lilei.box_client.manager.view.fragment.NavGoodsFragment;
@@ -34,6 +34,8 @@ public class ManagerNavgationActivity extends FragmentActivity {
     //信号图片
     @BindView(R.id.manager_head_img_sign)
     ImageView managerHeadImgSign;
+    @BindView(R.id.manager_head_txt_imei)
+    TextView managerHeadTxtImei;
     private NavGoodsFragment navGoodsFragment;
     private NavRoadFragment navRoadFragment;
     private NavTempFragment navTempFragment;
@@ -52,6 +54,8 @@ public class ManagerNavgationActivity extends FragmentActivity {
         setContentView(R.layout.activity_manager_navgation);
         ButterKnife.bind(this);
         mContext = this;
+        managerHeadTxtImei.setText(BoxAction.getBoxIdFromSP(mContext));
+
         initView();
         initFragment();
         initSignListener();
