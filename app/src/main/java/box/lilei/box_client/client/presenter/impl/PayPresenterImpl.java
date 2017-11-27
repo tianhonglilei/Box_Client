@@ -151,11 +151,16 @@ public class PayPresenterImpl implements PayPresenter {
                 if (jsonObject.getString("error").equals("0")) {
                     for (int i = 0; i < num; i++) {
                         BoxAction.outGoods(boxType, roadIndex);
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
                     }
                 }
             }
