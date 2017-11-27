@@ -388,9 +388,11 @@ public class ActivePresenterImpl implements ActivePresenter {
     @Override
     public void saveBoxSetting() {
         BoxParams boxParams = new BoxParams();
-        SharedPreferencesUtil.putString(mContext, BoxParams.LEFT_STATE, boxParams.getLeft_state());
-        SharedPreferencesUtil.putString(mContext, BoxParams.RIGHT_STATE, boxParams.getRight_state());
-        SharedPreferencesUtil.putString(mContext, BoxParams.LIGHT_TIME, boxParams.getStart_time()+boxParams.getEnd_time());
+        if (!boxParams.getAvmSetInfo().equals("0")) {
+            SharedPreferencesUtil.putString(mContext, BoxParams.LEFT_STATE, boxParams.getLeft_state());
+            SharedPreferencesUtil.putString(mContext, BoxParams.RIGHT_STATE, boxParams.getRight_state());
+            SharedPreferencesUtil.putString(mContext, BoxParams.LIGHT_TIME, boxParams.getStart_time() + boxParams.getEnd_time());
+        }
     }
 
     private void getBoxIdFromBox() {

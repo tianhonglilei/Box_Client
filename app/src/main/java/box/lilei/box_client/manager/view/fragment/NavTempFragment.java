@@ -18,6 +18,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -47,6 +49,7 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
     @BindView(R.id.nav_temp_btn_refresh)
     Button navTempBtnRefresh;
 
+    List<RadioButton> leftRdos,rightRdos;
 
 
     @BindView(R.id.nav_temp_right_rdo_cold)
@@ -99,6 +102,17 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
 
         navTempBtnOk.setOnClickListener(this);
         navTempBtnRefresh.setOnClickListener(this);
+
+        leftRdos = new ArrayList<>();
+        leftRdos.add(navTempLeftRdoCold);
+        leftRdos.add(navTempLeftRdoHot);
+        leftRdos.add(navTempLeftRdoClose);
+        rightRdos = new ArrayList<>();
+        rightRdos.add(navTempRightRdoCold);
+        rightRdos.add(navTempRightRdoHot);
+        rightRdos.add(navTempRightRdoClose);
+
+
         initTemp();
         timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -160,14 +174,14 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
      * 初始化温度显示
      */
     private void initTemp() {
-        RadioButton[] leftRdos = {navTempLeftRdoCold, navTempLeftRdoHot, navTempLeftRdoClose};
-        RadioButton[] rightRdos = {navTempRightRdoCold, navTempRightRdoHot, navTempRightRdoClose};
+
+
         BoxParams params = new BoxParams();
         Toast.makeText(mContext, params.getAvmSetInfo(), Toast.LENGTH_LONG).show();
         Log.e("NavTempFragment", params.getAvmSetInfo());
-        if (params.getAvmSetInfo().length() > 40) {
-            leftRdos[Integer.parseInt(params.getLeft_state())].setChecked(true);
-            rightRdos[Integer.parseInt(params.getRight_state())].setChecked(true);
+        if (!params.getAvmSetInfo().equals("0")) {
+            leftRdos.get(Integer.parseInt(params.getLeft_state())).setChecked(true);
+            rightRdos.get(Integer.parseInt(params.getRight_state())).setChecked(true);
             changeTemp(params.getLeft_temp(), params.getRight_temp());
             navEditSetTempCold.setText(params.getCold_temp());
             navEditSetTempHot.setText(params.getHot_temp());

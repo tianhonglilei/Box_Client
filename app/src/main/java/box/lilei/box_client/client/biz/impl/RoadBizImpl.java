@@ -55,8 +55,12 @@ public class RoadBizImpl implements RoadBiz {
                 goods.setGoodsType(goodsBean.getType());
                 if (roadInfo.getRoadBoxType().equals(RoadInfo.BOX_TYPE_DRINK)) {
                     BoxParams boxParams = new BoxParams();
-                    String leftState = boxParams.getLeft_state();
-                    String rightState = boxParams.getRight_state();
+                    String leftState = Goods.GOODS_WD_NORMAL+"";
+                    String rightState = Goods.GOODS_WD_NORMAL+"";
+                    if (!boxParams.getAvmSetInfo().equals("0")) {
+                        leftState = boxParams.getLeft_state();
+                        rightState = boxParams.getRight_state();
+                    }
                     if (roadInfo.getRoadIndex() < 9) {
                         goods.setGoodsWd(Integer.parseInt(leftState));
                     } else {

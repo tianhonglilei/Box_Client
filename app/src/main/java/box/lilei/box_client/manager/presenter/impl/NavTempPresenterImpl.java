@@ -27,9 +27,11 @@ public class NavTempPresenterImpl implements NavTempPresenter {
     @Override
     public void getTempSetting() {
         BoxParams boxParams = new BoxParams();
-        String left = boxParams.getLeft_temp();
-        String right = boxParams.getRight_temp();
-        navTempFragmentView.changeTemp(left, right);
+        if (!boxParams.getAvmSetInfo().equals("0")) {
+            String left = boxParams.getLeft_temp();
+            String right = boxParams.getRight_temp();
+            navTempFragmentView.changeTemp(left, right);
+        }
     }
 
     @Override

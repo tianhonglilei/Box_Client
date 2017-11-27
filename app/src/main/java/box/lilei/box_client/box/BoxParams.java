@@ -53,7 +53,7 @@ public class BoxParams {
         if (!TextUtils.isEmpty(info)) {
             this.avmSetInfo = info;
         } else {
-            this.avmSetInfo = "";
+            this.avmSetInfo = "0";
         }
     }
 
