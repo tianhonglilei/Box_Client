@@ -148,6 +148,12 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    activePresenter.saveBoxSetting();
+                }
+            },7000);
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
                     skipToADBannerActivity();
                 }
             },10000);
@@ -177,7 +183,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
     @Override
     public void skipToADBannerActivity() {
 
-        activePresenter.saveBoxSetting();
+
         Intent intent = new Intent(ActiveActivity.this, ADBannerActivity.class);
         startActivity(intent);
         finish();

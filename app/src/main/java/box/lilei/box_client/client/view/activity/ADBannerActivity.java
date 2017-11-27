@@ -139,7 +139,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         init();
         //调用中间层业务
         adPresenter.initAdData(adbannerAdLv);
-        adPresenter.initGoodsData(adbannerGoodsGv);
+//        adPresenter.initGoodsData(adbannerGoodsGv);
         initGoodsScroll();
         scrollTotal = goodsItemWidth * (adbannerGoodsGv.getCount() - 8);
         adCount = adbannerAdLv.getCount();
@@ -520,7 +520,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             }
         }
         super.onResume();
-
+        adPresenter.initGoodsData(adbannerGoodsGv);
     }
 
     @Override
