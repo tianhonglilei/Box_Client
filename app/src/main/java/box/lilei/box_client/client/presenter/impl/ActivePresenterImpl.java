@@ -395,6 +395,8 @@ public class ActivePresenterImpl implements ActivePresenter {
             SharedPreferencesUtil.putString(mContext, BoxParams.LEFT_STATE, boxParams.getLeft_state());
             SharedPreferencesUtil.putString(mContext, BoxParams.RIGHT_STATE, boxParams.getRight_state());
             SharedPreferencesUtil.putString(mContext, BoxParams.LIGHT_TIME, boxParams.getStart_time() + boxParams.getEnd_time());
+            SharedPreferencesUtil.putString(mContext, BoxParams.COLD_TEMP, boxParams.getCold_temp());
+            SharedPreferencesUtil.putString(mContext, BoxParams.HOT_TEMP, boxParams.getHot_temp());
         }
     }
 
