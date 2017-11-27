@@ -44,7 +44,7 @@ public class BoxSetting {
      * @return
      */
     public static boolean setBoxTemp(String leftState, String rightState, String cold, String hot, String lightTime) {
-        if (Integer.parseInt(cold) < 10) {
+        if (Integer.parseInt(cold) < 10 && cold.length() == 1) {
             cold = "0" + cold;
         }
         String info = "11000000000" + leftState + rightState + lightTime + cold

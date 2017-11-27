@@ -150,7 +150,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
                 public void run() {
                     skipToADBannerActivity();
                 }
-            },5000);
+            },10000);
         }
     }
 
