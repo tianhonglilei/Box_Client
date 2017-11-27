@@ -32,6 +32,7 @@ import box.lilei.box_client.loading.Z_TYPE;
 import box.lilei.box_client.manager.presenter.NavTempPresenter;
 import box.lilei.box_client.manager.presenter.impl.NavTempPresenterImpl;
 import box.lilei.box_client.manager.view.NavTempFragmentView;
+import box.lilei.box_client.util.SharedPreferencesUtil;
 import box.lilei.box_client.util.ToastTools;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,7 +53,7 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
     @BindView(R.id.nav_temp_btn_refresh)
     Button navTempBtnRefresh;
 
-    List<RadioButton> leftRdos,rightRdos;
+    List<RadioButton> leftRdos, rightRdos;
 
 
     @BindView(R.id.nav_temp_right_rdo_cold)
@@ -169,15 +170,12 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
      * 初始化温度显示
      */
     private void initTemp() {
-        BoxParams params = new BoxParams();
-        Toast.makeText(mContext, params.getAvmSetInfo(), Toast.LENGTH_LONG).show();
-        Log.e("NavTempFragment", params.getAvmSetInfo());
-        if (!params.getAvmSetInfo().equals("0")) {
-            leftRdos.get(Integer.parseInt(params.getLeft_state())).setChecked(true);
-            rightRdos.get(Integer.parseInt(params.getRight_state())).setChecked(true);
-            navEditSetTempCold.setText(params.getCold_temp());
-            navEditSetTempHot.setText(params.getHot_temp());
-        }
+
+        leftRdos.get(Integer.parseInt(SharedPreferencesUtil.getString(mContext,BoxParams.LEFT_STATE))).setChecked(true);
+        rightRdos.get(Integer.parseInt(SharedPreferencesUtil.getString(mContext,BoxParams.RIGHT_STATE))).setChecked(true);
+        navEditSetTempCold.setText(SharedPreferencesUtil.getString(mContext,BoxParams.COLD_TEMP));
+        navEditSetTempHot.setText(SharedPreferencesUtil.getString(mContext,BoxParams.HOT_TEMP));
+
     }
 
     @Override
@@ -211,18 +209,18 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
 
     @Override
     public void setResult(boolean set) {
-        if (set){
+        if (set) {
             handler.sendEmptyMessage(1);
-        }else{
+        } else {
             handler.sendEmptyMessage(2);
         }
     }
 
-    Handler handler = new Handler(){
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     Toast.makeText(mContext, "设置成功", Toast.LENGTH_SHORT).show();
                     break;
@@ -239,13 +237,13 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
             case R.id.nav_temp_btn_ok:
                 String cold = navEditSetTempCold.getText().toString();
                 String hot = navEditSetTempHot.getText().toString();
-                if (Integer.parseInt(cold)<0 && Integer.parseInt(cold)>25){
-                    ToastTools.showShort(mContext,"制冷温度输入有误，请重新输入");
+                if (Integer.parseInt(cold) < 0 && Integer.parseInt(cold) > 25) {
+                    ToastTools.showShort(mContext, "制冷温度输入有误，请重新输入");
                     navEditSetTempCold.setFocusable(true);
                     return;
                 }
-                if (Integer.parseInt(hot)<40 && Integer.parseInt(hot)>63){
-                    ToastTools.showShort(mContext,"制热温度输入有误，请重新输入");
+                if (Integer.parseInt(hot) < 40 && Integer.parseInt(hot) > 63) {
+                    ToastTools.showShort(mContext, "制热温度输入有误，请重新输入");
                     navEditSetTempHot.setFocusable(true);
                     return;
                 }

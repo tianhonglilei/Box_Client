@@ -9,7 +9,7 @@
 
         <FrameLayout
             android:id="@+id/common_dialog_title_root"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/common_dialog_title_root_height"
             android:background="@drawable/common_dialog_title_safe_blue_bg">
 

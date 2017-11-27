@@ -207,7 +207,6 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
             case R.id.nav_road_btn_test:
                 //测试该货道
                 if (!index.equals("0")) {
-                    Toast.makeText(mContext, "测试", Toast.LENGTH_SHORT).show();
                     navRoadPresenter.testRoad(boxType, index);
                 } else {
                     Toast.makeText(mContext, "请选择货道", Toast.LENGTH_SHORT).show();
