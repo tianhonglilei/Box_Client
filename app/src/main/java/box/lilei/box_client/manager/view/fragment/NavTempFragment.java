@@ -30,6 +30,7 @@ import box.lilei.box_client.loading.Z_TYPE;
 import box.lilei.box_client.manager.presenter.NavTempPresenter;
 import box.lilei.box_client.manager.presenter.impl.NavTempPresenterImpl;
 import box.lilei.box_client.manager.view.NavTempFragmentView;
+import box.lilei.box_client.util.ToastTools;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -212,6 +213,16 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
             case R.id.nav_temp_btn_ok:
                 String cold = navEditSetTempCold.getText().toString();
                 String hot = navEditSetTempHot.getText().toString();
+                if (Integer.parseInt(cold)<0 && Integer.parseInt(cold)>25){
+                    ToastTools.showShort(mContext,"制冷温度输入有误，请重新输入");
+                    navEditSetTempCold.setFocusable(true);
+                    return;
+                }
+                if (Integer.parseInt(hot)<40 && Integer.parseInt(hot)>63){
+                    ToastTools.showShort(mContext,"制热温度输入有误，请重新输入");
+                    navEditSetTempHot.setFocusable(true);
+                    return;
+                }
                 navTempPresenter.setTemp(leftState + "", rightState + "", cold, hot);
                 break;
             case R.id.nav_temp_btn_refresh:
