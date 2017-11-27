@@ -22,4 +22,5 @@ public interface NavTempPresenter {
      */
     void setTemp(String leftState, String rightState, String cold, String hot);
 
+
 }

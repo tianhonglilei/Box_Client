@@ -174,15 +174,12 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
      * 初始化温度显示
      */
     private void initTemp() {
-
-
         BoxParams params = new BoxParams();
         Toast.makeText(mContext, params.getAvmSetInfo(), Toast.LENGTH_LONG).show();
         Log.e("NavTempFragment", params.getAvmSetInfo());
         if (!params.getAvmSetInfo().equals("0")) {
             leftRdos.get(Integer.parseInt(params.getLeft_state())).setChecked(true);
             rightRdos.get(Integer.parseInt(params.getRight_state())).setChecked(true);
-            changeTemp(params.getLeft_temp(), params.getRight_temp());
             navEditSetTempCold.setText(params.getCold_temp());
             navEditSetTempHot.setText(params.getHot_temp());
         }
@@ -230,7 +227,7 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
                 navTempPresenter.setTemp(leftState + "", rightState + "", cold, hot);
                 break;
             case R.id.nav_temp_btn_refresh:
-                initTemp();
+                navTempPresenter.getTempSetting();
                 break;
         }
     }
