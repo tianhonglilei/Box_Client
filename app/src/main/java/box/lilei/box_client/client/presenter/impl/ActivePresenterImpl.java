@@ -174,10 +174,11 @@ public class ActivePresenterImpl implements ActivePresenter {
             downloadFile(name);
         }
         if (downloadName.size() == 0) {
+            activeView.hideDialog();
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    activeView.hideDialog();
+
                     activeView.skipToADBannerActivity();
                 }
             },5000);
