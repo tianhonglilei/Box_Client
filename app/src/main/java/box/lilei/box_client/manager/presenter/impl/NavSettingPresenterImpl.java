@@ -30,12 +30,13 @@ public class NavSettingPresenterImpl implements NavSettingPresenter {
     public void setLightTime(String start, String end) {
         navSettingFragmentView.showDialog("设置中...");
         lightTime = start + "00" + end + "00";
-        Toast.makeText(mContext, lightTime, Toast.LENGTH_SHORT).show();
-        String leftState = SharedPreferencesUtil.getString(mContext,BoxParams.LEFT_STATE);
-        String rightState = SharedPreferencesUtil.getString(mContext,BoxParams.RIGHT_STATE);
-        String cold = SharedPreferencesUtil.getString(mContext,BoxParams.COLD_TEMP);
-        String hot = SharedPreferencesUtil.getString(mContext,BoxParams.HOT_TEMP);
+
+        String leftState = SharedPreferencesUtil.getString(mContext, BoxParams.LEFT_STATE);
+        String rightState = SharedPreferencesUtil.getString(mContext, BoxParams.RIGHT_STATE);
+        String cold = SharedPreferencesUtil.getString(mContext, BoxParams.COLD_TEMP);
+        String hot = SharedPreferencesUtil.getString(mContext, BoxParams.HOT_TEMP);
         boolean tempParams = BoxSetting.setBoxTemp(leftState, rightState, cold, hot, lightTime);
+        Toast.makeText(mContext, lightTime + "-" + rightState + "-" + cold + "-" + hot + "-" + lightTime, Toast.LENGTH_LONG).show();
         if (tempParams) {
             new Timer().schedule(new TimerTask() {
                 @Override
