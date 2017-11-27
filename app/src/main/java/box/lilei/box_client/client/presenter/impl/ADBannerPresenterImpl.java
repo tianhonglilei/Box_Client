@@ -128,7 +128,7 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
                 if(roadGoods.getGoods().getGoodsSaleState() != Goods.SALE_STATE_OUT){
                     adBannerView.navigateToPay(roadGoodsMainList.get(position));
                 }else{
-                    Toast.makeText(mContext, "该商品已售罄，请选购其他商品", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "该商品已售罄，请选购其他商品", Toast.LENGTH_SHORT).show();
                 }
             }
         });

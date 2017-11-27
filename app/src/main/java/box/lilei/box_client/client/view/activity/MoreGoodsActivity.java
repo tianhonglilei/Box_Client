@@ -114,7 +114,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 RoadGoods roadGoods = (RoadGoods) moreGoodsGv.getItemAtPosition(position);
                 Goods goods = roadGoods.getGoods();
                 if (goods.getGoodsSaleState() == Goods.SALE_STATE_OUT){
-                    ToastTools.showShort(mContext,"该商品已售罄，请选购其他商品");
+//                    ToastTools.showShort(mContext,"该商品已售罄，请选购其他商品");
                     return;
                 }
                 RoadInfo roadInfo = roadGoods.getRoadInfo();
