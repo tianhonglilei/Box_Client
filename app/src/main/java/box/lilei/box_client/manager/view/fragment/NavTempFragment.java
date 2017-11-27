@@ -117,10 +117,8 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
 
 
         initTemp();
-
+        navTempPresenter.getTempSetting();
         initRdoGroup();
-
-
         return view;
     }
 
