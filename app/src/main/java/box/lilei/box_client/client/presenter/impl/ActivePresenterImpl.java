@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import box.lilei.box_client.box.BoxAction;
 import box.lilei.box_client.box.BoxParams;
@@ -172,13 +174,13 @@ public class ActivePresenterImpl implements ActivePresenter {
             downloadFile(name);
         }
         if (downloadName.size() == 0) {
-            try {
-                Thread.sleep(5000);
-                activeView.hideDialog();
-                activeView.skipToADBannerActivity();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    activeView.hideDialog();
+                    activeView.skipToADBannerActivity();
+                }
+            },5000);
         }
     }
 
