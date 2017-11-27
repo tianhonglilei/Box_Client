@@ -4,6 +4,8 @@ package box.lilei.box_client.manager.view.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -119,12 +121,26 @@ public class NavSettingFragment extends Fragment implements View.OnClickListener
     @Override
     public void setResult(boolean set) {
         if (set){
-            Toast.makeText(mContext, "设置成功", Toast.LENGTH_SHORT).show();
+            handler.sendEmptyMessage(1);
         }else{
-            Toast.makeText(mContext, "设置失败，请重新设置", Toast.LENGTH_SHORT).show();
+            handler.sendEmptyMessage(2);
         }
     }
 
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    Toast.makeText(mContext, "设置成功", Toast.LENGTH_SHORT).show();
+                    break;
+                case 2:
+                    Toast.makeText(mContext, "设置失败，请重新设置", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
 
 
 
