@@ -67,7 +67,7 @@ public class PayPresenterImpl implements PayPresenter {
 
     private RequestParams requestParams;
 
-    private String url;
+    private String url = Constants.WX_GET_PAY_RESPONSE;
 
     private boolean isStart;
 
@@ -89,7 +89,6 @@ public class PayPresenterImpl implements PayPresenter {
 
     @Override
     public void getQRCode(String url, double price, final int payType, final int payNum, Goods goods, RoadInfo roadInfo) {
-        this.url = url;
         payView.loadQRCode();
         //获取二维码所需参数
         Timestamp now = new Timestamp(System.currentTimeMillis());
@@ -248,7 +247,6 @@ public class PayPresenterImpl implements PayPresenter {
 
 
     private void outGoodsAction(int num, final String boxType, final String roadIndex) {
-        payView.outGoodsCheck(num);
         for (int i = 0; i < num; i++) {
             if (i == 1) {
                 new Thread(new Runnable() {
@@ -268,6 +266,7 @@ public class PayPresenterImpl implements PayPresenter {
                     payView.showPopwindow(false, 0, 0);
                     break;
                 }
+                payView.outGoodsCheck(num);
             }
         }
     }
