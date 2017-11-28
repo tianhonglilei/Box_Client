@@ -89,6 +89,7 @@ public class PayPresenterImpl implements PayPresenter {
 
     @Override
     public void getQRCode(String url, double price, final int payType, final int payNum, Goods goods, RoadInfo roadInfo) {
+        this.url = url;
         payView.loadQRCode();
         //获取二维码所需参数
         Timestamp now = new Timestamp(System.currentTimeMillis());
@@ -119,7 +120,7 @@ public class PayPresenterImpl implements PayPresenter {
             public void onSuccess(Object responseObject) {
                 JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
 //                Log.e("PayPresenterImpl", "jsonObject:" + jsonObject);
-                String url = "";
+                String imgUrl = "";
                 if (payType == Constants.PAY_TYPE_WX)
                     if (jsonObject.getString("error").equals("0")) {
                         if (payNum == 1) {
@@ -136,10 +137,10 @@ public class PayPresenterImpl implements PayPresenter {
                             }
                         }
                     }
-                url = jsonObject.getString("url");
+                imgUrl = jsonObject.getString("url");
                 Bitmap bitmap;
-                if (!TextUtils.isEmpty(url)) {
-                    bitmap = QRCodeUtil.createQRImage(url);
+                if (!TextUtils.isEmpty(imgUrl)) {
+                    bitmap = QRCodeUtil.createQRImage(imgUrl);
                     if (!isStart){
                         getPayResponse(payType,payNum);
                         isStart = true;
