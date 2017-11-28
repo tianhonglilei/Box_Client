@@ -26,6 +26,7 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
 
     private Context mContext;
     private OutGoodsListener outGoodsListener;
+    private int num;
 
     public GoodsBroadcastReceiver() {
     }
@@ -52,13 +53,24 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
                     int state = BoxAction.getOutGoodsState();
                     if (state == BoxAction.OUT_GOODS_SUCCESS) {
                         outGoodsListener.outSuccess();
+                        num++;
                     } else if (state == BoxAction.OUT_GOODS_NULL) {
 
                     } else if (state == BoxAction.OUT_GOODS_FAIL) {
                         outGoodsListener.outFail();
+                        num++;
                     }
                 }
             },0,200);
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (num == 0){
+                        outGoodsListener.outFail();
+                    }
+                }
+            },5000);
+
         }
 
         throw new
