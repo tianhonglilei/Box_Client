@@ -99,14 +99,15 @@ public class PayPresenterImpl implements PayPresenter {
                 JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
                 Log.e("PayPresenterImpl", "jsonObject:" + jsonObject);
                 String url = "";
-                String weixinno = jsonObject.getString("tradeno");
                 if (payType == Constants.PAY_TYPE_WX)
                     if (jsonObject.getString("error").equals("0")) {
+                        String weixinno = jsonObject.getString("tradeno");
 //                        Log.e("PayPresenterImpl", weixinno);
                         getPayResponse(weixinno, Constants.PAY_TYPE_WX, boxType, roadIndex + "", payNum);
                     }
                 else {
                     if (jsonObject.getString("err").equals("0")) {
+
                         getPayResponse(tradeno, Constants.PAY_TYPE_ALI, boxType, roadIndex + "", payNum);
                     }
                 }
