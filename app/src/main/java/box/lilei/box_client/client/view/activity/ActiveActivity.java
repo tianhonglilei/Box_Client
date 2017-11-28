@@ -243,9 +243,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         } else {
             Toast.makeText(mContext, "其他错误", Toast.LENGTH_SHORT).show();
         }
-        if (loadResult != MainHandler.LOAD_DATA_SUCCESS) {
-            exitApplication();
-        }
+
     }
 
     public void exitApplication() {
@@ -260,12 +258,13 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         }.start();
         try {
             Thread.sleep(2000);
+            //退出程序
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(0);
         } catch (InterruptedException e) {
             Log.e(TAG, "error : ", e);
             e.printStackTrace();
         }
-        //退出程序
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(0);
+
     }
 }
