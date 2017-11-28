@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.IdRes;
@@ -18,13 +19,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.Timer;
-
 import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxAction;
 import box.lilei.box_client.box.BoxParams;
 import box.lilei.box_client.client.model.Goods;
-import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.model.RoadInfo;
 import box.lilei.box_client.client.presenter.MoreGoodsPresenter;
@@ -77,7 +75,8 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     TextView moreWeatherTxt;
     @BindView(R.id.more_weather_wd_num)
     TextView moreWeatherWdNum;
-    private Timer timer;
+
+    private CountDownTimer countDownTimer;
 
 
     @Override
@@ -94,7 +93,11 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         initGoodsGridView();
 
         initDateAndWeather();
+
+        initCountDownTimer();
+
     }
+
 
     /**
      * 初始化时间和温度
@@ -113,21 +116,21 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RoadGoods roadGoods = (RoadGoods) moreGoodsGv.getItemAtPosition(position);
                 Goods goods = roadGoods.getGoods();
-                if (goods.getGoodsSaleState() == Goods.SALE_STATE_OUT){
+                if (goods.getGoodsSaleState() == Goods.SALE_STATE_OUT) {
 //                    ToastTools.showShort(mContext,"该商品已售罄，请选购其他商品");
                     return;
                 }
                 RoadInfo roadInfo = roadGoods.getRoadInfo();
                 Long index = roadInfo.getRoadIndex();
-                int state = BoxAction.getRoadState(roadInfo.getRoadBoxType(), index+"");
+                int state = BoxAction.getRoadState(roadInfo.getRoadBoxType(), index + "");
                 if (state == RoadInfo.ROAD_STATE_NORMAL) {
                     Intent intent = new Intent(MoreGoodsActivity.this, PayActivity.class);
                     intent.putExtra("temp", moreWeatherWdNum.getText().toString());
                     intent.putExtra("weather", moreWeatherTxt.getText().toString());
                     intent.putExtra("roadGoods", roadGoods);
                     startActivity(intent);
-                }else{
-                    ToastTools.showShort(mContext,"该商品已售罄，请选购其他商品");
+                } else {
+                    ToastTools.showShort(mContext, "该商品已售罄，请选购其他商品");
                     //刷新商品
                     moreGoodsPresenter.initAllGoods(moreGoodsGv);
                 }
@@ -199,9 +202,12 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        timer.cancel();
+        if (moreGoodsPresenter!=null)
         moreGoodsPresenter = null;
-        timer = null;
+        if (countDownTimer!=null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
     }
 
     //处理handler消息
@@ -219,12 +225,20 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         }
     };
 
-    @Override
-    public void updateDate(MyTime myTime) {
-        if (myTime != null) {
-//            moreWeatherTime.setText(myTime.getTimeMinute());
-//            moreWeatherDate.setText(myTime.getTimeDay() + " " + myTime.getTimeWeek());
-        }
+
+    private void initCountDownTimer() {
+        countDownTimer = new CountDownTimer(80000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                moreNavTxtReturnTime.setText(millisUntilFinished / 1000 + "S");
+            }
+
+            @Override
+            public void onFinish() {
+                finish();
+            }
+        };
     }
+
 
 }

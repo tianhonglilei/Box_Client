@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.IdRes;
@@ -22,7 +23,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
-import java.util.Timer;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxParams;
@@ -32,7 +32,6 @@ import box.lilei.box_client.client.model.PercentInfo;
 import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.model.RoadInfo;
 import box.lilei.box_client.client.presenter.PayPresenter;
-import box.lilei.box_client.client.presenter.WeatherPresenter;
 import box.lilei.box_client.client.presenter.impl.PayPresenterImpl;
 import box.lilei.box_client.client.view.PayView;
 import box.lilei.box_client.contants.Constants;
@@ -54,6 +53,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     //返回按钮
     @BindView(R.id.pay_rl_return)
     RelativeLayout payRlReturn;
+
+    CountDownTimer countDownTimer;
 
     //天气和时间
     @BindView(R.id.more_weather_time)
@@ -111,6 +112,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     ZLoadingView payQrcodeLoading;
     @BindView(R.id.more_imei_num)
     TextView moreImeiNum;
+    @BindView(R.id.pay_txt_return_time)
+    TextView payTxtReturnTime;
     private Bitmap bitmapWxPayOne, bitmapWxPayTwo, bitmapAliPayOne, bitmapAliPayTwo;
 
     //支付和数量的选择按钮
@@ -122,8 +125,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
     private Context mContext;
     private Intent dataIntent;
-    private WeatherPresenter weatherPresenter;
-    private Timer timer;
 
     private ZLoadingDialog dialog;
 
@@ -424,20 +425,38 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        payPresenter = null;
-        weatherPresenter = null;
+        if (payPresenter != null)
+            payPresenter = null;
         //回收bitmap
         recycleBitmap(bitmapAliPayOne);
         recycleBitmap(bitmapAliPayTwo);
         recycleBitmap(bitmapWxPayOne);
         recycleBitmap(bitmapWxPayTwo);
+        if (countDownTimer!=null){
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
     }
 
-    private void recycleBitmap(Bitmap bitmap){
-        if (bitmap!=null){
+    private void recycleBitmap(Bitmap bitmap) {
+        if (bitmap != null) {
             bitmap.recycle();
             bitmap = null;
         }
+    }
+
+    private void initCountDownTimer() {
+        countDownTimer = new CountDownTimer(80000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                payTxtReturnTime.setText(millisUntilFinished / 1000 + "S");
+            }
+
+            @Override
+            public void onFinish() {
+                finish();
+            }
+        };
     }
 
 }

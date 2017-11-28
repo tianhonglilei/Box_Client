@@ -8,6 +8,5 @@ import box.lilei.box_client.client.model.MyTime;
 
 public interface MoreGoodsView {
 
-    void updateDate(MyTime myTime);
 
 }
