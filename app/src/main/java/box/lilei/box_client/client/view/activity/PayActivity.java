@@ -447,10 +447,18 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     }
 
     private void initCountDownTimer() {
-        countDownTimer = new CountDownTimer(80000, 1000) {
+        if (countDownTimer!=null){
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
+        countDownTimer = new CountDownTimer(60000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                payTxtReturnTime.setText(millisUntilFinished / 1000 + "S");
+                long time = millisUntilFinished / 1000;
+                if (time<55){
+                    payTxtReturnTime.setTextColor(getResources().getColor(R.color.colorDemoLogo));
+                }
+                payTxtReturnTime.setText(time + "S");
             }
 
             @Override

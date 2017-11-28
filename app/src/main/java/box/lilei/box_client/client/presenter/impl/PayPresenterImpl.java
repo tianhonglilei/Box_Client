@@ -107,7 +107,6 @@ public class PayPresenterImpl implements PayPresenter {
                     }
                 else {
                     if (jsonObject.getString("err").equals("0")) {
-
                         getPayResponse(tradeno, Constants.PAY_TYPE_ALI, boxType, roadIndex + "", payNum);
                     }
                 }
