@@ -227,7 +227,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
 
     private void initCountDownTimer() {
-        countDownTimer = new CountDownTimer(80000, 1000) {
+        countDownTimer = new CountDownTimer(60000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 moreNavTxtReturnTime.setText(millisUntilFinished / 1000 + "S");
@@ -237,7 +237,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             public void onFinish() {
                 finish();
             }
-        };
+        }.start();
     }
 
 

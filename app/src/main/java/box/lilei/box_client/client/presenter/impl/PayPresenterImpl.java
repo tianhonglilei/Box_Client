@@ -2,6 +2,7 @@ package box.lilei.box_client.client.presenter.impl;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.util.Log;
 
 
@@ -101,18 +102,17 @@ public class PayPresenterImpl implements PayPresenter {
                 String weixinno = jsonObject.getString("tradeno");
                 if (payType == Constants.PAY_TYPE_WX)
                     if (jsonObject.getString("error").equals("0")) {
-                        url = jsonObject.getString("url");
-                        Log.e("PayPresenterImpl", weixinno);
+//                        Log.e("PayPresenterImpl", weixinno);
                         getPayResponse(weixinno, Constants.PAY_TYPE_WX, boxType, roadIndex + "", payNum);
                     }
                 else {
                     if (jsonObject.getString("err").equals("0")) {
-                        url = jsonObject.getString("url");
                         getPayResponse(tradeno, Constants.PAY_TYPE_ALI, boxType, roadIndex + "", payNum);
                     }
                 }
+                url = jsonObject.getString("url");
                 Bitmap bitmap;
-                if (url != null && !url.equals("")) {
+                if (!TextUtils.isEmpty(url)) {
                     bitmap = QRCodeUtil.createQRImage(url);
                 } else {
                     bitmap = null;
@@ -152,17 +152,21 @@ public class PayPresenterImpl implements PayPresenter {
                 Log.e("PayPresenterImpl", "responseObject:" + responseObject);
                 if (jsonObject.getString("error").equals("0")) {
                     for (int i = 0; i < num; i++) {
-                        BoxAction.outGoods(boxType, roadIndex);
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    Thread.sleep(1000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
+                        if (i == 1) {
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Thread.sleep(1500);
+                                        BoxAction.outGoods(boxType, roadIndex);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                            }
-                        }).start();
+                            }).start();
+                        }else{
+                            BoxAction.outGoods(boxType, roadIndex);
+                        }
                     }
                 }
             }

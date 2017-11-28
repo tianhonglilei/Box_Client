@@ -161,6 +161,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
 
 
+
     }
 
 
@@ -412,7 +413,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         } else {
             payTxtQrcodeLoading.setText("二维码生成失败");
         }
-
+        initCountDownTimer();
     }
 
     @Override
@@ -456,7 +457,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             public void onFinish() {
                 finish();
             }
-        };
+        }.start();
     }
 
 }

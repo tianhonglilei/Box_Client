@@ -150,13 +150,13 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
                 public void run() {
                     activePresenter.saveBoxSetting();
                 }
-            },7000);
+            },13000);
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     skipToADBannerActivity();
                 }
-            },10000);
+            },15000);
         }
     }
 

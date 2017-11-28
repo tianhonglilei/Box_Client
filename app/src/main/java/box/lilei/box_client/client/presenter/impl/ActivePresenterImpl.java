@@ -174,9 +174,15 @@ public class ActivePresenterImpl implements ActivePresenter {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
+                    saveBoxSetting();
+                }
+            },13000);
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
                     activeView.skipToADBannerActivity();
                 }
-            }, 5000);
+            }, 15000);
             return;
         }
         activeView.showDialog("下载中...");
