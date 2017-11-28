@@ -51,6 +51,7 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
                 @Override
                 public void run() {
                     int state = BoxAction.getOutGoodsState();
+                    Log.e("GoodsBroadcastReceiver", "state:" + state);
                     if (state == BoxAction.OUT_GOODS_SUCCESS) {
                         outGoodsListener.outSuccess();
                         num++;

@@ -73,7 +73,6 @@ public class PayPresenterImpl implements PayPresenter {
     private Map<String, String> params;
 
 
-
     public PayPresenterImpl(Context mContext, PayView payView) {
         this.mContext = mContext;
         this.payView = payView;
@@ -122,29 +121,30 @@ public class PayPresenterImpl implements PayPresenter {
                 JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
 //                Log.e("PayPresenterImpl", "jsonObject:" + jsonObject);
                 String imgUrl = "";
-                if (payType == Constants.PAY_TYPE_WX)
+                if (payType == Constants.PAY_TYPE_WX) {
                     if (jsonObject.getString("error").equals("0")) {
                         if (payNum == 1) {
                             weixinno1 = jsonObject.getString("tradeno");
                         } else if (payNum == 2) {
                             weixinno2 = jsonObject.getString("tradeno");
                         }
-                    } else {
-                        if (jsonObject.getString("err").equals("0")) {
-                            if (payNum == 1) {
-                                tradeno1 = tradeno;
-                            } else if (payNum == 2) {
-                                tradeno2 = tradeno;
-                            }
+                    }
+                } else {
+                    if (jsonObject.getString("err").equals("0")) {
+                        if (payNum == 1) {
+                            tradeno1 = tradeno;
+                        } else if (payNum == 2) {
+                            tradeno2 = tradeno;
                         }
                     }
+                }
                 imgUrl = jsonObject.getString("url");
                 Bitmap bitmap;
                 if (!TextUtils.isEmpty(imgUrl)) {
                     bitmap = QRCodeUtil.createQRImage(imgUrl);
-                    if (!isStart){
+                    if (!isStart) {
                         chengePayRequest(payNum, payType);
-                        getPayResponse(payType,payNum);
+                        getPayResponse(payType, payNum);
                         isStart = true;
                     }
                 } else {
@@ -165,7 +165,7 @@ public class PayPresenterImpl implements PayPresenter {
         payView.hiddenDialog();
         if (orderNum == outNum) {
             payView.showPopwindow(true, orderNum, outNum);
-        }else{
+        } else {
             payView.showPopwindow(false, orderNum, outNum);
         }
         new Timer().schedule(new TimerTask() {
@@ -173,7 +173,7 @@ public class PayPresenterImpl implements PayPresenter {
             public void run() {
                 payView.hiddenPopwindow();
             }
-        },3000);
+        }, 3000);
 
     }
 
@@ -183,10 +183,9 @@ public class PayPresenterImpl implements PayPresenter {
     }
 
 
-
     @Override
     public void chengePayRequest(int num, int payType) {
-        if (timer!=null){
+        if (timer != null) {
             timer.cancel();
             timer = null;
         }
@@ -211,7 +210,7 @@ public class PayPresenterImpl implements PayPresenter {
         getPayResponse(payType, num);
     }
 
-private Timer timer;
+    private Timer timer;
 
     /**
      * 支付结果查询
@@ -237,7 +236,7 @@ private Timer timer;
                             public void run() {
                                 chengePayRequest(num, payType);
                             }
-                        },1000);
+                        }, 1000);
                     }
                 }
             }
