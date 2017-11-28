@@ -24,6 +24,7 @@ import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.PercentInfo;
 import box.lilei.box_client.client.model.RoadInfo;
 import box.lilei.box_client.client.okhttp.CommonOkHttpClient;
+import box.lilei.box_client.client.okhttp.exception.OkHttpException;
 import box.lilei.box_client.client.okhttp.handler.DisposeDataHandle;
 import box.lilei.box_client.client.okhttp.listener.DisposeDataListener;
 import box.lilei.box_client.client.okhttp.request.CommonRequest;
@@ -38,6 +39,7 @@ import box.lilei.box_client.util.ParamsUtils;
 import box.lilei.box_client.util.QRCodeUtil;
 import box.lilei.box_client.util.TimeUtil;
 import box.lilei.box_client.util.ToastTools;
+import okhttp3.OkHttpClient;
 
 /**
  * Created by lilei on 2017/11/9.
@@ -94,7 +96,7 @@ public class PayPresenterImpl implements PayPresenter {
             @Override
             public void onSuccess(Object responseObject) {
                 JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
-//                Log.e("PayPresenterImpl", "jsonObject:" + jsonObject);
+                Log.e("PayPresenterImpl", "jsonObject:" + jsonObject);
                 String url = "";
                 String weixinno = jsonObject.getString("tradeno");
                 if (payType == Constants.PAY_TYPE_WX)
@@ -167,7 +169,9 @@ public class PayPresenterImpl implements PayPresenter {
 
             @Override
             public void onFail(Object errorObject) {
-                Log.e("PayPresenterImpl", "errorObject:" + errorObject);
+                if ( errorObject instanceof OkHttpException){
+                    ((OkHttpException)errorObject).getEmsg();
+                }
                 ((Exception) errorObject).printStackTrace();
             }
         }));
