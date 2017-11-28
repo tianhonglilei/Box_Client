@@ -420,6 +420,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 }
             }
             payImgQrcode.setImageBitmap(bitmap);
+            payPresenter.chengePayRequest(checkNum,checkPay);
         } else {
             payTxtQrcodeLoading.setText("二维码生成失败");
         }
@@ -440,7 +441,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
     @Override
     public void hiddenPopwindow() {
-
+        finish();
     }
 
 

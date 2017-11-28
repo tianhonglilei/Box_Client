@@ -9,6 +9,15 @@ public class OrderInfo {
     private String orderId;
     private boolean payState = false;
     private int outGoodsNum;
+    private boolean cancel;
+
+    public boolean isCancel() {
+        return cancel;
+    }
+
+    public void setCancel(boolean cancel) {
+        this.cancel = cancel;
+    }
 
     public int getOutGoodsNum() {
         return outGoodsNum;

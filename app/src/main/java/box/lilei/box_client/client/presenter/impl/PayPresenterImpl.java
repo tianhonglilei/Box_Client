@@ -15,6 +15,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import box.lilei.box_client.box.BoxAction;
 import box.lilei.box_client.box.BoxSetting;
@@ -54,6 +56,21 @@ public class PayPresenterImpl implements PayPresenter {
     private PercentBiz percentBiz;
     private OrderInfo orderInfo;
 
+    //微信识别号
+    private String weixinno1, weixinno2;
+    //支付宝识别号
+    private String tradeno1, tradeno2;
+    //货道
+    private String boxType;
+    //货柜
+    private Long roadIndex;
+
+    private RequestParams requestParams;
+
+    private String url;
+
+    private boolean isStart;
+
 
     public PayPresenterImpl(Context mContext, PayView payView) {
         this.mContext = mContext;
@@ -69,6 +86,7 @@ public class PayPresenterImpl implements PayPresenter {
         payView.showPercentInfo(percentInfo);
     }
 
+
     @Override
     public void getQRCode(String url, double price, final int payType, final int payNum, Goods goods, RoadInfo roadInfo) {
         payView.loadQRCode();
@@ -76,8 +94,8 @@ public class PayPresenterImpl implements PayPresenter {
         Timestamp now = new Timestamp(System.currentTimeMillis());
         Long goodsId = goods.getGoodsId();
         String box_id = BoxAction.getBoxIdFromSP(mContext);
-        final Long roadIndex = roadInfo.getRoadIndex();
-        final String boxType = roadInfo.getRoadBoxType();
+        roadIndex = roadInfo.getRoadIndex();
+        boxType = roadInfo.getRoadBoxType();
         final String tradeno = now + "," + goodsId + ","
                 + box_id + "," + roadIndex + ","
                 + boxType;
@@ -104,18 +122,28 @@ public class PayPresenterImpl implements PayPresenter {
                 String url = "";
                 if (payType == Constants.PAY_TYPE_WX)
                     if (jsonObject.getString("error").equals("0")) {
-                        String weixinno = jsonObject.getString("tradeno");
-//                        Log.e("PayPresenterImpl", weixinno);
-                        getPayResponse(weixinno, Constants.PAY_TYPE_WX, boxType, roadIndex + "", payNum);
+                        if (payNum == 1) {
+                            weixinno1 = jsonObject.getString("tradeno");
+                        } else if (payNum == 2) {
+                            weixinno2 = jsonObject.getString("tradeno");
+                        }
                     } else {
                         if (jsonObject.getString("err").equals("0")) {
-                            getPayResponse(tradeno, Constants.PAY_TYPE_ALI, boxType, roadIndex + "", payNum);
+                            if (payNum == 1) {
+                                tradeno1 = tradeno;
+                            } else if (payNum == 2) {
+                                tradeno2 = tradeno;
+                            }
                         }
                     }
                 url = jsonObject.getString("url");
                 Bitmap bitmap;
                 if (!TextUtils.isEmpty(url)) {
                     bitmap = QRCodeUtil.createQRImage(url);
+                    if (!isStart){
+                        getPayResponse(payType,payNum);
+                        isStart = true;
+                    }
                 } else {
                     bitmap = null;
                 }
@@ -131,28 +159,56 @@ public class PayPresenterImpl implements PayPresenter {
 
     @Override
     public void postOrder(int orderNum, int outNum) {
-        payView.hiddenPopwindow();
+        payView.hiddenDialog();
+        if (orderNum == outNum) {
+            payView.showPopwindow(true, orderNum, outNum);
+        }else{
+            payView.showPopwindow(false, orderNum, outNum);
+        }
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                payView.hiddenPopwindow();
+            }
+        },3000);
+
+    }
+
+    @Override
+    public void cancelOrder() {
+        orderInfo.setCancel(true);
+    }
+
+    @Override
+    public void chengePayRequest(int num, int payType) {
+        String tradeno;
+        if (payType == Constants.PAY_TYPE_WX) {
+            url = Constants.WX_GET_PAY_RESPONSE;
+            if (num == 1) {
+                tradeno = weixinno1;
+            } else {
+                tradeno = weixinno2;
+            }
+        } else {
+            url = Constants.ALI_GET_PAY_RESPONSE;
+            if (num == 1) {
+                tradeno = tradeno1;
+            } else {
+                tradeno = tradeno2;
+            }
+        }
+        Map<String, String> params = ParamsUtils.getPayResponseParams(tradeno, payType);
+        requestParams = new RequestParams(params);
     }
 
 
     /**
      * 支付结果查询
      *
-     * @param tradeno
      * @param payType
-     * @param boxType
-     * @param roadIndex
      */
-    private void getPayResponse(final String tradeno, final int payType, final String boxType, final String roadIndex, final int num) {
-
-        String url = "";
-        if (payType == Constants.PAY_TYPE_WX) {
-            url = Constants.WX_GET_PAY_RESPONSE;
-        } else {
-            url = Constants.ALI_GET_PAY_RESPONSE;
-        }
-        Map<String, String> params = ParamsUtils.getPayResponseParams(tradeno, payType);
-        CommonOkHttpClient.post(CommonRequest.createPostRequest(url, new RequestParams(params)), new DisposeDataHandle(new DisposeDataListener() {
+    private void getPayResponse(final int payType, final int num) {
+        CommonOkHttpClient.post(CommonRequest.createPostRequest(url, requestParams), new DisposeDataHandle(new DisposeDataListener() {
 
             @Override
             public void onSuccess(Object responseObject) {
@@ -161,15 +217,15 @@ public class PayPresenterImpl implements PayPresenter {
                 if (jsonObject.getString("error").equals("0")) {
                     payView.showDialog("出货中...");
                     orderInfo.setPayState(true);
-                    outGoodsAction(num, boxType, roadIndex);
+                    outGoodsAction(num, boxType, roadIndex + "");
                 } else if (jsonObject.getString("error").equals("-1")) {
-                    if (!orderInfo.isPayState()) {
+                    if (!orderInfo.isPayState() && !orderInfo.isCancel()) {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
                                     Thread.sleep(1000);
-                                    getPayResponse(tradeno, payType, boxType, roadIndex, num);
+                                    getPayResponse(payType, num);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
@@ -208,7 +264,7 @@ public class PayPresenterImpl implements PayPresenter {
             } else {
                 if (!BoxAction.outGoods(boxType, roadIndex)) {
                     payView.hiddenDialog();
-                    payView.showPopwindow(false,0,0);
+                    payView.showPopwindow(false, 0, 0);
                     break;
                 }
             }

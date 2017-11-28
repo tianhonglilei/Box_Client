@@ -16,4 +16,7 @@ public interface PayPresenter {
 
     void postOrder(int orderNum,int outNum);
 
+    void cancelOrder();
+
+    void chengePayRequest(int num,int payType);
 }
