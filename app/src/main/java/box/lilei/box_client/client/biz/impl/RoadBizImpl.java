@@ -41,7 +41,11 @@ public class RoadBizImpl implements RoadBiz {
             }
             //货道状态和开关
             roadInfo.setRoadState(BoxAction.getRoadState(roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString()));
-            roadInfo.setRoadOpen(RoadInfo.ROAD_OPEN);
+            if (roadInfo.getRoadNowNum() == 0){
+                roadInfo.setRoadOpen(RoadInfo.ROAD_CLOSE);
+            }else{
+                roadInfo.setRoadOpen(RoadInfo.ROAD_OPEN);
+            }
             if (roadInfo.getRoadOpen() == RoadInfo.ROAD_OPEN
                     && roadInfo.getRoadState() == RoadInfo.ROAD_STATE_NORMAL) {
                 goods.setGoodsSaleState(Goods.SALE_STATE_NORMAL);
