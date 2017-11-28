@@ -462,6 +462,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        payPresenter.cancelOrder();
         if (payPresenter != null)
             payPresenter = null;
         //回收bitmap
