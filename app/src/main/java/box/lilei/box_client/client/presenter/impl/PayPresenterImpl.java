@@ -70,6 +70,7 @@ public class PayPresenterImpl implements PayPresenter {
     private String url = Constants.WX_GET_PAY_RESPONSE;
 
     private boolean isStart;
+    private Map<String, String> params;
 
 
     public PayPresenterImpl(Context mContext, PayView payView) {
@@ -141,8 +142,8 @@ public class PayPresenterImpl implements PayPresenter {
                 if (!TextUtils.isEmpty(imgUrl)) {
                     bitmap = QRCodeUtil.createQRImage(imgUrl);
                     if (!isStart){
-                        getPayResponse(payType,payNum);
                         chengePayRequest(payNum, payType);
+                        getPayResponse(payType,payNum);
                         isStart = true;
                     }
                 } else {
@@ -198,7 +199,7 @@ public class PayPresenterImpl implements PayPresenter {
                 tradeno = tradeno2;
             }
         }
-        Map<String, String> params = ParamsUtils.getPayResponseParams(tradeno, payType);
+        params = ParamsUtils.getPayResponseParams(tradeno, payType);
         requestParams = new RequestParams(params);
     }
 
