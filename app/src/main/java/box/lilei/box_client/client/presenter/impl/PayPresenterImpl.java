@@ -73,6 +73,7 @@ public class PayPresenterImpl implements PayPresenter {
     private Map<String, String> params;
 
 
+
     public PayPresenterImpl(Context mContext, PayView payView) {
         this.mContext = mContext;
         this.payView = payView;
@@ -181,8 +182,14 @@ public class PayPresenterImpl implements PayPresenter {
         orderInfo.setCancel(true);
     }
 
+
+
     @Override
     public void chengePayRequest(int num, int payType) {
+        if (timer!=null){
+            timer.cancel();
+            timer = null;
+        }
         String tradeno;
         if (payType == Constants.PAY_TYPE_WX) {
             url = Constants.WX_GET_PAY_RESPONSE;
@@ -201,8 +208,10 @@ public class PayPresenterImpl implements PayPresenter {
         }
         params = ParamsUtils.getPayResponseParams(tradeno, payType);
         requestParams = new RequestParams(params);
+        getPayResponse(payType, num);
     }
 
+private Timer timer;
 
     /**
      * 支付结果查询
@@ -222,17 +231,13 @@ public class PayPresenterImpl implements PayPresenter {
                     outGoodsAction(num, boxType, roadIndex + "");
                 } else if (jsonObject.getString("error").equals("-1")) {
                     if (!orderInfo.isPayState() && !orderInfo.isCancel()) {
-                        new Thread(new Runnable() {
+                        timer = new Timer();
+                        timer.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                try {
-                                    Thread.sleep(1000);
-                                    getPayResponse(payType, num);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
+                                chengePayRequest(num, payType);
                             }
-                        }).start();
+                        },1000);
                     }
                 }
             }
