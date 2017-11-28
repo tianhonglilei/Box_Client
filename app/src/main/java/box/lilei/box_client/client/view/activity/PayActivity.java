@@ -451,11 +451,12 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             countDownTimer.cancel();
             countDownTimer = null;
         }
+        payTxtReturnTime.setTextColor(Color.WHITE);
         countDownTimer = new CountDownTimer(60000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long time = millisUntilFinished / 1000;
-                if (time<55){
+                if (time<15){
                     payTxtReturnTime.setTextColor(getResources().getColor(R.color.colorDemoLogo));
                 }
                 payTxtReturnTime.setText(time + "S");

@@ -94,7 +94,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
         initDateAndWeather();
 
-        initCountDownTimer();
 
     }
 
@@ -197,6 +196,8 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     @Override
     protected void onResume() {
         super.onResume();
+
+        initCountDownTimer();
     }
 
     @Override
@@ -210,23 +211,16 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         }
     }
 
-    //处理handler消息
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 3:
-
-                    break;
-            }
 
 
-        }
-    };
-
-
+    /**
+     * 倒计时
+     */
     private void initCountDownTimer() {
+        if (countDownTimer!=null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
         countDownTimer = new CountDownTimer(60000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {

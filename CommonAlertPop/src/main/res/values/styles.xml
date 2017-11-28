@@ -31,7 +31,7 @@
 
     <!-- 对话框外层背景布局属性 -->
     <style name="common_dialog_root_bg_layout_style">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">400dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:background">@drawable/common_dialog_bg</item>
@@ -135,7 +135,7 @@
         <item name="android:layout_height">@dimen/common_dialog_title_logo_width</item>
         <item name="android:layout_marginRight">@dimen/common_dialog_title_logo_right_space</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/common_dialog_title_logo</item>
+
     </style>
 
     <!-- 对话框内容布局容器样式 -->
