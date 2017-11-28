@@ -142,6 +142,7 @@ public class PayPresenterImpl implements PayPresenter {
                     bitmap = QRCodeUtil.createQRImage(imgUrl);
                     if (!isStart){
                         getPayResponse(payType,payNum);
+                        chengePayRequest(payNum, payType);
                         isStart = true;
                     }
                 } else {
