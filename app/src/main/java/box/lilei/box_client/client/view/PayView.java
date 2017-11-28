@@ -2,6 +2,7 @@ package box.lilei.box_client.client.view;
 
 import android.graphics.Bitmap;
 
+import box.lilei.box_client.client.listener.OutGoodsListener;
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.PercentInfo;
 
@@ -34,5 +35,16 @@ public interface PayView {
     void showQRCode(Bitmap bitmap);
 
     void loadQRCode();
+
+    void showPopwindow(boolean success,int orderNum,int successNum);
+
+    void hiddenPopwindow();
+
+    /**
+     * 出货检测
+     * @param num 出货数量
+     */
+    void outGoodsCheck(int num);
+
 
 }

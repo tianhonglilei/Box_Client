@@ -191,6 +191,10 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     @Override
     protected void onPause() {
         super.onPause();
+        if (countDownTimer!=null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+        }
     }
 
     @Override

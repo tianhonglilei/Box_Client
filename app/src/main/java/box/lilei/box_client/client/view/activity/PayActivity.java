@@ -3,6 +3,7 @@ package box.lilei.box_client.client.view.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -19,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -26,6 +28,7 @@ import java.io.File;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxParams;
+import box.lilei.box_client.client.listener.OutGoodsListener;
 import box.lilei.box_client.client.model.Goods;
 import box.lilei.box_client.client.model.MyTime;
 import box.lilei.box_client.client.model.PercentInfo;
@@ -33,6 +36,7 @@ import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.model.RoadInfo;
 import box.lilei.box_client.client.presenter.PayPresenter;
 import box.lilei.box_client.client.presenter.impl.PayPresenterImpl;
+import box.lilei.box_client.client.receiver.GoodsBroadcastReceiver;
 import box.lilei.box_client.client.view.PayView;
 import box.lilei.box_client.contants.Constants;
 import box.lilei.box_client.loading.ZLoadingDialog;
@@ -42,7 +46,7 @@ import box.lilei.box_client.util.SharedPreferencesUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PayActivity extends Activity implements View.OnClickListener, PayView {
+public class PayActivity extends Activity implements View.OnClickListener, PayView, OutGoodsListener {
 
     @BindView(R.id.pay_rb_wechat)
     RadioButton payRbWechat;
@@ -135,6 +139,11 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     private RoadInfo roadInfo;
     private Goods goods;
 
+    GoodsBroadcastReceiver goodsBroadcastReceiver;
+    //出货数量
+    private int num;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,7 +168,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         initRadioGroup();
         payQrcodeLoading.setLoadingBuilder(Z_TYPE.values()[1]);
         payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
-
 
 
     }
@@ -338,10 +346,10 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 PayActivity.this.finish();
                 break;
             case R.id.pay_rb_num_two:
-//                if(roadInfo.getRoadNowNum()<2){
-//                    Toast.makeText(this, "选购商品数量不足2瓶", Toast.LENGTH_SHORT).show();
-//                    payRbNumOne.setChecked(true);
-//                }
+                if(roadInfo.getRoadNowNum()<2){
+                    Toast.makeText(this, "非常抱歉，只剩一个咯", Toast.LENGTH_SHORT).show();
+                    payRbNumOne.setChecked(true);
+                }
 
                 break;
         }
@@ -424,6 +432,31 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     }
 
     @Override
+    public void showPopwindow(boolean success,int orderNum,int successNum) {
+
+    }
+
+    @Override
+    public void hiddenPopwindow() {
+
+    }
+
+
+
+    @Override
+    public void outGoodsCheck(int num) {
+        this.num = num;
+        registerGoodsBoradcastReceiver();
+    }
+
+    private void registerGoodsBoradcastReceiver() {
+        goodsBroadcastReceiver = new GoodsBroadcastReceiver(this, this);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.avm.serialport.OUT_GOODS");
+        mContext.registerReceiver(goodsBroadcastReceiver, filter);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (payPresenter != null)
@@ -433,7 +466,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         recycleBitmap(bitmapAliPayTwo);
         recycleBitmap(bitmapWxPayOne);
         recycleBitmap(bitmapWxPayTwo);
-        if (countDownTimer!=null){
+        if (countDownTimer != null) {
             countDownTimer.cancel();
             countDownTimer = null;
         }
@@ -447,7 +480,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     }
 
     private void initCountDownTimer() {
-        if (countDownTimer!=null){
+        if (countDownTimer != null) {
             countDownTimer.cancel();
             countDownTimer = null;
         }
@@ -456,7 +489,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             @Override
             public void onTick(long millisUntilFinished) {
                 long time = millisUntilFinished / 1000;
-                if (time<15){
+                if (time < 15) {
                     payTxtReturnTime.setTextColor(getResources().getColor(R.color.colorDemoLogo));
                 }
                 payTxtReturnTime.setText(time + "S");
@@ -469,4 +502,25 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         }.start();
     }
 
+    private int successNum, failNum;
+
+    @Override
+    public void outSuccess() {
+        successNum++;
+        if (successNum + failNum == num) {
+            payPresenter.postOrder(num, successNum);
+            if (goodsBroadcastReceiver!=null)
+            unregisterReceiver(goodsBroadcastReceiver);
+        }
+    }
+
+    @Override
+    public void outFail() {
+        failNum++;
+        if (successNum + failNum == num) {
+            payPresenter.postOrder(num, successNum);
+            if (goodsBroadcastReceiver!=null)
+            unregisterReceiver(goodsBroadcastReceiver);
+        }
+    }
 }

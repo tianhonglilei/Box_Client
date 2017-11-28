@@ -71,7 +71,6 @@ public class CommonJsonCallback implements Callback {
     private void handlerResponse(String result) {
         if (result == null || result.equals("")) {
             listener.onFail(new OkHttpException(NETWORK_ERROR, EMPTY_MSG));
-            return;
         }else{
             listener.onSuccess(result);
         }

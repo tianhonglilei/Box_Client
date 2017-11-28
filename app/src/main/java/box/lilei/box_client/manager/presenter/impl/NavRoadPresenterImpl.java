@@ -81,7 +81,7 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
     public void testRoad(String boxType, String index) {
         int state = BoxAction.getRoadState(boxType, index);
         if (state == RoadInfo.ROAD_STATE_NORMAL) {
-            navRoadFragmentView.boxOutGoods();
+            BoxAction.outGoods(boxType, index);
         } else if (state == RoadInfo.ROAD_STATE_NULL) {
             Toast.makeText(mContext, index + "货道没有检测到货品", Toast.LENGTH_SHORT).show();
         } else {
@@ -96,11 +96,12 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
         while (true) {
             int state = BoxAction.getRoadState(boxType, index);
             if (state == RoadInfo.ROAD_STATE_NORMAL) {
-                navRoadFragmentView.boxOutGoods();
-                i++;
-                ToastTools.showShort(mContext, "数量：" + i);
+                if (BoxAction.outGoods(boxType, index)) {
+                    i++;
+                    ToastTools.showShort(mContext, "数量：" + i);
+                }
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(1500);
                     continue;
                 } catch (InterruptedException e) {
                     e.printStackTrace();

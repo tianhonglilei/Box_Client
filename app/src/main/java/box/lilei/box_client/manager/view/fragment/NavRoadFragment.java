@@ -70,7 +70,6 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
 
     private ZLoadingDialog dialog;
 
-    private GoodsBroadcastReceiver goodsBroadcastReceiver;
 
     public NavRoadFragment() {
         // Required empty public constructor
@@ -174,32 +173,9 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
             dialog.dismiss();
             dialog = null;
         }
-        if (goodsBroadcastReceiver != null) {
-            mContext.unregisterReceiver(goodsBroadcastReceiver);
-        }
     }
 
-    @Override
-    public void boxOutGoods() {
-//        handler.sendEmptyMessage(OUT_GOODS);
-        if (BoxAction.outGoods(boxType, index)) {
-            registerGoodsBoradcastReceiver();
-        } else {
-            hiddenLoading();
-        }
-    }
 
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case OUT_GOODS:
-
-                    break;
-            }
-        }
-    };
 
     @Override
     public void onClick(View v) {
@@ -223,13 +199,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
         }
     }
 
-    // 监听出货广播
-    private void registerGoodsBoradcastReceiver() {
-        goodsBroadcastReceiver = new GoodsBroadcastReceiver(this);
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("com.avm.serialport.OUT_GOODS");
-        mContext.registerReceiver(goodsBroadcastReceiver, filter);
-    }
+
 
     public void showOkCancelDialog() {
         final ICommonDialog okDialog = CommonDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_1);

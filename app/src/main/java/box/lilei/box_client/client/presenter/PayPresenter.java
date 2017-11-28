@@ -14,5 +14,6 @@ public interface PayPresenter {
 
     void getQRCode(String url,double price, int payType, int payNum, Goods goods, RoadInfo roadInfo);
 
+    void postOrder(int orderNum,int outNum);
 
 }

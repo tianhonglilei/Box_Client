@@ -9,55 +9,53 @@ import android.widget.Toast;
 import com.avm.serialport_142.MainHandler;
 
 import box.lilei.box_client.box.BoxAction;
+import box.lilei.box_client.client.listener.OutGoodsListener;
+import box.lilei.box_client.client.view.PayView;
 import box.lilei.box_client.client.view.activity.PayActivity;
+import box.lilei.box_client.manager.view.NavRoadFragmentView;
 import box.lilei.box_client.manager.view.fragment.NavRoadFragment;
 import box.lilei.box_client.util.ToastTools;
 
-public class GoodsBroadcastReceiver extends BroadcastReceiver {
-    private NavRoadFragment roadFragment;
-    private PayActivity payActivity;
+public class GoodsBroadcastReceiver extends BroadcastReceiver{
+    private NavRoadFragmentView roadFragmentView;
+    private PayView payView;
+
 
     private Context mContext;
+    private OutGoodsListener outGoodsListener;
 
     public GoodsBroadcastReceiver(){}
 
-    public GoodsBroadcastReceiver(NavRoadFragment roadFragment) {
-        this.roadFragment = roadFragment;
+    public GoodsBroadcastReceiver(NavRoadFragmentView roadFragmentView) {
+        this.roadFragmentView = roadFragmentView;
+        mContext = ((NavRoadFragment)roadFragmentView).getContext();
     }
 
-    public GoodsBroadcastReceiver(PayActivity payActivity) {
-        this.payActivity = payActivity;
+    public GoodsBroadcastReceiver(PayView payView,OutGoodsListener outGoodsListener) {
+        this.payView = payView;
+        mContext = (PayActivity)payView;
+        this.outGoodsListener = outGoodsListener;
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
         String action = intent.getAction();
-        if (payActivity != null) {
-            mContext = payActivity;
-        }
-        if (roadFragment != null) {
-            mContext = roadFragment.getContext();
-        }
         if (action.equals("com.avm.serialport.OUT_GOODS")) {
             while (true) {
-                int num = BoxAction.getOutGoodsState();
-                if (num == BoxAction.OUT_GOODS_SUCCESS) {
-                    ToastTools.showShort(mContext,"出货成功");
-                    if (payActivity != null) {
-
-                    }
-                    if (roadFragment != null) {
-                        roadFragment.hiddenLoading();
-                    }
+                int state = BoxAction.getOutGoodsState();
+                if (state == BoxAction.OUT_GOODS_SUCCESS) {
+                    outGoodsListener.outSuccess();
                     break;
-                } else if (num == BoxAction.OUT_GOODS_NULL) {
+                } else if (state == BoxAction.OUT_GOODS_NULL) {
                     continue;
-                } else if (num == BoxAction.OUT_GOODS_FAIL) {
-                    ToastTools.showShort(mContext,"出货失败");
+                } else if (state == BoxAction.OUT_GOODS_FAIL) {
+                    outGoodsListener.outFail();
+                    break;
+                }else{
+                    outGoodsListener.outFail();
                     break;
                 }
-                break;
             }
 
         }

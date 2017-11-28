@@ -22,6 +22,7 @@ import box.lilei.box_client.client.biz.PercentBiz;
 import box.lilei.box_client.client.biz.impl.PercenteBizImpl;
 import box.lilei.box_client.client.model.Goods;
 import box.lilei.box_client.client.model.MyTime;
+import box.lilei.box_client.client.model.OrderInfo;
 import box.lilei.box_client.client.model.PercentInfo;
 import box.lilei.box_client.client.model.RoadInfo;
 import box.lilei.box_client.client.okhttp.CommonOkHttpClient;
@@ -51,6 +52,7 @@ public class PayPresenterImpl implements PayPresenter {
     private PayView payView;
     private PercentBeanService percentBeanService;
     private PercentBiz percentBiz;
+    private OrderInfo orderInfo;
 
 
     public PayPresenterImpl(Context mContext, PayView payView) {
@@ -58,6 +60,7 @@ public class PayPresenterImpl implements PayPresenter {
         this.payView = payView;
         percentBeanService = new PercentBeanService(mContext, PercentBean.class);
         percentBiz = new PercenteBizImpl();
+        orderInfo = new OrderInfo();
     }
 
     @Override
@@ -97,19 +100,18 @@ public class PayPresenterImpl implements PayPresenter {
             @Override
             public void onSuccess(Object responseObject) {
                 JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
-                Log.e("PayPresenterImpl", "jsonObject:" + jsonObject);
+//                Log.e("PayPresenterImpl", "jsonObject:" + jsonObject);
                 String url = "";
                 if (payType == Constants.PAY_TYPE_WX)
                     if (jsonObject.getString("error").equals("0")) {
                         String weixinno = jsonObject.getString("tradeno");
 //                        Log.e("PayPresenterImpl", weixinno);
                         getPayResponse(weixinno, Constants.PAY_TYPE_WX, boxType, roadIndex + "", payNum);
+                    } else {
+                        if (jsonObject.getString("err").equals("0")) {
+                            getPayResponse(tradeno, Constants.PAY_TYPE_ALI, boxType, roadIndex + "", payNum);
+                        }
                     }
-                else {
-                    if (jsonObject.getString("err").equals("0")) {
-                        getPayResponse(tradeno, Constants.PAY_TYPE_ALI, boxType, roadIndex + "", payNum);
-                    }
-                }
                 url = jsonObject.getString("url");
                 Bitmap bitmap;
                 if (!TextUtils.isEmpty(url)) {
@@ -127,6 +129,11 @@ public class PayPresenterImpl implements PayPresenter {
         }));
     }
 
+    @Override
+    public void postOrder(int orderNum, int outNum) {
+        payView.hiddenPopwindow();
+    }
+
 
     /**
      * 支付结果查询
@@ -136,7 +143,8 @@ public class PayPresenterImpl implements PayPresenter {
      * @param boxType
      * @param roadIndex
      */
-    private void getPayResponse(String tradeno, int payType, final String boxType, final String roadIndex, final int num) {
+    private void getPayResponse(final String tradeno, final int payType, final String boxType, final String roadIndex, final int num) {
+
         String url = "";
         if (payType == Constants.PAY_TYPE_WX) {
             url = Constants.WX_GET_PAY_RESPONSE;
@@ -151,34 +159,60 @@ public class PayPresenterImpl implements PayPresenter {
                 JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
                 Log.e("PayPresenterImpl", "responseObject:" + responseObject);
                 if (jsonObject.getString("error").equals("0")) {
-                    for (int i = 0; i < num; i++) {
-                        if (i == 1) {
-                            new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        Thread.sleep(1500);
-                                        BoxAction.outGoods(boxType, roadIndex);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
+                    payView.showDialog("出货中...");
+                    orderInfo.setPayState(true);
+                    outGoodsAction(num, boxType, roadIndex);
+                } else if (jsonObject.getString("error").equals("-1")) {
+                    if (!orderInfo.isPayState()) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(1000);
+                                    getPayResponse(tradeno, payType, boxType, roadIndex, num);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
                                 }
-                            }).start();
-                        }else{
-                            BoxAction.outGoods(boxType, roadIndex);
-                        }
+                            }
+                        }).start();
                     }
                 }
             }
 
             @Override
             public void onFail(Object errorObject) {
-                if ( errorObject instanceof OkHttpException){
-                    ((OkHttpException)errorObject).getEmsg();
+                if (errorObject instanceof OkHttpException) {
+                    ((OkHttpException) errorObject).getEmsg();
                 }
                 ((Exception) errorObject).printStackTrace();
             }
         }));
+    }
+
+
+    private void outGoodsAction(int num, final String boxType, final String roadIndex) {
+        payView.outGoodsCheck(num);
+        for (int i = 0; i < num; i++) {
+            if (i == 1) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1500);
+                            BoxAction.outGoods(boxType, roadIndex);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+            } else {
+                if (!BoxAction.outGoods(boxType, roadIndex)) {
+                    payView.hiddenDialog();
+                    payView.showPopwindow(false,0,0);
+                    break;
+                }
+            }
+        }
     }
 
 }
