@@ -201,6 +201,12 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                         }
                     }
                 } else {
+                    if(roadInfo.getRoadNowNum()<2){
+                        payRbNumTwo.setClickable(false);
+                        Toast.makeText(mContext, "非常抱歉，只剩一个咯", Toast.LENGTH_SHORT).show();
+                        payRbNumOne.setChecked(true);
+                        return;
+                    }
                     checkNum = 2;
                     payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice() * 2);
                     if (checkPay == Constants.PAY_TYPE_WX) {
@@ -346,10 +352,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 PayActivity.this.finish();
                 break;
             case R.id.pay_rb_num_two:
-                if(roadInfo.getRoadNowNum()<2){
-                    Toast.makeText(this, "非常抱歉，只剩一个咯", Toast.LENGTH_SHORT).show();
-                    payRbNumOne.setChecked(true);
-                }
 
                 break;
         }

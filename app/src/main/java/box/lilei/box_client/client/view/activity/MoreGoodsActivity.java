@@ -144,7 +144,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         if (moreGoodsPresenter == null) {
             moreGoodsPresenter = new MoreGoodsPresenterImpl(mContext, this);
         }
-        moreGoodsPresenter.initAllGoods(moreGoodsGv);
 
         moreGoodsNavRlReturn.setOnClickListener(this);
 
@@ -200,7 +199,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     @Override
     protected void onResume() {
         super.onResume();
-
+        moreGoodsPresenter.initAllGoods(moreGoodsGv);
         initCountDownTimer();
     }
 
