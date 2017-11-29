@@ -45,24 +45,16 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
 
         String action = intent.getAction();
         if (action.equals("com.avm.serialport.OUT_GOODS")) {
-            countDownTimer = new CountDownTimer(40000, 500) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    int state = BoxAction.getOutGoodsState();
-                    Log.e("GoodsBroadcastReceiver", "state:" + state);
-                    if (state == BoxAction.OUT_GOODS_SUCCESS) {
-                        outGoodsListener.outSuccess();
-                    } else if (state == BoxAction.OUT_GOODS_NULL) {
-
-                    } else if (state == BoxAction.OUT_GOODS_FAIL) {
-                        outGoodsListener.outFail();
-                    }
-                }
-                @Override
-                public void onFinish() {
-                    outGoodsListener.outOver();
-                }
-            };
+            int state = BoxAction.getOutGoodsState();
+            Log.e("GoodsBroadcastReceiver", "state:" + state);
+            if (state == BoxAction.OUT_GOODS_SUCCESS) {
+                outGoodsListener.outSuccess();
+            } else if (state == BoxAction.OUT_GOODS_NULL) {
+                outGoodsListener.outFail();
+            } else if (state == BoxAction.OUT_GOODS_FAIL) {
+                outGoodsListener.outFail();
+            }
+            outGoodsListener.outOver();
         }
 
 

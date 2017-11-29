@@ -255,7 +255,7 @@ public class PayPresenterImpl implements PayPresenter {
     }
 
 
-    private void outGoodsAction(int num, final String boxType, final String roadIndex) {
+    private void outGoodsAction(final int num, final String boxType, final String roadIndex) {
         for (int i = 0; i < num; i++) {
             if (i == 1) {
                 new Thread(new Runnable() {
@@ -264,6 +264,7 @@ public class PayPresenterImpl implements PayPresenter {
                         try {
                             Thread.sleep(1500);
                             BoxAction.outGoods(boxType, roadIndex);
+                            payView.outGoodsCheck(num);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

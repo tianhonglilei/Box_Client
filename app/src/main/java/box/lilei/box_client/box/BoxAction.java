@@ -34,7 +34,6 @@ public class BoxAction {
         }
         String params = boxType + "1" + roadIndex + "00000100" + Avm.OUT_GOODS_ROAD_CHECK;
         String random = "" + (int)((Math.random() * 9 + 1) * 100000);
-        Log.e("BoxAction", params);
         if (MainHandler.noticeAvmOutGoods(params, random)){
             return true;
         }else{
