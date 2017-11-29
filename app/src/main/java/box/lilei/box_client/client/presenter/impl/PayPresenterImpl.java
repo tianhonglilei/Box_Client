@@ -109,8 +109,10 @@ public class PayPresenterImpl implements PayPresenter {
         final String mchTradeNo = MyStringUtil.getRandonInt(20);
         Map<String, String> params;
         if (payType == Constants.PAY_TYPE_WX) {
+            //微信二维码
             params = ParamsUtils.wxGetQRParams(Double.toString(price), des, mchTradeNo, subject);
         } else if (payType == Constants.PAY_TYPE_ALI) {
+            //支付宝二维码
             params = ParamsUtils.aliGetQRParams(tradeno, Double.toString(price), title, des);
         } else {
             params = new HashMap<>();
@@ -205,6 +207,7 @@ public class PayPresenterImpl implements PayPresenter {
                 tradeno = tradeno2;
             }
         }
+        Log.e("PayPresenterImpl", tradeno);
         params = ParamsUtils.getPayResponseParams(tradeno, payType);
         requestParams = new RequestParams(params);
         getPayResponse(payType, num);
