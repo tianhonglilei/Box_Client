@@ -37,7 +37,9 @@ import box.lilei.box_client.client.presenter.PayPresenter;
 import box.lilei.box_client.client.view.PayView;
 import box.lilei.box_client.contants.Constants;
 import box.lilei.box_client.db.PercentBean;
+import box.lilei.box_client.db.RoadBean;
 import box.lilei.box_client.db.biz.PercentBeanService;
+import box.lilei.box_client.db.biz.RoadBeanService;
 import box.lilei.box_client.util.MyStringUtil;
 import box.lilei.box_client.util.ParamsUtils;
 import box.lilei.box_client.util.QRCodeUtil;
@@ -72,6 +74,8 @@ public class PayPresenterImpl implements PayPresenter {
     //    private boolean isStart;
     private Map<String, String> params;
 
+    private RoadBeanService roadBeanService;
+
 
     public PayPresenterImpl(Context mContext, PayView payView) {
         this.mContext = mContext;
@@ -79,6 +83,7 @@ public class PayPresenterImpl implements PayPresenter {
         percentBeanService = new PercentBeanService(mContext, PercentBean.class);
         percentBiz = new PercenteBizImpl();
         orderInfo = new OrderInfo();
+        roadBeanService = new RoadBeanService(mContext, RoadBean.class);
     }
 
     @Override
@@ -332,10 +337,11 @@ public class PayPresenterImpl implements PayPresenter {
 
             }
         }));
+        updateDBNum(outNum);
     }
 
-    private void updateDBNum(){
-
+    private void updateDBNum(int num){
+        roadBeanService.updateRoadNum(Long.parseLong(orderInfo.getHdid()),num);
     }
 
 

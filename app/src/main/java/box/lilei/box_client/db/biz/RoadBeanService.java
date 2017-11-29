@@ -28,6 +28,8 @@ public class RoadBeanService extends BeanService<RoadBean> {
     }
 
     public void updateRoadNum(Long roadId, int num){
-
+        RoadBean roadBean = mDao.load(roadId);
+        roadBean.setHuodao_num(roadBean.getHuodao_num()-num);
+        updateBean(roadBean);
     }
 }
