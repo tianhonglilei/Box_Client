@@ -232,16 +232,16 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
     public void initBoxCheck() {
         int loadResult = MainHandler.load(mContext.getApplicationContext());
         if (loadResult == MainHandler.ERROR_NO_SDCARD) {
-            Toast.makeText(mContext, "系统没有内存卡", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, "系统没有内存卡", Toast.LENGTH_SHORT).show();
         } else if (loadResult == MainHandler.ERROR_EMPTY_DATA) {
-            Toast.makeText(mContext, "串口信息没有配置或者读取失败", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, "串口信息没有配置或者读取失败", Toast.LENGTH_SHORT).show();
         } else if (loadResult == MainHandler.ERROR_NET_NOT_AVAILABLE) {
-            Toast.makeText(mContext, "系统没有连接网络", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, "系统没有连接网络", Toast.LENGTH_SHORT).show();
         } else if (loadResult == MainHandler.LOAD_DATA_SUCCESS) {
             Toast.makeText(mContext, "加载成功", Toast.LENGTH_SHORT).show();
             activePresenter.getBoxId();
         } else {
-            Toast.makeText(mContext, "其他错误", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, "其他错误", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -260,7 +260,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
             Thread.sleep(2000);
             //退出程序
             android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(0);
+            System.exit(1);
         } catch (InterruptedException e) {
             Log.e(TAG, "error : ", e);
             e.printStackTrace();
