@@ -21,30 +21,15 @@ import box.lilei.box_client.manager.view.fragment.NavRoadFragment;
 import box.lilei.box_client.util.ToastTools;
 
 public class GoodsBroadcastReceiver extends BroadcastReceiver {
-    private NavRoadFragmentView roadFragmentView;
-    private PayView payView;
 
-
-    private Context mContext;
     private OutGoodsListener outGoodsListener;
-
-    public GoodsBroadcastReceiver() {
-    }
-
-    public GoodsBroadcastReceiver(PayView payView, OutGoodsListener outGoodsListener) {
-        this.payView = payView;
-        mContext = (PayActivity) payView;
-        this.outGoodsListener = outGoodsListener;
-    }
-
-    private CountDownTimer countDownTimer;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
 
         String action = intent.getAction();
-        if (action.equals("com.avm.serialport.OUT_GOODS")) {
+        if (action.equals(BoxAction.OUT_GOODS_RECEIVER_ACTION)) {
             int state = BoxAction.getOutGoodsState();
             Log.e("GoodsBroadcastReceiver", "state:" + state);
             if (state == BoxAction.OUT_GOODS_SUCCESS) {
@@ -55,5 +40,9 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
                 outGoodsListener.outFail();
             }
         }
+    }
+
+    public void setLisenter(OutGoodsListener outGoodsListener){
+        this.outGoodsListener = outGoodsListener;
     }
 }

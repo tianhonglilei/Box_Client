@@ -12,11 +12,6 @@ import box.lilei.box_client.client.model.PercentInfo;
 
 public interface PayView {
 
-    /**
-     * 刷新时间
-     * @param myTime
-     */
-    void updateDate(MyTime myTime);
 
     void showDialog(String text);
 
@@ -36,9 +31,14 @@ public interface PayView {
 
     void loadQRCode();
 
+    /**
+     * 出货后弹窗
+     * @param success
+     * @param orderNum
+     * @param successNum
+     */
     void showPopwindow(boolean success,int orderNum,int successNum);
 
-    void hiddenPopwindow();
 
     /**
      * 出货检测

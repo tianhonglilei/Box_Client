@@ -3,6 +3,7 @@ package box.lilei.box_client.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import box.lilei.box_client.client.model.OrderInfo;
 import box.lilei.box_client.client.model.paramsmodel.AddGoods;
 import box.lilei.box_client.contants.Constants;
 
@@ -66,6 +67,12 @@ public class ParamsUtils {
     }
 
 
+    /**
+     * 支付响应
+     * @param tradeno
+     * @param payType
+     * @return
+     */
     public static Map<String,String> getPayResponseParams(String tradeno,int payType){
         Map<String,String> params = new HashMap<String,String>();
         if (payType == Constants.PAY_TYPE_WX) {
@@ -76,6 +83,24 @@ public class ParamsUtils {
         return params;
     }
 
+
+    public static Map<String,String> sendOrderParams(OrderInfo orderInfo,int payType){
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("imei", orderInfo.getImei());
+        params.put("pid", orderInfo.getPid());
+        params.put("hdid",orderInfo.getHdid());
+        params.put("hgid",orderInfo.getHgid());
+        params.put("title",orderInfo.getTitle());
+        params.put("price",orderInfo.getPrice());
+        params.put("sum",orderInfo.getOrderNum()+"-"+orderInfo.getOutGoodsNum());
+        if (payType == Constants.PAY_TYPE_WX) {
+            params.put("weixintradeno", orderInfo.getTradeno());
+            params.put("mchTradeNo", "");
+        }else{
+            params.put("tradeno", orderInfo.getTradeno());
+        }
+        return params;
+    }
 
 
 

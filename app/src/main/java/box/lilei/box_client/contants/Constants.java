@@ -37,7 +37,8 @@ public class Constants {
     public static final int PAY_TYPE_WX = 0;
     //获取微信支付结果
     public static final String WX_GET_PAY_RESPONSE = MAIN_URL_ONE + "/dc/boxapp/?c=welcome&m=box_weixinuodao";
-
+    //发送微信订单
+    public static final String WX_SEND_ORDER = MAIN_URL_ONE + "/dc/boxapp/?c=welcome&m=box_weixinhuodaostatus";
 
     /**
      * 支付宝支付
@@ -47,7 +48,8 @@ public class Constants {
     public static final int PAY_TYPE_ALI = 1;
     //获取支付宝支付结果
     public static final String ALI_GET_PAY_RESPONSE = MAIN_URL_ONE + "/dc/boxapp/?c=welcome&m=box_zhifubaohuodao";
-
+    //发送支付宝订单
+    public static final String ALI_SEND_ORDER = MAIN_URL_ONE + "/dc/boxapp/?c=welcome&m=box_zhifubaohuodaostatus";
 
     /**
      * 管理员模块

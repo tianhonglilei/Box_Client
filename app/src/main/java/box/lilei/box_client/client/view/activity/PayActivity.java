@@ -14,8 +14,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.IdRes;
 import android.support.v4.content.res.ResourcesCompat;
+import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -27,6 +30,7 @@ import com.bumptech.glide.Glide;
 import java.io.File;
 
 import box.lilei.box_client.R;
+import box.lilei.box_client.box.BoxAction;
 import box.lilei.box_client.box.BoxParams;
 import box.lilei.box_client.client.listener.OutGoodsListener;
 import box.lilei.box_client.client.model.Goods;
@@ -143,6 +147,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     //出货数量
     private int num;
 
+    private PopupWindow window;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +175,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         payQrcodeLoading.setLoadingBuilder(Z_TYPE.values()[1]);
         payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
 
+
+        registerGoodsBoradcastReceiver();
 
     }
 
@@ -201,7 +209,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                         }
                     }
                 } else {
-                    if(roadInfo.getRoadNowNum()<2){
+                    if (roadInfo.getRoadNowNum() < 2) {
                         payRbNumTwo.setClickable(false);
                         Toast.makeText(mContext, "非常抱歉，只剩一个咯", Toast.LENGTH_SHORT).show();
                         payRbNumOne.setChecked(true);
@@ -358,14 +366,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     }
 
     @Override
-    public void updateDate(MyTime myTime) {
-        if (myTime != null) {
-            moreWeatherTime.setText(myTime.getTimeMinute());
-            moreWeatherDate.setText(myTime.getTimeDay() + " " + myTime.getTimeWeek());
-        }
-    }
-
-    @Override
     public void showDialog(String text) {
         dialog = new ZLoadingDialog(PayActivity.this);
         dialog.setLoadingBuilder(Z_TYPE.TEXT)
@@ -420,7 +420,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 }
             }
             payImgQrcode.setImageBitmap(bitmap);
-            payPresenter.chengePayRequest(checkNum,checkPay);
+            payPresenter.chengePayRequest(checkNum, checkPay);
         } else {
             payTxtQrcodeLoading.setText("二维码生成失败");
         }
@@ -434,29 +434,65 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         payQrcodeLoading.setVisibility(View.VISIBLE);
     }
 
+
+
     @Override
-    public void showPopwindow(boolean success,int orderNum,int successNum) {
+    public void showPopwindow(boolean success, int orderNum, int successNum) {
+        final TextView dialogReturn;
+        View mainView = this.getLayoutInflater().inflate(R.layout.client_pay_activity, null);
+        View popupView;
+        if (success) {
+            popupView = this.getLayoutInflater().inflate(R.layout.pay_out_goods_success, null);
+            dialogReturn = (TextView) popupView.findViewById(R.id.pay_dialog_success_return_txt);
+        } else {
+            popupView = this.getLayoutInflater().inflate(R.layout.pay_out_goods_fail, null);
+            dialogReturn = (TextView) popupView.findViewById(R.id.pay_dialog_fail_return_txt);
+        }
+        window = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        window.setFocusable(false);
+        window.setOutsideTouchable(false);
+        changePopwindowBg(0.7f);
+        window.showAsDropDown(mainView, Gravity.CENTER, 0, 0);
+        new CountDownTimer(3000,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                dialogReturn.setText(millisUntilFinished/1000+"S");
+            }
+
+            @Override
+            public void onFinish() {
+                if (window!=null){
+                    window.dismiss();
+                }
+            }
+        }.start();
+        window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                finish();
+            }
+        });
 
     }
 
-    @Override
-    public void hiddenPopwindow() {
-        finish();
+    private void changePopwindowBg(float alpha){
+        WindowManager.LayoutParams l = this.getWindow().getAttributes();
+        l.alpha = alpha;
+        getWindow().setAttributes(l);
     }
-
 
 
     @Override
     public void outGoodsCheck(int num) {
         this.num = num;
-        registerGoodsBoradcastReceiver();
     }
 
     private void registerGoodsBoradcastReceiver() {
-        goodsBroadcastReceiver = new GoodsBroadcastReceiver(this, this);
+        goodsBroadcastReceiver = new GoodsBroadcastReceiver();
         IntentFilter filter = new IntentFilter();
-        filter.addAction("com.avm.serialport.OUT_GOODS");
+        filter.addAction(BoxAction.OUT_GOODS_RECEIVER_ACTION);
         registerReceiver(goodsBroadcastReceiver, filter);
+        goodsBroadcastReceiver.setLisenter(this);
     }
 
     @Override
@@ -473,6 +509,10 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         if (countDownTimer != null) {
             countDownTimer.cancel();
             countDownTimer = null;
+        }
+        if (goodsBroadcastReceiver != null) {
+            unregisterReceiver(goodsBroadcastReceiver);
+            goodsBroadcastReceiver = null;
         }
     }
 
@@ -511,20 +551,24 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @Override
     public void outSuccess() {
         successNum++;
-        if (num == successNum + failNum){
+        if (num == successNum + failNum) {
             payPresenter.postOrder(num, successNum);
-            if (goodsBroadcastReceiver!=null)
+            if (goodsBroadcastReceiver != null) {
                 unregisterReceiver(goodsBroadcastReceiver);
+                goodsBroadcastReceiver = null;
+            }
         }
     }
 
     @Override
     public void outFail() {
         failNum++;
-        if (num == successNum + failNum){
+        if (num == successNum + failNum) {
             payPresenter.postOrder(num, successNum);
-            if (goodsBroadcastReceiver!=null)
+            if (goodsBroadcastReceiver != null) {
                 unregisterReceiver(goodsBroadcastReceiver);
+                goodsBroadcastReceiver = null;
+            }
         }
     }
 

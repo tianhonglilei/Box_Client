@@ -69,7 +69,7 @@ public class PayPresenterImpl implements PayPresenter {
 
     private String url = Constants.WX_GET_PAY_RESPONSE;
 
-    private boolean isStart;
+    //    private boolean isStart;
     private Map<String, String> params;
 
 
@@ -94,13 +94,19 @@ public class PayPresenterImpl implements PayPresenter {
         //获取二维码所需参数
         Timestamp now = new Timestamp(System.currentTimeMillis());
         Long goodsId = goods.getGoodsId();
+        orderInfo.setPid(goodsId.toString());
+        orderInfo.setPrice(price+"");
         String box_id = BoxAction.getBoxIdFromSP(mContext);
+        orderInfo.setImei(box_id);
         roadIndex = roadInfo.getRoadIndex();
+        orderInfo.setHdid(roadInfo.getRoadIndex()+"");
         boxType = roadInfo.getRoadBoxType();
+        orderInfo.setHgid(roadInfo.getRoadBoxType());
         final String tradeno = now + "," + goodsId + ","
                 + box_id + "," + roadIndex + ","
                 + boxType;
         String goodsName = goods.getGoodsName();
+        orderInfo.setName(goodsName);
         String title = goodsName + "x" + payNum;
         String des = "商品" + goodsName + payNum + "份，共" + price + "元";
         String subject = des + "|" + goodsId + "|"
@@ -144,11 +150,11 @@ public class PayPresenterImpl implements PayPresenter {
                 Bitmap bitmap;
                 if (!TextUtils.isEmpty(imgUrl)) {
                     bitmap = QRCodeUtil.createQRImage(imgUrl);
-                    if (!isStart) {
-                        chengePayRequest(payNum, payType);
-                        getPayResponse(payType, payNum);
-                        isStart = true;
-                    }
+//                    if (!isStart) {
+//                        chengePayRequest(payNum, payType);
+////                        getPayResponse(payType, payNum);
+//                        isStart = true;
+//                    }
                 } else {
                     bitmap = null;
                 }
@@ -170,14 +176,10 @@ public class PayPresenterImpl implements PayPresenter {
         } else {
             payView.showPopwindow(false, orderNum, outNum);
         }
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                payView.hiddenPopwindow();
-            }
-        }, 3000);
-
+        sendOrder(orderNum, outNum);
     }
+
+
 
     @Override
     public void cancelOrder() {
@@ -185,8 +187,14 @@ public class PayPresenterImpl implements PayPresenter {
     }
 
 
+    /**
+     * 改变支付方式
+     * @param num
+     * @param payType
+     */
     @Override
     public void chengePayRequest(int num, int payType) {
+
         if (timer != null) {
             timer.cancel();
             timer = null;
@@ -207,7 +215,7 @@ public class PayPresenterImpl implements PayPresenter {
                 tradeno = tradeno2;
             }
         }
-        Log.e("PayPresenterImpl", tradeno);
+        Log.e("PayPresenterImpl:" + payType + "-" + num, tradeno);
         params = ParamsUtils.getPayResponseParams(tradeno, payType);
         requestParams = new RequestParams(params);
         getPayResponse(payType, num);
@@ -228,6 +236,8 @@ public class PayPresenterImpl implements PayPresenter {
                 JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
                 Log.e("PayPresenterImpl", "responseObject:" + responseObject);
                 if (jsonObject.getString("error").equals("0")) {
+                    orderInfo.setPayType(payType);
+                    orderInfo.setOrderNum(num);
                     payView.showDialog("出货中...");
                     orderInfo.setPayState(true);
                     outGoodsAction(num, boxType, roadIndex + "");
@@ -256,6 +266,7 @@ public class PayPresenterImpl implements PayPresenter {
 
 
     private void outGoodsAction(final int num, final String boxType, final String roadIndex) {
+        payView.outGoodsCheck(num);
         for (int i = 0; i < num; i++) {
             if (i == 1) {
                 new Thread(new Runnable() {
@@ -264,7 +275,6 @@ public class PayPresenterImpl implements PayPresenter {
                         try {
                             Thread.sleep(1500);
                             BoxAction.outGoods(boxType, roadIndex);
-                            payView.outGoodsCheck(num);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -276,9 +286,69 @@ public class PayPresenterImpl implements PayPresenter {
                     payView.showPopwindow(false, 0, 0);
                     break;
                 }
-                payView.outGoodsCheck(num);
+
             }
         }
     }
+
+
+    /**
+     * 上传订单信息
+     * @param orderNum
+     * @param outNum
+     */
+    private void sendOrder(int orderNum, int outNum) {
+        String tradeno;
+        orderInfo.setOutGoodsNum(outNum);
+        int payType = orderInfo.getPayType();
+        if (payType == Constants.PAY_TYPE_WX) {
+            url = Constants.WX_SEND_ORDER;
+            if (orderNum == 1) {
+                tradeno = weixinno1;
+            } else {
+                tradeno = weixinno2;
+            }
+        } else {
+            url = Constants.ALI_SEND_ORDER;
+            if (orderNum == 1) {
+                tradeno = tradeno1;
+            } else {
+                tradeno = tradeno2;
+            }
+        }
+        orderInfo.setTradeno(tradeno);
+        orderInfo.setTitle(orderInfo.getName()+"X"+orderNum);
+        params = ParamsUtils.sendOrderParams(orderInfo, payType);
+        requestParams = new RequestParams(params);
+        CommonOkHttpClient.post(CommonRequest.createPostRequest(url, requestParams), new DisposeDataHandle(new DisposeDataListener() {
+
+            @Override
+            public void onSuccess(Object responseObject) {
+
+            }
+
+            @Override
+            public void onFail(Object errorObject) {
+
+            }
+        }));
+    }
+
+    private void updateDBNum(){
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

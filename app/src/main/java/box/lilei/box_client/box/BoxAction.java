@@ -21,6 +21,9 @@ public class BoxAction {
     public static final int OUT_GOODS_FAIL = 1;
     public static final int OUT_GOODS_SUCCESS = 0;
 
+    public static final String OUT_GOODS_RECEIVER_ACTION = "com.avm.serialport.OUT_GOODS";
+
+
     /**
      * 出货
      *
