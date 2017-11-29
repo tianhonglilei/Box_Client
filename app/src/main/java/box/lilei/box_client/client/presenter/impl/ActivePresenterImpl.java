@@ -353,7 +353,7 @@ public class ActivePresenterImpl implements ActivePresenter {
 
     @Override
     public void activeBox(final String code) {
-        new CommService() {
+        CommService commService = new CommService() {
 
             @Override
             public void result(int res) {
@@ -391,7 +391,8 @@ public class ActivePresenterImpl implements ActivePresenter {
                     Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
                 }
             }
-        }.connect(mContext, code, 1);
+        };
+        commService.connect(mContext, code, 1);
     }
 
     @Override
