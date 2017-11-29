@@ -511,20 +511,17 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @Override
     public void outSuccess() {
         successNum++;
-        if (successNum + failNum == num) {
-            payPresenter.postOrder(num, successNum);
-            if (goodsBroadcastReceiver!=null)
-            unregisterReceiver(goodsBroadcastReceiver);
-        }
     }
 
     @Override
     public void outFail() {
         failNum++;
-        if (successNum + failNum == num) {
-            payPresenter.postOrder(num, successNum);
-            if (goodsBroadcastReceiver!=null)
+    }
+
+    @Override
+    public void outOver() {
+        payPresenter.postOrder(num, successNum);
+        if (goodsBroadcastReceiver!=null)
             unregisterReceiver(goodsBroadcastReceiver);
-        }
     }
 }

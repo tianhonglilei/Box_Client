@@ -3,6 +3,7 @@ package box.lilei.box_client.client.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -26,14 +27,8 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
 
     private Context mContext;
     private OutGoodsListener outGoodsListener;
-    private int num;
 
     public GoodsBroadcastReceiver() {
-    }
-
-    public GoodsBroadcastReceiver(NavRoadFragmentView roadFragmentView) {
-        this.roadFragmentView = roadFragmentView;
-        mContext = ((NavRoadFragment) roadFragmentView).getContext();
     }
 
     public GoodsBroadcastReceiver(PayView payView, OutGoodsListener outGoodsListener) {
@@ -42,40 +37,35 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
         this.outGoodsListener = outGoodsListener;
     }
 
+    private CountDownTimer countDownTimer;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
+
         String action = intent.getAction();
         if (action.equals("com.avm.serialport.OUT_GOODS")) {
-            new Timer().schedule(new TimerTask() {
+            countDownTimer = new CountDownTimer(40000, 500) {
                 @Override
-                public void run() {
+                public void onTick(long millisUntilFinished) {
                     int state = BoxAction.getOutGoodsState();
                     Log.e("GoodsBroadcastReceiver", "state:" + state);
                     if (state == BoxAction.OUT_GOODS_SUCCESS) {
                         outGoodsListener.outSuccess();
-                        num++;
                     } else if (state == BoxAction.OUT_GOODS_NULL) {
 
                     } else if (state == BoxAction.OUT_GOODS_FAIL) {
                         outGoodsListener.outFail();
-                        num++;
                     }
                 }
-            },0,200);
-            new Timer().schedule(new TimerTask() {
                 @Override
-                public void run() {
-                    if (num == 0){
-                        outGoodsListener.outFail();
-                    }
+                public void onFinish() {
+                    outGoodsListener.outOver();
                 }
-            },5000);
-
+            };
         }
 
-        throw new
 
-    UnsupportedOperationException("Not yet implemented");
-}
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

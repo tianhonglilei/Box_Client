@@ -74,20 +74,19 @@ public class BoxAction {
 
     public static int getOutGoodsState() {
         String result = MainHandler.getTranResult();
-        if (result.equals("-1") || Integer.parseInt(result) == -1) {
-            return OUT_GOODS_NULL;
-        } else if (result.length() > 10) {
-            int num = Integer.parseInt(result.substring(17,18));
-            if (num == 0) {
-                return OUT_GOODS_SUCCESS;
-            }else{
-                return OUT_GOODS_FAIL;
+            if (result.equals("-1") || Integer.parseInt(result) == -1) {
+                return  OUT_GOODS_NULL;
+            } else if (result.length() > 10) {
+                int num = Integer.parseInt(result.substring(17, 18));
+                if (num == 0) {
+                    return OUT_GOODS_SUCCESS;
+                } else {
+                    return OUT_GOODS_FAIL;
+                }
+            } else {
+                return OUT_GOODS_NULL;
             }
-        }else{
-            return OUT_GOODS_NULL;
         }
-    }
-
 
 
 }
