@@ -176,7 +176,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
 
 
-        registerGoodsBoradcastReceiver();
+
 
     }
 
@@ -375,6 +375,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 .setHintTextColor(Color.parseColor("#525252"))  // 设置字体颜色
                 .setCanceledOnTouchOutside(false)
                 .show();
+        registerGoodsBoradcastReceiver();
     }
 
     @Override
