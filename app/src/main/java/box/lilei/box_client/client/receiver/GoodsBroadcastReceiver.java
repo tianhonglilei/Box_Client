@@ -54,10 +54,6 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
             } else if (state == BoxAction.OUT_GOODS_FAIL) {
                 outGoodsListener.outFail();
             }
-            outGoodsListener.outOver();
         }
-
-
-        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

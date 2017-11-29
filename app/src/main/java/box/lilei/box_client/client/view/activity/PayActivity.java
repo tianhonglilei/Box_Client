@@ -456,7 +456,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         goodsBroadcastReceiver = new GoodsBroadcastReceiver(this, this);
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.avm.serialport.OUT_GOODS");
-        mContext.registerReceiver(goodsBroadcastReceiver, filter);
+        registerReceiver(goodsBroadcastReceiver, filter);
     }
 
     @Override
@@ -511,17 +511,25 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @Override
     public void outSuccess() {
         successNum++;
+        if (num == successNum + failNum){
+            payPresenter.postOrder(num, successNum);
+            if (goodsBroadcastReceiver!=null)
+                unregisterReceiver(goodsBroadcastReceiver);
+        }
     }
 
     @Override
     public void outFail() {
         failNum++;
+        if (num == successNum + failNum){
+            payPresenter.postOrder(num, successNum);
+            if (goodsBroadcastReceiver!=null)
+                unregisterReceiver(goodsBroadcastReceiver);
+        }
     }
 
     @Override
     public void outOver() {
-        payPresenter.postOrder(num, successNum);
-        if (goodsBroadcastReceiver!=null)
-            unregisterReceiver(goodsBroadcastReceiver);
+
     }
 }
