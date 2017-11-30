@@ -369,7 +369,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     }
 
     private Timer failTimer;
-
+    private TimerTask failTask;
     @Override
     public void showDialog(String text) {
         dialog = new ZLoadingDialog(PayActivity.this);
@@ -380,19 +380,27 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 .setHintTextColor(Color.parseColor("#525252"))  // 设置字体颜色
                 .setCanceledOnTouchOutside(false)
                 .show();
-        failTimer.schedule(new TimerTask() {
+        failTimer = new Timer();
+        failTask = new TimerTask() {
             @Override
             public void run() {
                 if (successNum + failNum != num) {
                     payPresenter.postOrder(num, successNum);
                 }
             }
-        }, 5000);
+        };
+        failTimer.schedule(failTask, 5000);
     }
 
     @Override
     public void hiddenDialog() {
         dialog.cancel();
+        if (failTimer != null){
+            if (failTask!=null){
+                failTask.cancel();
+            }
+            failTimer.cancel();
+        }
     }
 
     @Override
