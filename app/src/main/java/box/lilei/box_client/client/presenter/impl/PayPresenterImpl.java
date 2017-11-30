@@ -199,11 +199,6 @@ public class PayPresenterImpl implements PayPresenter {
      */
     @Override
     public void chengePayRequest(int num, int payType) {
-
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
         String tradeno;
         if (payType == Constants.PAY_TYPE_WX) {
             url = Constants.WX_GET_PAY_RESPONSE;
@@ -224,6 +219,14 @@ public class PayPresenterImpl implements PayPresenter {
         params = ParamsUtils.getPayResponseParams(tradeno, payType);
         requestParams = new RequestParams(params);
         getPayResponse(payType, num);
+    }
+
+    @Override
+    public void cancelRequest() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
     }
 
     private Timer timer;

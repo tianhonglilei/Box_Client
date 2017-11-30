@@ -192,6 +192,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         payRbgrpNum.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                payPresenter.cancelRequest();
                 if (checkedId == R.id.pay_rb_num_one) {
                     checkNum = 1;
                     payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice());
@@ -237,6 +238,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         payRbgrpQrcode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                payPresenter.cancelRequest();
                 if (checkedId == R.id.pay_rb_wechat) {
                     checkPay = Constants.PAY_TYPE_WX;
                     payQRCodeUrl = Constants.WX_GET_QR_URL;
