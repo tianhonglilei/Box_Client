@@ -3,22 +3,10 @@ package box.lilei.box_client.client.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.CountDownTimer;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.avm.serialport_142.MainHandler;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import box.lilei.box_client.box.BoxAction;
 import box.lilei.box_client.client.listener.OutGoodsListener;
-import box.lilei.box_client.client.view.PayView;
-import box.lilei.box_client.client.view.activity.PayActivity;
-import box.lilei.box_client.manager.view.NavRoadFragmentView;
-import box.lilei.box_client.manager.view.fragment.NavRoadFragment;
-import box.lilei.box_client.util.ToastTools;
 
 public class GoodsBroadcastReceiver extends BroadcastReceiver {
 
@@ -39,7 +27,7 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
-    public void setLisenter(OutGoodsListener outGoodsListener){
+    public void setListener(OutGoodsListener outGoodsListener) {
         this.outGoodsListener = outGoodsListener;
     }
 }
