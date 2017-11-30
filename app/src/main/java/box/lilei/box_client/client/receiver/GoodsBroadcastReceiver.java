@@ -23,10 +23,13 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
             int state = BoxAction.getOutGoodsState();
             Log.e("GoodsBroadcastReceiver", "state:" + state);
             if (state == BoxAction.OUT_GOODS_SUCCESS) {
+                if (outGoodsListener!=null)
                 outGoodsListener.outSuccess();
             } else if (state == BoxAction.OUT_GOODS_NULL) {
+                if (outGoodsListener!=null)
                 outGoodsListener.outFail();
             } else if (state == BoxAction.OUT_GOODS_FAIL) {
+                if (outGoodsListener!=null)
                 outGoodsListener.outFail();
             }
         }
