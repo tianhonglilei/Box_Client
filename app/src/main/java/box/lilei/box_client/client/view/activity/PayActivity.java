@@ -545,7 +545,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             countDownTimer = null;
         }
         payTxtReturnTime.setTextColor(Color.WHITE);
-        countDownTimer = new CountDownTimer(60000, 1000) {
+        countDownTimer = new CountDownTimer(80000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long time = millisUntilFinished / 1000;
