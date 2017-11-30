@@ -12,6 +12,10 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
 
     private OutGoodsListener outGoodsListener;
 
+    public void setOutGoodsListener(OutGoodsListener outGoodsListener) {
+        this.outGoodsListener = outGoodsListener;
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(BoxAction.OUT_GOODS_RECEIVER_ACTION)) {
@@ -27,7 +31,4 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
-    public void setListener(OutGoodsListener outGoodsListener) {
-        this.outGoodsListener = outGoodsListener;
-    }
 }

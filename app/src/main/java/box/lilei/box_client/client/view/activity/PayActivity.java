@@ -493,7 +493,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
     private void registerGoodsBoradcastReceiver() {
         goodsBroadcastReceiver = new GoodsBroadcastReceiver();
-        goodsBroadcastReceiver.setListener(this);
+        goodsBroadcastReceiver.setOutGoodsListener(this);
         IntentFilter filter = new IntentFilter();
         filter.addAction(BoxAction.OUT_GOODS_RECEIVER_ACTION);
         mContext.registerReceiver(goodsBroadcastReceiver, filter);
