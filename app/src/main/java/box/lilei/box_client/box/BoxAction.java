@@ -20,6 +20,8 @@ public class BoxAction {
     public static final int OUT_GOODS_NULL = -1;
     public static final int OUT_GOODS_FAIL = 1;
     public static final int OUT_GOODS_SUCCESS = 0;
+    public static final int OUT_GOODS_TYPE_TEST = 1;
+    public static final int OUT_GOODS_TYPE_PAY = 0;
 
     public static final String OUT_GOODS_RECEIVER_ACTION = "com.avm.serialport.OUT_GOODS";
 
@@ -31,11 +33,17 @@ public class BoxAction {
      * @param roadIndex 货道编号
      * @return
      */
-    public static boolean outGoods(String boxType, String roadIndex) {
+    public static boolean outGoods(String boxType, String roadIndex,int type) {
         if (Integer.parseInt(roadIndex) < 10 && roadIndex.length() == 1) {
             roadIndex = "0" + roadIndex;
         }
-        String params = boxType + "1" + roadIndex + "00000100" + Avm.OUT_GOODS_ALIPAY;
+        String outType;
+        if (type == OUT_GOODS_TYPE_PAY){
+            outType = Avm.OUT_GOODS_ALIPAY;
+        }else{
+            outType = Avm.OUT_GOODS_ROAD_CHECK;
+        }
+        String params = boxType + "1" + roadIndex + "00000100" + outType;
         String random = "" + (int)((Math.random() * 9 + 1) * 100000);
         if (MainHandler.noticeAvmOutGoods(params, random)){
             return true;
@@ -76,7 +84,7 @@ public class BoxAction {
 
     public static int getOutGoodsState() {
         String result = MainHandler.getTranResult();
-            if (result.equals("-1") || Integer.parseInt(result) == -1) {
+            if (result.equals("-1")) {
                 return  OUT_GOODS_NULL;
             } else if (result.length() > 10) {
                 int num = Integer.parseInt(result.substring(17, 18));
