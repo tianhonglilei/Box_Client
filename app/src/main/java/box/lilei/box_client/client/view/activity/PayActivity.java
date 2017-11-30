@@ -492,16 +492,17 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
     private void registerGoodsBoradcastReceiver() {
         goodsBroadcastReceiver = new GoodsBroadcastReceiver();
+        goodsBroadcastReceiver.setLisenter(this);
         IntentFilter filter = new IntentFilter();
         filter.addAction(BoxAction.OUT_GOODS_RECEIVER_ACTION);
         registerReceiver(goodsBroadcastReceiver, filter);
-        goodsBroadcastReceiver.setLisenter(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         payPresenter.cancelOrder();
+        payPresenter.cancelRequest();
         if (payPresenter != null)
             payPresenter = null;
         //回收bitmap

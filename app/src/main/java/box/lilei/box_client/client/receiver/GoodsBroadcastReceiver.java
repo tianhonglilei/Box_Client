@@ -26,7 +26,6 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO: This method is called when the BroadcastReceiver is receiving
 
         String action = intent.getAction();
         if (action.equals(BoxAction.OUT_GOODS_RECEIVER_ACTION)) {

@@ -223,6 +223,10 @@ public class PayPresenterImpl implements PayPresenter {
 
     @Override
     public void cancelRequest() {
+        if (task != null){
+            task.cancel();
+            task = null;
+        }
         if (timer != null) {
             timer.cancel();
             timer = null;
@@ -230,6 +234,7 @@ public class PayPresenterImpl implements PayPresenter {
     }
 
     private Timer timer;
+    private TimerTask task;
 
     /**
      * 支付结果查询
@@ -252,12 +257,13 @@ public class PayPresenterImpl implements PayPresenter {
                 } else if (jsonObject.getString("error").equals("-1")) {
                     if (!orderInfo.isPayState() && !orderInfo.isCancel()) {
                         timer = new Timer();
-                        timer.schedule(new TimerTask() {
+                        task = new TimerTask() {
                             @Override
                             public void run() {
                                 chengePayRequest(num, payType);
                             }
-                        }, 1000);
+                        };
+                        timer.schedule(task, 1000);
                     }
                 }
             }
