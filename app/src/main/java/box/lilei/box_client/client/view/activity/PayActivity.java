@@ -492,12 +492,34 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     }
 
     private void registerGoodsBoradcastReceiver() {
-        goodsBroadcastReceiver = new GoodsBroadcastReceiver();
-        goodsBroadcastReceiver.setOutGoodsListener(this);
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(BoxAction.OUT_GOODS_RECEIVER_ACTION);
-        mContext.registerReceiver(goodsBroadcastReceiver, filter);
-        Log.e("PayActivity", "注册广播");
+//        goodsBroadcastReceiver = new GoodsBroadcastReceiver();
+//        goodsBroadcastReceiver.setOutGoodsListener(this);
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(BoxAction.OUT_GOODS_RECEIVER_ACTION);
+//        mContext.registerReceiver(goodsBroadcastReceiver, filter);
+//        Log.e("PayActivity", "注册广播");
+        int i = 0;
+        while (true){
+            i++;
+            try {
+                Thread.sleep(100);
+                int result = BoxAction.getOutGoodsState();
+                if (result == BoxAction.OUT_GOODS_SUCCESS){
+                    successNum++;
+                }else if (result == BoxAction.OUT_GOODS_FAIL){
+                    failNum++;
+                }
+                if (num == successNum+failNum){
+                    payPresenter.postOrder(num, successNum);
+                    break;
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (i == 50){
+                break;
+            }
+        }
     }
 
     @Override
