@@ -454,7 +454,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         window.setFocusable(false);
         window.setOutsideTouchable(false);
         changePopwindowBg(0.7f);
-        window.showAsDropDown(mainView, 0, 0, Gravity.CENTER);
+        window.showAsDropDown(mainView, 0, 0);
         new CountDownTimer(3000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
