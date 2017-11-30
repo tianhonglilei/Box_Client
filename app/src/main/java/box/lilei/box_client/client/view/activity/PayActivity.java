@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.IdRes;
 import android.support.v4.content.res.ResourcesCompat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -496,6 +497,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         IntentFilter filter = new IntentFilter();
         filter.addAction(BoxAction.OUT_GOODS_RECEIVER_ACTION);
         registerReceiver(goodsBroadcastReceiver, filter);
+        Log.e("PayActivity", "注册广播");
     }
 
     @Override

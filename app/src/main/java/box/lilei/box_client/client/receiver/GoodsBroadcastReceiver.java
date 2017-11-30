@@ -27,8 +27,7 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        String action = intent.getAction();
-        if (action.equals(BoxAction.OUT_GOODS_RECEIVER_ACTION)) {
+        if (intent.getAction().equals(BoxAction.OUT_GOODS_RECEIVER_ACTION)) {
             int state = BoxAction.getOutGoodsState();
             Log.e("GoodsBroadcastReceiver", "state:" + state);
             if (state == BoxAction.OUT_GOODS_SUCCESS) {
