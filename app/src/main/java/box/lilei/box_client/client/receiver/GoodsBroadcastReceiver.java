@@ -31,6 +31,5 @@ public class GoodsBroadcastReceiver extends BroadcastReceiver {
                 outGoodsListener.outFail();
             }
         }
-        throw new UnsupportedOperationException("Not yet implemented");
     }
 }
