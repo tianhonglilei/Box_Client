@@ -20,4 +20,6 @@ public interface ActiveView {
 
     void hiddenActiveLayout(boolean success);
 
+    void exitApplication();
+
 }
