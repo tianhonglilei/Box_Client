@@ -338,12 +338,15 @@ public class PayPresenterImpl implements PayPresenter {
 
             @Override
             public void onSuccess(Object responseObject) {
-
+                Log.e("PayPresenterImpl", "responseObject:" + responseObject);
             }
 
             @Override
             public void onFail(Object errorObject) {
-
+                if (errorObject instanceof OkHttpException){
+                    ((OkHttpException)errorObject).getEmsg();
+                    ((Exception)errorObject).printStackTrace();
+                }
             }
         }));
         updateDBNum(outNum);

@@ -26,12 +26,6 @@ public interface ADBannerPresenter {
     void initGoodsData(GridView adbannerGoodsGv);
 
 
-    /**
-     * 刷新商品信息
-     *
-     * @param adbannerGoodsGv
-     */
-    void refreshGoodsData(GridView adbannerGoodsGv);
 
 
     /**

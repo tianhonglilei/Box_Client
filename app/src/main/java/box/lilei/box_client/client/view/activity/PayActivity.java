@@ -461,22 +461,25 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         final TextView dialogReturn;
         View mainView = this.getLayoutInflater().inflate(R.layout.client_pay_activity, null);
         View popupView;
+        long count;
         if (success) {
             popupView = this.getLayoutInflater().inflate(R.layout.pay_out_goods_success, null);
             dialogReturn = (TextView) popupView.findViewById(R.id.pay_dialog_success_return_txt);
+            count = 4000;
         } else {
             popupView = this.getLayoutInflater().inflate(R.layout.pay_out_goods_fail, null);
             dialogReturn = (TextView) popupView.findViewById(R.id.pay_dialog_fail_return_txt);
+            count = 11000;
         }
         window = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         window.setFocusable(false);
         window.setOutsideTouchable(false);
-        changePopwindowBg(0.7f);
+        changePopwindowBg(0.8f);
         window.showAsDropDown(mainView, 0, 0);
-        new CountDownTimer(4000, 1000) {
+        new CountDownTimer(count, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                dialogReturn.setText(millisUntilFinished / 1000 + "S");
+                dialogReturn.setText(millisUntilFinished / 1000 + "秒后自动返回");
             }
 
             @Override
@@ -538,6 +541,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             unregisterReceiver(goodsBroadcastReceiver);
             goodsBroadcastReceiver = null;
         }
+        System.gc();
     }
 
     private void recycleBitmap(Bitmap bitmap) {

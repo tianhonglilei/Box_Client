@@ -136,11 +136,6 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
         });
     }
 
-    @Override
-    public void refreshGoodsData(GridView adbannerGoodsGv) {
-
-    }
-
 
     public void getAdInfoFromDB() {
         List<AdBean> adBeanList = adBeanService.queryAllAdBean();

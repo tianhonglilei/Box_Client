@@ -139,7 +139,9 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         init();
         //调用中间层业务
         adPresenter.initAdData(adbannerAdLv);
-//        adPresenter.initGoodsData(adbannerGoodsGv);
+
+        adPresenter.initGoodsData(adbannerGoodsGv);
+        scrollTotal = goodsItemWidth * (adbannerGoodsGv.getCount() - 8);
         initGoodsScroll();
 
         adCount = adbannerAdLv.getCount();
@@ -303,6 +305,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             intentDateWeather(intent);
             startActivity(intent);
             adVideoView.pause();
+            adVideoView.stopPlayback();
         }else{
             ToastTools.showShort(mContext,"该商品已经售罄，请选购其他商品");
             //刷新商品
@@ -442,17 +445,22 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
      * 展示图片广告
      */
     public void showImg() {
-        adImageView.setVisibility(View.VISIBLE);
-        adVideoView.stopPlayback();
-        adVideoView.setVisibility(View.GONE);
+        if (adVideoView!=null && adImageView!=null) {
+            adImageView.setVisibility(View.VISIBLE);
+            adVideoView.stopPlayback();
+            adVideoView.setVisibility(View.GONE);
+        }
     }
 
     /**
      * 展示视频广告
      */
     public void showVideo() {
-        adImageView.setVisibility(View.GONE);
-        adVideoView.setVisibility(View.VISIBLE);
+        if (adVideoView!=null && adImageView!=null){
+            adImageView.setVisibility(View.GONE);
+            adVideoView.setVisibility(View.VISIBLE);
+            adVideoView.suspend();
+        }
     }
 
 
@@ -461,24 +469,12 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @Override
     public void changeWeather(MyWeather myWeather) {
         this.myWeather = myWeather;
-//        Toast.makeText(mContext, "myWeather:" + myWeather, Toast.LENGTH_SHORT).show();
         if (myWeather != null) {
             homeImgWeather.setImageResource(myWeather.getWeatherIcon());
             homeTxtWeatherTemp.setText(myWeather.getWeather() + " " + myWeather.getTemp());
         }
     }
 
-
-    MyTime myTime;
-
-    @Override
-    public void updateDate(MyTime myTime) {
-        this.myTime = myTime;
-        if (myTime != null) {
-//            homeTxtDate.setText(myTime.getTimeDay() + " " + myTime.getTimeWeek());
-//            homeTxtTime.setText(myTime.getTimeMinute());
-        }
-    }
 
     @Override
     public void showDialog(String text) {
@@ -495,6 +491,16 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @Override
     public void hiddenDialog() {
         if (dialog != null) dialog.cancel();
+    }
+
+    @Override
+    public void refreshGoodsInfo() {
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                adPresenter.initGoodsData(adbannerGoodsGv);
+            }
+        },5000);
     }
 
     @Override
@@ -515,8 +521,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             }
         }
         super.onResume();
-        adPresenter.initGoodsData(adbannerGoodsGv);
-        scrollTotal = goodsItemWidth * (adbannerGoodsGv.getCount() - 8);
+
     }
 
     @Override

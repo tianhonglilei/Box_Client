@@ -24,10 +24,12 @@ public interface ADBannerView {
      */
     void changeWeather(MyWeather myWeather);
 
-    void updateDate(MyTime myTime);
 
     void showDialog(String text);
 
     void hiddenDialog();
+
+    //当货道异常的时候定时刷新货道数据
+    void refreshGoodsInfo();
 
 }
