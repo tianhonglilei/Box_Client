@@ -502,21 +502,26 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         while (true){
             i++;
             try {
-                Thread.sleep(100);
+                Thread.sleep(200);
                 int result = BoxAction.getOutGoodsState();
                 if (result == BoxAction.OUT_GOODS_SUCCESS){
                     successNum++;
+                    if (num == successNum+failNum){
+                        payPresenter.postOrder(num, successNum);
+                    }
+                    break;
                 }else if (result == BoxAction.OUT_GOODS_FAIL){
                     failNum++;
-                }
-                if (num == successNum+failNum){
-                    payPresenter.postOrder(num, successNum);
+                    if (num == successNum+failNum){
+                        payPresenter.postOrder(num, successNum);
+                    }
                     break;
                 }
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (i == 50){
+            if (i == 25){
                 break;
             }
         }
