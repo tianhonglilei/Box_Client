@@ -7,5 +7,4 @@ package box.lilei.box_client.client.listener;
 public interface OutGoodsListener {
     void outSuccess();
     void outFail();
-    void outOver();
 }

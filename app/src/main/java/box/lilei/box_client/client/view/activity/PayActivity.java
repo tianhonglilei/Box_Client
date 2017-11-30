@@ -578,8 +578,4 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         }
     }
 
-    @Override
-    public void outOver() {
-
-    }
 }
