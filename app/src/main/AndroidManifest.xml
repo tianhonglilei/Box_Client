@@ -76,7 +76,9 @@
         <receiver
             android:name=".client.receiver.GoodsBroadcastReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true">
+            <intent-filter android:priority="1000"></intent-filter>
+        </receiver>
     </application>
 
 </manifest>
