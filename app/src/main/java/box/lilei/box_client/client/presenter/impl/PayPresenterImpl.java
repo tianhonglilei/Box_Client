@@ -280,6 +280,7 @@ public class PayPresenterImpl implements PayPresenter {
 
 
     private void outGoodsAction(final int num, final String boxType, final String roadIndex) {
+        payView.outGoodsCheck(num);
         for (int i = 0; i < num; i++) {
             if (i == 1) {
                 new Thread(new Runnable() {
@@ -288,7 +289,6 @@ public class PayPresenterImpl implements PayPresenter {
                         try {
                             Thread.sleep(1500);
                             BoxAction.outGoods(boxType, roadIndex);
-                            payView.outGoodsCheck(num);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -300,7 +300,6 @@ public class PayPresenterImpl implements PayPresenter {
                     payView.showPopwindow(false, 0, 0);
                     break;
                 }
-                payView.outGoodsCheck(num);
             }
         }
     }

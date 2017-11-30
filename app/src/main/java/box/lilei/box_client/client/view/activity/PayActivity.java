@@ -29,6 +29,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxAction;
@@ -176,9 +178,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         payQrcodeLoading.setLoadingBuilder(Z_TYPE.values()[1]);
         payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
 
-
-
-
+        registerGoodsBoradcastReceiver();
     }
 
 
@@ -438,7 +438,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     }
 
 
-
     @Override
     public void showPopwindow(boolean success, int orderNum, int successNum) {
         final TextView dialogReturn;
@@ -456,15 +455,15 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         window.setOutsideTouchable(false);
         changePopwindowBg(0.7f);
         window.showAsDropDown(mainView, Gravity.CENTER, 0, 0);
-        new CountDownTimer(3000,1000) {
+        new CountDownTimer(3000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                dialogReturn.setText(millisUntilFinished/1000+"S");
+                dialogReturn.setText(millisUntilFinished / 1000 + "S");
             }
 
             @Override
             public void onFinish() {
-                if (window!=null){
+                if (window != null) {
                     window.dismiss();
                 }
             }
@@ -478,7 +477,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
     }
 
-    private void changePopwindowBg(float alpha){
+    private void changePopwindowBg(float alpha) {
         WindowManager.LayoutParams l = this.getWindow().getAttributes();
         l.alpha = alpha;
         getWindow().setAttributes(l);
@@ -488,44 +487,17 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @Override
     public void outGoodsCheck(int num) {
         this.num = num;
-        registerGoodsBoradcastReceiver();
+//        registerGoodsBoradcastReceiver();
     }
 
-    private void registerGoodsBoradcastReceiver() {
-//        goodsBroadcastReceiver = new GoodsBroadcastReceiver();
-//        goodsBroadcastReceiver.setOutGoodsListener(this);
-//        IntentFilter filter = new IntentFilter();
-//        filter.addAction(BoxAction.OUT_GOODS_RECEIVER_ACTION);
-//        mContext.registerReceiver(goodsBroadcastReceiver, filter);
-//        Log.e("PayActivity", "注册广播");
-        int i = 0;
-        while (true){
-            i++;
-            try {
-                Thread.sleep(200);
-                int result = BoxAction.getOutGoodsState();
-                Log.e("PayActivity", "result:" + result);
-                if (result == BoxAction.OUT_GOODS_SUCCESS){
-                    successNum++;
-                    if (num == successNum+failNum){
-                        payPresenter.postOrder(num, successNum);
-                    }
-                    break;
-                }else if (result == BoxAction.OUT_GOODS_FAIL){
-                    failNum++;
-                    if (num == successNum+failNum){
-                        payPresenter.postOrder(num, successNum);
-                    }
-                    break;
-                }
 
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (i == 25){
-                break;
-            }
-        }
+    private void registerGoodsBoradcastReceiver() {
+        goodsBroadcastReceiver = new GoodsBroadcastReceiver();
+        goodsBroadcastReceiver.setOutGoodsListener(this);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BoxAction.OUT_GOODS_RECEIVER_ACTION);
+        mContext.registerReceiver(goodsBroadcastReceiver, filter);
+        Log.e("PayActivity", "注册广播");
     }
 
     @Override
