@@ -377,7 +377,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 .setHintTextColor(Color.parseColor("#525252"))  // 设置字体颜色
                 .setCanceledOnTouchOutside(false)
                 .show();
-        registerGoodsBoradcastReceiver();
     }
 
     @Override
@@ -488,6 +487,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @Override
     public void outGoodsCheck(int num) {
         this.num = num;
+        registerGoodsBoradcastReceiver();
     }
 
     private void registerGoodsBoradcastReceiver() {
