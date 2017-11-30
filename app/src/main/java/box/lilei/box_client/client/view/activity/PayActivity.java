@@ -559,10 +559,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         successNum++;
         if (num == successNum + failNum) {
             payPresenter.postOrder(num, successNum);
-            if (goodsBroadcastReceiver != null) {
-                unregisterReceiver(goodsBroadcastReceiver);
-                goodsBroadcastReceiver = null;
-            }
         }
     }
 
@@ -571,10 +567,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         failNum++;
         if (num == successNum + failNum) {
             payPresenter.postOrder(num, successNum);
-            if (goodsBroadcastReceiver != null) {
-                unregisterReceiver(goodsBroadcastReceiver);
-                goodsBroadcastReceiver = null;
-            }
         }
     }
 

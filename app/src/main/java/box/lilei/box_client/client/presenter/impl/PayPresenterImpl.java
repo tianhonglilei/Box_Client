@@ -249,6 +249,7 @@ public class PayPresenterImpl implements PayPresenter {
                 JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
                 Log.e("PayPresenterImpl", "responseObject:" + responseObject);
                 if (jsonObject.getString("error").equals("0")) {
+                    payView.outGoodsCheck(num);
                     orderInfo.setPayType(payType);
                     orderInfo.setOrderNum(num);
 //                    payView.showDialog("出货中...");
@@ -288,7 +289,6 @@ public class PayPresenterImpl implements PayPresenter {
                         try {
                             Thread.sleep(1500);
                             BoxAction.outGoods(boxType, roadIndex);
-                            payView.outGoodsCheck(num);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -300,7 +300,6 @@ public class PayPresenterImpl implements PayPresenter {
                     payView.showPopwindow(false, 0, 0);
                     break;
                 }
-                payView.outGoodsCheck(num);
             }
         }
     }
