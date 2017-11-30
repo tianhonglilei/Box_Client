@@ -251,7 +251,7 @@ public class PayPresenterImpl implements PayPresenter {
                 if (jsonObject.getString("error").equals("0")) {
                     orderInfo.setPayType(payType);
                     orderInfo.setOrderNum(num);
-                    payView.showDialog("出货中...");
+//                    payView.showDialog("出货中...");
                     orderInfo.setPayState(true);
                     outGoodsAction(num, boxType, roadIndex + "");
                 } else if (jsonObject.getString("error").equals("-1")) {
