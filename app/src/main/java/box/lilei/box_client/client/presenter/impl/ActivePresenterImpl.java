@@ -383,7 +383,6 @@ public class ActivePresenterImpl implements ActivePresenter {
                 } else if (res == CommServiceThread.COMM_SERVICE_START) {
                     Toast.makeText(mContext, "激活启动成功", Toast.LENGTH_SHORT).show();
                     if (!TextUtils.isEmpty(box_id) && !box_id.equals("00000000")) {
-                        SharedPreferencesUtil.putString(mContext, "active_code", code);
                         activeView.hiddenActiveLayout(true);
                     } else {
                         getBoxIdFromBox();

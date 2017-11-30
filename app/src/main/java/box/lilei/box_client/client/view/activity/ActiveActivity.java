@@ -121,6 +121,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
                 String code = editActiveCode.getText().toString();
                 if (!TextUtils.isEmpty(code)) {
                     activePresenter.activeBox(code);
+                    SharedPreferencesUtil.putString(mContext, BoxParams.ACTIVE_CODE, code);
                 } else {
                     Toast.makeText(mContext, "请输入激活码", Toast.LENGTH_SHORT).show();
                 }
@@ -220,7 +221,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
                     exitTimer.cancel();
                     exitTimer = null;
                 }
-                activePresenter.getBoxId();
+//                activePresenter.getBoxId();
                 initBoxCheck();
                 break;
             case -1://没有网络

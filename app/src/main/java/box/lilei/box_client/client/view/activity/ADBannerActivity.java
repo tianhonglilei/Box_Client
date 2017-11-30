@@ -159,20 +159,14 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 mHandler.sendEmptyMessage(4);
 
             }
-        }, 0, 1000 * 60 * 60 * 3);
+        }, 100, 1000 * 60 * 60 * 3);
     }
 
-
-    private void weatherPresenterIsNUll() {
-        if (weatherPresenter == null) {
-            weatherPresenter = new WeatherPresenterImpl(this, this);
-        }
-    }
 
     //实例化对象
     private void init() {
         adPresenter = new ADBannerPresenterImpl(this, this);
-        weatherPresenterIsNUll();
+        weatherPresenter = new WeatherPresenterImpl(this, this);
         // 隐藏媒体控制条
         MediaController mc = new MediaController(this);
         mc.setVisibility(View.INVISIBLE);
@@ -436,6 +430,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
                     break;
                 case 4:
+
                     weatherPresenter.getWeatherInfo();
                     break;
             }

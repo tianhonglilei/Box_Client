@@ -13,6 +13,7 @@ import box.lilei.box_client.util.SharedPreferencesUtil;
 
 public class BoxParams {
 
+    public static final String ACTIVE_CODE = "active_code";
     public static final String LEFT_STATE = "left_state";
     public static final String RIGHT_STATE = "right_state";
     public static final String BOX_ID = "box_id";

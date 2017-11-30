@@ -32,8 +32,9 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if(mInstance == null)
+        if(mInstance == null) {
             mInstance = this;
+        }
 
         //初始化SDK配置文件
         initSDKiniFile();
@@ -122,9 +123,6 @@ public class BaseApplication extends Application {
             Toast.makeText(mInstance, "加载成功", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(mInstance, "其他错误", Toast.LENGTH_SHORT).show();
-        }
-        if (loadResult!=MainHandler.LOAD_DATA_SUCCESS){
-            Toast.makeText(mInstance, "2秒后退出程序", Toast.LENGTH_SHORT).show();
         }
     }
 
