@@ -504,6 +504,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             try {
                 Thread.sleep(200);
                 int result = BoxAction.getOutGoodsState();
+                Log.e("PayActivity", "result:" + result);
                 if (result == BoxAction.OUT_GOODS_SUCCESS){
                     successNum++;
                     if (num == successNum+failNum){
