@@ -70,7 +70,11 @@
 
         <receiver
             android:name=".client.receiver.GoodsBroadcastReceiver"
-             />
+             >
+            <intent-filter>
+                <action android:name="com.avm.serialport.OUT_GOODS"/>
+            </intent-filter>
+        </receiver>
         <receiver
             android:name=".client.receiver.OpenDoorBroadcastReceiver"
             android:enabled="true"
