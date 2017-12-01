@@ -20,6 +20,7 @@ public class BoxParams {
     public static final String LIGHT_TIME = "light_time";
     public static final String COLD_TEMP = "cold_temp";
     public static final String HOT_TEMP = "hot_temp";
+    public static final String HAVE_FOOD = "have_food";
 
     private String avmSetInfo;
 

@@ -94,7 +94,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     private boolean videoPlay = false;
 
 
-
     //右侧广告栏
     @BindView(R.id.adbanner_ad_lv)
     ListView adbannerAdLv;
@@ -307,16 +306,17 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         int resultCode = 2;
         RoadInfo roadInfo = roadGoods.getRoadInfo();
         Long index = roadInfo.getRoadIndex();
-        int state = BoxAction.getRoadState(roadInfo.getRoadBoxType(), index+"");
+        int state = BoxAction.getRoadState(roadInfo.getRoadBoxType(), index + "");
         if (state == RoadInfo.ROAD_STATE_NORMAL) {
             Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
             intent.putExtra("roadGoods", roadGoods);
+            intent.putExtra("result", 2);
             intentDateWeather(intent);
             startActivityForResult(intent, resultCode);
             adVideoView.pause();
             adVideoView.stopPlayback();
-        }else{
-            ToastTools.showShort(mContext,"该商品已经售罄，请选购其他商品");
+        } else {
+            ToastTools.showShort(mContext, "该商品已经售罄，请选购其他商品");
             //刷新商品
             adPresenter.initGoodsData(adbannerGoodsGv);
         }
@@ -325,7 +325,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode){
+        switch (resultCode) {
             case 2:
                 adPresenter.initGoodsData(adbannerGoodsGv);
                 break;
@@ -463,7 +463,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
      * 展示图片广告
      */
     public void showImg() {
-        if (adVideoView!=null && adImageView!=null) {
+        if (adVideoView != null && adImageView != null) {
             adImageView.setVisibility(View.VISIBLE);
             adVideoView.stopPlayback();
             adVideoView.setVisibility(View.GONE);
@@ -475,7 +475,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
      * 展示视频广告
      */
     public void showVideo() {
-        if (adVideoView!=null && adImageView!=null){
+        if (adVideoView != null && adImageView != null) {
             adImageView.setVisibility(View.GONE);
             adVideoView.setVisibility(View.VISIBLE);
         }
@@ -513,13 +513,13 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     @Override
     public void refreshGoodsInfo() {
-        if (refreshGoods){
+        if (refreshGoods) {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     adPresenter.initGoodsData(adbannerGoodsGv);
                 }
-            },5000);
+            }, 5000);
         }
     }
 
@@ -535,7 +535,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @Override
     protected void onResume() {
         if (adVideoView != null && videoPlay == false) {
-            if (!adVideoView.isPlaying()){
+            if (!adVideoView.isPlaying()) {
                 adVideoView.start();
                 videoPlay = true;
             }
@@ -555,7 +555,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (adTimer!=null) {
+        if (adTimer != null) {
             adTimer.cancel();
             adTimer = null;
         }

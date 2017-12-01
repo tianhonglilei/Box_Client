@@ -8,9 +8,10 @@ import android.content.res.AssetManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.IdRes;
+import android.telephony.PhoneStateListener;
+import android.telephony.SignalStrength;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,8 +23,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-
-import java.io.IOException;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxAction;
@@ -48,6 +47,8 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     ImageView moreGoodsUpGif;
     @BindView(R.id.more_imei_num)
     TextView moreImeiNum;
+    @BindView(R.id.date_img_signal)
+    ImageView dateImgSignal;
     private MoreGoodsPresenter moreGoodsPresenter;
     private Context mContext;
 
@@ -101,13 +102,28 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         initControl();
 
         moreGoodsPresenter.initAllGoods(moreGoodsGv);
-        initGoodsGridView();
+        haveFoods();
 
+        initGoodsGridView();
 
         initDateAndWeather();
 
         initMediaPlayer();
 
+        initSignListener();
+
+    }
+
+    /**
+     * 是否有食品
+     */
+    private void haveFoods() {
+        String haveFoods = SharedPreferencesUtil.getString(mContext, BoxParams.HAVE_FOOD);
+        if (haveFoods.equals("false")) {
+            moreGoodsNavRbFood.setVisibility(View.INVISIBLE);
+        } else {
+            moreGoodsNavRbFood.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -283,5 +299,64 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         }
     }
 
+    /**
+     * 初始化信号监听
+     */
+    public void initSignListener() {
+        final TelephonyManager telephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        PhoneStateListener phoneStateListener = new PhoneStateListener() {
+            @Override
+            public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+                super.onSignalStrengthsChanged(signalStrength);
+                String signalInfo = signalStrength.toString();
+                String[] params = signalInfo.split(" ");
+
+                if (telephonyManager.getNetworkType() == TelephonyManager.NETWORK_TYPE_LTE) {
+                    //4G网络 最佳范围   >-90dBm 越大越好
+                    int ltedbm = Integer.parseInt(params[9]);
+                    if (ltedbm > -44) {
+                        changeSignSize(0);
+                    } else if (ltedbm >= -90) {
+                        changeSignSize(4);
+                    } else if (ltedbm >= -100) {
+                        changeSignSize(3);
+                    } else if (ltedbm >= -110) {
+                        changeSignSize(2);
+                    } else if (ltedbm >= -120) {
+                        changeSignSize(1);
+                    } else if (ltedbm >= -140) {
+                        changeSignSize(0);
+                    } else {
+                        changeSignSize(0);
+                    }
+                } else {
+                    changeSignSize(0);
+                }
+
+            }
+        };
+        telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+    }
+
+
+    public void changeSignSize(int level) {
+        switch (level) {
+            case 0:
+                dateImgSignal.setImageResource(R.drawable.sign_no_black);
+                break;
+            case 1:
+                dateImgSignal.setImageResource(R.drawable.sign_one_black);
+                break;
+            case 2:
+                dateImgSignal.setImageResource(R.drawable.sign_two_black);
+                break;
+            case 3:
+                dateImgSignal.setImageResource(R.drawable.sign_three_black);
+                break;
+            case 4:
+                dateImgSignal.setImageResource(R.drawable.sign_four_black);
+                break;
+        }
+    }
 
 }

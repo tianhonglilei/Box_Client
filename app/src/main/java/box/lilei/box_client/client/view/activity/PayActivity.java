@@ -186,6 +186,11 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
 
         registerGoodsBoradcastReceiver();
+
+        int result = dataIntent.getIntExtra("result",0);
+        if (result == 2){
+            initMediaPlayer(1);
+        }
     }
 
 
@@ -482,7 +487,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             dialogReturn = (TextView) popupView.findViewById(R.id.pay_dialog_fail_return_txt);
             dialogMsg = (TextView) popupView.findViewById(R.id.pay_dialog_txt_msg);
             dialogMsg.setText("订单数量:" + orderNum + "份，出货数量:" + successNum + "份");
-            count = 11000;
+            count = 21000;
             initMediaPlayer(3);
         }
         window = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
@@ -609,12 +614,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("MoreGoodsActivity", "requestCode:" + requestCode + "--resultCode:" + resultCode);
-        switch (requestCode) {
-            case 2:
-                initMediaPlayer(1);
-                break;
-        }
+
     }
 
 

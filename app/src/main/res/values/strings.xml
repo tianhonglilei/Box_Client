@@ -9,7 +9,7 @@
     <string name="dialog_txt_title_success">出货成功</string>
     <string name="dialog_txt_title_fail">货道故障</string>
     <string name="dialog_txt_info_success">请在下方取物口取走您的商品</string>
-    <string name="dialog_txt_info_fail">非常抱歉，请您联系客服，并扫描机身二维码申请退款</string>
+    <string name="dialog_txt_info_fail">非常抱歉，请您扫描机身二维码发送订单号申请退款</string>
     <string name="cancel">取消</string>
     <string name="ok">确定</string>
     <string name="string_test_this_road">测试该货道：</string>

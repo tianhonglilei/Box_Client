@@ -91,6 +91,11 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
                 foods.add(roadGoods);
             }
         }
+        if (foods.size() == 0){
+            SharedPreferencesUtil.putString(mContext, BoxParams.HAVE_FOOD, "false");
+        }else{
+            SharedPreferencesUtil.putString(mContext, BoxParams.HAVE_FOOD, "true");
+        }
 
     }
 
