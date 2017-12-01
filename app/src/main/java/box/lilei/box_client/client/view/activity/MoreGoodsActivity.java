@@ -375,13 +375,13 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 public void run() {
                     moreGoodsGv.smoothScrollBy(moreGoodsGv.getMeasuredHeight(),1000);
                 }
-            },1500);
+            },2000);
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     moreGoodsGv.smoothScrollBy(-moreGoodsGv.getHeight(),1000);
                 }
-            },3000);
+            },3500);
     }
 
 }
