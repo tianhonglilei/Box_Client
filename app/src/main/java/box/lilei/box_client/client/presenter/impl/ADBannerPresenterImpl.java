@@ -134,6 +134,7 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
                 }
             }
         });
+        adBannerView.refreshGoodsInfo();
     }
 
 

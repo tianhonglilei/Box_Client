@@ -80,6 +80,11 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     private int x1 = 0;
     private boolean mAutoScroll = true;
     private int scrollTotal = 0;
+    private boolean refreshGoods = false;
+
+    public void setRefreshGoods(boolean refreshGoods) {
+        this.refreshGoods = refreshGoods;
+    }
 
     //广告轮播模块
     private Timer adTimer;
@@ -87,6 +92,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     private int adCount;
     private int errorVideoNum = 0;
     private boolean videoPlay = false;
+
 
 
     //右侧广告栏
@@ -147,6 +153,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adCount = adbannerAdLv.getCount();
         startAutoScroll();
         initDateAndWeather();
+
     }
 
     /**
@@ -291,11 +298,13 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     }
 
+
     /**
      * 导航至支付界面
      */
     @Override
     public void navigateToPay(RoadGoods roadGoods) {
+        int resultCode = 1;
         RoadInfo roadInfo = roadGoods.getRoadInfo();
         Long index = roadInfo.getRoadIndex();
         int state = BoxAction.getRoadState(roadInfo.getRoadBoxType(), index+"");
@@ -303,7 +312,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
             intent.putExtra("roadGoods", roadGoods);
             intentDateWeather(intent);
-            startActivity(intent);
+            startActivityForResult(intent, resultCode);
             adVideoView.pause();
             adVideoView.stopPlayback();
         }else{
@@ -311,8 +320,16 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             //刷新商品
             adPresenter.initGoodsData(adbannerGoodsGv);
         }
+    }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 2:
+                adPresenter.initGoodsData(adbannerGoodsGv);
+                break;
+        }
 
     }
 
@@ -383,6 +400,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 mHandler.sendEmptyMessage(2);
             }
         }
+        System.gc();
 
     }
 
@@ -449,6 +467,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             adImageView.setVisibility(View.VISIBLE);
             adVideoView.stopPlayback();
             adVideoView.setVisibility(View.GONE);
+            adVideoView.suspend();
         }
     }
 
@@ -459,7 +478,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         if (adVideoView!=null && adImageView!=null){
             adImageView.setVisibility(View.GONE);
             adVideoView.setVisibility(View.VISIBLE);
-            adVideoView.suspend();
         }
     }
 
@@ -495,12 +513,14 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
     @Override
     public void refreshGoodsInfo() {
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                adPresenter.initGoodsData(adbannerGoodsGv);
-            }
-        },5000);
+        if (refreshGoods){
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    adPresenter.initGoodsData(adbannerGoodsGv);
+                }
+            },5000);
+        }
     }
 
     @Override
@@ -521,7 +541,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             }
         }
         super.onResume();
-
     }
 
     @Override

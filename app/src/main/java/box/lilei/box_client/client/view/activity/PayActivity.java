@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -151,6 +154,10 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     private int num;
 
     private PopupWindow window;
+
+    //语音提示
+    MediaPlayer mediaPlayer = null;
+    AssetManager assetManager = null;
 
 
     @Override
@@ -370,6 +377,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
     private Timer failTimer;
     private TimerTask failTask;
+
     @Override
     public void showDialog(String text) {
         dialog = new ZLoadingDialog(PayActivity.this);
@@ -395,8 +403,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @Override
     public void hiddenDialog() {
         dialog.cancel();
-        if (failTimer != null){
-            if (failTask!=null){
+        if (failTimer != null) {
+            if (failTask != null) {
                 failTask.cancel();
             }
             failTimer.cancel();
@@ -458,7 +466,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
     @Override
     public void showPopwindow(boolean success, int orderNum, int successNum) {
-        final TextView dialogReturn;
+        final TextView dialogReturn, dialogMsg;
         View mainView = this.getLayoutInflater().inflate(R.layout.client_pay_activity, null);
         View popupView;
         long count;
@@ -466,10 +474,14 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             popupView = this.getLayoutInflater().inflate(R.layout.pay_out_goods_success, null);
             dialogReturn = (TextView) popupView.findViewById(R.id.pay_dialog_success_return_txt);
             count = 4000;
+            initMediaPlayer(2);
         } else {
             popupView = this.getLayoutInflater().inflate(R.layout.pay_out_goods_fail, null);
             dialogReturn = (TextView) popupView.findViewById(R.id.pay_dialog_fail_return_txt);
+            dialogMsg = (TextView) popupView.findViewById(R.id.pay_dialog_txt_msg);
+            dialogMsg.setText("订单数量:" + orderNum + "份，出货数量:" + successNum + "份");
             count = 11000;
+            initMediaPlayer(3);
         }
         window = new PopupWindow(popupView, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         window.setFocusable(false);
@@ -492,6 +504,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         window.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
+                PayActivity.this.setResult(2);
                 finish();
             }
         });
@@ -589,6 +602,47 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         failNum++;
         if (num == successNum + failNum) {
             payPresenter.postOrder(num, successNum);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("MoreGoodsActivity", "requestCode:" + requestCode + "--resultCode:" + resultCode);
+        switch (resultCode) {
+            case 2:
+                initMediaPlayer(1);
+                break;
+        }
+    }
+
+    /**
+     * 初始化音频播放
+     */
+    private void initMediaPlayer(int musicId) {
+        String path = "";
+        switch (musicId) {
+            case 1:
+                path = "welcome.wav";
+                break;
+            case 2:
+                path = "out_success_music.wma";
+                break;
+            case 3:
+                path = "out_fail_music.wma";
+                break;
+        }
+        mediaPlayer = new MediaPlayer();
+        assetManager = getAssets();
+        AssetFileDescriptor fileDescriptor;
+        try {
+            fileDescriptor = assetManager.openFd(path);
+            mediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(),
+                    fileDescriptor.getStartOffset());
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

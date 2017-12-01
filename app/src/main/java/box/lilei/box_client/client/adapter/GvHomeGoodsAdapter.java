@@ -22,6 +22,8 @@ import java.util.List;
 import box.lilei.box_client.R;
 import box.lilei.box_client.client.model.Goods;
 import box.lilei.box_client.client.model.RoadGoods;
+import box.lilei.box_client.client.model.RoadInfo;
+import box.lilei.box_client.client.view.activity.ADBannerActivity;
 import box.lilei.box_client.contants.Constants;
 
 /**
@@ -42,6 +44,10 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<RoadGoods> {
 
     @Override
     protected void convert(RoadGoods roadGoods, MyViewHolder viewHolder, int position) {
+        RoadInfo roadInfo = roadGoods.getRoadInfo();
+        if (roadInfo.getRoadState() == RoadInfo.ROAD_STATE_ERROR){
+            ((ADBannerActivity)mContext).setRefreshGoods(true);
+        }
         Goods goods = roadGoods.getGoods();
         ImageView goodsImg = viewHolder.getView(R.id.adbanner_b_item_img);
         ImageView wdImg = viewHolder.getView(R.id.adbanner_b_item_img_wd);

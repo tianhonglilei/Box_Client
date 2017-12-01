@@ -26,12 +26,23 @@
             android:textSize="35sp" />
 
         <TextView
+            android:id="@+id/pay_dialog_txt_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pay_dialog_txt_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:textSize="18sp"
+            android:textColor="@color/common_dialog_text_danger_red"
+            android:text="" />
+
+        <TextView
             android:id="@+id/pay_dialog_txt_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/pay_dialog_txt_title"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="30dp"
             android:text="@string/dialog_txt_info_fail"
             android:textColor="@color/colorDemoLogo"
             android:textSize="18sp" />
@@ -58,6 +69,7 @@
             />
 
     </RelativeLayout>
+
 
 
 

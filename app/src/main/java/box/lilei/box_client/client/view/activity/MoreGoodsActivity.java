@@ -3,11 +3,15 @@ package box.lilei.box_client.client.view.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.content.res.AssetManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.IdRes;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -18,6 +22,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+
+import java.io.IOException;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxAction;
@@ -78,6 +84,10 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
     private CountDownTimer countDownTimer;
 
+    //语音提示
+    MediaPlayer mediaPlayer = null;
+    AssetManager assetManager = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,10 +100,13 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
         initControl();
 
+        moreGoodsPresenter.initAllGoods(moreGoodsGv);
         initGoodsGridView();
+
 
         initDateAndWeather();
 
+        initMediaPlayer();
 
     }
 
@@ -108,11 +121,14 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         }
     }
 
+    private int resultCode;
+
     private void initGoodsGridView() {
         //设置gv item 点击事件
         moreGoodsGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                resultCode = 2;
                 RoadGoods roadGoods = (RoadGoods) moreGoodsGv.getItemAtPosition(position);
                 Goods goods = roadGoods.getGoods();
                 if (goods.getGoodsSaleState() == Goods.SALE_STATE_OUT) {
@@ -127,7 +143,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                     intent.putExtra("temp", moreWeatherWdNum.getText().toString());
                     intent.putExtra("weather", moreWeatherTxt.getText().toString());
                     intent.putExtra("roadGoods", roadGoods);
-                    startActivity(intent);
+                    startActivityForResult(intent, resultCode);
                 } else {
                     ToastTools.showShort(mContext, "该商品已售罄，请选购其他商品");
                     //刷新商品
@@ -136,6 +152,17 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("MoreGoodsActivity", "requestCode:" + requestCode + "--resultCode:" + resultCode);
+        switch (requestCode) {
+            case 2:
+                moreGoodsPresenter.initAllGoods(moreGoodsGv);
+                break;
+        }
     }
 
     private void initControl() {
@@ -190,7 +217,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     @Override
     protected void onPause() {
         super.onPause();
-        if (countDownTimer!=null) {
+        if (countDownTimer != null) {
             countDownTimer.cancel();
             countDownTimer = null;
         }
@@ -199,28 +226,27 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     @Override
     protected void onResume() {
         super.onResume();
-        moreGoodsPresenter.initAllGoods(moreGoodsGv);
+
         initCountDownTimer();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (moreGoodsPresenter!=null)
-        moreGoodsPresenter = null;
-        if (countDownTimer!=null) {
+        if (moreGoodsPresenter != null)
+            moreGoodsPresenter = null;
+        if (countDownTimer != null) {
             countDownTimer.cancel();
             countDownTimer = null;
         }
     }
 
 
-
     /**
      * 倒计时
      */
     private void initCountDownTimer() {
-        if (countDownTimer!=null) {
+        if (countDownTimer != null) {
             countDownTimer.cancel();
             countDownTimer = null;
         }
@@ -235,6 +261,25 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 finish();
             }
         }.start();
+    }
+
+
+    /**
+     * 初始化音频播放
+     */
+    private void initMediaPlayer() {
+        mediaPlayer = new MediaPlayer();
+        assetManager = getAssets();
+        AssetFileDescriptor fileDescriptor = null;
+        try {
+            fileDescriptor = assetManager.openFd("welcome.wav");
+            mediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(),
+                    fileDescriptor.getStartOffset());
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
