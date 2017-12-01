@@ -304,7 +304,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
      */
     @Override
     public void navigateToPay(RoadGoods roadGoods) {
-        int resultCode = 1;
+        int resultCode = 2;
         RoadInfo roadInfo = roadGoods.getRoadInfo();
         Long index = roadInfo.getRoadIndex();
         int state = BoxAction.getRoadState(roadInfo.getRoadBoxType(), index+"");
@@ -325,7 +325,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
+        switch (resultCode){
             case 2:
                 adPresenter.initGoodsData(adbannerGoodsGv);
                 break;

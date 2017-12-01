@@ -128,7 +128,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         moreGoodsGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                resultCode = 2;
+                resultCode = 1;
                 RoadGoods roadGoods = (RoadGoods) moreGoodsGv.getItemAtPosition(position);
                 Goods goods = roadGoods.getGoods();
                 if (goods.getGoodsSaleState() == Goods.SALE_STATE_OUT) {
@@ -158,7 +158,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e("MoreGoodsActivity", "requestCode:" + requestCode + "--resultCode:" + resultCode);
-        switch (requestCode) {
+        switch (resultCode) {
             case 2:
                 moreGoodsPresenter.initAllGoods(moreGoodsGv);
                 break;

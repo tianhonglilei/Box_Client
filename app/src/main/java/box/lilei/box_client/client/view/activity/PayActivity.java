@@ -609,7 +609,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e("MoreGoodsActivity", "requestCode:" + requestCode + "--resultCode:" + resultCode);
-        switch (resultCode) {
+        switch (requestCode) {
             case 2:
                 initMediaPlayer(1);
                 break;
