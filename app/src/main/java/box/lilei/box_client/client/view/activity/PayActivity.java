@@ -367,6 +367,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay_rl_return:
+                payPresenter.cancelOrder();
+                payPresenter.cancelRequest();
                 PayActivity.this.finish();
                 break;
             case R.id.pay_rb_num_two:
@@ -504,8 +506,9 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         window.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
+
                 PayActivity.this.setResult(2);
-                finish();
+                PayActivity.this.finish();
             }
         });
 
@@ -537,8 +540,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        payPresenter.cancelOrder();
-        payPresenter.cancelRequest();
+
         if (payPresenter != null)
             payPresenter = null;
         //回收bitmap
@@ -615,6 +617,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 break;
         }
     }
+
 
     /**
      * 初始化音频播放
