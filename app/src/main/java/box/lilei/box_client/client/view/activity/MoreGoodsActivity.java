@@ -24,6 +24,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxAction;
 import box.lilei.box_client.box.BoxParams;
@@ -112,7 +115,11 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
         initSignListener();
 
+        initAnimation();
+
     }
+
+
 
     /**
      * 是否有食品
@@ -356,6 +363,26 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             case 4:
                 dateImgSignal.setImageResource(R.drawable.sign_four_black);
                 break;
+        }
+    }
+
+    /**
+     * 初始化动画
+     */
+    private void initAnimation() {
+        if (moreGoodsGv.getCount()>9) {
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    moreGoodsGv.smoothScrollToPosition(9);
+                }
+            },500);
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    moreGoodsGv.smoothScrollToPosition(0);
+                }
+            },1200);
         }
     }
 
