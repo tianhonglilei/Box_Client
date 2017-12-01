@@ -161,6 +161,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         switch (resultCode) {
             case 2:
                 moreGoodsPresenter.initAllGoods(moreGoodsGv);
+                setResult(2);
                 break;
         }
     }

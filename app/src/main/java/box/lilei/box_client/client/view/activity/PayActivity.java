@@ -628,10 +628,10 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 path = "welcome.wav";
                 break;
             case 2:
-                path = "out_success_music.wma";
+                path = "out_success_music.wav";
                 break;
             case 3:
-                path = "out_fail_music.wma";
+                path = "out_fail_music.wav";
                 break;
         }
         mediaPlayer = new MediaPlayer();
