@@ -506,7 +506,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         window.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-
                 PayActivity.this.setResult(2);
                 PayActivity.this.finish();
             }
