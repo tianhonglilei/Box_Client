@@ -60,9 +60,11 @@ public class WeatherPresenterImpl implements WeatherPresenter {
                             e.printStackTrace();
                         }
                         WeatherTestInfo weatherInfo = (WeatherTestInfo) ResponseEntityToModule.parseJsonObjectToModule(jsonObject, WeatherTestInfo.class);
-                        myWeather.setWeather(weatherInfo.getData().getForecast().get(0).getType());
-                        myWeather.setTemp(weatherInfo.getData().getWendu()+"℃");
-                        adBannerView.changeWeather(myWeather);
+                        if (weatherInfo!=null) {
+                            myWeather.setWeather(weatherInfo.getData().getForecast().get(0).getType());
+                            myWeather.setTemp(weatherInfo.getData().getWendu() + "℃");
+                            adBannerView.changeWeather(myWeather);
+                        }
                     }
 
                     @Override

@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.avm.serialport_142.MainHandler;
 import com.squareup.leakcanary.LeakCanary;
+import com.umeng.commonsdk.UMConfigure;
 
 import java.io.File;
 
@@ -50,7 +51,39 @@ public class BaseApplication extends Application {
         //初始化异常捕捉
         ExceptionHandler exceptionHandler = ExceptionHandler.getInstance();
 //        exceptionHandler.init(this);
+
+
+
+        /**
+         * 初始化common库
+         * 参数1:上下文，不能为空
+         * 参数2:设备类型，UMConfigure.DEVICE_TYPE_PHONE为手机、UMConfigure.DEVICE_TYPE_BOX为盒子，默认为手机
+         * 参数3:Push推送业务的secret
+         */
+        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_BOX, "");
+
+        /**
+         * 初始化common库
+         * 参数1:上下文，不能为空
+         * 参数2:友盟 app key
+         * 参数3:友盟 channel
+         * 参数4:设备类型，UMConfigure.DEVICE_TYPE_PHONE为手机、UMConfigure.DEVICE_TYPE_BOX为盒子，默认为手机
+         * 参数5:Push推送业务的secret
+         */
+        UMConfigure.init(this, "", "", UMConfigure.DEVICE_TYPE_BOX, "");
+
+        /**
+         * 设置组件化的Log开关
+         * 参数: boolean 默认为false，如需查看LOG设置为true
+         */
+        UMConfigure.setLogEnabled(true);
+
+
+
+
     }
+
+
 
     private void initSDKiniFile() {
         String firstPath = Environment.getExternalStorageDirectory()

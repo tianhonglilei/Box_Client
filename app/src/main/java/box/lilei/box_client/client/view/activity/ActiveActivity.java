@@ -268,4 +268,11 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
         }
 
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 }
