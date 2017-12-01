@@ -370,20 +370,18 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
      * 初始化动画
      */
     private void initAnimation() {
-        if (moreGoodsGv.getCount()>9) {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    moreGoodsGv.smoothScrollToPosition(9);
+                    moreGoodsGv.smoothScrollBy(moreGoodsGv.getHeight(),1000);
                 }
             },500);
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    moreGoodsGv.smoothScrollToPosition(0);
+                    moreGoodsGv.smoothScrollToPositionFromTop(0,0,1000);
                 }
-            },1200);
-        }
+            },1500);
     }
 
 }
