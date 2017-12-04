@@ -177,14 +177,16 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         });
     }
 
+    private int result = 0;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e("MoreGoodsActivity", "requestCode:" + requestCode + "--resultCode:" + resultCode);
         switch (resultCode) {
             case 2:
+                result = 2;
                 moreGoodsPresenter.initAllGoods(moreGoodsGv);
-                setResult(2);
+
                 break;
         }
     }
@@ -230,6 +232,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
         switch (v.getId()) {
             case R.id.more_goods_nav_rl_return:
+                setResult(result);
                 MoreGoodsActivity.this.finish();
                 break;
             case R.id.more_imei_num:
@@ -381,7 +384,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 public void run() {
                     moreGoodsGv.smoothScrollBy(-moreGoodsGv.getHeight(),1000);
                 }
-            },3500);
+            },3800);
     }
 
 }
