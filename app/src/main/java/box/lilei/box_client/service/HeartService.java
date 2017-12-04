@@ -6,19 +6,24 @@ import android.app.job.JobService;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
 
-public class HeartService extends JobService {
+public class HeartService extends Service implements Runnable {
     public HeartService() {
+        
     }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+
+
+        return null;
+    }
+
 
     @Override
-    public boolean onStartJob(JobParameters params) {
-        return false;
-    }
+    public void run() {
 
-    @Override
-    public boolean onStopJob(JobParameters params) {
-        return false;
     }
-
 }

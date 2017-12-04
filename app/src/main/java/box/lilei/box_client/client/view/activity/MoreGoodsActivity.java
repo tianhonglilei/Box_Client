@@ -186,7 +186,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             case 2:
                 result = 2;
                 moreGoodsPresenter.initAllGoods(moreGoodsGv);
-
                 break;
         }
     }
@@ -232,7 +231,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
         switch (v.getId()) {
             case R.id.more_goods_nav_rl_return:
-                setResult(result);
+                MoreGoodsActivity.this.setResult(result);
                 MoreGoodsActivity.this.finish();
                 break;
             case R.id.more_imei_num:
@@ -285,6 +284,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
             @Override
             public void onFinish() {
+                MoreGoodsActivity.this.setResult(result);
                 finish();
             }
         }.start();
