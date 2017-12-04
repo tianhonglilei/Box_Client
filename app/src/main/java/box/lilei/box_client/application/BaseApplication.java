@@ -60,7 +60,7 @@ public class BaseApplication extends Application {
          * 参数2:设备类型，UMConfigure.DEVICE_TYPE_PHONE为手机、UMConfigure.DEVICE_TYPE_BOX为盒子，默认为手机
          * 参数3:Push推送业务的secret
          */
-        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_BOX, "");
+//        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_BOX, "");
 
         /**
          * 初始化common库
@@ -70,13 +70,13 @@ public class BaseApplication extends Application {
          * 参数4:设备类型，UMConfigure.DEVICE_TYPE_PHONE为手机、UMConfigure.DEVICE_TYPE_BOX为盒子，默认为手机
          * 参数5:Push推送业务的secret
          */
-        UMConfigure.init(this, "", "", UMConfigure.DEVICE_TYPE_BOX, "");
+//        UMConfigure.init(this, "", "", UMConfigure.DEVICE_TYPE_BOX, "");
 
         /**
          * 设置组件化的Log开关
          * 参数: boolean 默认为false，如需查看LOG设置为true
          */
-        UMConfigure.setLogEnabled(true);
+//        UMConfigure.setLogEnabled(true);
 
 
 
