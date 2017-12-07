@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import box.lilei.box_client.manager.view.activity.LoginActivity;
+import box.lilei.box_client.manager.view.activity.ManagerNavgationActivity;
 
 public class OpenDoorBroadcastReceiver extends BroadcastReceiver {
     private static final String DOOR_ACTION = "com.avm.serialport.door_state";
@@ -16,10 +17,9 @@ public class OpenDoorBroadcastReceiver extends BroadcastReceiver {
 
         String action = intent.getAction();
         if (action.equals(DOOR_ACTION)){
-            Intent managerIntent = new Intent(context, LoginActivity.class);
+            Intent managerIntent = new Intent(context, ManagerNavgationActivity.class);
             context.startActivity(managerIntent);
         }
-
 
         throw new UnsupportedOperationException("Not yet implemented");
     }

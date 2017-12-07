@@ -172,7 +172,7 @@ public class ActivePresenterImpl implements ActivePresenter {
     private void startDownload() {
         count = downloadName.size();
         if (count == 0) {
-            activeView.hideDialog();
+            activeView.hiddenDialog();
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -341,6 +341,7 @@ public class ActivePresenterImpl implements ActivePresenter {
         box_id = SharedPreferencesUtil.getString(mContext, BoxParams.BOX_ID);
         if (box_id != null && !box_id.equals("") && !box_id.equals("00000000")) {
             String code = SharedPreferencesUtil.getString(mContext, "active_code");
+            SharedPreferencesUtil.putString(mContext, BoxParams.ACTIVE_CODE, code);
             if (!code.equals("")) {
                 activeBox(code);
             } else {

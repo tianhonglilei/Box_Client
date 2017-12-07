@@ -10,12 +10,7 @@ import box.lilei.box_client.client.model.PercentInfo;
  * Created by lilei on 2017/10/19.
  */
 
-public interface PayView {
-
-
-    void showDialog(String text);
-
-    void hiddenDialog();
+public interface PayView  extends BaseView{
 
     /**
      * 展示营养信息

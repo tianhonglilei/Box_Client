@@ -48,6 +48,7 @@ import box.lilei.box_client.client.widget.FullVideoView;
 import box.lilei.box_client.contants.Constants;
 import box.lilei.box_client.loading.ZLoadingDialog;
 import box.lilei.box_client.loading.Z_TYPE;
+import box.lilei.box_client.service.HeartService;
 import box.lilei.box_client.util.FileUtils;
 import box.lilei.box_client.util.ToastTools;
 import butterknife.BindView;
@@ -152,8 +153,12 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adCount = adbannerAdLv.getCount();
         startAutoScroll();
         initDateAndWeather();
+        
+//        startHeartService();
 
     }
+
+
 
     /**
      * 实例化天气控件
@@ -276,6 +281,14 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         });
 
 
+    }
+
+    /**
+     * 启动心跳服务
+     */
+    private void startHeartService() {
+        Intent intent = new Intent(this, HeartService.class);
+        startService(intent);
     }
 
 

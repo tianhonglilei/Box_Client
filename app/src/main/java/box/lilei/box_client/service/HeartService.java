@@ -15,7 +15,9 @@ import android.support.annotation.Nullable;
 
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
 
+import box.lilei.box_client.client.view.BaseView;
 import box.lilei.box_client.contants.Constants;
 import box.lilei.box_client.service.view.HeartView;
 
@@ -23,24 +25,39 @@ public class HeartService extends Service implements  HeartView {
     public static final String LIVE_SERVICE_NAME = "";
     public static final String LIVE_SERVICE_PACKAGE_NAME = "";
 
+    //心跳间隔
+    public static final int BOX_HEART_TIME = 1000 * 60 * 5;
+
+    private BaseView baseView;
+
+    public void setBaseView(BaseView baseView) {
+        this.baseView = baseView;
+    }
+
     Timer timer;
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (!isServiceRunning(getApplicationContext(), LIVE_SERVICE_PACKAGE_NAME + LIVE_SERVICE_NAME)) {
+                    startLiveService();
+                }
+
+
+            }
+        },5000,BOX_HEART_TIME);
+        return START_REDELIVER_INTENT;
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
 
-
         return null;
     }
 
-    @Override
-    public void onCreate() {
-
-
-        if (!isServiceRunning(getApplicationContext(), LIVE_SERVICE_PACKAGE_NAME + LIVE_SERVICE_NAME)) {
-            startLiveService();
-        }
-
-    }
 
     @Override
     public void restartApp() {

@@ -3,6 +3,7 @@ package box.lilei.box_client.client.view.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.MediaPlayer;
@@ -35,6 +36,7 @@ import box.lilei.box_client.client.model.RoadGoods;
 import box.lilei.box_client.client.model.RoadInfo;
 import box.lilei.box_client.client.presenter.MoreGoodsPresenter;
 import box.lilei.box_client.client.presenter.impl.MoreGoodsPresenterImpl;
+import box.lilei.box_client.client.receiver.OpenDoorBroadcastReceiver;
 import box.lilei.box_client.client.view.MoreGoodsView;
 import box.lilei.box_client.manager.view.activity.ManagerNavgationActivity;
 import box.lilei.box_client.util.SharedPreferencesUtil;
@@ -117,8 +119,21 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
         initAnimation();
 
+        initDoorReceiver();
+
     }
 
+
+    private OpenDoorBroadcastReceiver openDoorBroadcastReceiver;
+    /**
+     * 初始化开门广播
+     */
+    private void initDoorReceiver() {
+        openDoorBroadcastReceiver = new OpenDoorBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BoxAction.OPEN_DOOR_ACTION);
+        mContext.registerReceiver(openDoorBroadcastReceiver, filter);
+    }
 
 
     /**
@@ -231,12 +246,19 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
         switch (v.getId()) {
             case R.id.more_goods_nav_rl_return:
-                MoreGoodsActivity.this.setResult(result);
-                MoreGoodsActivity.this.finish();
+                returnAndFinish();
                 break;
             case R.id.more_imei_num:
                 Intent intent = new Intent(MoreGoodsActivity.this, ManagerNavgationActivity.class);
                 startActivity(intent);
+        }
+    }
+
+    private void returnAndFinish() {
+        MoreGoodsActivity.this.setResult(result);
+        MoreGoodsActivity.this.finish();
+        if (openDoorBroadcastReceiver!=null){
+            unregisterReceiver(openDoorBroadcastReceiver);
         }
     }
 
@@ -265,6 +287,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             countDownTimer.cancel();
             countDownTimer = null;
         }
+
     }
 
 
@@ -284,8 +307,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
             @Override
             public void onFinish() {
-                MoreGoodsActivity.this.setResult(result);
-                finish();
+                returnAndFinish();
             }
         }.start();
     }

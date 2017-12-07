@@ -10,7 +10,7 @@ import box.lilei.box_client.client.model.RoadGoods;
  * 首页展示广告和推荐商品View接口
  */
 
-public interface ADBannerView {
+public interface ADBannerView extends BaseView{
     //导航至支付页面
     void navigateToPay(RoadGoods roadGoods);
     //导航至更多商品展示
@@ -24,10 +24,6 @@ public interface ADBannerView {
      */
     void changeWeather(MyWeather myWeather);
 
-
-    void showDialog(String text);
-
-    void hiddenDialog();
 
     //当货道异常的时候定时刷新货道数据
     void refreshGoodsInfo();

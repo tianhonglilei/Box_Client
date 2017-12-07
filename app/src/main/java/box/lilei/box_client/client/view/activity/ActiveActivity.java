@@ -145,7 +145,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
     public void changeDownloadProgress(int maxNum, int successNum, int failNum) {
         activeDownloadTxt.setText("下载:" + maxNum + "{成功:" + successNum + "，失败:" + failNum + "}");
         if (maxNum == successNum + failNum) {
-            hideDialog();
+            hiddenDialog();
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -174,7 +174,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
     }
 
     @Override
-    public void hideDialog() {
+    public void hiddenDialog() {
         if (dialog != null) {
             dialog.cancel();
             dialog = null;
@@ -183,9 +183,15 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
 
     @Override
     public void skipToADBannerActivity() {
-        Intent intent = new Intent(ActiveActivity.this, ADBannerActivity.class);
-        startActivity(intent);
-        finish();
+        if (MainHandler.isAvmRunning()){
+            Intent intent = new Intent(ActiveActivity.this, ADBannerActivity.class);
+            startActivity(intent);
+            finish();
+        }else{
+            Toast.makeText(mContext, "通讯失败，正在重启...", Toast.LENGTH_SHORT).show();
+            restartApp();
+        }
+
     }
 
     @Override
@@ -274,10 +280,15 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
      * 重启程序
      */
     public void restartApp() {
-        Intent i = getBaseContext().getPackageManager()
-                .getLaunchIntentForPackage(getBaseContext().getPackageName());
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Intent i = getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage(getBaseContext().getPackageName());
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+            }
+        },2000);
     }
 
 

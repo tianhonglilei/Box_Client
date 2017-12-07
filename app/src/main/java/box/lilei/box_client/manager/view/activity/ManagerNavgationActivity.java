@@ -9,9 +9,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import com.common.controls.dialog.CommonDialogFactory;
+import com.common.controls.dialog.DialogUtil;
+import com.common.controls.dialog.ICommonDialog;
 
 import box.lilei.box_client.R;
 import box.lilei.box_client.box.BoxAction;
@@ -84,16 +89,43 @@ public class ManagerNavgationActivity extends FragmentActivity {
                         break;
                     case R.id.manager_nav_rdo_btn_restart:
                         setIndexSelected(5);
+//                        showOkCancelDialog();
                         break;
                     case R.id.manager_nav_rdo_btn_exit:
                         setIndexSelected(6);
-                        finish();
                         break;
                 }
 
             }
         });
 
+    }
+
+    public void showOkCancelDialog() {
+        final ICommonDialog okDialog = CommonDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_1);
+        okDialog.setTitleText("确定退出后台并继续销售？");
+        okDialog.setOkBtnStyleType(DialogUtil.OK_BTN_LARGE_BLUE_BG_WHITE_TEXT);
+        okDialog.setOkBtn(R.string.ok, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                returnAndFinish();
+                okDialog.dismiss();
+            }
+        });
+        okDialog.setCancelBtn(R.string.cancel, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                okDialog.dismiss();
+            }
+        });
+        okDialog.setCanceledOnTouchOutside(false);
+        okDialog.show();
+    }
+
+
+    private void returnAndFinish() {
+        ManagerNavgationActivity.this.setResult(2);
+        ManagerNavgationActivity.this.finish();
     }
 
 

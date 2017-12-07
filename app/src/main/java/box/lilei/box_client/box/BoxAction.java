@@ -24,7 +24,7 @@ public class BoxAction {
     public static final int OUT_GOODS_TYPE_PAY = 0;
 
     public static final String OUT_GOODS_RECEIVER_ACTION = "com.avm.serialport.OUT_GOODS";
-
+    public static final String OPEN_DOOR_ACTION = "com.avm.serialport.door_state";
 
     /**
      * 出货

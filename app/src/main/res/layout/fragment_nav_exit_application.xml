@@ -2,12 +2,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="box.lilei.box_client.manager.view.fragment.NavExitApplicationFragment">
+    tools:context="box.lilei.box_client.manager.view.fragment.NavExitApplicationFragment"
+    android:background="@color/colorWhiteTxt">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="344dp"
+            android:layout_marginTop="250dp"
+            android:text="确定退出程序么？"
+            android:textColor="@color/colorGaryFiveTwo"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/exit_app_btn"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:text="确 定"
+            android:layout_alignStart="@+id/textView17"
+            android:layout_centerVertical="true"
+            android:background="@drawable/manager_login_btn_selector"
+            android:textColor="@color/colorWhiteTxt"
+            android:textSize="28sp"/>
+
+
+    </RelativeLayout>
 
 </FrameLayout>

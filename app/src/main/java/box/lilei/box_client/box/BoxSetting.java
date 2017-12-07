@@ -15,10 +15,7 @@ import box.lilei.box_client.util.SharedPreferencesUtil;
 public class BoxSetting {
     //应用包名
     public static final String BOX_PACKAGE_NAME = "box.lilei.box_client";
-    //心跳间隔
-    public static final int BOX_HEART_TIME = 1000 * 60 * 5;
-    //机器自检间隔
-    public static final int BOX_CHECK_TIME = 1000 * 60;
+
     //货柜类型
     public static final String BOX_TYPE_DRINK = "11";//饮料机
     public static final String BOX_TYPE_FOOD = "09";//弹簧机
