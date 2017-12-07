@@ -20,7 +20,5 @@ public class OpenDoorBroadcastReceiver extends BroadcastReceiver {
             Intent managerIntent = new Intent(context, ManagerNavgationActivity.class);
             context.startActivity(managerIntent);
         }
-
-        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

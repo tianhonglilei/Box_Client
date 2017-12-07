@@ -538,7 +538,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         filter.addAction(BoxAction.OUT_GOODS_RECEIVER_ACTION);
         mContext.registerReceiver(goodsBroadcastReceiver, filter);
         goodsBroadcastReceiver.setOutGoodsListener(this);
-        Log.e("PayActivity", "注册广播");
     }
 
     @Override

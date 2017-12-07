@@ -196,7 +196,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("MoreGoodsActivity", "requestCode:" + requestCode + "--resultCode:" + resultCode);
+//        Log.e("MoreGoodsActivity", "requestCode:" + requestCode + "--resultCode:" + resultCode);
         switch (resultCode) {
             case 2:
                 result = 2;
@@ -249,8 +249,9 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 returnAndFinish();
                 break;
             case R.id.more_imei_num:
-                Intent intent = new Intent(MoreGoodsActivity.this, ManagerNavgationActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(MoreGoodsActivity.this, ManagerNavgationActivity.class);
+//                startActivity(intent);
+                break;
         }
     }
 

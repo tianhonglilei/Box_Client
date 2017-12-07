@@ -104,7 +104,7 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
                 adBannerView.changeAD(adInfoList.get(position), position);
             }
         });
-        Log.e("ADBannerPresenterImpl", "adInfoList.size():" + adInfoList.size());
+//        Log.e("ADBannerPresenterImpl", "adInfoList.size():" + adInfoList.size());
     }
 
 
