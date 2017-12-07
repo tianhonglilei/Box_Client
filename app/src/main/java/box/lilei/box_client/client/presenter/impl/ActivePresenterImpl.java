@@ -340,8 +340,8 @@ public class ActivePresenterImpl implements ActivePresenter {
     public void getBoxId() {
         box_id = SharedPreferencesUtil.getString(mContext, BoxParams.BOX_ID);
         if (box_id != null && !box_id.equals("") && !box_id.equals("00000000")) {
-            String code = SharedPreferencesUtil.getString(mContext, "active_code");
-            SharedPreferencesUtil.putString(mContext, BoxParams.ACTIVE_CODE, code);
+            String code = SharedPreferencesUtil.getString(mContext, BoxParams.ACTIVE_CODE);
+//            SharedPreferencesUtil.putString(mContext, BoxParams.ACTIVE_CODE, code);
             if (!code.equals("")) {
                 activeBox(code);
             } else {

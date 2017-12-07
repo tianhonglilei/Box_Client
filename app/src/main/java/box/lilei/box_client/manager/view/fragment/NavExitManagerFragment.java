@@ -52,6 +52,7 @@ public class NavExitManagerFragment extends Fragment implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.exit_manager_btn:
+                getActivity().setResult(2);
                 getActivity().finish();
                 break;
         }
