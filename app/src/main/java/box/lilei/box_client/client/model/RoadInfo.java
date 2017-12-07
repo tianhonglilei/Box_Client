@@ -20,9 +20,6 @@ public class RoadInfo implements Parcelable {
     public static final int ROAD_OPEN = 0;
     public static final int ROAD_CLOSE = 1;
 
-    public static final int BOX_TYPE_DRINK = 11;
-    public static final int BOX_TYPE_FOOD = 9;
-
 
     private Long roadIndex;
     private int roadState;

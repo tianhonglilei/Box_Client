@@ -59,7 +59,7 @@ public class RoadBizImpl implements RoadBiz {
             if (goodsBean != null) {
                 goods.setGoodsId(goodsBean.getId());
                 goods.setGoodsType(goodsBean.getType());
-                if (roadInfo.getRoadBoxType().equals(RoadInfo.BOX_TYPE_DRINK)) {
+                if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_DRINK)) {
                     if (Integer.parseInt(roadInfo.getRoadIndex().toString()) < 9) {
                         Log.e("RoadBizImpl", "Integer.parseInt(leftState):" + Integer.parseInt(leftState));
                         goods.setGoodsWd(Integer.parseInt(leftState));
