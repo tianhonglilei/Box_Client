@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.avm.serialport_142.MainHandler;
+
 import box.lilei.box_client.manager.view.activity.LoginActivity;
 import box.lilei.box_client.manager.view.activity.ManagerNavgationActivity;
 
@@ -17,8 +19,11 @@ public class OpenDoorBroadcastReceiver extends BroadcastReceiver {
 
         String action = intent.getAction();
         if (action.equals(DOOR_ACTION)){
-            Intent managerIntent = new Intent(context, ManagerNavgationActivity.class);
-            context.startActivity(managerIntent);
+            boolean isOpen = MainHandler.isDoorOpen();//获取机器开门信息
+            if (isOpen) {
+                Intent managerIntent = new Intent(context, ManagerNavgationActivity.class);
+                context.startActivity(managerIntent);
+            }
         }
     }
 }

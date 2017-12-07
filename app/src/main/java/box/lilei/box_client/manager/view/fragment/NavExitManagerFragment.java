@@ -37,7 +37,7 @@ public class NavExitManagerFragment extends Fragment implements View.OnClickList
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_nav_exit_manager, container, false);
         mContext = getContext();
-        unbinder = ButterKnife.bind(mContext, view);
+        unbinder = ButterKnife.bind(NavExitManagerFragment.this, view);
 
         return view;
     }
