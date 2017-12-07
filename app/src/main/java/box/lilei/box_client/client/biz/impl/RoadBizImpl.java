@@ -1,5 +1,7 @@
 package box.lilei.box_client.client.biz.impl;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +60,7 @@ public class RoadBizImpl implements RoadBiz {
                 goods.setGoodsId(goodsBean.getId());
                 goods.setGoodsType(goodsBean.getType());
                 if (roadInfo.getRoadBoxType().equals(RoadInfo.BOX_TYPE_DRINK)) {
-                    if (roadInfo.getRoadIndex() < 9) {
+                    if (Integer.parseInt(roadInfo.getRoadIndex().toString()) < 9) {
                         goods.setGoodsWd(Integer.parseInt(leftState));
                     } else {
                         goods.setGoodsWd(Integer.parseInt(rightState));

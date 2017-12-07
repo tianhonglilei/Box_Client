@@ -1,6 +1,7 @@
 package box.lilei.box_client.client.presenter.impl;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.GridView;
 
 import java.text.SimpleDateFormat;
@@ -61,7 +62,9 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
     public void initAllGoods(GridView gridView) {
         this.gridView = gridView;
         String leftState = SharedPreferencesUtil.getString(mContext, BoxParams.LEFT_STATE);
+        Log.e("MoreGoodsPresenterImpl:l", leftState);
         String rightState = SharedPreferencesUtil.getString(mContext, BoxParams.RIGHT_STATE);
+        Log.e("MoreGoodsPresenterImpl:r", rightState);
         goodsList = roadBiz.parseRoadBeanToRoadGoods(roadBeanService.queryAllRoadBean(), leftState, rightState);
         getFoodAndDrink();
         gvMoreGoodsAdapter = new GvMoreGoodsAdapter(mContext, goodsList, R.layout.client_more_goods_item);

@@ -120,7 +120,6 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
      * @param imageView
      */
     public void goodsWd( int wd, ImageView imageView) {
-        Log.e("GvMoreGoodsAdapter", "wd:" + wd);
         if (wd == Goods.GOODS_WD_COLD) {
             imageView.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(R.mipmap.logo_cold).into(imageView);
