@@ -109,7 +109,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
             public void run() {
                 exitApplication();
             }
-        }, 60000);
+        }, 120000);
     }
 
     @Override
@@ -253,21 +253,33 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
             @Override
             public void run() {
                 Looper.prepare();
-                Toast.makeText(mContext, "启动失败，即将退出.", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "启动失败，即将重启.", Toast.LENGTH_LONG).show();
                 Looper.loop();
             }
         }.start();
         try {
             Thread.sleep(2000);
             //退出程序
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(1);
+//            android.os.Process.killProcess(android.os.Process.myPid());
+//            System.exit(1);
+            restartApp();
         } catch (InterruptedException e) {
             Log.e(TAG, "error : ", e);
             e.printStackTrace();
         }
 
     }
+
+    /**
+     * 重启程序
+     */
+    public void restartApp() {
+        Intent i = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage(getBaseContext().getPackageName());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+    }
+
 
 
     @Override

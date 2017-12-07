@@ -315,7 +315,7 @@
                         android:layout_alignBaseline="@+id/pay_txt_num"
                         android:layout_marginLeft="20dp"
                         android:layout_toRightOf="@+id/pay_rbgrp_num"
-                        android:text="售价："
+                        android:text="单价："
                         android:textColor="@color/colorGaryFiveTwo"
                         android:textSize="20sp" />
 

@@ -22,4 +22,6 @@ public interface ActiveView {
 
     void exitApplication();
 
+    void restartApp();
+
 }

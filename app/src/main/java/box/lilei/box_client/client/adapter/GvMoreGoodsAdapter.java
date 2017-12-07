@@ -2,6 +2,7 @@ package box.lilei.box_client.client.adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -45,7 +46,7 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
         ((TextView) viewHolder.getView(R.id.more_goods_item_txt_price)).setText("" + goods.getGoodsPrice());
 
         goodsSaleState(viewHolder, goods.getGoodsSaleState(), goods, goodsImg);
-        goodsWd(viewHolder, goods.getGoodsWd(), (ImageView) viewHolder.getView(R.id.more_goods_item_img_wd));
+        goodsWd( goods.getGoodsWd(), (ImageView) viewHolder.getView(R.id.more_goods_item_img_wd));
         goodsType(viewHolder, goods.getGoodsType(), goodsImg);
     }
 
@@ -115,11 +116,11 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
     /**
      * 温度状态
      *
-     * @param viewHolder
      * @param wd
      * @param imageView
      */
-    public void goodsWd(MyViewHolder viewHolder, int wd, ImageView imageView) {
+    public void goodsWd( int wd, ImageView imageView) {
+        Log.e("GvMoreGoodsAdapter", "wd:" + wd);
         if (wd == Goods.GOODS_WD_COLD) {
             imageView.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(R.mipmap.logo_cold).into(imageView);

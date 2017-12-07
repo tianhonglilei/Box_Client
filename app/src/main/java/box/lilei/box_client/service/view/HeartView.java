@@ -5,4 +5,15 @@ package box.lilei.box_client.service.view;
  */
 
 public interface HeartView {
+
+    /**
+     * 重启app
+     */
+    void restartApp();
+
+    /**
+     * 启动更新完成后的app
+     */
+    void startAppAfterUpdate();
+
 }

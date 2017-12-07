@@ -45,7 +45,7 @@
             android:layout_marginTop="50dp"
             android:text="@string/dialog_txt_info_fail"
             android:textColor="@color/colorDemoLogo"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/pay_dialog_img"
