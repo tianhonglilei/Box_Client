@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    tools:context="box.lilei.box_client.com.lilei.box_client.client.view.activity.MoreGoodsActivity">
+    tools:context="com.zhang.box.client.view.activity.MoreGoodsActivity">
 
     <include layout="@layout/client_logo_date"
         android:layout_width="match_parent"

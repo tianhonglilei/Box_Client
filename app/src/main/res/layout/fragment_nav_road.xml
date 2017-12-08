@@ -3,7 +3,7 @@
     android:layout_width="1050dp"
     android:layout_height="match_parent"
     android:background="@color/colorWhiteTxt"
-    tools:context="box.lilei.box_client.com.lilei.box_client.manager.view.fragment.NavGoodsFragment">
+    tools:context="com.zhang.box.manager.view.fragment.NavGoodsFragment">
     <TextView
         android:id="@+id/nav_road_txt_robot"
         android:layout_width="wrap_content"

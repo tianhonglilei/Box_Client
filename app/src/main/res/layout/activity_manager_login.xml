@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="box.lilei.box_client.com.lilei.box_client.manager.view.activity.LoginActivity"
+    tools:context="com.zhang.box.manager.view.activity.LoginActivity"
     android:background="@color/colorWhiteTxt">
 
 

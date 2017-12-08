@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="box.lilei.box_client.com.lilei.box_client.client.view.activity.ActiveActivity">
+    tools:context="com.zhang.box.client.view.activity.ActiveActivity">
 
 
 
