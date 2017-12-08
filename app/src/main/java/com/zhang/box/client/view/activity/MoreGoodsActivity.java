@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.zhang.box.application.BaseApplication;
 import com.zhang.box.client.model.Goods;
 
 import java.util.Timer;
@@ -98,6 +99,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_more_goods_activity);
         ButterKnife.bind(this);
+        BaseApplication.addActivityToList(this);
         mContext = this;
         dataIntent = this.getIntent();
         Glide.with(mContext).load(R.drawable.more_goods_up).into(moreGoodsUpGif);

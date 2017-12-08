@@ -124,8 +124,11 @@ public class ActivePresenterImpl implements ActivePresenter {
         JSONArray roadJsonArray = null;
         JSONArray goodsJsonArray = null;
         JSONObject percentJsonObject = null;
+        String company = null;
         if (mainJson != null) {
             try {
+                company = mainJson.getString("company");
+                SharedPreferencesUtil.putString(mContext, BoxParams.COMPANY, company);
                 urlString = mainJson.getString("img_url");
                 adJsonArray = mainJson.getJSONArray("adv");
                 roadJsonArray = mainJson.getJSONArray("huodao");
@@ -171,7 +174,7 @@ public class ActivePresenterImpl implements ActivePresenter {
                 public void run() {
                     saveBoxSetting();
                 }
-            },13000);
+            }, 13000);
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {

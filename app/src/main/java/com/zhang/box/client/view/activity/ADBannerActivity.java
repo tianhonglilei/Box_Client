@@ -3,8 +3,10 @@ package com.zhang.box.client.view.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,7 +25,9 @@ import android.widget.MediaController;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.zhang.box.application.BaseApplication;
 import com.zhang.box.box.BoxAction;
+import com.zhang.box.box.BoxParams;
 import com.zhang.box.client.model.ADInfo;
 import com.zhang.box.client.model.RoadGoods;
 import com.zhang.box.client.model.RoadInfo;
@@ -31,6 +35,7 @@ import com.zhang.box.client.presenter.ADBannerPresenter;
 import com.zhang.box.client.presenter.WeatherPresenter;
 import com.zhang.box.client.presenter.impl.ADBannerPresenterImpl;
 import com.zhang.box.client.presenter.impl.WeatherPresenterImpl;
+import com.zhang.box.client.receiver.AVMRunningBroadcastReceiver;
 import com.zhang.box.client.view.ADBannerView;
 import com.zhang.box.client.widget.FullVideoView;
 import com.zhang.box.contants.Constants;
@@ -131,12 +136,18 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     //Loading
     ZLoadingDialog dialog;
 
+    //检测中控机连接广播
+    AVMRunningBroadcastReceiver avmRunningBroadcastReceiver;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_adbanner_activity);
         ButterKnife.bind(this);
         appContext = getApplicationContext();
+        BaseApplication.addActivityToList(this);
+
         showDialog("加载中...");
         //初始化部分对象
         init();
@@ -151,7 +162,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         startAutoScroll();
         initDateAndWeather();
         
-//        startHeartService();
+        startHeartService();
 
     }
 
@@ -284,8 +295,14 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
      * 启动心跳服务
      */
     private void startHeartService() {
+        HeartService heartService = new HeartService(this);
         Intent intent = new Intent(this, HeartService.class);
         startService(intent);
+
+        avmRunningBroadcastReceiver = new AVMRunningBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("com.avm.serialport.NOTICE_AVM_DISCONNECT");
+        registerReceiver(avmRunningBroadcastReceiver, filter);
     }
 
 

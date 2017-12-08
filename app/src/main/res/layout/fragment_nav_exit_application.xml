@@ -18,7 +18,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="344dp"
             android:layout_marginTop="250dp"
-            android:text="确定退出程序么？"
+            android:text="确定退出程序么？(继续销售请重启机器即可)"
             android:textColor="@color/colorGaryFiveTwo"
             android:textSize="24sp" />
 

@@ -19,6 +19,9 @@ public class BoxParams {
     public static final String COLD_TEMP = "cold_temp";
     public static final String HOT_TEMP = "hot_temp";
     public static final String HAVE_FOOD = "have_food";
+    public static final String COMPANY = "company";
+    public static final String DOOR_STATE = "door_state";
+    public static final String ERROR_MSG = "error_msg";
 
     private String avmSetInfo;
 

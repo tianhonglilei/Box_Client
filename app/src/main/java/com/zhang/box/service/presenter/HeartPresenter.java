@@ -11,9 +11,5 @@ public interface HeartPresenter {
      */
     void sendHeartInfo();
 
-    /**
-     * 从机器获取心跳信息
-     */
-    void getHeartInfo();
 
 }

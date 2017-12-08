@@ -14,6 +14,6 @@ public interface HeartView {
     /**
      * 启动更新完成后的app
      */
-    void startAppAfterUpdate();
+    void startAppAfterUpdate(String version);
 
 }

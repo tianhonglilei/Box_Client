@@ -34,6 +34,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import box.lilei.box_client.R;
+
+import com.zhang.box.application.BaseApplication;
 import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxParams;
 import com.zhang.box.client.listener.OutGoodsListener;
@@ -162,6 +164,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_pay_activity);
         ButterKnife.bind(this);
+        BaseApplication.addActivityToList(this);
         mContext = this;
         dataIntent = this.getIntent();
         roadGoods = dataIntent.getParcelableExtra("roadGoods");

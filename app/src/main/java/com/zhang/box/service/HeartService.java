@@ -12,22 +12,27 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.zhang.box.client.view.BaseView;
+import com.zhang.box.client.view.ADBannerView;
 import com.zhang.box.contants.Constants;
+import com.zhang.box.service.presenter.HeartPresenter;
+import com.zhang.box.service.presenter.impl.HeartPresenterImpl;
 import com.zhang.box.service.view.HeartView;
 
-public class HeartService extends Service implements  HeartView {
-    public static final String LIVE_SERVICE_NAME = "";
-    public static final String LIVE_SERVICE_PACKAGE_NAME = "";
+public class HeartService extends Service implements HeartView {
+    public static final String LIVE_SERVICE_NAME = ".RunningBoxService";
+    public static final String LIVE_SERVICE_PACKAGE_NAME = "com.wh.boxservies";
 
     //心跳间隔
     public static final int BOX_HEART_TIME = 1000 * 60 * 5;
 
-    private BaseView baseView;
+    Context mContext;
+    ADBannerView adBannerView;
+    HeartPresenter heartPresenter;
 
-    public void setBaseView(BaseView baseView) {
-        this.baseView = baseView;
+    public HeartService(ADBannerView adBannerView) {
+        this.adBannerView = adBannerView;
     }
+
 
     Timer timer;
 
@@ -40,12 +45,13 @@ public class HeartService extends Service implements  HeartView {
                 if (!isServiceRunning(getApplicationContext(), LIVE_SERVICE_PACKAGE_NAME + LIVE_SERVICE_NAME)) {
                     startLiveService();
                 }
-
-
+                heartPresenter.sendHeartInfo();
             }
-        },5000,BOX_HEART_TIME);
+        }, 5000, BOX_HEART_TIME);
         return START_REDELIVER_INTENT;
     }
+
+
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -53,6 +59,12 @@ public class HeartService extends Service implements  HeartView {
         return null;
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        mContext = getApplicationContext();
+        heartPresenter = new HeartPresenterImpl(mContext, adBannerView, this);
+    }
 
     @Override
     public void restartApp() {
@@ -63,9 +75,9 @@ public class HeartService extends Service implements  HeartView {
     }
 
     @Override
-    public void startAppAfterUpdate() {
+    public void startAppAfterUpdate(String version) {
         String path = Constants.DEMO_FILE_PATH
-                + "/update/Box_Client.apk";
+                + "/Box_" + version + ".apk";
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setDataAndType(Uri.parse("file://" + path),
@@ -105,6 +117,8 @@ public class HeartService extends Service implements  HeartView {
         intent.setComponent(new ComponentName(LIVE_SERVICE_PACKAGE_NAME, LIVE_SERVICE_PACKAGE_NAME + LIVE_SERVICE_NAME));//设置一个组件名称  同组件名来启动所需要启动Service
         startService(intent);
     }
+
+
 
 
 }

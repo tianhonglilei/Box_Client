@@ -23,6 +23,8 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.zhang.box.application.BaseApplication;
+import com.zhang.box.box.BoxParams;
 import com.zhang.box.box.BoxSetting;
 
 
@@ -47,11 +49,15 @@ public class ExceptionHandler implements UncaughtExceptionHandler {
     //用于格式化日期,作为日志文件名的一部分
     private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 
-    /** 保证只有一个CrashHandler实例 */
+    /**
+     * 保证只有一个CrashHandler实例
+     */
     private ExceptionHandler() {
     }
 
-    /** 获取CrashHandler实例 ,单例模式 */
+    /**
+     * 获取CrashHandler实例 ,单例模式
+     */
     public static ExceptionHandler getInstance() {
         return INSTANCE;
     }
@@ -85,8 +91,7 @@ public class ExceptionHandler implements UncaughtExceptionHandler {
                 e.printStackTrace();
             }
             //退出程序
-            android.os.Process.killProcess(android.os.Process.myPid());
-            System.exit(1);
+            BaseApplication.exitAllActivity();
         }
     }
 
@@ -118,6 +123,7 @@ public class ExceptionHandler implements UncaughtExceptionHandler {
 
     /**
      * 收集设备参数信息
+     *
      * @param ctx
      */
     public void collectDeviceInfo(Context ctx) {
@@ -149,7 +155,7 @@ public class ExceptionHandler implements UncaughtExceptionHandler {
      * 保存错误信息到文件中
      *
      * @param ex
-     * @return  返回文件名称,便于将文件传送到服务器
+     * @return 返回文件名称, 便于将文件传送到服务器
      */
     private String saveCrashInfo2File(Throwable ex) {
 
@@ -164,10 +170,13 @@ public class ExceptionHandler implements UncaughtExceptionHandler {
         PrintWriter printWriter = new PrintWriter(writer);
         ex.printStackTrace(printWriter);
         Throwable cause = ex.getCause();
+        StringBuilder stringBuilder = new StringBuilder();
         while (cause != null) {
             cause.printStackTrace(printWriter);
             cause = cause.getCause();
+            stringBuilder.append(cause);
         }
+        SharedPreferencesUtil.putString(mContext, BoxParams.ERROR_MSG, stringBuilder.toString());
         printWriter.close();
         String result = writer.toString();
         sb.append(result);

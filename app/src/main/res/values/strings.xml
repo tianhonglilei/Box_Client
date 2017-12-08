@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DC-BOX</string>
+    <string name="app_name">Box</string>
     <string name="client_home_more">更多商品</string>
     <string name="client_home_recommend">点创推荐</string>
     <string name="allGoodsTxt">全部商品</string>

@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhang.box.box.BoxAction;
+import com.zhang.box.box.BoxParams;
 import com.zhang.box.client.biz.PercentBiz;
 import com.zhang.box.client.biz.impl.PercenteBizImpl;
 import com.zhang.box.client.model.Goods;
@@ -37,6 +38,7 @@ import java.util.TimerTask;
 
 import com.zhang.box.client.model.PercentInfo;
 import com.zhang.box.util.ParamsUtils;
+import com.zhang.box.util.SharedPreferencesUtil;
 
 /**
  * Created by lilei on 2017/11/9.
@@ -108,14 +110,15 @@ public class PayPresenterImpl implements PayPresenter {
         String subject = des + "|" + goodsId + "|"
                 + roadIndex + "|" + box_id + "|"
                 + boxType;
+        String company = SharedPreferencesUtil.getString(mContext, BoxParams.COMPANY);
         final String mchTradeNo = MyStringUtil.getRandonInt(20);
         Map<String, String> params;
         if (payType == Constants.PAY_TYPE_WX) {
             //微信二维码
-            params = ParamsUtils.wxGetQRParams(Double.toString(price), des, mchTradeNo, subject);
+            params = ParamsUtils.wxGetQRParams(Double.toString(price), des, mchTradeNo, subject, company);
         } else if (payType == Constants.PAY_TYPE_ALI) {
             //支付宝二维码
-            params = ParamsUtils.aliGetQRParams(tradeno, Double.toString(price), title, des);
+            params = ParamsUtils.aliGetQRParams(tradeno, Double.toString(price), title, des, company);
         } else {
             params = new HashMap<>();
         }
@@ -334,9 +337,9 @@ public class PayPresenterImpl implements PayPresenter {
 
             @Override
             public void onFail(Object errorObject) {
-                if (errorObject instanceof OkHttpException){
-                    ((OkHttpException)errorObject).getEmsg();
-                    ((Exception)errorObject).printStackTrace();
+                if (errorObject instanceof OkHttpException) {
+                    ((OkHttpException) errorObject).getEmsg();
+                    ((Exception) errorObject).printStackTrace();
                 }
             }
         }));

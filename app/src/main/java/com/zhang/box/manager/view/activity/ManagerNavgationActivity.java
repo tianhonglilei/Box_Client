@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.common.controls.dialog.CommonDialogFactory;
 import com.common.controls.dialog.DialogUtil;
 import com.common.controls.dialog.ICommonDialog;
+import com.zhang.box.application.BaseApplication;
 import com.zhang.box.box.BoxAction;
 import com.zhang.box.manager.view.fragment.NavExitApplicationFragment;
 import com.zhang.box.manager.view.fragment.NavExitManagerFragment;
@@ -59,6 +60,7 @@ public class ManagerNavgationActivity extends FragmentActivity {
         setContentView(R.layout.activity_manager_navgation);
         ButterKnife.bind(this);
         mContext = this;
+        BaseApplication.addActivityToList(this);
         managerHeadTxtImei.setText(BoxAction.getBoxIdFromSP(mContext));
 
         initView();

@@ -1,5 +1,6 @@
 package com.zhang.box.application;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
@@ -9,6 +10,7 @@ import com.avm.serialport_142.MainHandler;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.io.File;
+import java.util.List;
 
 import com.zhang.box.box.BoxSetting;
 import com.zhang.box.contants.Constants;
@@ -31,7 +33,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if(mInstance == null) {
+        if (mInstance == null) {
             mInstance = this;
         }
 
@@ -76,10 +78,7 @@ public class BaseApplication extends Application {
 //        UMConfigure.setLogEnabled(true);
 
 
-
-
     }
-
 
 
     private void initSDKiniFile() {
@@ -141,7 +140,7 @@ public class BaseApplication extends Application {
         return daoSession;
     }
 
-    public void initBoxCheck(){
+    public void initBoxCheck() {
         int loadResult = MainHandler.load(this);
         if (loadResult == MainHandler.ERROR_NO_SDCARD) {
             Toast.makeText(mInstance, "系统没有内存卡", Toast.LENGTH_SHORT).show();
@@ -151,9 +150,25 @@ public class BaseApplication extends Application {
             Toast.makeText(mInstance, "系统没有连接网络", Toast.LENGTH_SHORT).show();
         } else if (loadResult == MainHandler.LOAD_DATA_SUCCESS) {
             Toast.makeText(mInstance, "加载成功", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(mInstance, "其他错误", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private static List<Activity> activityList;
+
+    public static void addActivityToList(Activity activity){
+        activityList.add(activity);
+    }
+    public static void exitAllActivity() {
+        for (Activity activity :
+                activityList) {
+            if (activity != null) {
+                activity.finish();
+            }
+        }
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(1);
     }
 
 }

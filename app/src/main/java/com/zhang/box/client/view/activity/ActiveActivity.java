@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avm.serialport_142.MainHandler;
+import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxParams;
 import com.zhang.box.client.listener.NetEvent;
 import com.zhang.box.client.presenter.ActivePresenter;
@@ -183,7 +184,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
 
     @Override
     public void skipToADBannerActivity() {
-        if (MainHandler.isAvmRunning()){
+        if (BoxAction.getAVMRunning()){
             Intent intent = new Intent(ActiveActivity.this, ADBannerActivity.class);
             startActivity(intent);
             finish();

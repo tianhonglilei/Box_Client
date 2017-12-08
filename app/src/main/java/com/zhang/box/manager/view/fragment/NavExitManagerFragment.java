@@ -38,6 +38,8 @@ public class NavExitManagerFragment extends Fragment implements View.OnClickList
         mContext = getContext();
         unbinder = ButterKnife.bind(NavExitManagerFragment.this, view);
 
+        exitManagerBtn.setOnClickListener(this);
+
         return view;
     }
 

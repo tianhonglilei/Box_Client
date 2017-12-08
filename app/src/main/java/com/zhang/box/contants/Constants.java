@@ -18,6 +18,7 @@ public class Constants {
     public static final String DEMO_FILE_PATH = Environment.getExternalStorageDirectory().toString() + "/Box_client";
 
 
+
     //天气接口获取weather接口
     public static final String WEATHER_INFO_URL = "http://www.sojson.com/open/api/weather/json.shtml?city=%E5%8C%97%E4%BA%AC";
 
@@ -25,9 +26,11 @@ public class Constants {
     /**
      * 前端模块接口
      */
-
     //初始化数据获取
     public static final String BANNER_AD_URL = MAIN_URL_ONE + "/dc/boxapp/?c=app&m=initialize_data";
+    //心跳接口
+    public static final String HEART_URL = MAIN_URL_ONE + "/dc/boxapp/?c=app&m=machine_heart";
+
 
     /**
      * 微信支付
@@ -56,4 +59,7 @@ public class Constants {
      */
     //补货接口
     public static final String GOODS_NUM_ADD = MAIN_URL_ONE + "/dc/boxapp/?c=app&m=buhuo";
+
+
+
 }
