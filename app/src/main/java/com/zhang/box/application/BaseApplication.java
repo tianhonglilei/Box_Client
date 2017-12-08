@@ -50,7 +50,7 @@ public class BaseApplication extends Application {
 
         //初始化异常捕捉
         ExceptionHandler exceptionHandler = ExceptionHandler.getInstance();
-//        exceptionHandler.init(this);
+        exceptionHandler.init(this);
 
 
         /**
