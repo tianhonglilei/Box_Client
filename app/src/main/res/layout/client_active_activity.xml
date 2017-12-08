@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="box.lilei.box_client.client.view.activity.ActiveActivity">
+    tools:context="box.lilei.box_client.com.lilei.box_client.client.view.activity.ActiveActivity">
 
 
 
-    <box.lilei.box_client.loading.ZLoadingView
+    <com.zhang.box.loading.ZLoadingView
         android:id="@+id/active_bg_loading"
         android:layout_width="450dp"
         android:layout_height="150dp"

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhiteTxt"
-    tools:context="box.lilei.box_client.manager.view.fragment.NavSettingFragment">
+    tools:context="box.lilei.box_client.com.lilei.box_client.manager.view.fragment.NavSettingFragment">
 
 
     <TextView

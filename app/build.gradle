@@ -6,7 +6,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "26.0.1"
     defaultConfig {
-        applicationId "box.lilei.box_client"
+        applicationId "com.zhang.box"
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
@@ -24,7 +24,7 @@ android {
 
     greendao{
         schemaVersion 5
-        daoPackage 'box.lilei.box_client.db'
+        daoPackage 'com.zhang.box.db'
         targetGenDir 'src/main/java'
     }
     sourceSets {

@@ -1,0 +1,14 @@
+package com.zhang.box.client.presenter;
+
+/**
+ * Created by lilei on 2017/10/16.
+ */
+
+public interface WeatherPresenter {
+
+    /**
+     * 获取当天天气信息
+     */
+    void getWeatherInfo();
+
+}

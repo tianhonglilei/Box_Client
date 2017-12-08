@@ -27,28 +27,28 @@
     <uses-permission android:name="android.permission.MOUNT_FORMAT_FILESYSTEMS" />
 
     <application
-        android:name=".application.BaseApplication"
+        android:name="com.zhang.box.application.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/logo_two"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         <activity
-            android:name=".client.view.activity.ADBannerActivity"
+            android:name="com.zhang.box.client.view.activity.ADBannerActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".client.view.activity.MoreGoodsActivity"
+            android:name="com.zhang.box.client.view.activity.MoreGoodsActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".client.view.activity.PayActivity"
+            android:name="com.zhang.box.client.view.activity.PayActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".manager.view.activity.LoginActivity"
+            android:name="com.zhang.box.manager.view.activity.LoginActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".manager.view.activity.ManagerNavgationActivity"
+            android:name="com.zhang.box.manager.view.activity.ManagerNavgationActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".client.view.activity.ActiveActivity"
+            android:name="com.zhang.box.client.view.activity.ActiveActivity"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,24 +58,24 @@
         </activity>
 
         <service
-            android:name=".service.HeartService"
+            android:name="com.zhang.box.service.HeartService"
             android:enabled="true"
             android:exported="true" />
 
         <receiver
-            android:name=".client.receiver.OpenDoorBroadcastReceiver"
+            android:name="com.zhang.box.client.receiver.OpenDoorBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
         <receiver
-            android:name=".client.receiver.NetBroadcastReceiver"
+            android:name="com.zhang.box.client.receiver.NetBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
         <receiver
-            android:name=".client.receiver.GoodsBroadcastReceiver"
+            android:name="com.zhang.box.client.receiver.GoodsBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
         <receiver
-            android:name=".client.receiver.AutoStartBroadcastReceiver"
+            android:name="com.zhang.box.client.receiver.AutoStartBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -83,7 +83,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".client.receiver.AVMRunningBroadcastReceiver"
+            android:name="com.zhang.box.client.receiver.AVMRunningBroadcastReceiver"
             android:enabled="true"
             android:exported="true"></receiver>
     </application>
