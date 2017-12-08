@@ -124,7 +124,7 @@ public class ActivePresenterImpl implements ActivePresenter {
         JSONArray roadJsonArray = null;
         JSONArray goodsJsonArray = null;
         JSONObject percentJsonObject = null;
-        String company = null;
+        String company;
         if (mainJson != null) {
             try {
                 company = mainJson.getString("company");
