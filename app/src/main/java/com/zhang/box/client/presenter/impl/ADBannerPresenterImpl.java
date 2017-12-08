@@ -7,6 +7,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.zhang.box.R;
 import com.zhang.box.client.adapter.GvHomeGoodsAdapter;
 import com.zhang.box.client.adapter.LvAdImgAdapter;
 import com.zhang.box.client.biz.AdBiz;
@@ -25,7 +26,6 @@ import com.zhang.box.db.biz.PercentBeanService;
 import java.util.ArrayList;
 import java.util.List;
 
-import box.lilei.box_client.R;
 import com.zhang.box.box.BoxParams;
 import com.zhang.box.client.biz.impl.AdBizImpl;
 import com.zhang.box.client.biz.impl.RoadBizImpl;

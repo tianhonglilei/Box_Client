@@ -7,7 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import box.lilei.box_client.R;
+import com.zhang.box.R;
+
 
 /**
  * A simple {@link Fragment} subclass.

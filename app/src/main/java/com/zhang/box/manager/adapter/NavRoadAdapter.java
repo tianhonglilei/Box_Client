@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.zhang.box.R;
 import com.zhang.box.client.adapter.MyBaseAdapter;
 import com.zhang.box.client.adapter.MyViewHolder;
 import com.zhang.box.client.model.Goods;
@@ -12,7 +13,6 @@ import com.zhang.box.client.model.RoadGoods;
 
 import java.util.List;
 
-import box.lilei.box_client.R;
 
 import com.zhang.box.contants.Constants;
 

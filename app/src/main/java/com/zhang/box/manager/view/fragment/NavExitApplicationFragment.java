@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.zhang.box.R;
 import com.zhang.box.application.BaseApplication;
 import com.zhang.box.service.HeartService;
 
-import box.lilei.box_client.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;

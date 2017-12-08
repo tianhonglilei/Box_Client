@@ -3,6 +3,7 @@ package com.zhang.box.client.presenter.impl;
 import android.content.Context;
 import android.widget.GridView;
 
+import com.zhang.box.R;
 import com.zhang.box.box.BoxParams;
 import com.zhang.box.client.biz.GoodsBiz;
 import com.zhang.box.client.biz.RoadBiz;
@@ -19,7 +20,6 @@ import com.zhang.box.util.SharedPreferencesUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import box.lilei.box_client.R;
 
 import com.zhang.box.client.adapter.GvMoreGoodsAdapter;
 

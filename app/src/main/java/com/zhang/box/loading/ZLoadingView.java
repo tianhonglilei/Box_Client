@@ -6,7 +6,8 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 
-import box.lilei.box_client.R;
+import com.zhang.box.R;
+
 
 /**
  *

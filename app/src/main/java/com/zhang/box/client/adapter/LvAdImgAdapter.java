@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide;
 import java.io.File;
 import java.util.List;
 
-import box.lilei.box_client.R;
+import com.zhang.box.R;
 import com.zhang.box.client.model.ADInfo;
 import com.zhang.box.contants.Constants;
 

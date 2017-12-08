@@ -8,7 +8,7 @@ import com.avm.serialport_142.MainHandler;
 
 public class BoxSetting {
     //应用包名
-    public static final String BOX_PACKAGE_NAME = "box.lilei.box_client";
+    public static final String BOX_PACKAGE_NAME = "com.zhang.box";
 
     //货柜类型
     public static final String BOX_TYPE_DRINK = "11";//饮料机

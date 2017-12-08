@@ -7,9 +7,9 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 
 
+import com.zhang.box.R;
 import com.zhang.box.loading.text.TextBuilder;
 
-import box.lilei.box_client.R;
 
 /**
  *

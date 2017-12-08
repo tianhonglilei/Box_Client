@@ -7,6 +7,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zhang.box.R;
 import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.biz.RoadBiz;
 import com.zhang.box.client.model.RoadGoods;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import box.lilei.box_client.R;
 import com.zhang.box.box.BoxParams;
 import com.zhang.box.client.biz.impl.RoadBizImpl;
 import com.zhang.box.client.model.RoadInfo;

@@ -18,6 +18,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zhang.box.R;
 import com.zhang.box.loading.Z_TYPE;
 import com.zhang.box.manager.presenter.NavTempPresenter;
 import com.zhang.box.manager.presenter.impl.NavTempPresenterImpl;
@@ -26,7 +27,6 @@ import com.zhang.box.util.ToastTools;
 import java.util.ArrayList;
 import java.util.List;
 
-import box.lilei.box_client.R;
 import com.zhang.box.box.BoxParams;
 import com.zhang.box.loading.ZLoadingDialog;
 import com.zhang.box.manager.view.NavTempFragmentView;

@@ -11,7 +11,7 @@ import android.text.TextUtils;
 import android.view.animation.AccelerateInterpolator;
 
 
-import box.lilei.box_client.R;
+import com.zhang.box.R;
 import com.zhang.box.loading.ZLoadingBuilder;
 
 /**

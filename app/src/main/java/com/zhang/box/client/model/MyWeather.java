@@ -1,6 +1,7 @@
 package com.zhang.box.client.model;
 
-import box.lilei.box_client.R;
+
+import com.zhang.box.R;
 
 /**
  * Created by lilei on 2017/10/12.

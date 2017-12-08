@@ -7,7 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import box.lilei.box_client.R;
+import com.zhang.box.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

@@ -8,13 +8,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.zhang.box.R;
 import com.zhang.box.client.model.Goods;
 import com.zhang.box.client.model.RoadGoods;
 
 import java.io.File;
 import java.util.List;
 
-import box.lilei.box_client.R;
 
 import com.zhang.box.client.model.RoadInfo;
 import com.zhang.box.client.view.activity.ADBannerActivity;

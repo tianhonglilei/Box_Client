@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.common.controls.dialog.CommonDialogFactory;
 import com.common.controls.dialog.DialogUtil;
 import com.common.controls.dialog.ICommonDialog;
+import com.zhang.box.R;
 import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.model.Goods;
 import com.zhang.box.client.model.RoadGoods;
@@ -33,7 +34,6 @@ import com.zhang.box.manager.view.NavGoodsFragmentView;
 
 import java.util.List;
 
-import box.lilei.box_client.R;
 
 /**
  * A simple {@link Fragment} subclass.

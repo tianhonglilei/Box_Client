@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avm.serialport_142.MainHandler;
+import com.zhang.box.R;
 import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxParams;
 import com.zhang.box.client.listener.NetEvent;
@@ -29,7 +30,6 @@ import com.zhang.box.loading.Z_TYPE;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import box.lilei.box_client.R;
 
 import com.zhang.box.client.presenter.impl.ActivePresenterImpl;
 import com.zhang.box.client.receiver.NetBroadcastReceiver;

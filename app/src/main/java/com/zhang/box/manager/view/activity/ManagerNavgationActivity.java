@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.common.controls.dialog.CommonDialogFactory;
 import com.common.controls.dialog.DialogUtil;
 import com.common.controls.dialog.ICommonDialog;
+import com.zhang.box.R;
 import com.zhang.box.application.BaseApplication;
 import com.zhang.box.box.BoxAction;
 import com.zhang.box.manager.view.fragment.NavExitApplicationFragment;
@@ -27,7 +28,6 @@ import com.zhang.box.manager.view.fragment.NavSettingFragment;
 import com.zhang.box.manager.view.fragment.NavTempFragment;
 import com.zhang.box.manager.view.fragment.NavVersionFragment;
 
-import box.lilei.box_client.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

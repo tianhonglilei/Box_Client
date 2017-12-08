@@ -7,13 +7,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.zhang.box.R;
 import com.zhang.box.client.model.Goods;
 import com.zhang.box.client.model.RoadGoods;
 import com.zhang.box.contants.Constants;
 
 import java.util.List;
 
-import box.lilei.box_client.R;
 
 /**
  * Created by lilei on 2017/9/25.

@@ -16,7 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import box.lilei.box_client.R;
+import com.zhang.box.R;
 import com.zhang.box.box.BoxParams;
 import com.zhang.box.loading.ZLoadingDialog;
 import com.zhang.box.loading.Z_TYPE;

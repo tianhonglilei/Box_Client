@@ -23,13 +23,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.zhang.box.R;
 import com.zhang.box.application.BaseApplication;
 import com.zhang.box.client.model.Goods;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import box.lilei.box_client.R;
 import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxParams;
 import com.zhang.box.client.model.RoadGoods;

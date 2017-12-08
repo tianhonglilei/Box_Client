@@ -7,9 +7,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.zhang.box.R;
+
 import java.lang.ref.WeakReference;
 
-import box.lilei.box_client.R;
 
 /**
  *

@@ -25,6 +25,7 @@ import android.widget.MediaController;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.zhang.box.R;
 import com.zhang.box.application.BaseApplication;
 import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxParams;
@@ -49,7 +50,6 @@ import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import box.lilei.box_client.R;
 
 import com.zhang.box.client.model.MyWeather;
 
