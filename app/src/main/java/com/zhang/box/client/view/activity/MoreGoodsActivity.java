@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.MediaPlayer;
@@ -25,8 +27,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.zhang.box.R;
 import com.zhang.box.application.BaseApplication;
+import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.model.Goods;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,6 +42,7 @@ import com.zhang.box.client.presenter.MoreGoodsPresenter;
 import com.zhang.box.client.presenter.impl.MoreGoodsPresenterImpl;
 import com.zhang.box.client.receiver.OpenDoorBroadcastReceiver;
 import com.zhang.box.client.view.MoreGoodsView;
+import com.zhang.box.util.BroadcastReceiverUtil;
 import com.zhang.box.util.SharedPreferencesUtil;
 import com.zhang.box.util.ToastTools;
 import butterknife.BindView;
@@ -258,7 +263,9 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         MoreGoodsActivity.this.setResult(result);
         MoreGoodsActivity.this.finish();
         if (openDoorBroadcastReceiver!=null){
-            unregisterReceiver(openDoorBroadcastReceiver);
+            if (BroadcastReceiverUtil.broadcastReceiverIsRegister(mContext,"com.avm.serialport.door_state")){
+                unregisterReceiver(openDoorBroadcastReceiver);
+            }
         }
     }
 
@@ -270,7 +277,9 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             countDownTimer = null;
         }
         if (openDoorBroadcastReceiver!=null){
-            unregisterReceiver(openDoorBroadcastReceiver);
+            if (BroadcastReceiverUtil.broadcastReceiverIsRegister(mContext,"com.avm.serialport.door_state")){
+                unregisterReceiver(openDoorBroadcastReceiver);
+            }
         }
     }
 
