@@ -92,7 +92,7 @@ public class HeartPresenterImpl implements HeartPresenter {
         }
         String door = BoxAction.getAVMRunning() ? "0" : "1";
         if (door.equals("1")){
-            disConnection();
+//            disConnection();
         }
         String msg = SharedPreferencesUtil.getString(mContext, BoxParams.ERROR_MSG);
         PackageInfo pinfo;
