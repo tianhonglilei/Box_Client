@@ -10,6 +10,7 @@ import com.avm.serialport_142.MainHandler;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.zhang.box.box.BoxSetting;
@@ -36,7 +37,7 @@ public class BaseApplication extends Application {
         if (mInstance == null) {
             mInstance = this;
         }
-
+        activityList = new ArrayList<>();
         //初始化SDK配置文件
         initSDKiniFile();
         //创建资源文件夹
