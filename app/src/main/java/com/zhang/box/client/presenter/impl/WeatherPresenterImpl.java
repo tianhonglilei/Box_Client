@@ -47,15 +47,26 @@ public class WeatherPresenterImpl implements WeatherPresenter {
                     public void onSuccess(Object responseObject) {
                         JSONObject jsonObject = null;
                         try {
-                            jsonObject = new JSONObject((String)responseObject);
+                            jsonObject = new JSONObject((String) responseObject);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                         WeatherTestInfo weatherInfo = (WeatherTestInfo) ResponseEntityToModule.parseJsonObjectToModule(jsonObject, WeatherTestInfo.class);
-                        if (weatherInfo!=null) {
-                            myWeather.setWeather(weatherInfo.getData().getForecast().get(0).getType());
-                            myWeather.setTemp(weatherInfo.getData().getWendu() + "℃");
-                            adBannerView.changeWeather(myWeather);
+                        if (weatherInfo != null) {
+                            if (weatherInfo.getData() != null) {
+                                if (weatherInfo.getData().getForecast() != null) {
+                                    if (weatherInfo.getData().getForecast().get(0) != null) {
+                                        myWeather.setWeather(weatherInfo.getData().getForecast().get(0).getType());
+                                        if (weatherInfo.getData().getWendu() != null) {
+                                            myWeather.setTemp(weatherInfo.getData().getWendu() + "℃");
+                                            adBannerView.changeWeather(myWeather);
+                                        }
+
+                                    }
+                                }
+                            }
+
+
                         }
                     }
 
