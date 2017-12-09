@@ -33,6 +33,7 @@ public class HeartService extends Service implements HeartView {
         this.adBannerView = adBannerView;
     }
 
+    public HeartService(){}
 
     Timer timer;
 
