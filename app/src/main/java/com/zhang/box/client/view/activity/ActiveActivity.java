@@ -190,7 +190,6 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
             startActivity(intent);
             finish();
         }else{
-            Toast.makeText(mContext, "通讯失败，正在重启...", Toast.LENGTH_SHORT).show();
             restartApp();
         }
 
