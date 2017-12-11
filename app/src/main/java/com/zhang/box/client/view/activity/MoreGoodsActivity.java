@@ -42,10 +42,11 @@ import com.zhang.box.client.view.MoreGoodsView;
 import com.zhang.box.util.BroadcastReceiverUtil;
 import com.zhang.box.util.SharedPreferencesUtil;
 import com.zhang.box.util.ToastTools;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MoreGoodsActivity extends Activity implements View.OnClickListener, MoreGoodsView{
+public class MoreGoodsActivity extends Activity implements View.OnClickListener, MoreGoodsView {
 
 
     //向上的GIF
@@ -128,6 +129,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
 
     private OpenDoorBroadcastReceiver openDoorBroadcastReceiver;
+
     /**
      * 初始化开门广播
      */
@@ -195,14 +197,15 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         });
     }
 
-    private int result = 0;
+    private int resultRefresh = 0;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 //        Log.e("MoreGoodsActivity", "requestCode:" + requestCode + "--resultCode:" + resultCode);
         switch (resultCode) {
             case 2:
-                result = 2;
+                resultRefresh = 2;
                 moreGoodsPresenter.initAllGoods(moreGoodsGv);
                 break;
         }
@@ -259,15 +262,22 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     }
 
     private void returnAndFinish() {
-        MoreGoodsActivity.this.setResult(result);
-        MoreGoodsActivity.this.finish();
-        if (openDoorBroadcastReceiver!=null){
-            if (BroadcastReceiverUtil.broadcastReceiverIsRegister(mContext,"com.avm.serialport.door_state")){
+        if (openDoorBroadcastReceiver != null) {
+            if (BroadcastReceiverUtil.broadcastReceiverIsRegister(mContext, "com.avm.serialport.door_state")) {
                 unregisterReceiver(openDoorBroadcastReceiver);
-            }else{
+            } else {
                 openDoorBroadcastReceiver = null;
             }
         }
+        if (phoneStateListener != null) {
+            phoneStateListener = null;
+        }
+        if (telephonyManager != null) {
+            telephonyManager = null;
+        }
+
+        MoreGoodsActivity.this.setResult(resultRefresh);
+        MoreGoodsActivity.this.finish();
     }
 
     @Override
@@ -284,7 +294,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         super.onResume();
         initDoorReceiver();
         initCountDownTimer();
-        if (openDoorBroadcastReceiver!=null){
+        if (openDoorBroadcastReceiver != null) {
             openDoorBroadcastReceiver.setShow(false);
         }
     }
@@ -342,12 +352,16 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         }
     }
 
+
+    TelephonyManager telephonyManager;
+    PhoneStateListener phoneStateListener;
+
     /**
      * 初始化信号监听
      */
     public void initSignListener() {
-        final TelephonyManager telephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-        PhoneStateListener phoneStateListener = new PhoneStateListener() {
+        telephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        phoneStateListener = new PhoneStateListener() {
             @Override
             public void onSignalStrengthsChanged(SignalStrength signalStrength) {
                 super.onSignalStrengthsChanged(signalStrength);
@@ -356,7 +370,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 Toast.makeText(mContext, signalInfo, Toast.LENGTH_LONG).show();
                 if (telephonyManager.getNetworkType() == TelephonyManager.NETWORK_TYPE_LTE) {
                     //4G网络 最佳范围   >-90dBm 越大越好
-                    int ltedbm = Integer.parseInt(params[9]);
+                    int ltedbm = Integer.parseInt(params[3]);
                     if (ltedbm > -44) {
                         changeSignSize(0);
                     } else if (ltedbm >= -90) {
@@ -406,18 +420,18 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
      * 初始化动画
      */
     private void initAnimation() {
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    moreGoodsGv.smoothScrollBy(moreGoodsGv.getMeasuredHeight(),1000);
-                }
-            },2000);
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    moreGoodsGv.smoothScrollBy(-moreGoodsGv.getHeight(),1000);
-                }
-            },3800);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                moreGoodsGv.smoothScrollBy(moreGoodsGv.getMeasuredHeight(), 1000);
+            }
+        }, 2000);
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                moreGoodsGv.smoothScrollBy(-moreGoodsGv.getHeight(), 1000);
+            }
+        }, 3800);
     }
 
 

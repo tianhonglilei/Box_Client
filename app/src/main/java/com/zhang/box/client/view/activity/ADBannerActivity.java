@@ -159,11 +159,10 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adCount = adbannerAdLv.getCount();
         startAutoScroll();
         initDateAndWeather();
-        
+
         startHeartService();
 
     }
-
 
 
     /**
@@ -329,7 +328,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
      */
     @Override
     public void navigateToPay(RoadGoods roadGoods) {
-        int resultCode = 2;
+        int requestCode = 2;
         RoadInfo roadInfo = roadGoods.getRoadInfo();
         Long index = roadInfo.getRoadIndex();
         int state = BoxAction.getRoadState(roadInfo.getRoadBoxType(), index + "");
@@ -338,7 +337,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             intent.putExtra("roadGoods", roadGoods);
             intent.putExtra("result", 2);
             intentDateWeather(intent);
-            startActivityForResult(intent, resultCode);
+            startActivityForResult(intent, requestCode);
             adVideoView.pause();
             adVideoView.stopPlayback();
         } else {
@@ -367,7 +366,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     public void navigateToMoreGoods() {
         Intent intent = new Intent(ADBannerActivity.this, MoreGoodsActivity.class);
         intentDateWeather(intent);
-        startActivity(intent);
+        startActivityForResult(intent, 0);
         adVideoView.pause();
     }
 

@@ -187,8 +187,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
         registerGoodsBoradcastReceiver();
 
-        int result = dataIntent.getIntExtra("result",0);
-        if (result == 2){
+        int request = dataIntent.getIntExtra("result",0);
+        if (request == 2){
             initMediaPlayer(1);
         }
     }
