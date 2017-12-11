@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.zhang.box.R;
 import com.zhang.box.application.BaseApplication;
+import com.zhang.box.client.listener.OpenDoorListener;
 import com.zhang.box.client.model.Goods;
 
 import java.util.Timer;
@@ -39,6 +40,7 @@ import com.zhang.box.client.presenter.MoreGoodsPresenter;
 import com.zhang.box.client.presenter.impl.MoreGoodsPresenterImpl;
 import com.zhang.box.client.receiver.OpenDoorBroadcastReceiver;
 import com.zhang.box.client.view.MoreGoodsView;
+import com.zhang.box.manager.view.activity.ManagerNavgationActivity;
 import com.zhang.box.util.BroadcastReceiverUtil;
 import com.zhang.box.util.SharedPreferencesUtil;
 import com.zhang.box.util.ToastTools;
@@ -46,7 +48,7 @@ import com.zhang.box.util.ToastTools;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MoreGoodsActivity extends Activity implements View.OnClickListener, MoreGoodsView {
+public class MoreGoodsActivity extends Activity implements View.OnClickListener, MoreGoodsView, OpenDoorListener {
 
 
     //向上的GIF
@@ -436,4 +438,9 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     }
 
 
+    @Override
+    public void openTheDoor() {
+        Intent intent = new Intent(MoreGoodsActivity.this, ManagerNavgationActivity.class);
+        startActivityForResult(intent, 0);
+    }
 }

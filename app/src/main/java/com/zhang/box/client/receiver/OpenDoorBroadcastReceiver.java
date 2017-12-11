@@ -6,6 +6,8 @@ import android.content.Intent;
 
 import com.avm.serialport_142.MainHandler;
 
+import com.zhang.box.client.listener.OpenDoorListener;
+import com.zhang.box.client.view.activity.MoreGoodsActivity;
 import com.zhang.box.manager.view.activity.ManagerNavgationActivity;
 
 public class OpenDoorBroadcastReceiver extends BroadcastReceiver {
@@ -18,6 +20,12 @@ public class OpenDoorBroadcastReceiver extends BroadcastReceiver {
         this.show = show;
     }
 
+    private OpenDoorListener openDoorListener;
+
+    public void setOpenDoorListener(OpenDoorListener openDoorListener) {
+        this.openDoorListener = openDoorListener;
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
@@ -27,8 +35,7 @@ public class OpenDoorBroadcastReceiver extends BroadcastReceiver {
             boolean isOpen = MainHandler.isDoorOpen();//获取机器开门信息
             if (isOpen) {
                 if (!show){
-                    Intent managerIntent = new Intent(context, ManagerNavgationActivity.class);
-                    context.startActivity(managerIntent);
+                    openDoorListener.openTheDoor();
                     show = true;
                 }
 //                SharedPreferencesUtil.putString(context, BoxParams.DOOR_STATE, isOpen + "");
