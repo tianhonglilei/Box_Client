@@ -1,6 +1,7 @@
 package com.zhang.box.application;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
@@ -18,6 +19,7 @@ import com.zhang.box.contants.Constants;
 import com.zhang.box.db.DaoMaster;
 import com.zhang.box.db.DaoSession;
 import com.zhang.box.db.MySQLiteOpenHelper;
+import com.zhang.box.service.HeartService;
 import com.zhang.box.util.ExceptionHandler;
 import com.zhang.box.util.FileUtils;
 
@@ -161,6 +163,7 @@ public class BaseApplication extends Application {
     public static void addActivityToList(Activity activity){
         activityList.add(activity);
     }
+
     public static void exitAllActivity() {
         for (Activity activity :
                 activityList) {

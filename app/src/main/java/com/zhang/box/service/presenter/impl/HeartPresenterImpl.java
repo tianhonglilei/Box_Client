@@ -96,15 +96,15 @@ public class HeartPresenterImpl implements HeartPresenter {
         }
         String msg = SharedPreferencesUtil.getString(mContext, BoxParams.ERROR_MSG);
         PackageInfo pinfo;
-        String versionCode = "";
+        int versionCode = 0;
         try {
             pinfo = mContext.getPackageManager().getPackageInfo("com.zhang.box",
                     PackageManager.GET_CONFIGURATIONS);
-            versionCode = String.valueOf(pinfo.versionCode);
+            versionCode = pinfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        params = ParamsUtils.heartParams(box_id, stringBuilder.toString(), door, msg, versionCode);
+        params = ParamsUtils.heartParams(box_id, stringBuilder.toString(), door, msg, versionCode+"");
 
     }
 

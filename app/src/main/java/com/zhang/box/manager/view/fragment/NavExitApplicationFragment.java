@@ -55,6 +55,8 @@ public class NavExitApplicationFragment extends Fragment implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.exit_app_btn:
+                ActivityManager activityManager = (ActivityManager)getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+                activityManager.killBackgroundProcesses(HeartService.LIVE_SERVICE_PACKAGE_NAME);
                 BaseApplication.exitAllActivity();
                 break;
         }
