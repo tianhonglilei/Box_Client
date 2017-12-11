@@ -24,7 +24,7 @@ public class HeartService extends Service implements HeartView {
     public static final String LIVE_SERVICE_PACKAGE_NAME = "com.wh.boxservies";
 
     //心跳间隔
-    public static final int BOX_HEART_TIME = 1000 * 60 * 5;
+    public static final int BOX_HEART_TIME = 1000 * 60 * 1;
 
     Context mContext;
     ADBannerView adBannerView;
