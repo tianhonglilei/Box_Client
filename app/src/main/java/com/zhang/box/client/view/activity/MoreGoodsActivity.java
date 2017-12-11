@@ -139,6 +139,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         openDoorBroadcastReceiver = new OpenDoorBroadcastReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(BoxAction.OPEN_DOOR_ACTION);
+        openDoorBroadcastReceiver.setOpenDoorListener(this);
         mContext.registerReceiver(openDoorBroadcastReceiver, filter);
     }
 
