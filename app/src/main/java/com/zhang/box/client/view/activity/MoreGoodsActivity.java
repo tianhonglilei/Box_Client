@@ -367,10 +367,11 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 super.onSignalStrengthsChanged(signalStrength);
                 String signalInfo = signalStrength.toString();
                 String[] params = signalInfo.split(" ");
-                Toast.makeText(mContext, signalInfo, Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext, signalInfo, Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "telephonyManager.getNetworkType():" + telephonyManager.getNetworkType(), Toast.LENGTH_SHORT).show();
                 if (telephonyManager.getNetworkType() == TelephonyManager.NETWORK_TYPE_LTE) {
                     //4G网络 最佳范围   >-90dBm 越大越好
-                    int ltedbm = Integer.parseInt(params[3]);
+                    int ltedbm = Integer.parseInt(params[6]);
                     if (ltedbm > -44) {
                         changeSignSize(0);
                     } else if (ltedbm >= -90) {
