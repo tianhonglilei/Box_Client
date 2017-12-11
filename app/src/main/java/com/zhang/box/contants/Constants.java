@@ -15,7 +15,7 @@ public class Constants {
     public static final String DB_NAME = "box_db";
 
     //默认文件地址
-    public static final String DEMO_FILE_PATH = Environment.getExternalStorageDirectory().toString() + "/Box_client";
+    public static final String DEMO_FILE_PATH = Environment.getExternalStorageDirectory().toString() + "/boxcontent";
 
 
 

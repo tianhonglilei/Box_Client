@@ -43,7 +43,7 @@ public class HeartService extends Service implements HeartView {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (!isServiceRunning(getApplicationContext(), LIVE_SERVICE_PACKAGE_NAME + LIVE_SERVICE_NAME)) {
+                if (!isServiceRunning(getApplicationContext(), LIVE_SERVICE_PACKAGE_NAME + LIVE_SERVICE_PACKAGE_NAME + LIVE_SERVICE_NAME)) {
                     startLiveService();
                 }
                 heartPresenter.sendHeartInfo();
@@ -51,7 +51,6 @@ public class HeartService extends Service implements HeartView {
         }, 5000, BOX_HEART_TIME);
         return START_REDELIVER_INTENT;
     }
-
 
 
     @Override
@@ -118,8 +117,6 @@ public class HeartService extends Service implements HeartView {
         intent.setComponent(new ComponentName(LIVE_SERVICE_PACKAGE_NAME, LIVE_SERVICE_PACKAGE_NAME + LIVE_SERVICE_NAME));//设置一个组件名称  同组件名来启动所需要启动Service
         startService(intent);
     }
-
-
 
 
 }
