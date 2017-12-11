@@ -173,4 +173,10 @@ public class HeartPresenterImpl implements HeartPresenter {
         }
     }
 
+    @Override
+    public void setAdView(ADBannerView adBannerView) {
+        this.adBannerView = adBannerView;
+    }
+
+
 }

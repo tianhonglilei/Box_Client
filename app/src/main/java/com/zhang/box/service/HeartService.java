@@ -48,6 +48,7 @@ public class HeartService extends Service implements HeartView {
                     startLiveActivity();
                 }
                 heartPresenter.sendHeartInfo();
+                heartPresenter.setAdView(adBannerView);
             }
         }, 5000, BOX_HEART_TIME);
         return START_REDELIVER_INTENT;
@@ -86,6 +87,8 @@ public class HeartService extends Service implements HeartView {
         startActivity(intent);
         android.os.Process.killProcess(android.os.Process.myPid());
     }
+
+
 
     /**
      * 方法描述：判断某一Service是否正在运行
