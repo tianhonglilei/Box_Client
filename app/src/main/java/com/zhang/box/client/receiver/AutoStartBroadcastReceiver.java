@@ -16,6 +16,7 @@ public class AutoStartBroadcastReceiver extends BroadcastReceiver {
 
         if (intent.getAction().equals(ACTION)) {
             Intent i = new Intent(context, ActiveActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
         }
 

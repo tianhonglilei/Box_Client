@@ -110,7 +110,7 @@ public class PayPresenterImpl implements PayPresenter {
 //        String subject = des + "|" + goodsId + "|"
 //                + roadIndex + "|" + box_id + "|"
 //                + boxType;
-        String subject = SharedPreferencesUtil.getString(mContext, BoxParams.COMPANY);
+        String subject = "点创";
         String company = SharedPreferencesUtil.getString(mContext, BoxParams.COMPANY);
         final String mchTradeNo = MyStringUtil.getRandonInt(20);
         Map<String, String> params;
