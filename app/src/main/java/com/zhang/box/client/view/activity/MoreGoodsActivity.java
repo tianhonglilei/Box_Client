@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.media.MediaPlayer;
@@ -27,10 +25,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.zhang.box.R;
 import com.zhang.box.application.BaseApplication;
-import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.model.Goods;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,7 +44,7 @@ import com.zhang.box.util.ToastTools;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MoreGoodsActivity extends Activity implements View.OnClickListener, MoreGoodsView {
+public class MoreGoodsActivity extends Activity implements View.OnClickListener, MoreGoodsView{
 
 
     //向上的GIF
@@ -97,6 +93,8 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     //语音提示
     MediaPlayer mediaPlayer = null;
     AssetManager assetManager = null;
+
+    private boolean managerShow = false;
 
 
     @Override
@@ -265,6 +263,8 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         if (openDoorBroadcastReceiver!=null){
             if (BroadcastReceiverUtil.broadcastReceiverIsRegister(mContext,"com.avm.serialport.door_state")){
                 unregisterReceiver(openDoorBroadcastReceiver);
+            }else{
+                openDoorBroadcastReceiver = null;
             }
         }
     }
@@ -276,11 +276,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             countDownTimer.cancel();
             countDownTimer = null;
         }
-        if (openDoorBroadcastReceiver!=null){
-            if (BroadcastReceiverUtil.broadcastReceiverIsRegister(mContext,"com.avm.serialport.door_state")){
-                unregisterReceiver(openDoorBroadcastReceiver);
-            }
-        }
     }
 
     @Override
@@ -288,6 +283,9 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         super.onResume();
         initDoorReceiver();
         initCountDownTimer();
+        if (openDoorBroadcastReceiver!=null){
+            openDoorBroadcastReceiver.setShow(false);
+        }
     }
 
     @Override
@@ -420,5 +418,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 }
             },3800);
     }
+
 
 }
