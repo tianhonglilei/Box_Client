@@ -107,19 +107,19 @@ public class PayPresenterImpl implements PayPresenter {
         orderInfo.setName(goodsName);
         String title = goodsName + "x" + payNum;
         String des = "商品" + goodsName + payNum + "份，共" + price + "元";
-//        String subject = des + "|" + goodsId + "|"
-//                + roadIndex + "|" + box_id + "|"
-//                + boxType;
-        String subject = "点创";
         String company = SharedPreferencesUtil.getString(mContext, BoxParams.COMPANY);
+        String subject = des + "|" + goodsId + "|"
+                + roadIndex + "|" + box_id + "|"
+                + boxType + "|" + company;
+
         final String mchTradeNo = MyStringUtil.getRandonInt(20);
         Map<String, String> params;
         if (payType == Constants.PAY_TYPE_WX) {
             //微信二维码
-            params = ParamsUtils.wxGetQRParams(Double.toString(price), des, mchTradeNo, subject, company);
+            params = ParamsUtils.wxGetQRParams(Double.toString(price), des, mchTradeNo, subject);
         } else if (payType == Constants.PAY_TYPE_ALI) {
             //支付宝二维码
-            params = ParamsUtils.aliGetQRParams(tradeno, Double.toString(price), title, des, company);
+            params = ParamsUtils.aliGetQRParams(tradeno, Double.toString(price), title, des);
         } else {
             params = new HashMap<>();
         }

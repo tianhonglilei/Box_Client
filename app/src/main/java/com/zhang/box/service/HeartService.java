@@ -30,11 +30,9 @@ public class HeartService extends Service implements HeartView {
     ADBannerView adBannerView;
     HeartPresenter heartPresenter;
 
-    public HeartService(ADBannerView adBannerView) {
+    public void setAdBannerView(ADBannerView adBannerView) {
         this.adBannerView = adBannerView;
     }
-
-    public HeartService(){}
 
     Timer timer;
 

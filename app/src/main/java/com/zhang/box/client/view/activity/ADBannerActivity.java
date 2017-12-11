@@ -293,7 +293,8 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
      * 启动心跳服务
      */
     private void startHeartService() {
-        HeartService heartService = new HeartService(this);
+        HeartService heartService = new HeartService();
+        heartService.setAdBannerView(this);
         Intent intent = new Intent(this, HeartService.class);
         startService(intent);
 

@@ -352,7 +352,6 @@ public class ActivePresenterImpl implements ActivePresenter {
 
     @Override
     public void activeBox(final String code) {
-
         CommService commService = new CommService() {
 
             @Override
@@ -383,6 +382,7 @@ public class ActivePresenterImpl implements ActivePresenter {
                     Toast.makeText(mContext, "激活启动成功", Toast.LENGTH_SHORT).show();
                     if (!TextUtils.isEmpty(box_id) && !box_id.equals("00000000")) {
                         activeView.hiddenActiveLayout(true);
+                        activeView.hiddenDialog();
                     } else {
                         getBoxIdFromBox();
                     }
