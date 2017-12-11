@@ -44,7 +44,8 @@ public class HeartService extends Service implements HeartView {
             @Override
             public void run() {
                 if (!isServiceRunning(getApplicationContext(), LIVE_SERVICE_PACKAGE_NAME + LIVE_SERVICE_NAME)) {
-                    startLiveService();
+//                    startLiveService();
+                    startLiveActivity();
                 }
                 heartPresenter.sendHeartInfo();
             }
@@ -115,6 +116,15 @@ public class HeartService extends Service implements HeartView {
         Intent intent = new Intent();
         intent.setComponent(new ComponentName(LIVE_SERVICE_PACKAGE_NAME, LIVE_SERVICE_PACKAGE_NAME + LIVE_SERVICE_NAME));//设置一个组件名称  同组件名来启动所需要启动Service
         startService(intent);
+    }
+
+    /**
+     * 通过包名启动应用
+     */
+    public void startLiveActivity(){
+        Intent intent = this.getPackageManager().getLaunchIntentForPackage(
+                LIVE_SERVICE_PACKAGE_NAME);
+        startActivity(intent);
     }
 
 
