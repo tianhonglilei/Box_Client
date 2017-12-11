@@ -62,9 +62,9 @@ public class HeartPresenterImpl implements HeartPresenter {
                 } else if (msg.equals("2")) {
 
                 } else if (msg.equals("3")) {
-                    JSONArray array = jsonObject.getJSONArray("down");
-                    apkUrl = array.getJSONObject(0).getString("apk");
-                    version = array.getJSONObject(1).getString("ver");
+                    JSONObject array = jsonObject.getJSONObject("down");
+                    apkUrl = array.getString("apk");
+                    version = array.getString("ver");
                     updateApk();
                 }
             }
