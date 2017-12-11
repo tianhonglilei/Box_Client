@@ -24,6 +24,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.zhang.box.application.BaseApplication;
+import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxParams;
 import com.zhang.box.box.BoxSetting;
 
@@ -183,7 +184,7 @@ public class ExceptionHandler implements UncaughtExceptionHandler {
         try {
             long timestamp = System.currentTimeMillis();
             String time = formatter.format(new Date());
-            String fileName = "crash-" + time + "-" + BoxSetting.BOX_TEST_ID + ".log";
+            String fileName = "crash-" + time + "-" + BoxAction.getBoxIdFromSP(mContext) + ".log";
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 String path = "/sdcard/box_exception/";
                 File dir = new File(path);

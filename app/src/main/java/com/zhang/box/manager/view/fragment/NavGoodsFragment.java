@@ -20,6 +20,7 @@ import com.common.controls.dialog.CommonDialogFactory;
 import com.common.controls.dialog.DialogUtil;
 import com.common.controls.dialog.ICommonDialog;
 import com.zhang.box.R;
+import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.model.Goods;
 import com.zhang.box.client.model.RoadGoods;
@@ -132,7 +133,7 @@ public class NavGoodsFragment extends Fragment implements NavGoodsFragmentView,V
                                 roadGoods.setRoadInfo(roadInfo);
                                 AddGoods addGoods = new AddGoods();
                                 addGoods.setHid(roadInfo.getRoadIndex().toString());
-                                addGoods.setMachineid(BoxSetting.BOX_TEST_ID);
+                                addGoods.setMachineid(BoxAction.getBoxIdFromSP(mContext));
                                 addGoods.setPid(goods.getGoodsId().toString());
                                 addGoods.setHgid(roadInfo.getRoadBoxType());
                                 addGoods.setHuodao_num(now);

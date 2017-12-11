@@ -21,6 +21,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.zhang.box.R;
@@ -352,7 +353,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 super.onSignalStrengthsChanged(signalStrength);
                 String signalInfo = signalStrength.toString();
                 String[] params = signalInfo.split(" ");
-
+                Toast.makeText(mContext, signalInfo, Toast.LENGTH_LONG).show();
                 if (telephonyManager.getNetworkType() == TelephonyManager.NETWORK_TYPE_LTE) {
                     //4G网络 最佳范围   >-90dBm 越大越好
                     int ltedbm = Integer.parseInt(params[9]);

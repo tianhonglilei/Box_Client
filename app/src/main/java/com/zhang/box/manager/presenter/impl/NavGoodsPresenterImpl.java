@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhang.box.R;
+import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.biz.RoadBiz;
 import com.zhang.box.client.model.RoadGoods;
@@ -138,7 +139,7 @@ public class NavGoodsPresenterImpl implements NavGoodsPresenter {
             AddGoods addGoods = new AddGoods();
             addGoods.setHgid(roadInfo.getRoadBoxType());
             addGoods.setHid(roadInfo.getRoadIndex().toString());
-            addGoods.setMachineid(BoxSetting.BOX_TEST_ID);
+            addGoods.setMachineid(BoxAction.getBoxIdFromSP(mContext));
             addGoods.setPid(roadGoods.getGoods().getGoodsId().toString());
             addGoods.setHuodao_max("" + roadInfo.getRoadMaxNum());
             addGoods.setHuodao_num("" + roadInfo.getRoadMaxNum());
