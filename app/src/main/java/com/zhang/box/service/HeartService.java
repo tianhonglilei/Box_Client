@@ -43,7 +43,7 @@ public class HeartService extends Service implements HeartView {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (!isServiceRunning(getApplicationContext(), LIVE_SERVICE_PACKAGE_NAME + LIVE_SERVICE_PACKAGE_NAME + LIVE_SERVICE_NAME)) {
+                if (!isServiceRunning(getApplicationContext(), LIVE_SERVICE_PACKAGE_NAME + LIVE_SERVICE_NAME)) {
                     startLiveService();
                 }
                 heartPresenter.sendHeartInfo();
@@ -84,7 +84,6 @@ public class HeartService extends Service implements HeartView {
                 "application/vnd.android.package-archive");
         startActivity(intent);
         android.os.Process.killProcess(android.os.Process.myPid());
-
     }
 
     /**
