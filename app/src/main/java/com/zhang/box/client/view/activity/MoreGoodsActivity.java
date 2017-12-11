@@ -357,39 +357,43 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
      * 初始化信号监听
      */
     public void initSignListener() {
-        telephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-        phoneStateListener = new PhoneStateListener() {
-            @Override
-            public void onSignalStrengthsChanged(SignalStrength signalStrength) {
-                super.onSignalStrengthsChanged(signalStrength);
-                String signalInfo = signalStrength.toString();
-                String[] params = signalInfo.split(" ");
-                Toast.makeText(mContext, signalInfo, Toast.LENGTH_LONG).show();
-                Toast.makeText(mContext, "telephonyManager.getNetworkType():" + telephonyManager.getNetworkType(), Toast.LENGTH_SHORT).show();
-                if (telephonyManager.getNetworkType() == TelephonyManager.NETWORK_TYPE_LTE) {
-                    //4G网络 最佳范围   >-90dBm 越大越好
-                    int ltedbm = Integer.parseInt(params[6]);
-                    if (ltedbm > -44) {
-                        changeSignSize(0);
-                    } else if (ltedbm >= -90) {
-                        changeSignSize(4);
-                    } else if (ltedbm >= -100) {
-                        changeSignSize(3);
-                    } else if (ltedbm >= -110) {
-                        changeSignSize(2);
-                    } else if (ltedbm >= -120) {
-                        changeSignSize(1);
-                    } else if (ltedbm >= -140) {
-                        changeSignSize(0);
+        if (telephonyManager == null) {
+            telephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        }
+        if (phoneStateListener == null) {
+            phoneStateListener = new PhoneStateListener() {
+                @Override
+                public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+                    super.onSignalStrengthsChanged(signalStrength);
+                    String signalInfo = signalStrength.toString();
+                    String[] params = signalInfo.split(" ");
+                    Toast.makeText(mContext, signalInfo, Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "telephonyManager.getNetworkType():" + telephonyManager.getNetworkType(), Toast.LENGTH_SHORT).show();
+                    if (telephonyManager.getNetworkType() == TelephonyManager.NETWORK_TYPE_LTE) {
+                        //4G网络 最佳范围   >-90dBm 越大越好
+                        int ltedbm = Integer.parseInt(params[6]);
+                        if (ltedbm > -44) {
+                            changeSignSize(0);
+                        } else if (ltedbm >= -90) {
+                            changeSignSize(4);
+                        } else if (ltedbm >= -100) {
+                            changeSignSize(3);
+                        } else if (ltedbm >= -110) {
+                            changeSignSize(2);
+                        } else if (ltedbm >= -120) {
+                            changeSignSize(1);
+                        } else if (ltedbm >= -140) {
+                            changeSignSize(0);
+                        } else {
+                            changeSignSize(0);
+                        }
                     } else {
                         changeSignSize(0);
                     }
-                } else {
-                    changeSignSize(0);
-                }
 
-            }
-        };
+                }
+            };
+        }
         telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
     }
 
