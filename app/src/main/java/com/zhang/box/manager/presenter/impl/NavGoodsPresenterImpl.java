@@ -191,12 +191,13 @@ public class NavGoodsPresenterImpl implements NavGoodsPresenter {
                     @Override
                     public void onSuccess(Object responseObject) {
                         JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
-                        if (jsonObject.get("msg").equals("0")) {
+                        String msg = jsonObject.getString("msg");
+                        if (msg.equals("0")) {
                             roadBeanService.updateRoadNum(roadGoods.getRoadGoodsId(), Integer.parseInt(addGoods.getHuodao_num()), Integer.parseInt(addGoods.getHuodao_max()));
                             refreshGoodsNum(roadGoods, position);
                             Toast.makeText(mContext, "补货完成", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(mContext, "补货失败,请重新尝试", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "补货失败,请重新尝试" + msg, Toast.LENGTH_SHORT).show();
                         }
                     }
 

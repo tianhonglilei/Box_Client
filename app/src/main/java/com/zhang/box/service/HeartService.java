@@ -38,7 +38,7 @@ public class HeartService extends Service implements HeartView {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(mContext, "心跳开始", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "心跳开始", Toast.LENGTH_SHORT).show();
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
