@@ -352,6 +352,7 @@ public class ActivePresenterImpl implements ActivePresenter {
 
     @Override
     public void activeBox(final String code) {
+        activeView.showDialog("激活中...");
         CommService commService = new CommService() {
 
             @Override
@@ -387,6 +388,10 @@ public class ActivePresenterImpl implements ActivePresenter {
                     }
                 } else {
                     Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
+                }
+                if (res != CommServiceThread.COMM_SERVICE_START){
+                    activeView.hiddenDialog();
+                    activeView.showActiveLayout();
                 }
             }
         };
