@@ -352,7 +352,7 @@ public class ActivePresenterImpl implements ActivePresenter {
 
     @Override
     public void activeBox(final String code) {
-        activeView.showDialog("激活中...");
+
         CommService commService = new CommService() {
 
             @Override

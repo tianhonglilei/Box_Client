@@ -123,6 +123,7 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
                 if (!TextUtils.isEmpty(code)) {
                     activePresenter.activeBox(code);
                     SharedPreferencesUtil.putString(mContext, BoxParams.ACTIVE_CODE, code);
+                    showDialog("激活中...");
                 } else {
                     Toast.makeText(mContext, "请输入激活码", Toast.LENGTH_SHORT).show();
                 }

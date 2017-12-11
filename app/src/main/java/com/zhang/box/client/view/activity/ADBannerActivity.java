@@ -297,10 +297,10 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         Intent intent = new Intent(this, HeartService.class);
         startService(intent);
 
-        avmRunningBroadcastReceiver = new AVMRunningBroadcastReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("com.avm.serialport.NOTICE_AVM_DISCONNECT");
-        registerReceiver(avmRunningBroadcastReceiver, filter);
+//        avmRunningBroadcastReceiver = new AVMRunningBroadcastReceiver();
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction("com.avm.serialport.NOTICE_AVM_DISCONNECT");
+//        registerReceiver(avmRunningBroadcastReceiver, filter);
     }
 
 

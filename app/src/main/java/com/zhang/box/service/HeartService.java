@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Timer;
@@ -39,6 +40,7 @@ public class HeartService extends Service implements HeartView {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Toast.makeText(mContext, "心跳开始", Toast.LENGTH_SHORT).show();
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
