@@ -107,9 +107,10 @@ public class PayPresenterImpl implements PayPresenter {
         orderInfo.setName(goodsName);
         String title = goodsName + "x" + payNum;
         String des = "商品" + goodsName + payNum + "份，共" + price + "元";
-        String subject = des + "|" + goodsId + "|"
-                + roadIndex + "|" + box_id + "|"
-                + boxType;
+//        String subject = des + "|" + goodsId + "|"
+//                + roadIndex + "|" + box_id + "|"
+//                + boxType;
+        String subject = SharedPreferencesUtil.getString(mContext, BoxParams.COMPANY);
         String company = SharedPreferencesUtil.getString(mContext, BoxParams.COMPANY);
         final String mchTradeNo = MyStringUtil.getRandonInt(20);
         Map<String, String> params;
