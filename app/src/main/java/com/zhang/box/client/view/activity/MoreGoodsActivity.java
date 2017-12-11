@@ -272,12 +272,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 openDoorBroadcastReceiver = null;
             }
         }
-        if (phoneStateListener != null) {
-            phoneStateListener = null;
-        }
-        if (telephonyManager != null) {
-            telephonyManager = null;
-        }
 
         MoreGoodsActivity.this.setResult(resultRefresh);
         MoreGoodsActivity.this.finish();
@@ -370,7 +364,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 super.onSignalStrengthsChanged(signalStrength);
                 String signalInfo = signalStrength.toString();
                 String[] params = signalInfo.split(" ");
-//                Toast.makeText(mContext, signalInfo, Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, signalInfo, Toast.LENGTH_LONG).show();
                 Toast.makeText(mContext, "telephonyManager.getNetworkType():" + telephonyManager.getNetworkType(), Toast.LENGTH_SHORT).show();
                 if (telephonyManager.getNetworkType() == TelephonyManager.NETWORK_TYPE_LTE) {
                     //4G网络 最佳范围   >-90dBm 越大越好
