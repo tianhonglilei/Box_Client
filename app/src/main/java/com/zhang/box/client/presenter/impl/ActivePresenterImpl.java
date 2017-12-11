@@ -416,7 +416,7 @@ public class ActivePresenterImpl implements ActivePresenter {
             String box_id = BoxAction.getBoxId();
             if (!TextUtils.isEmpty(box_id) && !box_id.equals("00000000")) {
                 SharedPreferencesUtil.putString(mContext, BoxParams.BOX_ID, box_id);
-                Toast.makeText(mContext, box_id, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, box_id, Toast.LENGTH_SHORT).show();
                 activeView.hiddenActiveLayout(true);
                 break;
             } else {

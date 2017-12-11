@@ -52,7 +52,7 @@ public class HeartPresenterImpl implements HeartPresenter {
     @Override
     public void sendHeartInfo() {
         getHeartInfo();
-        CommonOkHttpClient.post(CommonRequest.createGetRequest(Constants.HEART_URL, new RequestParams(params)), new DisposeDataHandle(new DisposeDataListener() {
+        CommonOkHttpClient.post(CommonRequest.createPostRequest(Constants.HEART_URL, new RequestParams(params)), new DisposeDataHandle(new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObject) {
                 JSONObject jsonObject = JSONObject.parseObject(responseObject.toString());
