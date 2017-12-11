@@ -47,6 +47,7 @@ public class HeartService extends Service implements HeartView {
                     startLiveService();
                 }
                 heartPresenter.sendHeartInfo();
+                Toast.makeText(mContext, "心跳", Toast.LENGTH_SHORT).show();
             }
         }, 5000, BOX_HEART_TIME);
         return START_REDELIVER_INTENT;
