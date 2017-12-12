@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.avm.serialport_142.MainHandler;
+import com.zhang.box.application.BaseApplication;
 import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxParams;
 import com.zhang.box.client.okhttp.CommonOkHttpClient;
@@ -109,6 +110,7 @@ public class HeartPresenterImpl implements HeartPresenter {
 
     public void updateApk() {
         if (isActivityTop(ADBannerActivity.class, mContext)) {
+            BaseApplication.showDialog("升级中,请勿支付");
             CommonOkHttpClient.downloadFile(CommonRequest.createGetRequest(apkUrl, null), new DisposeDataHandle(new DisposeDownloadDataListener() {
                 @Override
                 public void onProgress(int progrss) {
