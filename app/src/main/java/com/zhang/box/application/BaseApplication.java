@@ -3,7 +3,9 @@ package com.zhang.box.application;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Environment;
 import android.widget.Toast;
 
@@ -15,10 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.zhang.box.box.BoxSetting;
+import com.zhang.box.client.view.activity.ActiveActivity;
 import com.zhang.box.contants.Constants;
 import com.zhang.box.db.DaoMaster;
 import com.zhang.box.db.DaoSession;
 import com.zhang.box.db.MySQLiteOpenHelper;
+import com.zhang.box.loading.ZLoadingDialog;
+import com.zhang.box.loading.Z_TYPE;
 import com.zhang.box.service.HeartService;
 import com.zhang.box.util.ExceptionHandler;
 import com.zhang.box.util.FileUtils;
@@ -32,6 +37,7 @@ public class BaseApplication extends Application {
     private static BaseApplication mInstance;
     private static DaoMaster daoMaster;
     private static DaoSession daoSession;
+    public static Context context;
 
     @Override
     public void onCreate() {
@@ -39,6 +45,7 @@ public class BaseApplication extends Application {
         if (mInstance == null) {
             mInstance = this;
         }
+        context = this;
         activityList = new ArrayList<>();
         //初始化SDK配置文件
         initSDKiniFile();
@@ -174,5 +181,19 @@ public class BaseApplication extends Application {
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
     }
+
+
+    public static void showDialog(String text) {
+        ZLoadingDialog dialog = new ZLoadingDialog(context);
+        dialog.setLoadingBuilder(Z_TYPE.TEXT)
+                .setLoadingColor(Color.parseColor("#ff5307"))
+                .setHintText(text)
+                .setHintTextSize(16) // 设置字体大小
+                .setHintTextColor(Color.parseColor("#525252"))  // 设置字体颜色
+                .setCanceledOnTouchOutside(false)
+                .show();
+    }
+
+
 
 }

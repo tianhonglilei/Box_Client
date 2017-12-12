@@ -350,7 +350,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e(TAG, "resultCode:" + resultCode);
         switch (resultCode) {
             case 2:
                 adPresenter.initGoodsData(adbannerGoodsGv);

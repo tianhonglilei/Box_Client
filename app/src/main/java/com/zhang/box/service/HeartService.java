@@ -48,7 +48,6 @@ public class HeartService extends Service implements HeartView {
                     startLiveActivity();
                 }
                 heartPresenter.sendHeartInfo();
-                heartPresenter.setAdView(adBannerView);
             }
         }, 5000, BOX_HEART_TIME);
         return START_REDELIVER_INTENT;
@@ -65,7 +64,7 @@ public class HeartService extends Service implements HeartView {
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
-        heartPresenter = new HeartPresenterImpl(mContext, adBannerView, this);
+        heartPresenter = new HeartPresenterImpl(mContext, this);
     }
 
     @Override

@@ -119,7 +119,7 @@ public class PayPresenterImpl implements PayPresenter {
             params = ParamsUtils.wxGetQRParams(Double.toString(price), des, mchTradeNo, subject);
         } else if (payType == Constants.PAY_TYPE_ALI) {
             //支付宝二维码
-            params = ParamsUtils.aliGetQRParams(tradeno, Double.toString(price), title, des);
+            params = ParamsUtils.aliGetQRParams(tradeno, Double.toString(price), title, des, company);
         } else {
             params = new HashMap<>();
         }

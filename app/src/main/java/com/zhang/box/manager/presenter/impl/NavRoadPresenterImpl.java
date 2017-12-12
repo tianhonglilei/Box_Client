@@ -94,7 +94,6 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
             if (state == RoadInfo.ROAD_STATE_NORMAL) {
                 if (BoxAction.outGoods(boxType, index, BoxAction.OUT_GOODS_TYPE_TEST)) {
                     i++;
-                    ToastTools.showShort(mContext, "数量：" + i);
                 }
                 try {
                     Thread.sleep(1500);
@@ -103,7 +102,7 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
                     e.printStackTrace();
                 }
             } else if (state == RoadInfo.ROAD_STATE_NULL) {
-                ToastTools.showShort(mContext, index + "货道已清空");
+                ToastTools.showShort(mContext, index + "货道已清空:共出"+ (i-1) +"瓶");
                 break;
             } else {
                 Toast.makeText(mContext, "货道出现异常，请重启程序", Toast.LENGTH_SHORT).show();

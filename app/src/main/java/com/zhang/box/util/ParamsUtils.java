@@ -45,13 +45,13 @@ public class ParamsUtils {
      * @param des
      * @return
      */
-    public static Map<String, String> aliGetQRParams(String tradeno, String zhiprice, String title, String des) {
+    public static Map<String, String> aliGetQRParams(String tradeno, String zhiprice, String title, String des,String company) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("tradeno", tradeno);
         params.put("price", zhiprice);
         params.put("title", title);
         params.put("des", des);
-//        params.put("company", company);
+        params.put("company", company);
         return params;
     }
 

@@ -37,15 +37,13 @@ import java.util.TimerTask;
 public class HeartPresenterImpl implements HeartPresenter {
 
     Context mContext;
-    ADBannerView adBannerView;
     HeartView heartView;
     Map<String, String> params;
     String apkUrl;
     String version;
 
-    public HeartPresenterImpl(Context mContext, ADBannerView adBannerView, HeartView heartView) {
+    public HeartPresenterImpl(Context mContext, HeartView heartView) {
         this.mContext = mContext;
-        this.adBannerView = adBannerView;
         this.heartView = heartView;
     }
 
@@ -111,7 +109,6 @@ public class HeartPresenterImpl implements HeartPresenter {
 
     public void updateApk() {
         if (isActivityTop(ADBannerActivity.class, mContext)) {
-            adBannerView.showDialog("系统升级");
             CommonOkHttpClient.downloadFile(CommonRequest.createGetRequest(apkUrl, null), new DisposeDataHandle(new DisposeDownloadDataListener() {
                 @Override
                 public void onProgress(int progrss) {
@@ -120,7 +117,6 @@ public class HeartPresenterImpl implements HeartPresenter {
 
                 @Override
                 public void onSuccess(Object responseObject) {
-                    adBannerView.hiddenDialog();
                     heartView.startAppAfterUpdate(version);
                 }
 
@@ -156,7 +152,6 @@ public class HeartPresenterImpl implements HeartPresenter {
 
     private void disConnection(){
         if (isActivityTop(ADBannerActivity.class, mContext)) {
-            adBannerView.showDialog("系统重启");
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -173,10 +168,6 @@ public class HeartPresenterImpl implements HeartPresenter {
         }
     }
 
-    @Override
-    public void setAdView(ADBannerView adBannerView) {
-        this.adBannerView = adBannerView;
-    }
 
 
 }

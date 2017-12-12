@@ -14,6 +14,5 @@ public interface HeartPresenter {
     void sendHeartInfo();
 
 
-    void setAdView(ADBannerView adBannerView);
 
 }
