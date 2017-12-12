@@ -110,7 +110,7 @@ public class HeartPresenterImpl implements HeartPresenter {
 
     public void updateApk() {
         if (isActivityTop(ADBannerActivity.class, mContext)) {
-            BaseApplication.showDialog("升级中,请勿支付");
+//            BaseApplication.showDialog("升级中,请勿支付");
             CommonOkHttpClient.downloadFile(CommonRequest.createGetRequest(apkUrl, null), new DisposeDataHandle(new DisposeDownloadDataListener() {
                 @Override
                 public void onProgress(int progrss) {
