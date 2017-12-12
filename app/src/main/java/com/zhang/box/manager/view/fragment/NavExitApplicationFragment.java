@@ -14,9 +14,6 @@ import com.zhang.box.R;
 import com.zhang.box.application.BaseApplication;
 import com.zhang.box.service.HeartService;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -58,32 +55,12 @@ public class NavExitApplicationFragment extends Fragment implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.exit_app_btn:
-                forceStopAPK(HeartService.LIVE_SERVICE_PACKAGE_NAME);
+                ActivityManager activityManager = (ActivityManager)getActivity().getSystemService(Context.ACTIVITY_SERVICE);
+                activityManager.killBackgroundProcesses(HeartService.LIVE_SERVICE_PACKAGE_NAME);
                 BaseApplication.exitAllActivity();
                 break;
         }
     }
 
-    private void forceStopAPK(String pkgName){
-        Process sh = null;
-        DataOutputStream os = null;
-        try {
-            sh = Runtime.getRuntime().exec("su");
-            os = new DataOutputStream(sh.getOutputStream());
-            final String Command = "am force-stop "+pkgName+ "\n";
-            os.writeBytes(Command);
-            os.flush();
 
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        try {
-            sh.waitFor();
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
 }

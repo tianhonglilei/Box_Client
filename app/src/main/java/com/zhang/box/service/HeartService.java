@@ -50,7 +50,7 @@ public class HeartService extends Service implements HeartView {
                 heartPresenter.sendHeartInfo();
             }
         }, 5000, BOX_HEART_TIME);
-        return START_REDELIVER_INTENT;
+        return START_STICKY;
     }
 
 
