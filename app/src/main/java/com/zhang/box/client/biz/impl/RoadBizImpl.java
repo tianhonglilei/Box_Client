@@ -70,6 +70,7 @@ public class RoadBizImpl implements RoadBiz {
                 goods.setGoodsBImgName(goodsBean.getBig_img());
                 goods.setGoodsSImgName(goodsBean.getSmall_img());
                 goods.setGoodsOutImgName(goodsBean.getNo_pro_img());
+                goods.setGoodsMemo(goodsBean.getDes1());
 
                 roadGoods.setRoadInfo(roadInfo);
                 roadGoods.setGoods(goods);

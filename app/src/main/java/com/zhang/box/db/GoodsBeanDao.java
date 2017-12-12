@@ -28,6 +28,7 @@ public class GoodsBeanDao extends AbstractDao<GoodsBean, Long> {
         public final static Property Small_img = new Property(3, String.class, "small_img", false, "SMALL_IMG");
         public final static Property Big_img = new Property(4, String.class, "big_img", false, "BIG_IMG");
         public final static Property No_pro_img = new Property(5, String.class, "no_pro_img", false, "NO_PRO_IMG");
+        public final static Property Des1 = new Property(6, String.class, "des1", false, "DES1");
     }
 
     private DaoSession daoSession;
@@ -51,7 +52,8 @@ public class GoodsBeanDao extends AbstractDao<GoodsBean, Long> {
                 "\"TYPE\" INTEGER NOT NULL ," + // 2: type
                 "\"SMALL_IMG\" TEXT," + // 3: small_img
                 "\"BIG_IMG\" TEXT," + // 4: big_img
-                "\"NO_PRO_IMG\" TEXT);"); // 5: no_pro_img
+                "\"NO_PRO_IMG\" TEXT," + // 5: no_pro_img
+                "\"DES1\" TEXT);"); // 6: des1
     }
 
     /** Drops the underlying database table. */
@@ -89,6 +91,11 @@ public class GoodsBeanDao extends AbstractDao<GoodsBean, Long> {
         if (no_pro_img != null) {
             stmt.bindString(6, no_pro_img);
         }
+ 
+        String des1 = entity.getDes1();
+        if (des1 != null) {
+            stmt.bindString(7, des1);
+        }
     }
 
     @Override
@@ -120,6 +127,11 @@ public class GoodsBeanDao extends AbstractDao<GoodsBean, Long> {
         if (no_pro_img != null) {
             stmt.bindString(6, no_pro_img);
         }
+ 
+        String des1 = entity.getDes1();
+        if (des1 != null) {
+            stmt.bindString(7, des1);
+        }
     }
 
     @Override
@@ -141,7 +153,8 @@ public class GoodsBeanDao extends AbstractDao<GoodsBean, Long> {
             cursor.getInt(offset + 2), // type
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // small_img
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // big_img
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // no_pro_img
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // no_pro_img
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // des1
         );
         return entity;
     }
@@ -154,6 +167,7 @@ public class GoodsBeanDao extends AbstractDao<GoodsBean, Long> {
         entity.setSmall_img(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setBig_img(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setNo_pro_img(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setDes1(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
      }
     
     @Override

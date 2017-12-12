@@ -35,6 +35,9 @@ public class GoodsBean {
     private String big_img;
     //售罄图
     private String no_pro_img;
+    //描述
+    private String des1;
+
     @ToMany(referencedJoinProperty = "id")
     private List<PercentBean> percentBeanList;
     /** Used to resolve relations */
@@ -44,55 +47,78 @@ public class GoodsBean {
     @Generated(hash = 521530994)
     private transient GoodsBeanDao myDao;
 
-    @Generated(hash = 331017321)
+    @Generated(hash = 337356374)
     public GoodsBean(Long id, String name, int type, String small_img,
-            String big_img, String no_pro_img) {
+            String big_img, String no_pro_img, String des1) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.small_img = small_img;
         this.big_img = big_img;
         this.no_pro_img = no_pro_img;
+        this.des1 = des1;
     }
+
     @Generated(hash = 1806305570)
     public GoodsBean() {
     }
+
     public Long getId() {
         return this.id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getName() {
         return this.name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public int getType() {
         return this.type;
     }
+
     public void setType(int type) {
         this.type = type;
     }
+
     public String getSmall_img() {
         return this.small_img;
     }
+
     public void setSmall_img(String small_img) {
         this.small_img = small_img;
     }
+
     public String getBig_img() {
         return this.big_img;
     }
+
     public void setBig_img(String big_img) {
         this.big_img = big_img;
     }
+
     public String getNo_pro_img() {
         return this.no_pro_img;
     }
+
     public void setNo_pro_img(String no_pro_img) {
         this.no_pro_img = no_pro_img;
     }
+
+    public String getDes1() {
+        return this.des1;
+    }
+
+    public void setDes1(String des1) {
+        this.des1 = des1;
+    }
+
     /**
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
@@ -115,11 +141,13 @@ public class GoodsBean {
         }
         return percentBeanList;
     }
+
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
     @Generated(hash = 1660621809)
     public synchronized void resetPercentBeanList() {
         percentBeanList = null;
     }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
      * Entity must attached to an entity context.
@@ -131,6 +159,7 @@ public class GoodsBean {
         }
         myDao.delete(this);
     }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
      * Entity must attached to an entity context.
@@ -142,6 +171,7 @@ public class GoodsBean {
         }
         myDao.refresh(this);
     }
+
     /**
      * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
      * Entity must attached to an entity context.
@@ -153,12 +183,14 @@ public class GoodsBean {
         }
         myDao.update(this);
     }
+
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 2062802439)
     public void __setDaoSession(DaoSession daoSession) {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getGoodsBeanDao() : null;
     }
+
 
 
 }

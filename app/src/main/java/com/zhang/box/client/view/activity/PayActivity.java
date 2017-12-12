@@ -28,12 +28,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-
-import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
-
-
 import com.zhang.box.R;
 import com.zhang.box.application.BaseApplication;
 import com.zhang.box.box.BoxAction;
@@ -52,6 +46,11 @@ import com.zhang.box.loading.ZLoadingDialog;
 import com.zhang.box.loading.ZLoadingView;
 import com.zhang.box.loading.Z_TYPE;
 import com.zhang.box.util.SharedPreferencesUtil;
+
+import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -187,8 +186,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
         registerGoodsBoradcastReceiver();
 
-        int request = dataIntent.getIntExtra("result",0);
-        if (request == 2){
+        int request = dataIntent.getIntExtra("result", 0);
+        if (request == 2) {
             initMediaPlayer(1);
         }
     }
@@ -358,6 +357,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         payTxtGoodsPrice.setText("" + goods.getGoodsPrice());
         initRadioNum();
         payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice());
+        payTxtGoodsDetailsMemo.setText(goods.getGoodsMemo());
     }
 
     /**
