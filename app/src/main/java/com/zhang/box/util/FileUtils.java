@@ -114,12 +114,12 @@ public class FileUtils {
 		}
 	}
 
-	/** 将eclipse里assets资源目录ini文件复制到指定目录下 */
-	public static void assetsDataToSD(Context context, String fileName) {
+	/** 将assets资源目录ini文件复制到指定目录下 */
+	public static void assetsDataToSD(Context context, String path, String fileName) {
 		InputStream myInput;
 		try {
-			OutputStream myOutput = new FileOutputStream(fileName);
-			myInput = context.getAssets().open("config.ini");
+			OutputStream myOutput = new FileOutputStream(path + fileName);
+			myInput = context.getAssets().open(fileName);
 			byte[] buffer = new byte[1024];
 			int length = myInput.read(buffer);
 			while (length > 0) {

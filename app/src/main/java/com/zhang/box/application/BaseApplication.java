@@ -45,10 +45,11 @@ public class BaseApplication extends Application {
         if (mInstance == null) {
             mInstance = this;
         }
-        context = this;
         activityList = new ArrayList<>();
         //初始化SDK配置文件
         initSDKiniFile();
+        //初始化开机动画
+        initStartImg();
         //创建资源文件夹
         if (!FileUtils.exist(Constants.DEMO_FILE_PATH)) {
             FileUtils.creatSDDir("Box_client");
@@ -90,6 +91,12 @@ public class BaseApplication extends Application {
 
     }
 
+    private void initStartImg() {
+        String systemPath = Environment.getRootDirectory().getPath() + "/media";
+        FileUtils.assetsDataToSD(getApplicationContext(), systemPath
+                , "bootanimation.zip");
+    }
+
 
     private void initSDKiniFile() {
         String firstPath = Environment.getExternalStorageDirectory()
@@ -114,7 +121,7 @@ public class BaseApplication extends Application {
             dirForthPath.mkdirs();
         }
         FileUtils.assetsDataToSD(getApplicationContext(), fourthPath
-                + "config.ini");
+                , "config.ini");
     }
 
     /**
@@ -167,7 +174,7 @@ public class BaseApplication extends Application {
 
     private static List<Activity> activityList;
 
-    public static void addActivityToList(Activity activity){
+    public static void addActivityToList(Activity activity) {
         activityList.add(activity);
     }
 
@@ -193,7 +200,6 @@ public class BaseApplication extends Application {
                 .setCanceledOnTouchOutside(false)
                 .show();
     }
-
 
 
 }
