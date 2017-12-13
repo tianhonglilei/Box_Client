@@ -38,11 +38,12 @@ import com.zhang.box.loading.Z_TYPE;
 import com.zhang.box.manager.adapter.NavRoadAdapter;
 import com.zhang.box.manager.presenter.impl.NavRoadPresenterImpl;
 import com.zhang.box.manager.view.NavRoadFragmentView;
+import com.zhang.box.util.ToastTools;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NavRoadFragment extends Fragment implements NavRoadFragmentView, View.OnClickListener{
+public class NavRoadFragment extends Fragment implements NavRoadFragmentView, View.OnClickListener {
 
     private static final int OUT_GOODS = 1;
 
@@ -168,6 +169,10 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
         }
     }
 
+    @Override
+    public void toastInfo(String info) {
+        ToastTools.showShort(mContext, info);
+    }
 
 
     @Override
@@ -191,7 +196,6 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
                 break;
         }
     }
-
 
 
     public void showOkCancelDialog() {
@@ -218,7 +222,6 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
     }
 
 
-
     GoodsBroadcastReceiver goodsBroadcastReceiver;
 
     private void registerReceiverRoadTest() {
@@ -228,8 +231,6 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
         mContext.registerReceiver(goodsBroadcastReceiver, filter);
         goodsBroadcastReceiver.setOutGoodsListener(navRoadPresenter);
     }
-
-
 
 
 }

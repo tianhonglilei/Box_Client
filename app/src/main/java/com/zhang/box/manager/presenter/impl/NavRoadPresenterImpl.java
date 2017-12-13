@@ -105,11 +105,11 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
                 }, 1600);
             }
         } else if (state == RoadInfo.ROAD_STATE_NULL) {
-            ToastTools.showShort(mContext, index + "货道已清空:共出" + (i) + "瓶");
             navRoadFragmentView.hiddenLoading();
+            navRoadFragmentView.toastInfo("货道已清空，数量：" + i);
         } else {
-            Toast.makeText(mContext, "货道出现异常，请重启程序", Toast.LENGTH_SHORT).show();
             navRoadFragmentView.hiddenLoading();
+            navRoadFragmentView.toastInfo("货道异常，请重启程序或机器");
         }
 
 
