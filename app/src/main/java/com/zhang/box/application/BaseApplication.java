@@ -92,7 +92,7 @@ public class BaseApplication extends Application {
     }
 
     private void initStartImg() {
-        String systemPath = Environment.getRootDirectory().getPath() + "/media";
+        String systemPath = Environment.getRootDirectory().getPath() + "/media/";
         FileUtils.assetsDataToSD(getApplicationContext(), systemPath
                 , "bootanimation.zip");
     }
