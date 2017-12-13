@@ -41,7 +41,7 @@
         android:textSize="14sp"
         android:textColor="#b1b1b1"
         android:text=""
-        android:maxWidth="163dp"
+        android:maxWidth="160dp"
         style="@style/TextViewOutStyle" />
 
     <TextView
