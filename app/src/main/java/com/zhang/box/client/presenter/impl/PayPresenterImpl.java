@@ -69,6 +69,8 @@ public class PayPresenterImpl implements PayPresenter {
 
     private RoadBeanService roadBeanService;
 
+    private int num, payType;
+
 
     public PayPresenterImpl(Context mContext, PayView payView) {
         this.mContext = mContext;
@@ -194,6 +196,8 @@ public class PayPresenterImpl implements PayPresenter {
      */
     @Override
     public void chengePayRequest(int num, int payType) {
+        this.num = num;
+        this.payType = payType;
         String tradeno;
         if (payType == Constants.PAY_TYPE_WX) {
             url = Constants.WX_GET_PAY_RESPONSE;
@@ -220,16 +224,19 @@ public class PayPresenterImpl implements PayPresenter {
     public void cancelRequest() {
         if (task != null) {
             task.cancel();
-            task = null;
         }
         if (timer != null) {
             timer.cancel();
-            timer = null;
         }
     }
 
-    private Timer timer;
-    private TimerTask task;
+    private Timer timer = new Timer();
+    private TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+            chengePayRequest(num, payType);
+        }
+    };
 
     /**
      * 支付结果查询
@@ -251,13 +258,6 @@ public class PayPresenterImpl implements PayPresenter {
                     outGoodsAction(num, boxType, roadIndex + "");
                 } else if (jsonObject.getString("error").equals("-1")) {
                     if (!orderInfo.isPayState() && !orderInfo.isCancel()) {
-                        timer = new Timer();
-                        task = new TimerTask() {
-                            @Override
-                            public void run() {
-                                chengePayRequest(num, payType);
-                            }
-                        };
                         timer.schedule(task, 1000);
                     }
                 }

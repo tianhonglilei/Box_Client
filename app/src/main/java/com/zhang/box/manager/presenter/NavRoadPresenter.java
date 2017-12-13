@@ -2,13 +2,14 @@ package com.zhang.box.manager.presenter;
 
 import java.util.List;
 
+import com.zhang.box.client.listener.OutGoodsListener;
 import com.zhang.box.client.model.RoadGoods;
 
 /**
  * Created by lilei on 2017/11/14.
  */
 
-public interface NavRoadPresenter {
+public interface NavRoadPresenter extends OutGoodsListener{
 
     void initRoadInfo();
 

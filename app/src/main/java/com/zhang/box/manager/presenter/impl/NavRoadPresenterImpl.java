@@ -22,12 +22,14 @@ import com.zhang.box.util.ToastTools;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by lilei on 2017/11/14.
  */
 
-public class NavRoadPresenterImpl implements NavRoadPresenter, OutGoodsListener{
+public class NavRoadPresenterImpl implements NavRoadPresenter {
     private Context mContext;
     private NavRoadFragmentView navRoadFragmentView;
     private RoadBiz roadBiz;
@@ -91,45 +93,28 @@ public class NavRoadPresenterImpl implements NavRoadPresenter, OutGoodsListener{
     int i = 0;
 
     @Override
-    public void clearRoad(String boxType, String index) {
-        i = 0;
-        registerReceiverRoadTest();
-        navRoadFragmentView.showLoading("出货中...");
-        int i = 0;
-        while (true) {
-            int state = BoxAction.getRoadState(boxType, index);
-            if (state == RoadInfo.ROAD_STATE_NORMAL) {
-                if (BoxAction.outGoods(boxType, index, BoxAction.OUT_GOODS_TYPE_PAY)) {
-
-                }
-                try {
-                    Thread.sleep(1500);
-                    continue;
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            } else if (state == RoadInfo.ROAD_STATE_NULL) {
-                ToastTools.showShort(mContext, index + "货道已清空:共出"+ (i) +"瓶");
-                navRoadFragmentView.hiddenLoading();
-                break;
-            } else {
-                Toast.makeText(mContext, "货道出现异常，请重启程序", Toast.LENGTH_SHORT).show();
-                navRoadFragmentView.hiddenLoading();
-                break;
+    public void clearRoad(final String boxType, final String index) {
+        int state = BoxAction.getRoadState(boxType, index);
+        if (state == RoadInfo.ROAD_STATE_NORMAL) {
+            if (BoxAction.outGoods(boxType, index, BoxAction.OUT_GOODS_TYPE_PAY)) {
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        clearRoad(boxType, index);
+                    }
+                }, 1600);
             }
+        } else if (state == RoadInfo.ROAD_STATE_NULL) {
+            ToastTools.showShort(mContext, index + "货道已清空:共出" + (i) + "瓶");
+            navRoadFragmentView.hiddenLoading();
+        } else {
+            Toast.makeText(mContext, "货道出现异常，请重启程序", Toast.LENGTH_SHORT).show();
+            navRoadFragmentView.hiddenLoading();
         }
 
+
     }
 
-    GoodsBroadcastReceiver goodsBroadcastReceiver;
-
-    private void registerReceiverRoadTest(){
-        goodsBroadcastReceiver = new GoodsBroadcastReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(BoxAction.OUT_GOODS_RECEIVER_ACTION);
-        mContext.registerReceiver(goodsBroadcastReceiver, filter);
-        goodsBroadcastReceiver.setOutGoodsListener(this);
-    }
 
     @Override
     public void outSuccess() {

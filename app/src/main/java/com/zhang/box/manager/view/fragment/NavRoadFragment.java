@@ -2,6 +2,7 @@ package com.zhang.box.manager.view.fragment;
 
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -20,9 +21,11 @@ import com.common.controls.dialog.CommonDialogFactory;
 import com.common.controls.dialog.DialogUtil;
 import com.common.controls.dialog.ICommonDialog;
 import com.zhang.box.R;
+import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.listener.OutGoodsListener;
 import com.zhang.box.client.model.Goods;
+import com.zhang.box.client.receiver.GoodsBroadcastReceiver;
 import com.zhang.box.manager.presenter.NavRoadPresenter;
 
 import java.util.List;
@@ -198,8 +201,10 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
         okDialog.setOkBtn(R.string.ok, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navRoadPresenter.clearRoad(boxType, index);
                 okDialog.dismiss();
+                showLoading("出货中...");
+                registerReceiverRoadTest();
+                navRoadPresenter.clearRoad(boxType, index);
             }
         });
         okDialog.setCancelBtn(R.string.cancel, new View.OnClickListener() {
@@ -211,5 +216,20 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
         okDialog.setCanceledOnTouchOutside(false);
         okDialog.show();
     }
+
+
+
+    GoodsBroadcastReceiver goodsBroadcastReceiver;
+
+    private void registerReceiverRoadTest() {
+        goodsBroadcastReceiver = new GoodsBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BoxAction.OUT_GOODS_RECEIVER_ACTION);
+        mContext.registerReceiver(goodsBroadcastReceiver, filter);
+        goodsBroadcastReceiver.setOutGoodsListener(navRoadPresenter);
+    }
+
+
+
 
 }
