@@ -40,8 +40,8 @@
         android:layout_centerHorizontal="true"
         android:textSize="14sp"
         android:textColor="#b1b1b1"
-        android:text="清爽碳酸饮品"
-        android:maxWidth="150dp"
+        android:text=""
+        android:maxWidth="163dp"
         style="@style/TextViewOutStyle" />
 
     <TextView
@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/more_goods_item_txt_memo"
         android:layout_centerHorizontal="true"
-        android:text="雪碧 (听装)"
+        android:text=""
         android:textColor="@color/colorMoreTxtTwoOne"
         android:textSize="14sp"
         style="@style/TextViewOutStyle"
