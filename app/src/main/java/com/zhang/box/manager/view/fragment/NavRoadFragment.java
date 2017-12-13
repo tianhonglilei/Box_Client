@@ -21,6 +21,7 @@ import com.common.controls.dialog.DialogUtil;
 import com.common.controls.dialog.ICommonDialog;
 import com.zhang.box.R;
 import com.zhang.box.box.BoxSetting;
+import com.zhang.box.client.listener.OutGoodsListener;
 import com.zhang.box.client.model.Goods;
 import com.zhang.box.manager.presenter.NavRoadPresenter;
 
@@ -38,7 +39,7 @@ import com.zhang.box.manager.view.NavRoadFragmentView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NavRoadFragment extends Fragment implements NavRoadFragmentView, View.OnClickListener {
+public class NavRoadFragment extends Fragment implements NavRoadFragmentView, View.OnClickListener{
 
     private static final int OUT_GOODS = 1;
 

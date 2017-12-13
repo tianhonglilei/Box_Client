@@ -1,6 +1,7 @@
 package com.zhang.box.manager.presenter.impl;
 
 import android.content.Context;
+import android.content.IntentFilter;
 import android.widget.Toast;
 
 import com.zhang.box.box.BoxAction;
@@ -8,8 +9,10 @@ import com.zhang.box.box.BoxParams;
 import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.biz.RoadBiz;
 import com.zhang.box.client.biz.impl.RoadBizImpl;
+import com.zhang.box.client.listener.OutGoodsListener;
 import com.zhang.box.client.model.RoadGoods;
 import com.zhang.box.client.model.RoadInfo;
+import com.zhang.box.client.receiver.GoodsBroadcastReceiver;
 import com.zhang.box.db.RoadBean;
 import com.zhang.box.db.biz.RoadBeanService;
 import com.zhang.box.manager.presenter.NavRoadPresenter;
@@ -24,7 +27,7 @@ import java.util.List;
  * Created by lilei on 2017/11/14.
  */
 
-public class NavRoadPresenterImpl implements NavRoadPresenter {
+public class NavRoadPresenterImpl implements NavRoadPresenter, OutGoodsListener{
     private Context mContext;
     private NavRoadFragmentView navRoadFragmentView;
     private RoadBiz roadBiz;
@@ -85,15 +88,19 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
         }
     }
 
+    int i = 0;
+
     @Override
     public void clearRoad(String boxType, String index) {
+        i = 0;
+        registerReceiverRoadTest();
         navRoadFragmentView.showLoading("出货中...");
         int i = 0;
         while (true) {
             int state = BoxAction.getRoadState(boxType, index);
             if (state == RoadInfo.ROAD_STATE_NORMAL) {
-                if (BoxAction.outGoods(boxType, index, BoxAction.OUT_GOODS_TYPE_TEST)) {
-                    i++;
+                if (BoxAction.outGoods(boxType, index, BoxAction.OUT_GOODS_TYPE_PAY)) {
+
                 }
                 try {
                     Thread.sleep(1500);
@@ -102,15 +109,35 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
                     e.printStackTrace();
                 }
             } else if (state == RoadInfo.ROAD_STATE_NULL) {
-                ToastTools.showShort(mContext, index + "货道已清空:共出"+ (i-1) +"瓶");
+                ToastTools.showShort(mContext, index + "货道已清空:共出"+ (i) +"瓶");
+                navRoadFragmentView.hiddenLoading();
                 break;
             } else {
                 Toast.makeText(mContext, "货道出现异常，请重启程序", Toast.LENGTH_SHORT).show();
+                navRoadFragmentView.hiddenLoading();
                 break;
             }
         }
-        navRoadFragmentView.hiddenLoading();
+
     }
 
+    GoodsBroadcastReceiver goodsBroadcastReceiver;
 
+    private void registerReceiverRoadTest(){
+        goodsBroadcastReceiver = new GoodsBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BoxAction.OUT_GOODS_RECEIVER_ACTION);
+        mContext.registerReceiver(goodsBroadcastReceiver, filter);
+        goodsBroadcastReceiver.setOutGoodsListener(this);
+    }
+
+    @Override
+    public void outSuccess() {
+        i++;
+    }
+
+    @Override
+    public void outFail() {
+
+    }
 }
