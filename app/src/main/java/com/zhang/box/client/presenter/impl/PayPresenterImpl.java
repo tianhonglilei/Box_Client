@@ -224,6 +224,7 @@ public class PayPresenterImpl implements PayPresenter {
     public void cancelRequest() {
         if (task != null) {
             task.cancel();
+            task = null;
         }
         if (timer != null) {
             timer.cancel();
@@ -231,12 +232,7 @@ public class PayPresenterImpl implements PayPresenter {
     }
 
     private Timer timer = new Timer();
-    private TimerTask task = new TimerTask() {
-        @Override
-        public void run() {
-            chengePayRequest(num, payType);
-        }
-    };
+    private TimerTask task;
 
     /**
      * 支付结果查询
@@ -258,6 +254,12 @@ public class PayPresenterImpl implements PayPresenter {
                     outGoodsAction(num, boxType, roadIndex + "");
                 } else if (jsonObject.getString("error").equals("-1")) {
                     if (!orderInfo.isPayState() && !orderInfo.isCancel()) {
+                        task = new TimerTask() {
+                            @Override
+                            public void run() {
+                                chengePayRequest(num, payType);
+                            }
+                        };
                         timer.schedule(task, 1000);
                     }
                 }
