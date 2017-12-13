@@ -204,7 +204,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         payRbgrpNum.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                payPresenter.cancelRequest();
+                cancelRequest();
                 if (checkedId == R.id.pay_rb_num_one) {
                     checkNum = 1;
                     payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice());
@@ -250,7 +250,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         payRbgrpQrcode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                payPresenter.cancelRequest();
+                cancelRequest();
                 if (checkedId == R.id.pay_rb_wechat) {
                     checkPay = Constants.PAY_TYPE_WX;
                     payQRCodeUrl = Constants.WX_GET_QR_URL;
@@ -373,7 +373,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         switch (v.getId()) {
             case R.id.pay_rl_return:
                 payPresenter.cancelOrder();
-                payPresenter.cancelRequest();
+                cancelRequest();
                 PayActivity.this.finish();
                 break;
             case R.id.pay_rb_num_two:
@@ -437,6 +437,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         payPercentNa2.setText(ss5[1]);
     }
 
+    Timer timer;
+
     @Override
     public void showQRCode(Bitmap bitmap) {
         payQrcodeLoading.setVisibility(View.GONE);
@@ -456,11 +458,27 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 }
             }
             payImgQrcode.setImageBitmap(bitmap);
-            payPresenter.chengePayRequest(checkNum, checkPay);
+            if (timer == null) {
+                timer = new Timer();
+            }
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    payPresenter.chengePayRequest(checkNum, checkPay);
+                }
+            }, 2000, 1000);
         } else {
             payTxtQrcodeLoading.setText("二维码生成失败");
         }
         initCountDownTimer();
+    }
+
+    @Override
+    public void cancelRequest() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
     }
 
     @Override

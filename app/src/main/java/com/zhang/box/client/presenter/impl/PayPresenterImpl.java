@@ -222,17 +222,16 @@ public class PayPresenterImpl implements PayPresenter {
 
     @Override
     public void cancelRequest() {
-        if (task != null) {
-            task.cancel();
-            task = null;
-        }
-        if (timer != null) {
-            timer.cancel();
-        }
+//        if (task != null) {
+//            task.cancel();
+//            task = null;
+//        }
+//        if (timer != null) {
+//            timer.cancel();
+//        }
     }
 
-    private Timer timer = new Timer();
-    private TimerTask task;
+
 
     /**
      * 支付结果查询
@@ -249,18 +248,13 @@ public class PayPresenterImpl implements PayPresenter {
                 if (jsonObject.getString("error").equals("0")) {
                     orderInfo.setPayType(payType);
                     orderInfo.setOrderNum(num);
+                    payView.cancelRequest();
                     payView.showDialog("出货中...");
                     orderInfo.setPayState(true);
                     outGoodsAction(num, boxType, roadIndex + "");
                 } else if (jsonObject.getString("error").equals("-1")) {
-                    if (!orderInfo.isPayState() && !orderInfo.isCancel()) {
-                        task = new TimerTask() {
-                            @Override
-                            public void run() {
-                                chengePayRequest(num, payType);
-                            }
-                        };
-                        timer.schedule(task, 1000);
+                    if (orderInfo.isPayState() || orderInfo.isCancel()) {
+                        payView.cancelRequest();
                     }
                 }
             }

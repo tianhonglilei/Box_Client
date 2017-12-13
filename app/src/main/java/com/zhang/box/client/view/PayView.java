@@ -39,5 +39,7 @@ public interface PayView  extends BaseView{
      */
     void outGoodsCheck(int num);
 
+    void cancelRequest();
+
 
 }
