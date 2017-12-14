@@ -55,7 +55,7 @@ public class HeartService extends Service implements HeartView {
                 calendar = Calendar.getInstance();
                 int hour = calendar.get(Calendar.HOUR_OF_DAY);
                 int minuts = calendar.get(Calendar.MINUTE);
-                Log.e("HeartService", "hour:minuts" + hour + ":" + minuts);
+//                Log.e("HeartService", "hour:minuts" + hour + ":" + minuts);
                 if (hour == 2) {
                     if (minuts >= 0 && minuts <= 5) {
                         restartApp();
