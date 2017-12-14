@@ -272,13 +272,13 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 openDoorBroadcastReceiver = null;
             }
         }
-        if (phoneStateListener!=null){
-            phoneStateListener = null;
-        }
-        if (telephonyManager!=null){
-            telephonyManager.listen(null, 0);
-            telephonyManager = null;
-        }
+//        if (phoneStateListener!=null){
+//            phoneStateListener = null;
+//        }
+//        if (telephonyManager!=null){
+//            telephonyManager.listen(null, 0);
+//            telephonyManager = null;
+//        }
 
         MoreGoodsActivity.this.setResult(resultRefresh);
         MoreGoodsActivity.this.finish();
@@ -434,13 +434,13 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             public void run() {
                 moreGoodsGv.smoothScrollBy(moreGoodsGv.getMeasuredHeight(), 1000);
             }
-        }, 2000);
+        }, 1500);
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 moreGoodsGv.smoothScrollBy(-moreGoodsGv.getHeight(), 1000);
             }
-        }, 3800);
+        }, 3000);
     }
 
 
