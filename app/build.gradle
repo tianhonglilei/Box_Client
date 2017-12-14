@@ -5,16 +5,16 @@ apply plugin: 'org.greenrobot.greendao'
 android {
     signingConfigs {
         release {
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-            storeFile file('C:/Users/Administrator/.android/debug.keystore')
-            storePassword 'android'
+            keyAlias 'dcbox'
+            keyPassword 'lileidcbox'
+            storeFile file('E:/李磊/Key/dc_lilei.jks')
+            storePassword 'lileidcbox'
         }
         debug {
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-            storeFile file('C:/Users/Administrator/.android/debug.keystore')
-            storePassword 'android'
+            keyAlias 'dcbox'
+            keyPassword 'lileidcbox'
+            storeFile file('E:/李磊/Key/dc_lilei.jks')
+            storePassword 'lileidcbox'
         }
     }
     compileSdkVersion 25
