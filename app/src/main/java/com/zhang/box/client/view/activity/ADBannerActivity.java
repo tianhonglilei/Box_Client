@@ -243,7 +243,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                             @Override
                             public void run() {
                                 try {
-                                    Thread.sleep(1000);
+                                    Thread.sleep(2000);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
