@@ -61,6 +61,7 @@ public class HeartService extends Service implements HeartView {
                         restartApp();
                     }
                 }
+                System.gc();
 
             }
         }, 5000, BOX_HEART_TIME);
