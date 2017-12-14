@@ -7,8 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,6 +38,7 @@ public class HeartService extends Service implements HeartView {
     }
 
     Timer timer;
+    Calendar calendar;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -48,6 +52,16 @@ public class HeartService extends Service implements HeartView {
                     startLiveActivity();
                 }
                 heartPresenter.sendHeartInfo();
+                calendar = Calendar.getInstance();
+                int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                int minuts = calendar.get(Calendar.MINUTE);
+                Log.e("HeartService", "hour:minuts" + hour + ":" + minuts);
+                if (hour == 2) {
+                    if (minuts >= 0 && minuts <= 5) {
+                        restartApp();
+                    }
+                }
+
             }
         }, 5000, BOX_HEART_TIME);
         return START_STICKY;
@@ -89,9 +103,8 @@ public class HeartService extends Service implements HeartView {
                 startActivity(intent);
                 android.os.Process.killProcess(android.os.Process.myPid());
             }
-        },3000);
+        }, 3000);
     }
-
 
 
     /**
@@ -128,7 +141,7 @@ public class HeartService extends Service implements HeartView {
     /**
      * 通过包名启动应用
      */
-    public void startLiveActivity(){
+    public void startLiveActivity() {
         Intent intent = this.getPackageManager().getLaunchIntentForPackage(
                 LIVE_SERVICE_PACKAGE_NAME);
         startActivity(intent);
