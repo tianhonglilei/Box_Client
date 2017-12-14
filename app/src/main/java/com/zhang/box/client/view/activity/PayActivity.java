@@ -466,7 +466,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 public void run() {
                     payPresenter.chengePayRequest(checkNum, checkPay);
                 }
-            }, 2000, 1300);
+            }, 3000, 1300);
         } else {
             payTxtQrcodeLoading.setText("二维码生成失败");
         }

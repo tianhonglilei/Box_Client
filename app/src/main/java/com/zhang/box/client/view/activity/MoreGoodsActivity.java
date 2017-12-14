@@ -272,6 +272,13 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 openDoorBroadcastReceiver = null;
             }
         }
+        if (phoneStateListener!=null){
+            phoneStateListener = null;
+        }
+        if (telephonyManager!=null){
+            telephonyManager.listen(null, 0);
+            telephonyManager = null;
+        }
 
         MoreGoodsActivity.this.setResult(resultRefresh);
         MoreGoodsActivity.this.finish();
