@@ -106,10 +106,8 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
             }
         } else if (state == RoadInfo.ROAD_STATE_NULL) {
             navRoadFragmentView.hiddenLoading();
-            navRoadFragmentView.toastInfo("货道已清空，数量：" + i);
         } else {
             navRoadFragmentView.hiddenLoading();
-            navRoadFragmentView.toastInfo("货道异常，请重启程序或机器");
         }
 
 

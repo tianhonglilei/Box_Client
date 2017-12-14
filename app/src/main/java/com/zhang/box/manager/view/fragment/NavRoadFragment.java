@@ -169,10 +169,6 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
         }
     }
 
-    @Override
-    public void toastInfo(String info) {
-        ToastTools.showShort(mContext, info);
-    }
 
 
     @Override

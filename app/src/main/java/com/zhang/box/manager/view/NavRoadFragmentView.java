@@ -18,6 +18,5 @@ public interface NavRoadFragmentView {
 
     void hiddenLoading();
 
-    void toastInfo(String info);
 
 }
