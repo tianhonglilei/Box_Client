@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -43,11 +44,15 @@ public class HeartPresenterImpl implements HeartPresenter {
     Map<String, String> params;
     String apkUrl;
     String version;
+    String path;
 
     public HeartPresenterImpl(Context mContext, HeartView heartView) {
         this.mContext = mContext;
         this.heartView = heartView;
     }
+
+
+    boolean update = false;
 
     @Override
     public void sendHeartInfo() {
@@ -60,7 +65,11 @@ public class HeartPresenterImpl implements HeartPresenter {
                 if (msg.equals("1")) {
                     heartView.restartApp();
                 } else if (msg.equals("2")) {
-
+                    if (update){
+                        if (FileUtils.exist(path)) {
+                            heartView.startAppAfterUpdate(path);
+                        }
+                    }
                 } else if (msg.equals("3")) {
                     JSONObject array = jsonObject.getJSONObject("down");
                     apkUrl = array.getString("apk");
@@ -121,11 +130,12 @@ public class HeartPresenterImpl implements HeartPresenter {
 
             @Override
             public void onSuccess(Object responseObject) {
-                String path = Constants.DEMO_FILE_PATH + "/Box_" + version + ".apk";
+                path = Constants.DEMO_FILE_PATH + "/Box_" + version + ".apk";
+                Log.d("HeartPresenterImpl", "FileUtils.exist(path):" + FileUtils.exist(path));
                 if (FileUtils.exist(path)) {
                     heartView.startAppAfterUpdate(path);
-                }else{
-
+                } else {
+                    update = true;
                 }
             }
 
