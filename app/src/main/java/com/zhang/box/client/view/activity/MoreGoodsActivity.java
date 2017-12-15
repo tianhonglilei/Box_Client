@@ -129,7 +129,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
         initAnimation();
 
-
+        initDoorReceiver();
 
     }
 
@@ -221,6 +221,8 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             case 2:
                 resultRefresh = 2;
                 moreGoodsPresenter.initAllGoods(moreGoodsGv);
+                initDoorReceiver();
+                initCountDownTimer();
                 break;
         }
     }
@@ -303,8 +305,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     @Override
     protected void onResume() {
         super.onResume();
-        initDoorReceiver();
-        initCountDownTimer();
+
     }
 
     @Override
