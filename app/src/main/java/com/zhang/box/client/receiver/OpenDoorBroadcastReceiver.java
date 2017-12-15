@@ -29,12 +29,7 @@ public class OpenDoorBroadcastReceiver extends BroadcastReceiver {
         if (action.equals(DOOR_ACTION)) {
             boolean isOpen = MainHandler.isDoorOpen();//获取机器开门信息
             if (isOpen) {
-                String  open = SharedPreferencesUtil.getString(context,"open");
-                if (!open.equals("true")){
-                    openDoorListener.openTheDoor();
-                    open = "true";
-                    SharedPreferencesUtil.putString(context,"open",open);
-                }
+                openDoorListener.openTheDoor();
 //                SharedPreferencesUtil.putString(context, BoxParams.DOOR_STATE, isOpen + "");
             } else {
             }

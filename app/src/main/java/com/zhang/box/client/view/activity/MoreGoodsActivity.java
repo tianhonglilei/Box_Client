@@ -148,7 +148,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         filter.addAction(BoxAction.OPEN_DOOR_ACTION);
         openDoorBroadcastReceiver.setOpenDoorListener(this);
         if (isRegister == false) {
-            Log.e("MORE", "initDoorReceiver: " + isRegister);
             registerReceiver(openDoorBroadcastReceiver, filter);
             isRegister = true;
         }
@@ -465,5 +464,9 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     public void openTheDoor() {
         Intent intent = new Intent(MoreGoodsActivity.this, ManagerNavgationActivity.class);
         startActivityForResult(intent, 0);
+        if (isRegister == true){
+            unregisterReceiver(openDoorBroadcastReceiver);
+            isRegister = false;
+        }
     }
 }
