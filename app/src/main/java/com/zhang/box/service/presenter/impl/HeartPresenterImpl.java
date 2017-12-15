@@ -23,6 +23,7 @@ import com.zhang.box.client.view.activity.ADBannerActivity;
 import com.zhang.box.contants.Constants;
 import com.zhang.box.service.presenter.HeartPresenter;
 import com.zhang.box.service.view.HeartView;
+import com.zhang.box.util.FileUtils;
 import com.zhang.box.util.ParamsUtils;
 import com.zhang.box.util.SharedPreferencesUtil;
 
@@ -90,11 +91,11 @@ public class HeartPresenterImpl implements HeartPresenter {
             stringBuilder.append(i + "|" + subHuodaoInfo + "|");
         }
         String door = BoxAction.getAVMRunning() ? "0" : "1";
-        if (door.equals("1")){
+        if (door.equals("1")) {
 //            disConnection();
         }
         String msg = SharedPreferencesUtil.getString(mContext, BoxParams.ERROR_MSG);
-        if (!msg.equals("")){
+        if (!msg.equals("")) {
             SharedPreferencesUtil.putString(mContext, BoxParams.ERROR_MSG, "");
         }
         PackageInfo pinfo;
@@ -106,40 +107,35 @@ public class HeartPresenterImpl implements HeartPresenter {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        params = ParamsUtils.heartParams(box_id, stringBuilder.toString(), door, msg, versionCode+"");
+        params = ParamsUtils.heartParams(box_id, stringBuilder.toString(), door, msg, versionCode + "");
 
     }
 
 
     public void updateApk() {
-        if (isActivityTop(ADBannerActivity.class, mContext)) {
-//            BaseApplication.showDialog("升级中,请勿支付");
-            CommonOkHttpClient.downloadFile(CommonRequest.createGetRequest(apkUrl, null), new DisposeDataHandle(new DisposeDownloadDataListener() {
-                @Override
-                public void onProgress(int progrss) {
+        CommonOkHttpClient.downloadFile(CommonRequest.createGetRequest(apkUrl, null), new DisposeDataHandle(new DisposeDownloadDataListener() {
+            @Override
+            public void onProgress(int progrss) {
+
+            }
+
+            @Override
+            public void onSuccess(Object responseObject) {
+                String path = Constants.DEMO_FILE_PATH + "/Box_" + version + ".apk";
+                if (FileUtils.exist(path)) {
+                    heartView.startAppAfterUpdate(path);
+                }else{
 
                 }
+            }
 
-                @Override
-                public void onSuccess(Object responseObject) {
-                    heartView.startAppAfterUpdate(version);
+            @Override
+            public void onFail(Object errorObject) {
+                if (errorObject instanceof Exception) {
+                    ((Exception) errorObject).printStackTrace();
                 }
-
-                @Override
-                public void onFail(Object errorObject) {
-                    if (errorObject instanceof Exception) {
-                        ((Exception) errorObject).printStackTrace();
-                    }
-                }
-            }, Constants.DEMO_FILE_PATH + "/Box_" + version + ".apk"));
-        } else {
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    updateApk();
-                }
-            }, 2000);
-        }
+            }
+        }, Constants.DEMO_FILE_PATH + "/Box_" + version + ".apk"));
     }
 
 
@@ -155,24 +151,23 @@ public class HeartPresenterImpl implements HeartPresenter {
     }
 
 
-    private void disConnection(){
+    private void disConnection() {
         if (isActivityTop(ADBannerActivity.class, mContext)) {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     heartView.restartApp();
                 }
-            },2000);
-        }else{
+            }, 2000);
+        } else {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     disConnection();
                 }
-            },2000);
+            }, 2000);
         }
     }
-
 
 
 }

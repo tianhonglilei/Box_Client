@@ -13,6 +13,7 @@ import android.support.annotation.IdRes;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -368,6 +369,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                     super.onSignalStrengthsChanged(signalStrength);
                     String signalInfo = signalStrength.toString();
                     String[] params = signalInfo.split(" ");
+                    Log.e("MoreGoodsActivity", signalInfo);
 //                    Toast.makeText(mContext, signalInfo, Toast.LENGTH_LONG).show();
 //                    Toast.makeText(mContext, "telephonyManager.getNetworkType():" + telephonyManager.getNetworkType(), Toast.LENGTH_SHORT).show();
                     if (telephonyManager.getNetworkType() == TelephonyManager.NETWORK_TYPE_LTE) {

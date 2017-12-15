@@ -52,7 +52,7 @@ public class BaseApplication extends Application {
         initStartImg();
         //创建资源文件夹
         if (!FileUtils.exist(Constants.DEMO_FILE_PATH)) {
-            FileUtils.creatSDDir("Box_client");
+            FileUtils.creatSDDir("boxcontent");
         }
 
 //        initBoxCheck();

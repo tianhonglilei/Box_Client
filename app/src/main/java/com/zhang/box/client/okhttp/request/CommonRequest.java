@@ -46,15 +46,18 @@ public class CommonRequest {
      */
     public static Request createGetRequest(String url, RequestParams params) {
         StringBuilder urlBuilder = new StringBuilder(url);
-        int length = urlBuilder.length();
         if (params != null) {
-            urlBuilder = urlBuilder.append("?");
+            if (url.contains("?")){
+                urlBuilder.append("&");
+            }else{
+                urlBuilder.append("?");
+            }
             for (Map.Entry<String, String> entry : params.urlParams.entrySet()) {
                 urlBuilder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
             }
-            length = urlBuilder.length() - 1;
+            url = urlBuilder.toString();
         }
-        return new Request.Builder().url(urlBuilder.substring(0, length)).get().build();
+        return new Request.Builder().url(url).get().build();
     }
 
 

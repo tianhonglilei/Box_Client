@@ -175,11 +175,13 @@ public class ManagerNavgationActivity extends FragmentActivity {
 
     }
 
+
+    TelephonyManager telephonyManager;
     /**
      * 初始化信号监听
      */
     public void initSignListener() {
-        final TelephonyManager telephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        telephonyManager = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
         PhoneStateListener phoneStateListener = new PhoneStateListener() {
             @Override
             public void onSignalStrengthsChanged(SignalStrength signalStrength) {

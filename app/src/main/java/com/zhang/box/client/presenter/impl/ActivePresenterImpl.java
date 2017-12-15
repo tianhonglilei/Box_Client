@@ -146,7 +146,7 @@ public class ActivePresenterImpl implements ActivePresenter {
         saveRoadBean(roadJsonArray);
         //检查文件是否存在，并下载文件
         if (!FileUtils.exist(Constants.DEMO_FILE_PATH)) {
-            FileUtils.creatSDDir("Box_client");
+            FileUtils.creatSDDir("boxcontent");
         }
         for (String name : allFileName) {
             if (!FileUtils.isFileExists(new File(Constants.DEMO_FILE_PATH), name)) {

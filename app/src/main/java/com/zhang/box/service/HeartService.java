@@ -94,18 +94,16 @@ public class HeartService extends Service implements HeartView {
     }
 
     @Override
-    public void startAppAfterUpdate(final String version) {
+    public void startAppAfterUpdate(final String path) {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                String path = Constants.DEMO_FILE_PATH
-                        + "/Box_" + version + ".apk";
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setDataAndType(Uri.parse("file://" + path),
                         "application/vnd.android.package-archive");
                 startActivity(intent);
-                android.os.Process.killProcess(android.os.Process.myPid());
+//                android.os.Process.killProcess(android.os.Process.myPid());
             }
         }, 3000);
     }
