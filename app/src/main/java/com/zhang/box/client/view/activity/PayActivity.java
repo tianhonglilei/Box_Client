@@ -571,7 +571,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Glide.with(mContext).pauseRequests();
+//        Glide.with(mContext).pauseRequests();
         if (payPresenter != null)
             payPresenter = null;
         //回收bitmap

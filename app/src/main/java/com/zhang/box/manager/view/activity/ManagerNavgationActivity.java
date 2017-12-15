@@ -239,7 +239,7 @@ public class ManagerNavgationActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Glide.with(mContext).pauseRequests();
+//        Glide.with(mContext).pauseRequests();
     }
 }
 

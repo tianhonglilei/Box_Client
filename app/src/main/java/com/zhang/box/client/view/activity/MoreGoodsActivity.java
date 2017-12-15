@@ -308,7 +308,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             countDownTimer.cancel();
             countDownTimer = null;
         }
-        Glide.with(mContext).pauseRequests();
+//        Glide.with(mContext).pauseRequests();
 
     }
 

@@ -21,6 +21,7 @@ import com.zhang.box.contants.Constants;
 import com.zhang.box.service.presenter.HeartPresenter;
 import com.zhang.box.service.presenter.impl.HeartPresenterImpl;
 import com.zhang.box.service.view.HeartView;
+import com.zhang.box.util.SharedPreferencesUtil;
 
 public class HeartService extends Service implements HeartView {
     public static final String LIVE_SERVICE_NAME = ".RunningBoxService";
@@ -56,11 +57,13 @@ public class HeartService extends Service implements HeartView {
                 int hour = calendar.get(Calendar.HOUR_OF_DAY);
                 int minuts = calendar.get(Calendar.MINUTE);
 //                Log.e("HeartService", "hour:minuts" + hour + ":" + minuts);
+
                 if (hour == 2) {
-                    if (minuts >= 0 && minuts <= 5) {
+                    if (minuts >= 0 && minuts <= 4) {
                         restartApp();
                     }
                 }
+
                 System.gc();
 
             }
