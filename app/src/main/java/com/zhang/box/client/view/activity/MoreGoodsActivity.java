@@ -147,7 +147,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             filter.addAction(BoxAction.OPEN_DOOR_ACTION);
             openDoorBroadcastReceiver.setOpenDoorListener(this);
         }
-        if (!isRegister) {
+        if (isRegister == false) {
             registerReceiver(openDoorBroadcastReceiver, filter);
             isRegister = true;
         }
@@ -276,7 +276,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     }
 
     private void returnAndFinish() {
-        if (isRegister) {
+        if (isRegister == true) {
             unregisterReceiver(openDoorBroadcastReceiver);
         }
 //        if (phoneStateListener!=null){
@@ -317,7 +317,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             countDownTimer = null;
         }
 //        Glide.with(mContext).pauseRequests();
-        if (isRegister) {
+        if (isRegister == true) {
             unregisterReceiver(openDoorBroadcastReceiver);
         }
     }

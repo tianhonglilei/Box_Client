@@ -581,7 +581,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         goodsBroadcastReceiver = new GoodsBroadcastReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(BoxAction.OUT_GOODS_RECEIVER_ACTION);
-        if (!isRegister){
+        if (isRegister == false){
             mContext.registerReceiver(goodsBroadcastReceiver, filter);
             isRegister = true;
         }
@@ -604,7 +604,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             countDownTimer = null;
         }
         if (goodsBroadcastReceiver != null) {
-            if (isRegister) {
+            if (isRegister == true) {
                 unregisterReceiver(goodsBroadcastReceiver);
                 isRegister = false;
             }
