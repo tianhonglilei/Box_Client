@@ -146,8 +146,9 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         openDoorBroadcastReceiver = new OpenDoorBroadcastReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(BoxAction.OPEN_DOOR_ACTION);
-        openDoorBroadcastReceiver.setOpenDoorListener(MoreGoodsActivity.this);
+        openDoorBroadcastReceiver.setOpenDoorListener(this);
         if (isRegister == false) {
+            Log.e("MORE", "initDoorReceiver: " + isRegister);
             registerReceiver(openDoorBroadcastReceiver, filter);
             isRegister = true;
         }
@@ -201,6 +202,10 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                     intent.putExtra("roadGoods", roadGoods);
                     startActivityForResult(intent, resultCode);
                     telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
+                    if (isRegister == true){
+                        unregisterReceiver(openDoorBroadcastReceiver);
+                        isRegister = false;
+                    }
                 } else {
                     ToastTools.showShort(mContext, "该商品已售罄，请选购其他商品");
                     //刷新商品
@@ -217,12 +222,13 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 //        Log.e("MoreGoodsActivity", "requestCode:" + requestCode + "--resultCode:" + resultCode);
+        initDoorReceiver();
+        initCountDownTimer();
         switch (resultCode) {
             case 2:
                 resultRefresh = 2;
                 moreGoodsPresenter.initAllGoods(moreGoodsGv);
-                initDoorReceiver();
-                initCountDownTimer();
+
                 break;
         }
     }
