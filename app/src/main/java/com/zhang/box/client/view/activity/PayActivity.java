@@ -421,20 +421,30 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @Override
     public void showPercentInfo(PercentInfo percentInfo) {
         String[] ss1 = percentInfo.getEnergy().split("-");
-        payPercentEnergy1.setText(ss1[0]);
-        payPercentEnergy2.setText(ss1[1]);
+        if (ss1.length>1) {
+            payPercentEnergy1.setText(ss1[0]);
+            payPercentEnergy2.setText(ss1[1]);
+        }
         String[] ss2 = percentInfo.getProtein().split("-");
-        payPercentProtein1.setText(ss2[0]);
-        payPercentProtein2.setText(ss2[1]);
+        if (ss2.length>1) {
+            payPercentProtein1.setText(ss2[0]);
+            payPercentProtein2.setText(ss2[1]);
+        }
         String[] ss3 = percentInfo.getFat().split("-");
-        payPercentFat1.setText(ss3[0]);
-        payPercentFat2.setText(ss3[1]);
+        if (ss3.length>1) {
+            payPercentFat1.setText(ss3[0]);
+            payPercentFat2.setText(ss3[1]);
+        }
         String[] ss4 = percentInfo.getcWater().split("-");
-        payPercentCwater1.setText(ss4[0]);
-        payPercentCwater2.setText(ss4[1]);
+        if (ss4.length>1) {
+            payPercentCwater1.setText(ss4[0]);
+            payPercentCwater2.setText(ss4[1]);
+        }
         String[] ss5 = percentInfo.getNa().split("-");
-        payPercentNa1.setText(ss5[0]);
-        payPercentNa2.setText(ss5[1]);
+        if (ss5.length>1) {
+            payPercentNa1.setText(ss5[0]);
+            payPercentNa2.setText(ss5[1]);
+        }
     }
 
     Timer timer;
