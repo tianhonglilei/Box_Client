@@ -101,7 +101,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
     private boolean managerShow = false;
 
-    boolean isRegister;
+    boolean isRegister = false;
 
 
     @Override

@@ -65,12 +65,12 @@ public class HeartPresenterImpl implements HeartPresenter {
                 if (msg.equals("1")) {
                     heartView.restartApp();
                 } else if (msg.equals("2")) {
-                    if (update){
-                        if (FileUtils.exist(path)) {
-                            update = false;
-                            heartView.startAppAfterUpdate(path);
-                        }
-                    }
+//                    if (update){
+//                        if (FileUtils.exist(path)) {
+//                            update = false;
+//                            heartView.startAppAfterUpdate(path);
+//                        }
+//                    }
                 } else if (msg.equals("3")) {
                     JSONObject array = jsonObject.getJSONObject("down");
                     apkUrl = array.getString("apk");
