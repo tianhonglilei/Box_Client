@@ -294,9 +294,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         super.onResume();
         initDoorReceiver();
         initCountDownTimer();
-        if (openDoorBroadcastReceiver != null) {
-            openDoorBroadcastReceiver.setShow(false);
-        }
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.zhang.box.R;
+import com.zhang.box.util.SharedPreferencesUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,7 +19,7 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NavExitManagerFragment extends Fragment implements View.OnClickListener{
+public class NavExitManagerFragment extends Fragment implements View.OnClickListener {
 
 
     @BindView(R.id.exit_manager_btn)
@@ -52,8 +53,9 @@ public class NavExitManagerFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.exit_manager_btn:
+                SharedPreferencesUtil.putString(mContext, "open", "false");
                 getActivity().setResult(2);
                 getActivity().finish();
                 break;
