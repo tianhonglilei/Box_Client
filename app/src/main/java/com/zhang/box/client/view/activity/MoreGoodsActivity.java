@@ -140,7 +140,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         IntentFilter filter = new IntentFilter();
         filter.addAction(BoxAction.OPEN_DOOR_ACTION);
         openDoorBroadcastReceiver.setOpenDoorListener(this);
-        mContext.registerReceiver(openDoorBroadcastReceiver, filter);
+        registerReceiver(openDoorBroadcastReceiver, filter);
     }
 
 
@@ -266,11 +266,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
     private void returnAndFinish() {
         if (openDoorBroadcastReceiver != null) {
-            if (BroadcastReceiverUtil.broadcastReceiverIsRegister(mContext, "com.avm.serialport.door_state")) {
-                unregisterReceiver(openDoorBroadcastReceiver);
-            } else {
-                openDoorBroadcastReceiver = null;
-            }
+            unregisterReceiver(openDoorBroadcastReceiver);
         }
 //        if (phoneStateListener!=null){
 //            phoneStateListener = null;
@@ -312,6 +308,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             countDownTimer.cancel();
             countDownTimer = null;
         }
+        Glide.with(mContext).pauseRequests();
 
     }
 

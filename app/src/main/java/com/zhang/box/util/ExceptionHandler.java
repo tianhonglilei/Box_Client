@@ -171,16 +171,14 @@ public class ExceptionHandler implements UncaughtExceptionHandler {
         PrintWriter printWriter = new PrintWriter(writer);
         ex.printStackTrace(printWriter);
         Throwable cause = ex.getCause();
-        StringBuilder stringBuilder = new StringBuilder();
         while (cause != null) {
             cause.printStackTrace(printWriter);
             cause = cause.getCause();
-            stringBuilder.append(cause);
         }
-        SharedPreferencesUtil.putString(mContext, BoxParams.ERROR_MSG, stringBuilder.toString());
         printWriter.close();
         String result = writer.toString();
         sb.append(result);
+        SharedPreferencesUtil.putString(mContext, BoxParams.ERROR_MSG, result);
         try {
             long timestamp = System.currentTimeMillis();
             String time = formatter.format(new Date());

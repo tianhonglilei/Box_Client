@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.common.controls.dialog.CommonDialogFactory;
 import com.common.controls.dialog.DialogUtil;
 import com.common.controls.dialog.ICommonDialog;
@@ -235,6 +236,11 @@ public class ManagerNavgationActivity extends FragmentActivity {
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Glide.with(mContext).pauseRequests();
+    }
 }
 
 

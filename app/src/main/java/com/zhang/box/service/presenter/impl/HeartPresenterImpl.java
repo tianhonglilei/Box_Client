@@ -94,6 +94,9 @@ public class HeartPresenterImpl implements HeartPresenter {
 //            disConnection();
         }
         String msg = SharedPreferencesUtil.getString(mContext, BoxParams.ERROR_MSG);
+        if (!msg.equals("")){
+            SharedPreferencesUtil.putString(mContext, BoxParams.ERROR_MSG, "");
+        }
         PackageInfo pinfo;
         int versionCode = 0;
         try {

@@ -580,6 +580,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Glide.with(mContext).pauseRequests();
         if (adTimer != null) {
             adTimer.cancel();
             adTimer = null;
