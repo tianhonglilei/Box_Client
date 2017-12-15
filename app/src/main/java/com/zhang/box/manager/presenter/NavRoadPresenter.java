@@ -17,6 +17,6 @@ public interface NavRoadPresenter extends OutGoodsListener{
 
     void testRoad(String boxType,String index);
 
-    void clearRoad(String boxType,String index);
+    void clearRoad(String boxType,String index,int position);
 
 }

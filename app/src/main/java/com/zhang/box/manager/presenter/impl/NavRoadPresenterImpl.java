@@ -95,21 +95,21 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
     int num;
 
     @Override
-    public void clearRoad(final String boxType, final String index) {
-        RoadGoods roadGoods = roadGoodsList.get(Integer.parseInt(index));
+    public void clearRoad(final String boxType, final String index, final int position) {
+        RoadGoods roadGoods = roadGoodsList.get(position);
         int state = BoxAction.getRoadState(boxType, index);
         if (state == RoadInfo.ROAD_STATE_NORMAL) {
             num++;
             if (num > roadGoods.getRoadInfo().getRoadMaxNum()) {
                 navRoadFragmentView.hiddenLoading();
             } else {
-                if (BoxAction.outGoods(boxType, index, BoxAction.OUT_GOODS_TYPE_PAY)) {
+                if (BoxAction.outGoods(boxType, index, BoxAction.OUT_GOODS_TYPE_TEST)) {
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
-                            clearRoad(boxType, index);
+                            clearRoad(boxType, index, position);
                         }
-                    }, 1600);
+                    }, 2000);
                 }
             }
         } else if (state == RoadInfo.ROAD_STATE_NULL) {

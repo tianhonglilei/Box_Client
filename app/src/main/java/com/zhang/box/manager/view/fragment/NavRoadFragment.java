@@ -104,6 +104,8 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
     }
 
 
+    int p1;
+
     /**
      * 初始化选择机器
      */
@@ -135,6 +137,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
                 } else {
                     index = roadInfo.getRoadIndex().toString();
                 }
+                p1 = position;
                 Goods goods = roadGoods.getGoods();
                 String s1 = getResources().getString(R.string.string_test_this_road) + index;
                 navRoadTestBtn.setText(s1);
@@ -170,7 +173,6 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
     }
 
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -204,7 +206,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
                 okDialog.dismiss();
                 showLoading("出货中...");
                 registerReceiverRoadTest();
-                navRoadPresenter.clearRoad(boxType, index);
+                navRoadPresenter.clearRoad(boxType, index, p1);
             }
         });
         okDialog.setCancelBtn(R.string.cancel, new View.OnClickListener() {
