@@ -131,6 +131,8 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
         initDoorReceiver();
 
+        initCountDownTimer();
+
     }
 
 
@@ -280,6 +282,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     private void returnAndFinish() {
         if (isRegister == true) {
             unregisterReceiver(openDoorBroadcastReceiver);
+            isRegister = false;
         }
 //        if (phoneStateListener!=null){
 //            phoneStateListener = null;
@@ -320,6 +323,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 //        Glide.with(mContext).pauseRequests();
         if (isRegister == true) {
             unregisterReceiver(openDoorBroadcastReceiver);
+            isRegister = false;
         }
     }
 
