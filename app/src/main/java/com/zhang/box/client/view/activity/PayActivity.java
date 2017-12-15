@@ -482,6 +482,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                             if (timer != null) {
                                 timer.cancel();
                                 timer = null;
+                                this.cancel();
                             }
                         }
                     }

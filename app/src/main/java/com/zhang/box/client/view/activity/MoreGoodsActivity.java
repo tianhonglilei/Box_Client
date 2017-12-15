@@ -359,7 +359,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
      */
     public void initSignListener() {
         if (telephonyManager == null) {
-            telephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+            telephonyManager = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
         }
         if (phoneStateListener == null) {
             phoneStateListener = new PhoneStateListener() {
