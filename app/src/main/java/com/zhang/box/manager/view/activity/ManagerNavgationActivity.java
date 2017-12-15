@@ -177,12 +177,13 @@ public class ManagerNavgationActivity extends FragmentActivity {
 
 
     TelephonyManager telephonyManager;
+    PhoneStateListener phoneStateListener;
     /**
      * 初始化信号监听
      */
     public void initSignListener() {
         telephonyManager = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
-        PhoneStateListener phoneStateListener = new PhoneStateListener() {
+        phoneStateListener = new PhoneStateListener() {
             @Override
             public void onSignalStrengthsChanged(SignalStrength signalStrength) {
                 super.onSignalStrengthsChanged(signalStrength);
@@ -241,6 +242,7 @@ public class ManagerNavgationActivity extends FragmentActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        telephonyManager.listen(phoneStateListener,PhoneStateListener.LISTEN_NONE);
 //        Glide.with(mContext).pauseRequests();
     }
 }

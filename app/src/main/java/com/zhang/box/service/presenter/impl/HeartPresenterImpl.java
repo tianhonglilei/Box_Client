@@ -67,6 +67,7 @@ public class HeartPresenterImpl implements HeartPresenter {
                 } else if (msg.equals("2")) {
                     if (update){
                         if (FileUtils.exist(path)) {
+                            update = false;
                             heartView.startAppAfterUpdate(path);
                         }
                     }
@@ -133,6 +134,7 @@ public class HeartPresenterImpl implements HeartPresenter {
                 path = Constants.DEMO_FILE_PATH + "/Box_" + version + ".apk";
                 Log.d("HeartPresenterImpl", "FileUtils.exist(path):" + FileUtils.exist(path));
                 if (FileUtils.exist(path)) {
+                    update = false;
                     heartView.startAppAfterUpdate(path);
                 } else {
                     update = true;

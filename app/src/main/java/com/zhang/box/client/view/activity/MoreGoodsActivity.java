@@ -137,11 +137,13 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
      * 初始化开门广播
      */
     private void initDoorReceiver() {
-        openDoorBroadcastReceiver = new OpenDoorBroadcastReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(BoxAction.OPEN_DOOR_ACTION);
-        openDoorBroadcastReceiver.setOpenDoorListener(this);
-        registerReceiver(openDoorBroadcastReceiver, filter);
+        if (openDoorBroadcastReceiver == null) {
+            openDoorBroadcastReceiver = new OpenDoorBroadcastReceiver();
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(BoxAction.OPEN_DOOR_ACTION);
+            openDoorBroadcastReceiver.setOpenDoorListener(this);
+            registerReceiver(openDoorBroadcastReceiver, filter);
+        }
     }
 
 
@@ -191,6 +193,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                     intent.putExtra("weather", moreWeatherTxt.getText().toString());
                     intent.putExtra("roadGoods", roadGoods);
                     startActivityForResult(intent, resultCode);
+                    telephonyManager.listen(phoneStateListener,PhoneStateListener.LISTEN_NONE);
                 } else {
                     ToastTools.showShort(mContext, "该商品已售罄，请选购其他商品");
                     //刷新商品
@@ -307,7 +310,9 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             countDownTimer = null;
         }
 //        Glide.with(mContext).pauseRequests();
-
+        if (openDoorBroadcastReceiver != null) {
+            unregisterReceiver(openDoorBroadcastReceiver);
+        }
     }
 
 
