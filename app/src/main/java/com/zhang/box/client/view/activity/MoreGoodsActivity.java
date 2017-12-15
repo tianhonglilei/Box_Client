@@ -101,6 +101,8 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
     private boolean managerShow = false;
 
+    boolean isRegister;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,10 +130,12 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         initAnimation();
 
 
+
     }
 
 
     private OpenDoorBroadcastReceiver openDoorBroadcastReceiver;
+    IntentFilter filter;
 
     /**
      * 初始化开门广播
@@ -139,10 +143,13 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     private void initDoorReceiver() {
         if (openDoorBroadcastReceiver == null) {
             openDoorBroadcastReceiver = new OpenDoorBroadcastReceiver();
-            IntentFilter filter = new IntentFilter();
+            filter = new IntentFilter();
             filter.addAction(BoxAction.OPEN_DOOR_ACTION);
             openDoorBroadcastReceiver.setOpenDoorListener(this);
+        }
+        if (!isRegister) {
             registerReceiver(openDoorBroadcastReceiver, filter);
+            isRegister = true;
         }
     }
 
@@ -269,7 +276,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     }
 
     private void returnAndFinish() {
-        if (openDoorBroadcastReceiver != null) {
+        if (isRegister) {
             unregisterReceiver(openDoorBroadcastReceiver);
         }
 //        if (phoneStateListener!=null){
@@ -310,7 +317,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             countDownTimer = null;
         }
 //        Glide.with(mContext).pauseRequests();
-        if (openDoorBroadcastReceiver != null) {
+        if (isRegister) {
             unregisterReceiver(openDoorBroadcastReceiver);
         }
     }

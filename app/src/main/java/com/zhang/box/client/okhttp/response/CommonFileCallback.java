@@ -93,7 +93,7 @@ public class CommonFileCallback implements Callback {
         InputStream inputStream = null;
         File file = null;
         FileOutputStream fos = null;
-        byte[] buffer = new byte[2048];
+        byte[] buffer = new byte[128];
         int length = -1;
         int currentLength = 0;
         double sumLength = 0;

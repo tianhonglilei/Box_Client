@@ -103,9 +103,9 @@ public class HeartService extends Service implements HeartView {
                 intent.setDataAndType(Uri.parse("file://" + path),
                         "application/vnd.android.package-archive");
                 startActivity(intent);
-//                android.os.Process.killProcess(android.os.Process.myPid());
+                android.os.Process.killProcess(android.os.Process.myPid());
             }
-        }, 3000);
+        }, 60000);
     }
 
 

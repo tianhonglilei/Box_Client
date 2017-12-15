@@ -126,7 +126,7 @@ public class HeartPresenterImpl implements HeartPresenter {
         CommonOkHttpClient.downloadFile(CommonRequest.createGetRequest(apkUrl, null), new DisposeDataHandle(new DisposeDownloadDataListener() {
             @Override
             public void onProgress(int progrss) {
-
+                Log.e("HeartPresenterImpl", "progrss:" + progrss);
             }
 
             @Override

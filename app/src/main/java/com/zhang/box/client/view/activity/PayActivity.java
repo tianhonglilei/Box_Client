@@ -575,12 +575,16 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 //        registerGoodsBoradcastReceiver();
     }
 
+    boolean isRegister = false;
 
     private void registerGoodsBoradcastReceiver() {
         goodsBroadcastReceiver = new GoodsBroadcastReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(BoxAction.OUT_GOODS_RECEIVER_ACTION);
-        mContext.registerReceiver(goodsBroadcastReceiver, filter);
+        if (!isRegister){
+            mContext.registerReceiver(goodsBroadcastReceiver, filter);
+            isRegister = true;
+        }
         goodsBroadcastReceiver.setOutGoodsListener(this);
     }
 
@@ -600,8 +604,10 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             countDownTimer = null;
         }
         if (goodsBroadcastReceiver != null) {
-            unregisterReceiver(goodsBroadcastReceiver);
-            goodsBroadcastReceiver = null;
+            if (isRegister) {
+                unregisterReceiver(goodsBroadcastReceiver);
+                isRegister = false;
+            }
         }
         System.gc();
     }

@@ -205,7 +205,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
             public void onClick(View v) {
                 okDialog.dismiss();
                 showLoading("出货中...");
-                registerReceiverRoadTest();
+//                registerReceiverRoadTest();
                 navRoadPresenter.clearRoad(boxType, index, p1);
             }
         });
