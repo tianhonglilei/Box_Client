@@ -448,6 +448,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     }
 
     Timer timer;
+    TimerTask task;
 
     @Override
     public void showQRCode(Bitmap bitmap) {
@@ -471,19 +472,22 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             if (timer == null) {
                 timer = new Timer();
             }
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    if (payPresenter != null) {
-                        payPresenter.chengePayRequest(checkNum, checkPay);
-                    }else{
-                        if (timer!=null){
-                            timer.cancel();
-                            timer = null;
+            if (task == null) {
+                task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (payPresenter != null) {
+                            payPresenter.chengePayRequest(checkNum, checkPay);
+                        } else {
+                            if (timer != null) {
+                                timer.cancel();
+                                timer = null;
+                            }
                         }
                     }
-                }
-            }, 3000, 1300);
+                };
+            }
+            timer.schedule(task, 3000, 1300);
         } else {
             payTxtQrcodeLoading.setText("二维码生成失败");
         }
@@ -492,6 +496,10 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
     @Override
     public void cancelRequest() {
+        if (task != null) {
+            task.cancel();
+            task = null;
+        }
         if (timer != null) {
             timer.cancel();
             timer = null;
