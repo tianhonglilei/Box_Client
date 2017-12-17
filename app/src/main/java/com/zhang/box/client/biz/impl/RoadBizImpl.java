@@ -39,9 +39,9 @@ public class RoadBizImpl implements RoadBiz {
             }
             //货道状态和开关
             roadInfo.setRoadState(BoxAction.getRoadState(roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString()));
-            if (roadInfo.getRoadNowNum() == 0){
+            if (roadInfo.getRoadNowNum() == 0) {
                 roadInfo.setRoadOpen(RoadInfo.ROAD_CLOSE);
-            }else{
+            } else {
                 roadInfo.setRoadOpen(RoadInfo.ROAD_OPEN);
             }
             if (roadInfo.getRoadOpen() == RoadInfo.ROAD_OPEN
@@ -58,10 +58,14 @@ public class RoadBizImpl implements RoadBiz {
                 if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_DRINK)) {
                     if (Integer.parseInt(roadInfo.getRoadIndex().toString()) < 9) {
 //                        Log.e("RoadBizImpl", "Integer.parseInt(leftState):" + Integer.parseInt(leftState));
-                        goods.setGoodsWd(Integer.parseInt(leftState));
+                        if (!leftState.equals("")) {
+                            goods.setGoodsWd(Integer.parseInt(leftState));
+                        }
                     } else {
 //                        Log.e("RoadBizImpl", "Integer.parseInt(rightState):" + Integer.parseInt(rightState));
-                        goods.setGoodsWd(Integer.parseInt(rightState));
+                        if (!leftState.equals("")) {
+                            goods.setGoodsWd(Integer.parseInt(rightState));
+                        }
                     }
                 } else {
                     goods.setGoodsWd(Goods.GOODS_WD_NORMAL);
