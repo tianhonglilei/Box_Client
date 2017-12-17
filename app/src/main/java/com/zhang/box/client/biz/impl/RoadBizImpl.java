@@ -60,11 +60,15 @@ public class RoadBizImpl implements RoadBiz {
 //                        Log.e("RoadBizImpl", "Integer.parseInt(leftState):" + Integer.parseInt(leftState));
                         if (!leftState.equals("")) {
                             goods.setGoodsWd(Integer.parseInt(leftState));
+                        }else{
+                            goods.setGoodsWd(Goods.GOODS_WD_NORMAL);
                         }
                     } else {
 //                        Log.e("RoadBizImpl", "Integer.parseInt(rightState):" + Integer.parseInt(rightState));
                         if (!leftState.equals("")) {
                             goods.setGoodsWd(Integer.parseInt(rightState));
+                        }else{
+                            goods.setGoodsWd(Goods.GOODS_WD_NORMAL);
                         }
                     }
                 } else {
