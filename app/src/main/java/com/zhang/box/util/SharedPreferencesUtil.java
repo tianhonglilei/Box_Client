@@ -3,6 +3,8 @@ package com.zhang.box.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.zhang.box.box.BoxParams;
+
 /**
  * Created by lilei on 2017/11/21.
  */
@@ -23,6 +25,7 @@ public class SharedPreferencesUtil {
         if (sharedPreferences==null){
             sharedPreferences = context.getSharedPreferences("box",0);
         }
-        return sharedPreferences.getString(key,"");
+        String def = "";
+        return sharedPreferences.getString(key,def);
     }
 }

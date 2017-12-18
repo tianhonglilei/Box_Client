@@ -66,7 +66,7 @@ public class BoxParams {
         if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(18, 20);
         } else {
-            return "";
+            return "00";
         }
     }
 
@@ -74,7 +74,7 @@ public class BoxParams {
         if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(34, 36);
         } else {
-            return "";
+            return "00";
         }
     }
 
@@ -82,7 +82,7 @@ public class BoxParams {
         if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(20, 22);
         } else {
-            return "";
+            return "00";
         }
     }
 
@@ -90,7 +90,7 @@ public class BoxParams {
         if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(40, 42);
         } else {
-            return "";
+            return "00";
         }
     }
 
@@ -99,7 +99,7 @@ public class BoxParams {
         if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(22, 26);
         } else {
-            return "";
+            return "0000";
         }
     }
 
@@ -107,7 +107,7 @@ public class BoxParams {
         if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(26, 30);
         } else {
-            return "";
+            return "0000";
         }
     }
 
@@ -115,7 +115,7 @@ public class BoxParams {
         if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(31, 33);
         } else {
-            return "";
+            return "00";
         }
     }
 
@@ -123,7 +123,7 @@ public class BoxParams {
         if (avmSetInfo.length() > 41) {
             return avmSetInfo.substring(37, 39);
         } else {
-            return "";
+            return "30";
         }
     }
 }
