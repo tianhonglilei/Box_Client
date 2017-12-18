@@ -57,7 +57,7 @@ public class BaseApplication extends Application {
 
 //        initBoxCheck();
 
-        LeakCanary.install(this);
+//        LeakCanary.install(this);
 
         //初始化异常捕捉
         ExceptionHandler exceptionHandler = ExceptionHandler.getInstance();

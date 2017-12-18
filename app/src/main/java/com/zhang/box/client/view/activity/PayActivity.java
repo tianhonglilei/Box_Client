@@ -157,6 +157,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     MediaPlayer mediaPlayer = null;
     AssetManager assetManager = null;
 
+    boolean qrCodeIsShow = false;
+    boolean requestStart = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

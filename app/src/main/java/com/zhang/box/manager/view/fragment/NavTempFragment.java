@@ -166,9 +166,10 @@ public class NavTempFragment extends Fragment implements NavTempFragmentView, Vi
      * 初始化温度显示
      */
     private void initTemp() {
-
-        leftRdos.get(Integer.parseInt(SharedPreferencesUtil.getString(mContext,BoxParams.LEFT_STATE))).setChecked(true);
-        rightRdos.get(Integer.parseInt(SharedPreferencesUtil.getString(mContext,BoxParams.RIGHT_STATE))).setChecked(true);
+        leftState = Integer.parseInt(SharedPreferencesUtil.getString(mContext,BoxParams.LEFT_STATE));
+        leftRdos.get(leftState).setChecked(true);
+        rightState = Integer.parseInt(SharedPreferencesUtil.getString(mContext,BoxParams.RIGHT_STATE));
+        rightRdos.get(rightState).setChecked(true);
         navEditSetTempCold.setText(SharedPreferencesUtil.getString(mContext,BoxParams.COLD_TEMP));
         navEditSetTempHot.setText(SharedPreferencesUtil.getString(mContext,BoxParams.HOT_TEMP));
 
