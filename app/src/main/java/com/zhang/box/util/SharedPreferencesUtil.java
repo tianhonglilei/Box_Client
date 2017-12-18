@@ -26,6 +26,9 @@ public class SharedPreferencesUtil {
             sharedPreferences = context.getSharedPreferences("box",0);
         }
         String def = "";
+        if (key == BoxParams.LEFT_STATE || key == BoxParams.RIGHT_STATE ){
+            def = "0";
+        }
         return sharedPreferences.getString(key,def);
     }
 }
