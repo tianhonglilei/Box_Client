@@ -56,6 +56,16 @@ public class HeartPresenterImpl implements HeartPresenter {
 
     @Override
     public void sendHeartInfo() {
+        if (update){
+            path = Constants.DEMO_FILE_PATH + "/Box_" + version + ".apk";
+            Log.d("HeartPresenterImpl", "FileUtils.exist(path):" + FileUtils.exist(path));
+            if (FileUtils.exist(path)) {
+                update = false;
+                heartView.startAppAfterUpdate(path);
+            } else {
+                update = true;
+            }
+        }
         getHeartInfo();
         CommonOkHttpClient.post(CommonRequest.createPostRequest(Constants.HEART_URL, new RequestParams(params)), new DisposeDataHandle(new DisposeDataListener() {
             @Override
@@ -126,19 +136,22 @@ public class HeartPresenterImpl implements HeartPresenter {
         CommonOkHttpClient.downloadFile(CommonRequest.createGetRequest(apkUrl, null), new DisposeDataHandle(new DisposeDownloadDataListener() {
             @Override
             public void onProgress(int progrss) {
-                Log.e("HeartPresenterImpl", "progrss:" + progrss);
+//                Log.e("HeartPresenterImpl", "progrss:" + progrss);
+                if (progrss == 100){
+                    update = true;
+                }
             }
 
             @Override
             public void onSuccess(Object responseObject) {
-                path = Constants.DEMO_FILE_PATH + "/Box_" + version + ".apk";
-                Log.d("HeartPresenterImpl", "FileUtils.exist(path):" + FileUtils.exist(path));
-                if (FileUtils.exist(path)) {
-                    update = false;
-                    heartView.startAppAfterUpdate(path);
-                } else {
-                    update = true;
-                }
+//                path = Constants.DEMO_FILE_PATH + "/Box_" + version + ".apk";
+//                Log.d("HeartPresenterImpl", "FileUtils.exist(path):" + FileUtils.exist(path));
+//                if (FileUtils.exist(path)) {
+//                    update = false;
+//                    heartView.startAppAfterUpdate(path);
+//                } else {
+//                    update = true;
+//                }
             }
 
             @Override
