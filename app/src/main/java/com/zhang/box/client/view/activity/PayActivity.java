@@ -158,7 +158,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     AssetManager assetManager = null;
 
     boolean qrCodeIsShow = false;
-    boolean requestStart = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,6 +184,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         initRadioGroup();
         payQrcodeLoading.setLoadingBuilder(Z_TYPE.values()[1]);
         payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
+
+        payImgQrcode.setOnClickListener(this);
 
         registerGoodsBoradcastReceiver();
 
@@ -381,11 +382,17 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             case R.id.pay_rb_num_two:
 
                 break;
+            case R.id.pay_img_qrcode:
+                payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, goods, roadInfo);
+                break;
+
         }
     }
 
     private Timer failTimer;
     private TimerTask failTask;
+    //检测故障
+    private boolean checkOutGoodsFail = true;
 
     @Override
     public void showDialog(String text) {
@@ -401,8 +408,10 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         failTask = new TimerTask() {
             @Override
             public void run() {
-                if (successNum + failNum != num) {
-                    payPresenter.postOrder(num, successNum);
+                if (checkOutGoodsFail) {
+                    if (successNum + failNum != num) {
+                        payPresenter.postOrder(num, successNum);
+                    }
                 }
             }
         };
@@ -449,9 +458,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         }
     }
 
-    Timer timer;
-    TimerTask task;
-
     @Override
     public void showQRCode(Bitmap bitmap) {
         payQrcodeLoading.setVisibility(View.GONE);
@@ -471,42 +477,25 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 }
             }
             payImgQrcode.setImageBitmap(bitmap);
-            if (timer == null) {
-                timer = new Timer();
-            }
-            if (task == null) {
-                task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (payPresenter != null) {
-                            payPresenter.chengePayRequest(checkNum, checkPay);
-                        } else {
-                            if (timer != null) {
-                                timer.cancel();
-                                timer = null;
-                                this.cancel();
-                            }
-                        }
-                    }
-                };
-            }
-            timer.schedule(task, 3000, 1300);
+            qrCodeIsShow = true;
+            payImgQrcode.setClickable(false);
         } else {
-            payTxtQrcodeLoading.setText("二维码生成失败");
+            payTxtQrcodeLoading.setText("生成失败,点击刷新二维码");
+            payImgQrcode.setClickable(true);
         }
         initCountDownTimer();
     }
 
+    /**
+     * 轮询支付接口
+     */
+    private void requestTimerStart() {
+        payPresenter.chengePayRequest(checkNum, checkPay);
+    }
+
     @Override
     public void cancelRequest() {
-        if (task != null) {
-            task.cancel();
-            task = null;
-        }
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
+        qrCodeIsShow = false;
     }
 
     @Override
@@ -583,7 +572,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         goodsBroadcastReceiver = new GoodsBroadcastReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(BoxAction.OUT_GOODS_RECEIVER_ACTION);
-        if (isRegister == false){
+        if (isRegister == false) {
             mContext.registerReceiver(goodsBroadcastReceiver, filter);
             isRegister = true;
         }
@@ -617,7 +606,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     private void recycleBitmap(Bitmap bitmap) {
         if (bitmap != null) {
             bitmap.recycle();
-            bitmap = null;
         }
     }
 
@@ -635,6 +623,9 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                     payTxtReturnTime.setTextColor(getResources().getColor(R.color.colorDemoLogo));
                 }
                 payTxtReturnTime.setText(time + "S");
+                if (qrCodeIsShow == true) {
+                    requestTimerStart();
+                }
             }
 
             @Override
@@ -650,6 +641,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     public void outSuccess() {
         successNum++;
         if (num == successNum + failNum) {
+            checkOutGoodsFail = false;
             payPresenter.postOrder(num, successNum);
         }
     }
@@ -658,6 +650,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     public void outFail() {
         failNum++;
         if (num == successNum + failNum) {
+            checkOutGoodsFail = false;
             payPresenter.postOrder(num, successNum);
         }
     }
