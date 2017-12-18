@@ -201,7 +201,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                     intent.putExtra("roadGoods", roadGoods);
                     startActivityForResult(intent, resultCode);
                     telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
-                    if (isRegister == true){
+                    if (isRegister == true) {
                         unregisterReceiver(openDoorBroadcastReceiver);
                         isRegister = false;
                     }
@@ -392,28 +392,40 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                     Log.e("MoreGoodsActivity", signalInfo);
 //                    Toast.makeText(mContext, signalInfo, Toast.LENGTH_LONG).show();
 //                    Toast.makeText(mContext, "telephonyManager.getNetworkType():" + telephonyManager.getNetworkType(), Toast.LENGTH_SHORT).show();
-                    if (telephonyManager.getNetworkType() == TelephonyManager.NETWORK_TYPE_LTE) {
-                        //4G网络 最佳范围   >-90dBm 越大越好
-                        int ltedbm = Integer.parseInt(params[6]);
-                        if (ltedbm > -44) {
-                            changeSignSize(0);
-                        } else if (ltedbm >= -90) {
-                            changeSignSize(4);
-                        } else if (ltedbm >= -100) {
-                            changeSignSize(3);
-                        } else if (ltedbm >= -110) {
-                            changeSignSize(2);
-                        } else if (ltedbm >= -120) {
-                            changeSignSize(1);
-                        } else if (ltedbm >= -140) {
-                            changeSignSize(0);
-                        } else {
-                            changeSignSize(0);
-                        }
-                    } else {
-                        changeSignSize(0);
-                    }
+                    switch (telephonyManager.getNetworkType()) {
+                        case TelephonyManager.NETWORK_TYPE_UMTS:
+                        case TelephonyManager.NETWORK_TYPE_EVDO_0:
+                        case TelephonyManager.NETWORK_TYPE_EVDO_A:
+                        case TelephonyManager.NETWORK_TYPE_HSDPA:
+                        case TelephonyManager.NETWORK_TYPE_HSUPA:
+                        case TelephonyManager.NETWORK_TYPE_HSPA:
+                        case TelephonyManager.NETWORK_TYPE_EVDO_B:
+                        case TelephonyManager.NETWORK_TYPE_EHRPD:
+                        case TelephonyManager.NETWORK_TYPE_HSPAP:
+                        case TelephonyManager.NETWORK_TYPE_LTE:
 
+                            //4G网络 最佳范围   >-90dBm 越大越好
+                            int ltedbm = Integer.parseInt(params[6]);
+                            if (ltedbm > -44) {
+                                changeSignSize(0);
+                            } else if (ltedbm >= -90) {
+                                changeSignSize(4);
+                            } else if (ltedbm >= -100) {
+                                changeSignSize(3);
+                            } else if (ltedbm >= -110) {
+                                changeSignSize(2);
+                            } else if (ltedbm >= -120) {
+                                changeSignSize(1);
+                            } else if (ltedbm >= -140) {
+                                changeSignSize(0);
+                            } else {
+                                changeSignSize(0);
+                            }
+                            break;
+                        default:
+                            changeSignSize(0);
+                            break;
+                    }
                 }
             };
         }
@@ -464,7 +476,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     public void openTheDoor() {
         Intent intent = new Intent(MoreGoodsActivity.this, ManagerNavgationActivity.class);
         startActivityForResult(intent, 0);
-        if (isRegister == true){
+        if (isRegister == true) {
             unregisterReceiver(openDoorBroadcastReceiver);
             isRegister = false;
         }

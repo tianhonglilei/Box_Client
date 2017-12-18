@@ -17,6 +17,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.IdRes;
 import android.support.v4.content.res.ResourcesCompat;
+import android.telephony.PhoneStateListener;
+import android.telephony.SignalStrength;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -126,6 +129,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     TextView moreImeiNum;
     @BindView(R.id.pay_txt_return_time)
     TextView payTxtReturnTime;
+    @BindView(R.id.date_img_signal)
+    ImageView dateImgSignal;
     private Bitmap bitmapWxPayOne, bitmapWxPayTwo, bitmapAliPayOne, bitmapAliPayTwo;
 
     //支付和数量的选择按钮
@@ -600,6 +605,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 isRegister = false;
             }
         }
+        telephonyManager.listen(phoneStateListener,PhoneStateListener.LISTEN_NONE);
         System.gc();
     }
 
@@ -689,6 +695,79 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             mediaPlayer.start();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    TelephonyManager telephonyManager;
+    PhoneStateListener phoneStateListener;
+
+    /**
+     * 初始化信号监听
+     */
+    public void initSignListener() {
+        telephonyManager = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+        phoneStateListener = new PhoneStateListener() {
+            @Override
+            public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+                super.onSignalStrengthsChanged(signalStrength);
+                String signalInfo = signalStrength.toString();
+                String[] params = signalInfo.split(" ");
+                switch (telephonyManager.getNetworkType()) {
+                    case TelephonyManager.NETWORK_TYPE_UMTS:
+                    case TelephonyManager.NETWORK_TYPE_EVDO_0:
+                    case TelephonyManager.NETWORK_TYPE_EVDO_A:
+                    case TelephonyManager.NETWORK_TYPE_HSDPA:
+                    case TelephonyManager.NETWORK_TYPE_HSUPA:
+                    case TelephonyManager.NETWORK_TYPE_HSPA:
+                    case TelephonyManager.NETWORK_TYPE_EVDO_B:
+                    case TelephonyManager.NETWORK_TYPE_EHRPD:
+                    case TelephonyManager.NETWORK_TYPE_HSPAP:
+                    case TelephonyManager.NETWORK_TYPE_LTE:
+                        //4G网络 最佳范围   >-90dBm 越大越好
+                        int ltedbm = Integer.parseInt(params[6]);
+                        if (ltedbm > -44) {
+                            changeSignSize(0);
+                        } else if (ltedbm >= -90) {
+                            changeSignSize(4);
+                        } else if (ltedbm >= -105) {
+                            changeSignSize(3);
+                        } else if (ltedbm >= -115) {
+                            changeSignSize(2);
+                        } else if (ltedbm >= -120) {
+                            changeSignSize(1);
+                        } else if (ltedbm >= -140) {
+                            changeSignSize(0);
+                        } else {
+                            changeSignSize(0);
+                        }
+                        break;
+                    default:
+                        changeSignSize(0);
+                        break;
+
+                }
+            }
+        };
+        telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+    }
+
+    public void changeSignSize(int level) {
+        switch (level) {
+            case 0:
+                dateImgSignal.setImageResource(R.drawable.sign_no_black);
+                break;
+            case 1:
+                dateImgSignal.setImageResource(R.drawable.sign_one_black);
+                break;
+            case 2:
+                dateImgSignal.setImageResource(R.drawable.sign_two_black);
+                break;
+            case 3:
+                dateImgSignal.setImageResource(R.drawable.sign_three_black);
+                break;
+            case 4:
+                dateImgSignal.setImageResource(R.drawable.sign_four_black);
+                break;
         }
     }
 

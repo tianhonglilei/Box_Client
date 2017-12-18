@@ -189,29 +189,40 @@ public class ManagerNavgationActivity extends FragmentActivity {
                 super.onSignalStrengthsChanged(signalStrength);
                 String signalInfo = signalStrength.toString();
                 String[] params = signalInfo.split(" ");
+                switch (telephonyManager.getNetworkType()) {
+                    case TelephonyManager.NETWORK_TYPE_UMTS:
+                    case TelephonyManager.NETWORK_TYPE_EVDO_0:
+                    case TelephonyManager.NETWORK_TYPE_EVDO_A:
+                    case TelephonyManager.NETWORK_TYPE_HSDPA:
+                    case TelephonyManager.NETWORK_TYPE_HSUPA:
+                    case TelephonyManager.NETWORK_TYPE_HSPA:
+                    case TelephonyManager.NETWORK_TYPE_EVDO_B:
+                    case TelephonyManager.NETWORK_TYPE_EHRPD:
+                    case TelephonyManager.NETWORK_TYPE_HSPAP:
+                    case TelephonyManager.NETWORK_TYPE_LTE:
+                            //4G网络 最佳范围   >-90dBm 越大越好
+                            int ltedbm = Integer.parseInt(params[6]);
+                            if (ltedbm > -44) {
+                                changeSignSize(0);
+                            } else if (ltedbm >= -90) {
+                                changeSignSize(4);
+                            } else if (ltedbm >= -105) {
+                                changeSignSize(3);
+                            } else if (ltedbm >= -115) {
+                                changeSignSize(2);
+                            } else if (ltedbm >= -120) {
+                                changeSignSize(1);
+                            } else if (ltedbm >= -140) {
+                                changeSignSize(0);
+                            } else {
+                                changeSignSize(0);
+                            }
+                        break;
+                    default:
+                            changeSignSize(0);
+                        break;
 
-                if (telephonyManager.getNetworkType() == TelephonyManager.NETWORK_TYPE_LTE) {
-                    //4G网络 最佳范围   >-90dBm 越大越好
-                    int ltedbm = Integer.parseInt(params[6]);
-                    if (ltedbm > -44) {
-                        changeSignSize(0);
-                    } else if (ltedbm >= -90) {
-                        changeSignSize(4);
-                    } else if (ltedbm >= -100) {
-                        changeSignSize(3);
-                    } else if (ltedbm >= -110) {
-                        changeSignSize(2);
-                    } else if (ltedbm >= -120) {
-                        changeSignSize(1);
-                    } else if (ltedbm >= -140) {
-                        changeSignSize(0);
-                    } else {
-                        changeSignSize(0);
-                    }
-                } else {
-                    changeSignSize(0);
                 }
-
             }
         };
         telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
