@@ -387,8 +387,8 @@
                     android:layout_below="@+id/textView3"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:text="扫描二维码进行支付"
-                    android:textColor="@color/colorMoreTxtTwoOne"
+                    android:text="提示：请勿在支付时切换二维码"
+                    android:textColor="@color/colorDemoLogo"
                     android:textSize="20sp" />
 
                 <FrameLayout
