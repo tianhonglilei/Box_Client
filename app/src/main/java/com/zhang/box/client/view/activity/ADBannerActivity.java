@@ -232,7 +232,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 int action = event.getAction();
                 switch (action) {
                     case MotionEvent.ACTION_DOWN:
-                        isTouch = true;
+                        adbannerGoodsGv.getParent().requestDisallowInterceptTouchEvent(true);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         isTouch = true;
@@ -256,34 +256,34 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 return false;
             }
         });
-//        adbannerGoodsGv.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                int action = event.getAction();
-//                switch (action) {
-//                    case MotionEvent.ACTION_MOVE:
-//                        isTouch = true;
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        isTouch = true;
-//
-//                        new Thread() {
-//                            @Override
-//                            public void run() {
-//                                try {
-//                                    Thread.sleep(2000);
-//                                } catch (InterruptedException e) {
-//                                    e.printStackTrace();
-//                                }
-//                                x1 = adbannerBScroll.getScrollX();
-//                                isTouch = false;
-//                            }
-//                        }.start();
-//                        break;
-//                }
-//                return false;
-//            }
-//        });
+        adbannerGoodsGv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_MOVE:
+                        isTouch = true;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        isTouch = true;
+
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(2000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                x1 = adbannerBScroll.getScrollX();
+                                isTouch = false;
+                            }
+                        }.start();
+                        break;
+                }
+                return false;
+            }
+        });
 
 
     }
@@ -405,6 +405,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                     .error(R.drawable.ad_test_img1)
                     .into(adImageView);
             showImg();
+            videoPlay = false;
             scrollToNextAD();
         } else if (adInfo.getAdType() == ADInfo.ADTYPE_VIDEO) {
 //            Log.e(TAG, "exist:" + FileUtils.exist(Constants.DEMO_FILE_PATH + "/" + adInfo.getVideoFileName()).toString());
@@ -548,10 +549,14 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         }
     }
 
+    //播放进度记录
+    int per = 0;
+
     @Override
     protected void onPause() {
         if (adVideoView != null && videoPlay) {
             adVideoView.pause();
+            per = adVideoView.getCurrentPosition();
             videoPlay = false;
         }
         super.onPause();
@@ -560,10 +565,9 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @Override
     protected void onResume() {
         if (adVideoView != null && videoPlay == false) {
-            if (!adVideoView.isPlaying()) {
-                adVideoView.start();
-                videoPlay = true;
-            }
+            adVideoView.seekTo(per);
+            adVideoView.start();
+            videoPlay = true;
         }
         super.onResume();
     }
