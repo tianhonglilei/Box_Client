@@ -226,47 +226,19 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     private void initGoodsScroll() {
         adbannerBScroll.fling(0);
         //初始化滚动动画
-//        adbannerBScroll.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                int action = event.getAction();
-//                switch (action) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        isTouch = true;
-//                        break;
-//                    case MotionEvent.ACTION_MOVE:
-//                        isTouch = true;
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        isTouch = true;
-//                        new Thread() {
-//                            @Override
-//                            public void run() {
-//                                try {
-//                                    Thread.sleep(2000);
-//                                } catch (InterruptedException e) {
-//                                    e.printStackTrace();
-//                                }
-//                                x1 = adbannerBScroll.getScrollX();
-//                                isTouch = false;
-//                            }
-//                        }.start();
-//                        break;
-//                }
-//                return false;
-//            }
-//        });
-        adbannerGoodsGv.setOnTouchListener(new View.OnTouchListener() {
+        adbannerBScroll.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
                 switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        isTouch = true;
+                        break;
                     case MotionEvent.ACTION_MOVE:
                         isTouch = true;
                         break;
                     case MotionEvent.ACTION_UP:
                         isTouch = true;
-
                         new Thread() {
                             @Override
                             public void run() {
@@ -284,6 +256,34 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 return false;
             }
         });
+//        adbannerGoodsGv.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                int action = event.getAction();
+//                switch (action) {
+//                    case MotionEvent.ACTION_MOVE:
+//                        isTouch = true;
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        isTouch = true;
+//
+//                        new Thread() {
+//                            @Override
+//                            public void run() {
+//                                try {
+//                                    Thread.sleep(2000);
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
+//                                x1 = adbannerBScroll.getScrollX();
+//                                isTouch = false;
+//                            }
+//                        }.start();
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
 
 
     }
