@@ -232,7 +232,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 //                int action = event.getAction();
 //                switch (action) {
 //                    case MotionEvent.ACTION_DOWN:
-                        adbannerGoodsGv.getParent().requestDisallowInterceptTouchEvent(true);
+                adbannerGoodsGv.getParent().requestDisallowInterceptTouchEvent(true);
 //                        break;
 //                    case MotionEvent.ACTION_MOVE:
 //                        isTouch = true;
@@ -275,10 +275,9 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                                if (!isTouch) {
-                                    x1 = adbannerBScroll.getScrollX();
-                                    isTouch = false;
-                                }
+                                x1 = adbannerBScroll.getScrollX();
+                                isTouch = false;
+
                             }
                         }.start();
                         break;
