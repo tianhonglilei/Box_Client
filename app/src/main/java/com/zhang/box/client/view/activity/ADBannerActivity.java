@@ -339,7 +339,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             intentDateWeather(intent);
             startActivityForResult(intent, requestCode);
             adVideoView.pause();
-            adVideoView.stopPlayback();
+//            adVideoView.stopPlayback();
         } else {
             ToastTools.showShort(mContext, "该商品已经售罄，请选购其他商品");
             //刷新商品
