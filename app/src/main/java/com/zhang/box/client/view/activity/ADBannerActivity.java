@@ -231,9 +231,12 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
                 switch (action) {
-//                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_DOWN:
+                        isTouch = true;
 //                        adbannerGoodsGv.getParent().requestDisallowInterceptTouchEvent(false);
-//                        break;
+                        adbannerBScroll.requestDisallowInterceptTouchEvent(false);
+                        adbannerGoodsGv.requestDisallowInterceptTouchEvent(true);
+                        break;
                     case MotionEvent.ACTION_MOVE:
                         isTouch = true;
                         break;
