@@ -232,7 +232,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 //                int action = event.getAction();
 //                switch (action) {
 //                    case MotionEvent.ACTION_DOWN:
-                adbannerGoodsGv.getParent().requestDisallowInterceptTouchEvent(true);
+                adbannerGoodsGv.getParent().requestDisallowInterceptTouchEvent(false);
 //                        break;
 //                    case MotionEvent.ACTION_MOVE:
 //                        isTouch = true;
