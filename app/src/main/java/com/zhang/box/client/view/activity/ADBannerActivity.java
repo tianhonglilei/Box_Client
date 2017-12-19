@@ -226,13 +226,13 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     private void initGoodsScroll() {
         adbannerBScroll.fling(0);
         //初始化滚动动画
-        adbannerBScroll.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
+//        adbannerBScroll.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
 //                int action = event.getAction();
 //                switch (action) {
 //                    case MotionEvent.ACTION_DOWN:
-                adbannerGoodsGv.getParent().requestDisallowInterceptTouchEvent(false);
+//                adbannerGoodsGv.getParent().requestDisallowInterceptTouchEvent(false);
 //                        break;
 //                    case MotionEvent.ACTION_MOVE:
 //                        isTouch = true;
@@ -253,16 +253,17 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 //                        }.start();
 //                        break;
 //                }
-                return false;
-            }
-        });
+//                return false;
+//            }
+//        });
         adbannerGoodsGv.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int action = event.getAction();
                 switch (action) {
                     case MotionEvent.ACTION_DOWN:
-                        adbannerGoodsGv.requestDisallowInterceptTouchEvent(false);
+//                        adbannerGoodsGv.requestDisallowInterceptTouchEvent(false);
+                        adbannerGoodsGv.getParent().requestDisallowInterceptTouchEvent(false);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         isTouch = true;
