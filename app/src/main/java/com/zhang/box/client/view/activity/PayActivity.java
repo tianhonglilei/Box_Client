@@ -198,6 +198,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         if (request == 2) {
             initMediaPlayer(1);
         }
+
+        initSignListener();
     }
 
 
@@ -605,7 +607,9 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 isRegister = false;
             }
         }
-        telephonyManager.listen(phoneStateListener,PhoneStateListener.LISTEN_NONE);
+        if (telephonyManager != null) {
+            telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
+        }
         System.gc();
     }
 

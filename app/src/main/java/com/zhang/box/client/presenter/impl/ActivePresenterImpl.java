@@ -380,6 +380,7 @@ public class ActivePresenterImpl implements ActivePresenter {
                     Toast.makeText(mContext, "串口打开时的未知错误", Toast.LENGTH_SHORT).show();
                 } else if (res == CommServiceThread.COMM_SERVICE_START) {
                     Toast.makeText(mContext, "激活启动成功", Toast.LENGTH_SHORT).show();
+                    SharedPreferencesUtil.putString(mContext, BoxParams.ACTIVE_CODE, code);
                     if (!TextUtils.isEmpty(box_id) && !box_id.equals("00000000")) {
                         activeView.hiddenActiveLayout(true);
                         activeView.hiddenDialog();
@@ -389,10 +390,22 @@ public class ActivePresenterImpl implements ActivePresenter {
                 } else {
                     Toast.makeText(mContext, "未知错误", Toast.LENGTH_SHORT).show();
                 }
-                if (res != CommServiceThread.COMM_SERVICE_START){
-                    activeView.hiddenDialog();
-                    activeView.showActiveLayout();
+                if (SharedPreferencesUtil.getString(mContext, BoxParams.ACTIVE_CODE).equals("")){
+                    if (res != CommServiceThread.COMM_SERVICE_START){
+                        activeView.hiddenDialog();
+                        activeView.showActiveLayout();
+                    }
+                }else{
+                    if (res != CommServiceThread.COMM_SERVICE_START){
+                        new Timer().schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                activeBox(code);
+                            }
+                        },3000);
+                    }
                 }
+
             }
         };
         commService.connect(mContext, code, 1);
