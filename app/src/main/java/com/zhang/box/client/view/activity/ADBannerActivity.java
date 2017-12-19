@@ -229,30 +229,30 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         adbannerBScroll.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
+//                int action = event.getAction();
+//                switch (action) {
+//                    case MotionEvent.ACTION_DOWN:
                         adbannerGoodsGv.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        isTouch = true;
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        isTouch = true;
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                try {
-                                    Thread.sleep(2000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                x1 = adbannerBScroll.getScrollX();
-                                isTouch = false;
-                            }
-                        }.start();
-                        break;
-                }
+//                        break;
+//                    case MotionEvent.ACTION_MOVE:
+//                        isTouch = true;
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        isTouch = true;
+//                        new Thread() {
+//                            @Override
+//                            public void run() {
+//                                try {
+//                                    Thread.sleep(2000);
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
+//                                x1 = adbannerBScroll.getScrollX();
+//                                isTouch = false;
+//                            }
+//                        }.start();
+//                        break;
+//                }
                 return false;
             }
         });
