@@ -275,8 +275,10 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                                x1 = adbannerBScroll.getScrollX();
-                                isTouch = false;
+                                if (!isTouch) {
+                                    x1 = adbannerBScroll.getScrollX();
+                                    isTouch = false;
+                                }
                             }
                         }.start();
                         break;
