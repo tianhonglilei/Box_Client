@@ -411,18 +411,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 .setHintTextColor(Color.parseColor("#525252"))  // 设置字体颜色
                 .setCanceledOnTouchOutside(false)
                 .show();
-        failTimer = new Timer();
-        failTask = new TimerTask() {
-            @Override
-            public void run() {
-                if (checkOutGoodsFail) {
-                    if (successNum + failNum != num) {
-                        payPresenter.postOrder(num, successNum);
-                    }
-                }
-            }
-        };
-        failTimer.schedule(failTask, 5000);
     }
 
     @Override
@@ -489,6 +477,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         } else {
             payTxtQrcodeLoading.setText("生成失败,点击刷新二维码");
             payImgQrcode.setClickable(true);
+            qrCodeIsShow = false;
         }
         initCountDownTimer();
     }
@@ -497,7 +486,9 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
      * 轮询支付接口
      */
     private void requestTimerStart() {
-        payPresenter.chengePayRequest(checkNum, checkPay);
+        if (payPresenter!=null) {
+            payPresenter.chengePayRequest(checkNum, checkPay);
+        }
     }
 
     @Override
@@ -553,6 +544,10 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         window.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
+                if (countDownTimer != null) {
+                    countDownTimer.cancel();
+                    countDownTimer = null;
+                }
                 PayActivity.this.setResult(2);
                 PayActivity.this.finish();
             }
@@ -610,7 +605,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         if (telephonyManager != null) {
             telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
         }
-        System.gc();
     }
 
     private void recycleBitmap(Bitmap bitmap) {

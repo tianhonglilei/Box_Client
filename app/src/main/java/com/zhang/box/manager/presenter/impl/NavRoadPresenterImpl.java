@@ -94,8 +94,15 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
 
     int num;
 
+    int nextTime = 0;
+
     @Override
     public void clearRoad(final String boxType, final String index, final int position) {
+        if (boxType.equals(BoxSetting.BOX_TYPE_DRINK)){
+            nextTime = 2000;
+        }else{
+            nextTime = 6000;
+        }
         RoadGoods roadGoods = roadGoodsList.get(position);
         int state = BoxAction.getRoadState(boxType, index);
         if (state == RoadInfo.ROAD_STATE_NORMAL) {
@@ -109,7 +116,7 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
                         public void run() {
                             clearRoad(boxType, index, position);
                         }
-                    }, 2000);
+                    }, nextTime);
                 }
             }
         } else if (state == RoadInfo.ROAD_STATE_NULL) {

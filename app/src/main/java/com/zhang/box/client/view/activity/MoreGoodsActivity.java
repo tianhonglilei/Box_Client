@@ -221,13 +221,16 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 //        Log.e("MoreGoodsActivity", "requestCode:" + requestCode + "--resultCode:" + resultCode);
-        initDoorReceiver();
-        initCountDownTimer();
+//        initDoorReceiver();
+//        initCountDownTimer();
+        if (requestCode == 2){
+            resultRefresh = 2;
+        }
         switch (resultCode) {
             case 2:
                 resultRefresh = 2;
-                moreGoodsPresenter.initAllGoods(moreGoodsGv);
-
+                MoreGoodsActivity.this.setResult(resultRefresh);
+                MoreGoodsActivity.this.finish();
                 break;
         }
     }
@@ -464,5 +467,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             unregisterReceiver(openDoorBroadcastReceiver);
             isRegister = false;
         }
+        finish();
     }
 }

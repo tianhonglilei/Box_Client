@@ -23,8 +23,4 @@ public interface ADBannerView extends BaseView{
      */
     void changeWeather(MyWeather myWeather);
 
-
-    //当货道异常的时候定时刷新货道数据
-    void refreshGoodsInfo();
-
 }

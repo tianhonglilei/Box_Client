@@ -30,6 +30,9 @@ public class BoxAction {
      * @return
      */
     public static boolean outGoods(String boxType, String roadIndex, int type) {
+        if (roadIndex == null || roadIndex.equals("")){
+            return false;
+        }
         if (Integer.parseInt(roadIndex) < 10 && roadIndex.length() == 1) {
             roadIndex = "0" + roadIndex;
         }
@@ -38,6 +41,9 @@ public class BoxAction {
             outType = Avm.OUT_GOODS_ALIPAY;
         } else {
             outType = Avm.OUT_GOODS_ROAD_CHECK;
+        }
+        if (boxType== null || boxType.equals("")){
+            return false;
         }
         String params = boxType + "1" + roadIndex + "00000100" + outType;
         String random = "" + (int) ((Math.random() * 9 + 1) * 100000);

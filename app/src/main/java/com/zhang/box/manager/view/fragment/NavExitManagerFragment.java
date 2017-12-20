@@ -2,6 +2,7 @@ package com.zhang.box.manager.view.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.zhang.box.R;
+import com.zhang.box.client.view.activity.MoreGoodsActivity;
 import com.zhang.box.util.SharedPreferencesUtil;
 
 import butterknife.BindView;
@@ -56,7 +58,8 @@ public class NavExitManagerFragment extends Fragment implements View.OnClickList
         switch (v.getId()) {
             case R.id.exit_manager_btn:
                 SharedPreferencesUtil.putString(mContext, "open", "false");
-                getActivity().setResult(2);
+                Intent intent = new Intent(getActivity(), MoreGoodsActivity.class);
+                getActivity().startActivityForResult(intent,2);
                 getActivity().finish();
                 break;
         }

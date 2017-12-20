@@ -175,6 +175,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             @Override
             public void run() {
                 mHandler.sendEmptyMessage(4);
+                System.gc();
 
             }
         }, 100, 1000 * 60 * 60 * 3);
@@ -233,9 +234,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 switch (action) {
                     case MotionEvent.ACTION_DOWN:
                         isTouch = true;
-//                        adbannerGoodsGv.getParent().requestDisallowInterceptTouchEvent(false);
-                        adbannerBScroll.requestDisallowInterceptTouchEvent(false);
-                        adbannerGoodsGv.requestDisallowInterceptTouchEvent(true);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         isTouch = true;
@@ -259,39 +257,34 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 return false;
             }
         });
-//        adbannerGoodsGv.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                int action = event.getAction();
-//                switch (action) {
-//                    case MotionEvent.ACTION_DOWN:
-////                        adbannerGoodsGv.requestDisallowInterceptTouchEvent(false);
-//                        adbannerGoodsGv.getParent().requestDisallowInterceptTouchEvent(false);
-//                        break;
-//                    case MotionEvent.ACTION_MOVE:
-//                        isTouch = true;
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        isTouch = true;
-//
-//                        new Thread() {
-//                            @Override
-//                            public void run() {
-//                                try {
-//                                    Thread.sleep(2000);
-//                                } catch (InterruptedException e) {
-//                                    e.printStackTrace();
-//                                }
-//                                x1 = adbannerBScroll.getScrollX();
-//                                isTouch = false;
-//
-//                            }
-//                        }.start();
-//                        break;
-//                }
-//                return false;
-//            }
-//        });
+        adbannerGoodsGv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_MOVE:
+                        isTouch = true;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        isTouch = true;
+
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(2000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                x1 = adbannerBScroll.getScrollX();
+                                isTouch = false;
+                            }
+                        }.start();
+                        break;
+                }
+                return false;
+            }
+        });
 
 
     }
@@ -336,7 +329,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
      */
     @Override
     public void navigateToPay(RoadGoods roadGoods) {
-        int requestCode = 2;
+        int requestCode = 0;
         RoadInfo roadInfo = roadGoods.getRoadInfo();
         Long index = roadInfo.getRoadIndex();
         int state = BoxAction.getRoadState(roadInfo.getRoadBoxType(), index + "");
@@ -485,7 +478,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
                     break;
                 case 4:
-
                     weatherPresenter.getWeatherInfo();
                     break;
             }
@@ -543,18 +535,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @Override
     public void hiddenDialog() {
         if (dialog != null) dialog.cancel();
-    }
-
-    @Override
-    public void refreshGoodsInfo() {
-        if (refreshGoods) {
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    adPresenter.initGoodsData(adbannerGoodsGv);
-                }
-            }, 5000);
-        }
     }
 
     //播放进度记录

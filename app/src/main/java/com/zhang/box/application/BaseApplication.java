@@ -49,7 +49,7 @@ public class BaseApplication extends Application {
         //初始化SDK配置文件
         initSDKiniFile();
         //初始化开机动画
-        initStartImg();
+//        initStartImg();
         //创建资源文件夹
         if (!FileUtils.exist(Constants.DEMO_FILE_PATH)) {
             FileUtils.creatSDDir("boxcontent");

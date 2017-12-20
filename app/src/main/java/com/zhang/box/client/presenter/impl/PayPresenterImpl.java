@@ -9,6 +9,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSONObject;
 import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxParams;
+import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.biz.PercentBiz;
 import com.zhang.box.client.biz.impl.PercenteBizImpl;
 import com.zhang.box.client.model.Goods;
@@ -246,12 +247,14 @@ public class PayPresenterImpl implements PayPresenter {
                 JSONObject jsonObject = JSONObject.parseObject((String) responseObject);
                 Log.e("PayPresenterImpl", "responseObject:" + responseObject);
                 if (jsonObject.getString("error").equals("0")) {
-                    orderInfo.setPayType(payType);
-                    orderInfo.setOrderNum(num);
-                    payView.cancelRequest();
-                    payView.showDialog("出货中...");
-                    orderInfo.setPayState(true);
-                    outGoodsAction(num, boxType, roadIndex + "");
+                    if (!orderInfo.isPayState()) {
+                        orderInfo.setPayType(payType);
+                        orderInfo.setOrderNum(num);
+                        payView.cancelRequest();
+                        payView.showDialog("出货中...");
+                        orderInfo.setPayState(true);
+                        outGoodsAction(num, boxType, roadIndex + "");
+                    }
                 } else if (jsonObject.getString("error").equals("-1")) {
                     if (orderInfo.isPayState() || orderInfo.isCancel()) {
                         payView.cancelRequest();
@@ -269,16 +272,22 @@ public class PayPresenterImpl implements PayPresenter {
         }));
     }
 
+    int nextTime;
 
     private void outGoodsAction(final int num, final String boxType, final String roadIndex) {
         payView.outGoodsCheck(num);
+        if (boxType.equals(BoxSetting.BOX_TYPE_DRINK)){
+            nextTime = 2000;
+        }else{
+            nextTime = 6000;
+        }
         for (int i = 0; i < num; i++) {
             if (i == 1) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            Thread.sleep(1500);
+                            Thread.sleep(nextTime);
                             BoxAction.outGoods(boxType, roadIndex, BoxAction.OUT_GOODS_TYPE_PAY);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -288,7 +297,7 @@ public class PayPresenterImpl implements PayPresenter {
             } else {
                 if (!BoxAction.outGoods(boxType, roadIndex, BoxAction.OUT_GOODS_TYPE_PAY)) {
                     payView.hiddenDialog();
-                    payView.showPopwindow(false, 0, 0);
+                    payView.showPopwindow(false, 1, 0);
                     break;
                 }
             }
