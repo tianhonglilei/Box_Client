@@ -147,7 +147,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         IntentFilter filter = new IntentFilter();
         filter.addAction(BoxAction.OPEN_DOOR_ACTION);
         openDoorBroadcastReceiver.setOpenDoorListener(this);
-        if (isRegister == false) {
+        if (!isRegister) {
             registerReceiver(openDoorBroadcastReceiver, filter);
             isRegister = true;
         }
@@ -201,7 +201,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                     intent.putExtra("roadGoods", roadGoods);
                     startActivityForResult(intent, resultCode);
                     telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
-                    if (isRegister == true) {
+                    if (isRegister) {
                         unregisterReceiver(openDoorBroadcastReceiver);
                         isRegister = false;
                     }
@@ -286,7 +286,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     }
 
     private void returnAndFinish() {
-        if (isRegister == true) {
+        if (isRegister) {
             unregisterReceiver(openDoorBroadcastReceiver);
             isRegister = false;
         }
@@ -325,7 +325,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             countDownTimer = null;
         }
 //        Glide.with(mContext).pauseRequests();
-        if (isRegister == true) {
+        if (isRegister) {
             unregisterReceiver(openDoorBroadcastReceiver);
             isRegister = false;
         }
@@ -463,7 +463,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     public void openTheDoor() {
         Intent intent = new Intent(MoreGoodsActivity.this, ManagerNavgationActivity.class);
         startActivityForResult(intent, 0);
-        if (isRegister == true) {
+        if (isRegister) {
             unregisterReceiver(openDoorBroadcastReceiver);
             isRegister = false;
         }

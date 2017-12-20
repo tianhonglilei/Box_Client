@@ -332,13 +332,14 @@
 
                     <TextView
                         android:id="@+id/pay_txt_goods_price"
-                        android:layout_width="60dp"
+                        android:layout_width="75dp"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/pay_lbl_price"
                         android:layout_toRightOf="@+id/pay_txt_rmb"
                         android:text=""
                         android:textColor="@color/colorDemoLogo"
-                        android:textSize="40sp" />
+                        android:textSize="40sp"
+                        android:maxLines="1"/>
 
                     <TextView
                         android:id="@+id/pay_txt_goods_name"

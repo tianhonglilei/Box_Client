@@ -1,6 +1,7 @@
 package com.zhang.box.client.presenter;
 
 import com.zhang.box.client.model.Goods;
+import com.zhang.box.client.model.RoadGoods;
 import com.zhang.box.client.model.RoadInfo;
 
 /**
@@ -12,7 +13,7 @@ public interface PayPresenter {
 
     void initPercenterInfo(Long goodsId);
 
-    void getQRCode(String url, double price, int payType, int payNum, Goods goods, RoadInfo roadInfo);
+    void getQRCode(String url, double price, int payType, int payNum, RoadGoods roadGoods);
 
     void postOrder(int orderNum,int outNum);
 

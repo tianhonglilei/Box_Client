@@ -80,6 +80,8 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
 
 
     public void getFoodAndDrink() {
+        drinks.clear();
+        foods.clear();
         for (RoadGoods roadGoods :
                 goodsList) {
             if (roadGoods.getGoods().getGoodsType() == Goods.GOODS_TYPE_DRINK) {

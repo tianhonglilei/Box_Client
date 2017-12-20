@@ -14,6 +14,7 @@ import com.zhang.box.client.biz.PercentBiz;
 import com.zhang.box.client.biz.impl.PercenteBizImpl;
 import com.zhang.box.client.model.Goods;
 import com.zhang.box.client.model.OrderInfo;
+import com.zhang.box.client.model.RoadGoods;
 import com.zhang.box.client.model.RoadInfo;
 import com.zhang.box.client.okhttp.CommonOkHttpClient;
 import com.zhang.box.client.okhttp.exception.OkHttpException;
@@ -90,11 +91,14 @@ public class PayPresenterImpl implements PayPresenter {
 
 
     @Override
-    public void getQRCode(String url, double price, final int payType, final int payNum, Goods goods, RoadInfo roadInfo) {
+    public void getQRCode(String url, double price, final int payType, final int payNum, RoadGoods roadGoods) {
         payView.loadQRCode();
+        Goods goods = roadGoods.getGoods();
+        RoadInfo roadInfo = roadGoods.getRoadInfo();
         //获取二维码所需参数
         Timestamp now = new Timestamp(System.currentTimeMillis());
         Long goodsId = goods.getGoodsId();
+        orderInfo.setId(roadGoods.getRoadGoodsId().toString());
         orderInfo.setPid(goodsId.toString());
         orderInfo.setPrice(price + "");
         String box_id = BoxAction.getBoxIdFromSP(mContext);
@@ -353,7 +357,7 @@ public class PayPresenterImpl implements PayPresenter {
     }
 
     private void updateDBNum(int num) {
-        roadBeanService.updateRoadNum(Long.parseLong(orderInfo.getHdid()), num);
+        roadBeanService.updateRoadNum(Long.parseLong(orderInfo.getId()), num);
     }
 
 

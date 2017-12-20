@@ -156,7 +156,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="18dp"
             android:layout_alignParentLeft="true"
-            android:text="向上滑动浏览更多商品"
+            android:text="上下滑动浏览更多商品"
             android:textColor="@color/colorMoreTxtTwoOne"
             android:textSize="20sp"/>
 
