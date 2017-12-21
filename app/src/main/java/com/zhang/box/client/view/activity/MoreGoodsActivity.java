@@ -312,7 +312,11 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
     @Override
     protected void onResume() {
         super.onResume();
-
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            countDownTimer = null;
+            initCountDownTimer();
+        }
     }
 
     @Override
@@ -340,7 +344,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             countDownTimer.cancel();
             countDownTimer = null;
         }
-        countDownTimer = new CountDownTimer(60000, 1000) {
+        countDownTimer = new CountDownTimer(30000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 moreNavTxtReturnTime.setText(millisUntilFinished / 1000 + "S");
