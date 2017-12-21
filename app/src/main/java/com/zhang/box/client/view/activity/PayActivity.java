@@ -466,14 +466,13 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             payImgQrcode.setImageBitmap(bitmap);
             qrCodeIsShow = true;
             payImgQrcode.setClickable(false);
-            if (countDownTimer == null || (!countTimeStart && qrCodeIsShow)){
+            if (!countTimeStart){
                 initCountDownTimer();
             }
         } else {
             payTxtQrcodeLoading.setText("生成失败,点击刷新二维码");
             payImgQrcode.setClickable(true);
             qrCodeIsShow = false;
-            countTimeStart = false;
         }
 
     }
@@ -490,7 +489,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @Override
     public void cancelRequest() {
         qrCodeIsShow = false;
-        countTimeStart = false;
     }
 
     @Override
@@ -617,9 +615,9 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             @Override
             public void onTick(long millisUntilFinished) {
                 long time = millisUntilFinished / 1000;
+                countTimeStart = true;
                 if (qrCodeIsShow == true) {
                     requestTimerStart();
-                    countTimeStart = true;
                 }
                 if (time < 15) {
                     payTxtReturnTime.setTextColor(getResources().getColor(R.color.colorDemoLogo));
