@@ -81,13 +81,22 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
     @Override
     public void testRoad(String boxType, String index) {
         int state = BoxAction.getRoadState(boxType, index);
-        if (state == RoadInfo.ROAD_STATE_NORMAL) {
-            BoxAction.outGoods(boxType, index, BoxAction.OUT_GOODS_TYPE_TEST);
-        } else if (state == RoadInfo.ROAD_STATE_NULL) {
-            Toast.makeText(mContext, index + "货道没有检测到货品", Toast.LENGTH_SHORT).show();
+        if (boxType.equals(BoxSetting.BOX_TYPE_DRINK)) {
+            if (state == RoadInfo.ROAD_STATE_NORMAL) {
+                BoxAction.outGoods(boxType, index, BoxAction.OUT_GOODS_TYPE_TEST);
+            } else if (state == RoadInfo.ROAD_STATE_NULL) {
+                Toast.makeText(mContext, index + "货道没有检测到货品", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(mContext, "货道出现异常，请重启程序", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(mContext, "货道出现异常，请重启程序", Toast.LENGTH_SHORT).show();
+            if (state == RoadInfo.ROAD_STATE_DATA_ERROR) {
+                Toast.makeText(mContext, "货道出现异常，请重启程序", Toast.LENGTH_SHORT).show();
+            } else {
+                BoxAction.outGoods(boxType, index, BoxAction.OUT_GOODS_TYPE_TEST);
+            }
         }
+
     }
 
     int i = 0;
@@ -98,14 +107,38 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
 
     @Override
     public void clearRoad(final String boxType, final String index, final int position) {
-        if (boxType.equals(BoxSetting.BOX_TYPE_DRINK)){
+        if (boxType.equals(BoxSetting.BOX_TYPE_DRINK)) {
             nextTime = 2000;
-        }else{
+        } else {
             nextTime = 6000;
         }
         RoadGoods roadGoods = roadGoodsList.get(position);
         int state = BoxAction.getRoadState(boxType, index);
-        if (state == RoadInfo.ROAD_STATE_NORMAL) {
+        if (boxType.equals(BoxSetting.BOX_TYPE_DRINK)) {
+            if (state == RoadInfo.ROAD_STATE_NORMAL) {
+                num++;
+                if (num > roadGoods.getRoadInfo().getRoadMaxNum()) {
+                    navRoadFragmentView.hiddenLoading();
+                } else {
+                    if (BoxAction.outGoods(boxType, index, BoxAction.OUT_GOODS_TYPE_TEST)) {
+                        new Timer().schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                clearRoad(boxType, index, position);
+                            }
+                        }, nextTime);
+                    }
+                }
+            } else if (state == RoadInfo.ROAD_STATE_NULL) {
+                navRoadFragmentView.hiddenLoading();
+            } else {
+                navRoadFragmentView.hiddenLoading();
+            }
+        } else {
+            if (state == RoadInfo.ROAD_STATE_DATA_ERROR){
+                navRoadFragmentView.hiddenLoading();
+                return;
+            }
             num++;
             if (num > roadGoods.getRoadInfo().getRoadMaxNum()) {
                 navRoadFragmentView.hiddenLoading();
@@ -119,10 +152,6 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
                     }, nextTime);
                 }
             }
-        } else if (state == RoadInfo.ROAD_STATE_NULL) {
-            navRoadFragmentView.hiddenLoading();
-        } else {
-            navRoadFragmentView.hiddenLoading();
         }
 
 

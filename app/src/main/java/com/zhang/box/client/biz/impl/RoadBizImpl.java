@@ -34,11 +34,12 @@ public class RoadBizImpl implements RoadBiz {
             int hgType = Integer.parseInt(bean.getHuogui_num());
             if (hgType == 9) {
                 roadInfo.setRoadBoxType(BoxSetting.BOX_TYPE_FOOD);
+                roadInfo.setRoadState(RoadInfo.ROAD_STATE_NORMAL);
             } else {
                 roadInfo.setRoadBoxType(BoxSetting.BOX_TYPE_DRINK);
+                //货道状态和开关
+                roadInfo.setRoadState(BoxAction.getRoadState(roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString()));
             }
-            //货道状态和开关
-            roadInfo.setRoadState(BoxAction.getRoadState(roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString()));
             if (roadInfo.getRoadNowNum() <= 0) {
                 roadInfo.setRoadOpen(RoadInfo.ROAD_CLOSE);
             } else {
