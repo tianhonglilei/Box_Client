@@ -200,6 +200,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         }
 
         initSignListener();
+
+        initCountDownTimer();
     }
 
 
@@ -396,10 +398,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         }
     }
 
-    private Timer failTimer;
-    private TimerTask failTask;
-    //检测故障
-    private boolean checkOutGoodsFail = true;
 
     @Override
     public void showDialog(String text) {
@@ -416,12 +414,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     @Override
     public void hiddenDialog() {
         dialog.cancel();
-        if (failTimer != null) {
-            if (failTask != null) {
-                failTask.cancel();
-            }
-            failTimer.cancel();
-        }
     }
 
     @Override
@@ -474,7 +466,9 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             payImgQrcode.setImageBitmap(bitmap);
             qrCodeIsShow = true;
             payImgQrcode.setClickable(false);
-            initCountDownTimer();
+            if (countDownTimer == null || !countTimeStart){
+                initCountDownTimer();
+            }
         } else {
             payTxtQrcodeLoading.setText("生成失败,点击刷新二维码");
             payImgQrcode.setClickable(true);
@@ -614,14 +608,13 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         }
     }
 
+    boolean countTimeStart = false;
+
     private void initCountDownTimer() {
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-            countDownTimer = null;
-        }
-        countDownTimer = new CountDownTimer(80000, 1000) {
+        countDownTimer = new CountDownTimer(100000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
+                countTimeStart = true;
                 long time = millisUntilFinished / 1000;
                 if (qrCodeIsShow == true) {
                     requestTimerStart();
@@ -648,7 +641,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     public void outSuccess() {
         successNum++;
         if (num == successNum + failNum) {
-            checkOutGoodsFail = false;
             payPresenter.postOrder(num, successNum);
         }
     }
@@ -657,7 +649,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     public void outFail() {
         failNum++;
         if (num == successNum + failNum) {
-            checkOutGoodsFail = false;
             payPresenter.postOrder(num, successNum);
         }
     }
