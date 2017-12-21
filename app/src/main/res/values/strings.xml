@@ -7,9 +7,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dialog_txt_title_success">出货成功</string>
-    <string name="dialog_txt_title_fail">出货失败</string>
+    <string name="dialog_txt_title_fail">出货异常</string>
     <string name="dialog_txt_info_success">请在下方取物口取走您的商品</string>
-    <string name="dialog_txt_info_fail">非常抱歉，系统会在一个工作日内核实并给您退款，如未收到退款请联系机身客服电话</string>
+    <string name="dialog_txt_info_fail">系统会在一个工作日内自动为您退款(如未收到退款请关注公众号进行人工退款)</string>
     <string name="cancel">取消</string>
     <string name="ok">确定</string>
     <string name="string_test_this_road">测试该货道：</string>

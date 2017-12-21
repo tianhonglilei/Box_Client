@@ -216,18 +216,19 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         payRbgrpNum.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                cancelRequest();
                 if (checkedId == R.id.pay_rb_num_one) {
                     checkNum = 1;
                     payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice());
                     if (checkPay == Constants.PAY_TYPE_WX) {
                         if (bitmapWxPayOne == null) {
+                            cancelRequest();
                             payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
                         } else {
                             showQRCode(bitmapWxPayOne);
                         }
                     } else {
                         if (bitmapAliPayOne == null) {
+                            cancelRequest();
                             payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
                         } else {
                             showQRCode(bitmapAliPayOne);
@@ -244,12 +245,14 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                     payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice() * 2);
                     if (checkPay == Constants.PAY_TYPE_WX) {
                         if (bitmapWxPayTwo == null) {
+                            cancelRequest();
                             payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
                         } else {
                             showQRCode(bitmapWxPayTwo);
                         }
                     } else {
                         if (bitmapAliPayTwo == null) {
+                            cancelRequest();
                             payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
                         } else {
                             showQRCode(bitmapAliPayTwo);
