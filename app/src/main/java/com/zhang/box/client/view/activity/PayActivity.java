@@ -411,7 +411,9 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 break;
             case R.id.pay_btn_paysure:
                 payBtnPaysure.setClickable(false);
-                payPresenter.chengePayRequest(checkNum, checkPay);
+                if (qrCodeIsShow) {
+                    payPresenter.chengePayRequest(checkNum, checkPay);
+                }
                 paySureCountTimer = new CountDownTimer(5000, 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
