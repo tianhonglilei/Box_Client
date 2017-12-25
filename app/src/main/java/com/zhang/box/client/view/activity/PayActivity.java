@@ -572,7 +572,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         window.setFocusable(false);
         window.setOutsideTouchable(false);
         changePopwindowBg(0.8f);
-        window.showAsDropDown(mainView, 0, 0);
+        if (mainView != null)
+            window.showAsDropDown(mainView, 0, 0);
         new CountDownTimer(count, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -672,7 +673,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 long time = millisUntilFinished / 1000;
                 countTimeStart = true;
                 if (qrCodeIsShow == true) {
-//                    requestTimerStart();
+                    requestTimerStart();
                 }
                 if (dialogShow) {
                     if (showTime == 0) {
