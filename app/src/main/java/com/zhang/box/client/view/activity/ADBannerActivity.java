@@ -403,7 +403,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             public void run() {
                 mHandler.sendEmptyMessage(2);
             }
-        }, 5000);
+        }, 15000);
 
     }
 

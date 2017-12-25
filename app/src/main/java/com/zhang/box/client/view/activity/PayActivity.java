@@ -22,6 +22,7 @@ import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -52,8 +53,8 @@ import com.zhang.box.loading.Z_TYPE;
 import com.zhang.box.util.SharedPreferencesUtil;
 
 import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -132,6 +133,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     TextView payTxtReturnTime;
     @BindView(R.id.date_img_signal)
     ImageView dateImgSignal;
+    @BindView(R.id.pay_btn_paysure)
+    Button payBtnPaysure;
     private Bitmap bitmapWxPayOne, bitmapWxPayTwo, bitmapAliPayOne, bitmapAliPayTwo;
 
     //支付和数量的选择按钮
@@ -193,7 +196,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
         payImgQrcode.setOnClickListener(this);
 
-        if (roadGoods.getRoadInfo().getRoadBoxType().equals(BoxSetting.BOX_TYPE_DRINK)){
+        if (roadGoods.getRoadInfo().getRoadBoxType().equals(BoxSetting.BOX_TYPE_DRINK)) {
             registerGoodsBoradcastReceiver();
         }
 
@@ -205,6 +208,11 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         initSignListener();
 
         initCountDownTimer();
+
+
+        payBtnPaysure.setOnClickListener(this);
+        payBtnPaysure.setClickable(false);
+
     }
 
 
@@ -386,13 +394,14 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     }
 
 
+    //支付完成倒计时
+    CountDownTimer paySureCountTimer;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay_rl_return:
-                payPresenter.cancelOrder();
-                cancelRequest();
-                PayActivity.this.finish();
+                returnAndFinish();
                 break;
             case R.id.pay_rb_num_two:
 
@@ -400,9 +409,40 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             case R.id.pay_img_qrcode:
                 payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
                 break;
+            case R.id.pay_btn_paysure:
+                payBtnPaysure.setClickable(false);
+                payPresenter.chengePayRequest(checkNum,checkPay);
+                paySureCountTimer = new CountDownTimer(50000, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        payBtnPaysure.setText("支付完成" + millisUntilFinished / 1000 );
+                    }
 
+                    @Override
+                    public void onFinish() {
+                        payBtnPaysure.setText("支付完成");
+                        payBtnPaysure.setClickable(true);
+                    }
+                }.start();
+                break;
         }
     }
+
+
+    private void returnAndFinish(){
+        if (paySureCountTimer!=null){
+            paySureCountTimer.cancel();
+        }
+        payPresenter.cancelOrder();
+        cancelRequest();
+        PayActivity.this.finish();
+    }
+
+
+
+
+
+
 
     boolean dialogShow = false;
 
@@ -475,6 +515,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             payImgQrcode.setImageBitmap(bitmap);
             qrCodeIsShow = true;
             payImgQrcode.setClickable(false);
+            payBtnPaysure.setClickable(true);
             if (!countTimeStart) {
                 initCountDownTimer();
             }

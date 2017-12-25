@@ -370,26 +370,27 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <Button
+                    android:id="@+id/pay_btn_paysure"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="123dp"
-                    android:text="点创智能微超"
-                    android:textColor="@color/colorMoreTxtTwoOne"
-                    android:textSize="36sp" />
+                    android:text="支付完成"
+                    android:textColor="@color/colorWhiteTxt"
+                    android:textSize="26sp"
+                    android:background="@drawable/manager_login_btn_selector"/>
 
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textView3"
+                    android:layout_below="@+id/pay_btn_paysure"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:text="提示：请勿在支付时切换二维码"
+                    android:text="提示：扫码支付完成3秒内未出货，请点击 ↑ 此按钮"
                     android:textColor="@color/colorDemoLogo"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <FrameLayout
                     android:id="@+id/pay_fl_qrcode"
