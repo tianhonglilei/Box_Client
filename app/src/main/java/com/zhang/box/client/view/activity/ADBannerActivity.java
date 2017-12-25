@@ -27,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.zhang.box.R;
 import com.zhang.box.application.BaseApplication;
 import com.zhang.box.box.BoxAction;
+import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.model.ADInfo;
 import com.zhang.box.client.model.RoadGoods;
 import com.zhang.box.client.model.RoadInfo;
@@ -333,18 +334,34 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         RoadInfo roadInfo = roadGoods.getRoadInfo();
         Long index = roadInfo.getRoadIndex();
         int state = BoxAction.getRoadState(roadInfo.getRoadBoxType(), index + "");
-        if (state == RoadInfo.ROAD_STATE_NORMAL) {
-            Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
-            intent.putExtra("roadGoods", roadGoods);
-            intent.putExtra("result", 2);
-            intentDateWeather(intent);
-            startActivityForResult(intent, requestCode);
-            adVideoView.pause();
+        if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_DRINK)) {
+            if (state == RoadInfo.ROAD_STATE_NORMAL) {
+                Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
+                intent.putExtra("roadGoods", roadGoods);
+                intent.putExtra("result", 2);
+                intentDateWeather(intent);
+                startActivityForResult(intent, requestCode);
+                adVideoView.pause();
 //            adVideoView.stopPlayback();
-        } else {
-            ToastTools.showShort(mContext, "该商品已经售罄，请选购其他商品");
-            //刷新商品
-            adPresenter.initGoodsData(adbannerGoodsGv);
+            } else {
+                ToastTools.showShort(mContext, "该商品已经售罄，请选购其他商品");
+                //刷新商品
+                adPresenter.initGoodsData(adbannerGoodsGv);
+            }
+        }else{
+            if (state != RoadInfo.ROAD_STATE_DATA_ERROR){
+                Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
+                intent.putExtra("roadGoods", roadGoods);
+                intent.putExtra("result", 2);
+                intentDateWeather(intent);
+                startActivityForResult(intent, requestCode);
+                adVideoView.pause();
+//            adVideoView.stopPlayback();
+            } else {
+                ToastTools.showShort(mContext, "该商品已经售罄，请选购其他商品");
+                //刷新商品
+                adPresenter.initGoodsData(adbannerGoodsGv);
+            }
         }
     }
 

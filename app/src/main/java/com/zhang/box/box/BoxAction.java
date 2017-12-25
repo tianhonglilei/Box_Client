@@ -30,7 +30,7 @@ public class BoxAction {
      * @return
      */
     public static boolean outGoods(String boxType, String roadIndex, int type) {
-        if (roadIndex == null || roadIndex.equals("")){
+        if (roadIndex == null || roadIndex.equals("")) {
             return false;
         }
         if (Integer.parseInt(roadIndex) < 10 && roadIndex.length() == 1) {
@@ -38,11 +38,15 @@ public class BoxAction {
         }
         String outType;
         if (type == OUT_GOODS_TYPE_PAY) {
-            outType = Avm.OUT_GOODS_ALIPAY;
+            if (boxType.equals(BoxSetting.BOX_TYPE_FOOD)) {
+                outType = Avm.OUT_GOODS_ROAD_CHECK;
+            } else {
+                outType = Avm.OUT_GOODS_ALIPAY;
+            }
         } else {
             outType = Avm.OUT_GOODS_ROAD_CHECK;
         }
-        if (boxType== null || boxType.equals("")){
+        if (boxType == null || boxType.equals("")) {
             return false;
         }
         String params = boxType + "1" + roadIndex + "00000100" + outType;
@@ -103,9 +107,10 @@ public class BoxAction {
 
     /**
      * 检测工控机连接状态
+     *
      * @return
      */
-    public static boolean getAVMRunning(){
+    public static boolean getAVMRunning() {
         return MainHandler.isAvmRunning();
     }
 

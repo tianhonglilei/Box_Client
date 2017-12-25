@@ -1,6 +1,7 @@
 package com.zhang.box.client.view;
 
 import android.graphics.Bitmap;
+import android.os.Handler;
 
 import com.zhang.box.client.model.PercentInfo;
 
@@ -9,6 +10,7 @@ import com.zhang.box.client.model.PercentInfo;
  */
 
 public interface PayView  extends BaseView{
+
 
     /**
      * 展示营养信息

@@ -35,6 +35,7 @@ import com.zhang.box.R;
 import com.zhang.box.application.BaseApplication;
 import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxParams;
+import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.listener.OutGoodsListener;
 import com.zhang.box.client.model.Goods;
 import com.zhang.box.client.model.PercentInfo;
@@ -173,7 +174,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         mContext = this;
         dataIntent = this.getIntent();
         roadGoods = dataIntent.getParcelableExtra("roadGoods");
-        payPresenter = new PayPresenterImpl(this, this);
+        payPresenter = new PayPresenterImpl(this, this, handler);
         initLayoutRadioButton();
         initFont();
         initDateAndWeather();
@@ -192,7 +193,9 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
         payImgQrcode.setOnClickListener(this);
 
-        registerGoodsBoradcastReceiver();
+        if (roadGoods.getRoadInfo().getRoadBoxType().equals(BoxSetting.BOX_TYPE_DRINK)){
+            registerGoodsBoradcastReceiver();
+        }
 
         int request = dataIntent.getIntExtra("result", 0);
         if (request == 2) {
@@ -401,9 +404,11 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         }
     }
 
+    boolean dialogShow = false;
 
     @Override
     public void showDialog(String text) {
+        dialogShow = true;
         dialog = new ZLoadingDialog(PayActivity.this);
         dialog.setLoadingBuilder(Z_TYPE.TEXT)
                 .setLoadingColor(Color.parseColor("#ff5307"))
@@ -416,6 +421,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
     @Override
     public void hiddenDialog() {
+        dialogShow = false;
         dialog.cancel();
     }
 
@@ -469,7 +475,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             payImgQrcode.setImageBitmap(bitmap);
             qrCodeIsShow = true;
             payImgQrcode.setClickable(false);
-            if (!countTimeStart){
+            if (!countTimeStart) {
                 initCountDownTimer();
             }
         } else {
@@ -484,9 +490,10 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
      * 轮询支付接口
      */
     private void requestTimerStart() {
-        if (payPresenter!=null) {
-            payPresenter.chengePayRequest(checkNum, checkPay);
+        if (payPresenter == null) {
+            payPresenter = new PayPresenterImpl(mContext, this, handler);
         }
+        payPresenter.chengePayRequest(checkNum, checkPay);
     }
 
     @Override
@@ -504,6 +511,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
     @Override
     public void showPopwindow(boolean success, int orderNum, int successNum) {
+        countDownTimer.cancel();
         final TextView dialogReturn, dialogMsg;
         View mainView = this.getLayoutInflater().inflate(R.layout.client_pay_activity, null);
         View popupView;
@@ -612,6 +620,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     }
 
     boolean countTimeStart = false;
+    long showTime = 0;
 
     private void initCountDownTimer() {
         countDownTimer = new CountDownTimer(100000, 1000) {
@@ -622,9 +631,18 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 if (qrCodeIsShow == true) {
                     requestTimerStart();
                 }
+                if (dialogShow) {
+                    if (showTime == 0) {
+                        showTime = time;
+                    }
+                }
+                if (dialogShow && time == showTime - 20) {
+                    hiddenDialog();
+                    payPresenter.postOrder(num, successNum);
+                }
                 if (time < 15) {
                     payTxtReturnTime.setTextColor(getResources().getColor(R.color.colorDemoLogo));
-                }else{
+                } else {
                     payTxtReturnTime.setTextColor(Color.WHITE);
                 }
                 payTxtReturnTime.setText(time + "S");
@@ -752,5 +770,17 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 break;
         }
     }
+
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 3:
+                    payPresenter.postOrder(2, 2);
+                    break;
+            }
+        }
+    };
 
 }

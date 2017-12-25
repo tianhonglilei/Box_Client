@@ -2,6 +2,7 @@ package com.zhang.box.client.presenter.impl;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -73,10 +74,13 @@ public class PayPresenterImpl implements PayPresenter {
 
     private int num, payType;
 
+    private Handler mHandler;
 
-    public PayPresenterImpl(Context mContext, PayView payView) {
+
+    public PayPresenterImpl(Context mContext, PayView payView, Handler handler) {
         this.mContext = mContext;
         this.payView = payView;
+        mHandler = handler;
         percentBeanService = new PercentBeanService(mContext, PercentBean.class);
         percentBiz = new PercenteBizImpl();
         orderInfo = new OrderInfo();
@@ -237,7 +241,6 @@ public class PayPresenterImpl implements PayPresenter {
     }
 
 
-
     /**
      * 支付结果查询
      *
@@ -280,9 +283,9 @@ public class PayPresenterImpl implements PayPresenter {
 
     private void outGoodsAction(final int num, final String boxType, final String roadIndex) {
         payView.outGoodsCheck(num);
-        if (boxType.equals(BoxSetting.BOX_TYPE_DRINK)){
+        if (boxType.equals(BoxSetting.BOX_TYPE_DRINK)) {
             nextTime = 2000;
-        }else{
+        } else {
             nextTime = 6000;
         }
         for (int i = 0; i < num; i++) {
@@ -293,16 +296,20 @@ public class PayPresenterImpl implements PayPresenter {
                         try {
                             Thread.sleep(nextTime);
                             BoxAction.outGoods(boxType, roadIndex, BoxAction.OUT_GOODS_TYPE_PAY);
+                            if (boxType.equals(BoxSetting.BOX_TYPE_FOOD)) {
+                                mHandler.sendEmptyMessage(3);
+                            }
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
                 }).start();
             } else {
-                if (!BoxAction.outGoods(boxType, roadIndex, BoxAction.OUT_GOODS_TYPE_PAY)) {
-                    payView.hiddenDialog();
-                    payView.showPopwindow(false, 1, 0);
-                    break;
+                BoxAction.outGoods(boxType, roadIndex, BoxAction.OUT_GOODS_TYPE_PAY);
+                if (boxType.equals(BoxSetting.BOX_TYPE_FOOD)) {
+                    if (num == 1) {
+                        postOrder(num, 1);
+                    }
                 }
             }
         }

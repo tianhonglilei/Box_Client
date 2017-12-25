@@ -179,6 +179,7 @@ public class ExceptionHandler implements UncaughtExceptionHandler {
         String result = writer.toString();
         sb.append(result);
         SharedPreferencesUtil.putString(mContext, BoxParams.ERROR_MSG, result);
+        Log.e(TAG+":Error", result);
         try {
             long timestamp = System.currentTimeMillis();
             String time = formatter.format(new Date());

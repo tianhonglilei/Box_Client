@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.zhang.box.R;
 import com.zhang.box.application.BaseApplication;
+import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.listener.OpenDoorListener;
 import com.zhang.box.client.model.Goods;
 
@@ -194,21 +195,40 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 RoadInfo roadInfo = roadGoods.getRoadInfo();
                 Long index = roadInfo.getRoadIndex();
                 int state = BoxAction.getRoadState(roadInfo.getRoadBoxType(), index + "");
-                if (state == RoadInfo.ROAD_STATE_NORMAL) {
-                    Intent intent = new Intent(MoreGoodsActivity.this, PayActivity.class);
-                    intent.putExtra("temp", moreWeatherWdNum.getText().toString());
-                    intent.putExtra("weather", moreWeatherTxt.getText().toString());
-                    intent.putExtra("roadGoods", roadGoods);
-                    startActivityForResult(intent, resultCode);
-                    telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
-                    if (isRegister) {
-                        unregisterReceiver(openDoorBroadcastReceiver);
-                        isRegister = false;
+                if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_DRINK)) {
+                    if (state == RoadInfo.ROAD_STATE_NORMAL) {
+                        Intent intent = new Intent(MoreGoodsActivity.this, PayActivity.class);
+                        intent.putExtra("temp", moreWeatherWdNum.getText().toString());
+                        intent.putExtra("weather", moreWeatherTxt.getText().toString());
+                        intent.putExtra("roadGoods", roadGoods);
+                        startActivityForResult(intent, resultCode);
+                        telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
+                        if (isRegister) {
+                            unregisterReceiver(openDoorBroadcastReceiver);
+                            isRegister = false;
+                        }
+                    } else {
+                        ToastTools.showShort(mContext, "该商品已售罄，请选购其他商品");
+                        //刷新商品
+                        moreGoodsPresenter.initAllGoods(moreGoodsGv);
                     }
-                } else {
-                    ToastTools.showShort(mContext, "该商品已售罄，请选购其他商品");
-                    //刷新商品
-                    moreGoodsPresenter.initAllGoods(moreGoodsGv);
+                }else{
+                    if (state != RoadInfo.ROAD_STATE_DATA_ERROR) {
+                        Intent intent = new Intent(MoreGoodsActivity.this, PayActivity.class);
+                        intent.putExtra("temp", moreWeatherWdNum.getText().toString());
+                        intent.putExtra("weather", moreWeatherTxt.getText().toString());
+                        intent.putExtra("roadGoods", roadGoods);
+                        startActivityForResult(intent, resultCode);
+                        telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
+                        if (isRegister) {
+                            unregisterReceiver(openDoorBroadcastReceiver);
+                            isRegister = false;
+                        }
+                    } else {
+                        ToastTools.showShort(mContext, "该商品已售罄，请选购其他商品");
+                        //刷新商品
+                        moreGoodsPresenter.initAllGoods(moreGoodsGv);
+                    }
                 }
 
             }
@@ -315,6 +335,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             countDownTimer.cancel();
             countDownTimer = null;
             initCountDownTimer();
+            moreGoodsRbtnGroup.check(R.id.more_goods_nav_rb_allgoods);
         }
     }
 
