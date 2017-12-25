@@ -411,11 +411,11 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 break;
             case R.id.pay_btn_paysure:
                 payBtnPaysure.setClickable(false);
-                payPresenter.chengePayRequest(checkNum,checkPay);
+                payPresenter.chengePayRequest(checkNum, checkPay);
                 paySureCountTimer = new CountDownTimer(50000, 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
-                        payBtnPaysure.setText("支付完成" + millisUntilFinished / 1000 );
+                        payBtnPaysure.setText("支付完成" + millisUntilFinished / 1000);
                     }
 
                     @Override
@@ -429,19 +429,15 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     }
 
 
-    private void returnAndFinish(){
-        if (paySureCountTimer!=null){
+    private void returnAndFinish() {
+        if (paySureCountTimer != null) {
             paySureCountTimer.cancel();
+            paySureCountTimer = null;
         }
         payPresenter.cancelOrder();
         cancelRequest();
         PayActivity.this.finish();
     }
-
-
-
-
-
 
 
     boolean dialogShow = false;
@@ -594,6 +590,10 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 if (countDownTimer != null) {
                     countDownTimer.cancel();
                     countDownTimer = null;
+                }
+                if (paySureCountTimer != null) {
+                    paySureCountTimer.cancel();
+                    paySureCountTimer = null;
                 }
                 PayActivity.this.setResult(2);
                 PayActivity.this.finish();
