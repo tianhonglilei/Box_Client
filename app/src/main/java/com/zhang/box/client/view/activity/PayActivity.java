@@ -412,10 +412,10 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             case R.id.pay_btn_paysure:
                 payBtnPaysure.setClickable(false);
                 payPresenter.chengePayRequest(checkNum, checkPay);
-                paySureCountTimer = new CountDownTimer(50000, 1000) {
+                paySureCountTimer = new CountDownTimer(5000, 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
-                        payBtnPaysure.setText("支付完成" + millisUntilFinished / 1000);
+                        payBtnPaysure.setText("支付完成" + millisUntilFinished / 1000 + "S");
                     }
 
                     @Override
@@ -670,7 +670,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 long time = millisUntilFinished / 1000;
                 countTimeStart = true;
                 if (qrCodeIsShow == true) {
-                    requestTimerStart();
+//                    requestTimerStart();
                 }
                 if (dialogShow) {
                     if (showTime == 0) {
