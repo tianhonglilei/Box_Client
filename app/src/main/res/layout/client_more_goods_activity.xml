@@ -16,17 +16,16 @@
 
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_weight="1">
 
         <GridView
             android:id="@+id/more_goods_gv"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+
             android:columnWidth="163dp"
             android:scrollbars="none"
             android:stretchMode="columnWidth"
@@ -42,7 +41,8 @@
 
         <RelativeLayout
             android:layout_width="216dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true">
             <RadioGroup
                 android:id="@+id/more_goods_rbtn_group"
                 android:layout_width="match_parent"
@@ -143,7 +143,7 @@
 
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
