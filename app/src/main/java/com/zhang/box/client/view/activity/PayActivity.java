@@ -381,15 +381,15 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 break;
         }
         double price = goods.getGoodsPrice();
-        double disPrice = goods.getGoodsDiscountPrice();
-        if (price > disPrice) {
-            payTxtGoodsPrice.setText("" + disPrice);
-        } else {
-            payTxtGoodsPrice.setText("" + price);
+        if (goods.getGoodsSaleState() == Goods.SALE_STATE_DISCOUNT) {
+            double disPrice = goods.getGoodsDiscountPrice();
+            if (price > disPrice) {
+                price = disPrice;
+            }
         }
-        payTxtGoodsPrice.setText("" + goods.getGoodsPrice());
+        payTxtGoodsPrice.setText("" + price);
         initRadioNum();
-        payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice());
+        payTxtGoodsPriceCount.setText("" + price);
         payTxtGoodsDetailsMemo.setText(goods.getGoodsMemo());
     }
 
