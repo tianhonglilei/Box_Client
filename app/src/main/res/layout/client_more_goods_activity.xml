@@ -23,9 +23,8 @@
 
         <GridView
             android:id="@+id/more_goods_gv"
-            android:layout_width="wrap_content"
+            android:layout_width="1040dp"
             android:layout_height="match_parent"
-
             android:columnWidth="163dp"
             android:scrollbars="none"
             android:stretchMode="columnWidth"
