@@ -47,18 +47,19 @@ public class RoadBizImpl implements RoadBiz {
             }
             if (roadInfo.getRoadOpen() == RoadInfo.ROAD_OPEN
                     && roadInfo.getRoadState() == RoadInfo.ROAD_STATE_NORMAL) {
-                goods.setGoodsSaleState(Goods.SALE_STATE_NORMAL);
+                double price = (double) bean.getPrice() / 100;
+                double disPrice = (double) bean.getWeixin() / 100;
+                if (price > disPrice) {
+                    goods.setGoodsSaleState(Goods.SALE_STATE_DISCOUNT);
+                    goods.setGoodsDiscountPrice(disPrice);
+                } else {
+                    goods.setGoodsSaleState(Goods.SALE_STATE_NORMAL);
+                }
+                goods.setGoodsPrice((double) bean.getPrice() / 100);
             } else {
                 goods.setGoodsSaleState(Goods.SALE_STATE_OUT);
             }
-            double price = (double) bean.getPrice() / 100;
-            double disPrice = (double) bean.getWeixin() / 100;
-            if (price > disPrice){
-                goods.setGoodsSaleState(Goods.SALE_STATE_DISCOUNT);
-                goods.setGoodsDiscountPrice(disPrice);
-            }else{
-                goods.setGoodsPrice((double) bean.getPrice() / 100);
-            }
+
             goodsBean = bean.getGoodsBean();
             if (goodsBean != null) {
                 goods.setGoodsId(goodsBean.getId());
@@ -68,14 +69,14 @@ public class RoadBizImpl implements RoadBiz {
 //                        Log.e("RoadBizImpl", "Integer.parseInt(leftState):" + Integer.parseInt(leftState));
                         if (!leftState.equals("")) {
                             goods.setGoodsWd(Integer.parseInt(leftState));
-                        }else{
+                        } else {
                             goods.setGoodsWd(Goods.GOODS_WD_NORMAL);
                         }
                     } else {
 //                        Log.e("RoadBizImpl", "Integer.parseInt(rightState):" + Integer.parseInt(rightState));
                         if (!leftState.equals("")) {
                             goods.setGoodsWd(Integer.parseInt(rightState));
-                        }else{
+                        } else {
                             goods.setGoodsWd(Goods.GOODS_WD_NORMAL);
                         }
                     }
