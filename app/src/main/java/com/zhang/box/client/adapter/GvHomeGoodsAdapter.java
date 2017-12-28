@@ -59,6 +59,7 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<RoadGoods> {
             viewHolder.getView(R.id.adbanner_b_item_txt_sale).setVisibility(View.VISIBLE);
             viewHolder.getView(R.id.adbanner_b_item_discount_rmb).setVisibility(View.VISIBLE);
             viewHolder.getView(R.id.adbanner_b_item_txt_discount_price).setVisibility(View.VISIBLE);
+            ((TextView) viewHolder.getView(R.id.adbanner_b_item_txt_discount_price)).setText("" + goods.getGoodsDiscountPrice());
             Glide.with(mContext)
                     .load(new File(Constants.DEMO_FILE_PATH+"/"+goods.getGoodsSImgName()))
                     .into(goodsImg);
@@ -70,6 +71,7 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<RoadGoods> {
             viewHolder.getView(R.id.adbanner_b_item_txt_sale).setVisibility(View.INVISIBLE);
             viewHolder.getView(R.id.adbanner_b_item_discount_rmb).setVisibility(View.INVISIBLE);
             viewHolder.getView(R.id.adbanner_b_item_txt_discount_price).setVisibility(View.INVISIBLE);
+            ((TextView) viewHolder.getView(R.id.adbanner_b_item_txt_discount_price)).setText("" + goods.getGoodsDiscountPrice());
             Glide.with(mContext)
                     .load(new File(Constants.DEMO_FILE_PATH+"/"+goods.getGoodsOutImgName()))
                     .into(goodsImg);
