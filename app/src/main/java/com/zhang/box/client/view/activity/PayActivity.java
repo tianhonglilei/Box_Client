@@ -229,7 +229,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 if (checkedId == R.id.pay_rb_num_one) {
                     checkNum = 1;
-                    payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice());
+                    payTxtGoodsPriceCount.setText("" + Double.parseDouble(payTxtGoodsPrice.getText().toString()));
                     if (checkPay == Constants.PAY_TYPE_WX) {
                         if (bitmapWxPayOne == null) {
                             cancelRequest();
@@ -253,7 +253,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                         return;
                     }
                     checkNum = 2;
-                    payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice() * 2);
+                    payTxtGoodsPriceCount.setText("" + Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 2);
                     if (checkPay == Constants.PAY_TYPE_WX) {
                         if (bitmapWxPayTwo == null) {
                             cancelRequest();
