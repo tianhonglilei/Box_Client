@@ -81,20 +81,10 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
     @Override
     public void testRoad(String boxType, String index) {
         int state = BoxAction.getRoadState(boxType, index);
-        if (boxType.equals(BoxSetting.BOX_TYPE_DRINK)) {
-            if (state == RoadInfo.ROAD_STATE_NORMAL) {
-                BoxAction.outGoods(boxType, index, BoxAction.OUT_GOODS_TYPE_TEST);
-            } else if (state == RoadInfo.ROAD_STATE_NULL) {
-                Toast.makeText(mContext, index + "货道没有检测到货品", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(mContext, "货道出现异常，请重启程序", Toast.LENGTH_SHORT).show();
-            }
+        if (state == RoadInfo.ROAD_STATE_DATA_ERROR) {
+            Toast.makeText(mContext, "货道通信异常", Toast.LENGTH_SHORT).show();
         } else {
-            if (state == RoadInfo.ROAD_STATE_DATA_ERROR) {
-                Toast.makeText(mContext, "货道出现异常，请重启程序", Toast.LENGTH_SHORT).show();
-            } else {
-                BoxAction.outGoods(boxType, index, BoxAction.OUT_GOODS_TYPE_TEST);
-            }
+            BoxAction.outGoods(boxType, index, BoxAction.OUT_GOODS_TYPE_TEST);
         }
 
     }
@@ -135,7 +125,7 @@ public class NavRoadPresenterImpl implements NavRoadPresenter {
                 navRoadFragmentView.hiddenLoading();
             }
         } else {
-            if (state == RoadInfo.ROAD_STATE_DATA_ERROR){
+            if (state == RoadInfo.ROAD_STATE_DATA_ERROR) {
                 navRoadFragmentView.hiddenLoading();
                 return;
             }

@@ -51,7 +51,14 @@ public class RoadBizImpl implements RoadBiz {
             } else {
                 goods.setGoodsSaleState(Goods.SALE_STATE_OUT);
             }
-            goods.setGoodsPrice((double) bean.getPrice() / 100);
+            double price = (double) bean.getPrice() / 100;
+            double disPrice = (double) bean.getWeixin() / 100;
+            if (price > disPrice){
+                goods.setGoodsSaleState(Goods.SALE_STATE_DISCOUNT);
+                goods.setGoodsDiscountPrice(disPrice);
+            }else{
+                goods.setGoodsPrice((double) bean.getPrice() / 100);
+            }
             goodsBean = bean.getGoodsBean();
             if (goodsBean != null) {
                 goods.setGoodsId(goodsBean.getId());
