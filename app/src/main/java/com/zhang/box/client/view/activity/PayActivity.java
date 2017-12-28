@@ -380,6 +380,13 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 payImgWd.setVisibility(View.INVISIBLE);
                 break;
         }
+        double price = goods.getGoodsPrice();
+        double disPrice = goods.getGoodsDiscountPrice();
+        if (price > disPrice) {
+            payTxtGoodsPrice.setText("" + disPrice);
+        } else {
+            payTxtGoodsPrice.setText("" + price);
+        }
         payTxtGoodsPrice.setText("" + goods.getGoodsPrice());
         initRadioNum();
         payTxtGoodsPriceCount.setText("" + goods.getGoodsPrice());

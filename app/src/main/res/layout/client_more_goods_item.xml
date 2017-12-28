@@ -148,7 +148,8 @@
             android:textSize="26sp"
             android:textStyle="bold"
             android:textColor="@color/colorWhiteTxt"
-            style="@style/MyFontNotPadding"/>
+            style="@style/MyFontNotPadding"
+            android:maxLines="1"/>
 
     </RelativeLayout>
 
