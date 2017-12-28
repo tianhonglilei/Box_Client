@@ -18,7 +18,7 @@
         android:textColor="@color/colorDemoLogo"
         android:gravity="center"
         android:layout_marginBottom="10dp"
-        android:text="5.5" />
+        android:text="--" />
 
     <TextView
         android:id="@+id/textView2"
@@ -144,7 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/more_goods_item_discount_rmb"
             android:layout_below="@+id/more_goods_item_txt_sale"
-            android:text="2.5"
+            android:text="--"
             android:textSize="26sp"
             android:textStyle="bold"
             android:textColor="@color/colorWhiteTxt"

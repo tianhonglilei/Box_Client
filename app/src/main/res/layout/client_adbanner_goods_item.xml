@@ -34,7 +34,7 @@
         android:layout_below="@+id/adbanner_b_item_img"
         android:layout_marginTop="6dp"
         style="@style/MyFontNotPadding"
-        android:text="5.5"
+        android:text="--"
         android:textColor="@color/colorDemoLogo"
         android:textSize="30sp" />
 
@@ -99,10 +99,11 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/adbanner_b_item_discount_rmb"
             android:layout_below="@+id/adbanner_b_item_txt_sale"
-            android:text="5.5"
+            android:text="--"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/colorWhiteTxt"
+            android:maxLines="1"
             style="@style/MyFontNotPadding"/>
 
     </RelativeLayout>

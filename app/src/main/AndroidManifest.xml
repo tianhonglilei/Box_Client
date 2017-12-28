@@ -40,7 +40,9 @@
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         <activity
             android:name=".client.view.activity.ADBannerActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:alwaysRetainTaskState="true"
+            />
         <activity
             android:name=".client.view.activity.MoreGoodsActivity"
             android:screenOrientation="landscape" />
