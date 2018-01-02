@@ -365,6 +365,7 @@ public class PayPresenterImpl implements PayPresenter {
 
     private void updateDBNum(int num) {
         roadBeanService.updateRoadNum(Long.parseLong(orderInfo.getId()), num);
+        SharedPreferencesUtil.putString(mContext, BoxParams.UPDATE_DB, "true");
     }
 
 

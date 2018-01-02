@@ -27,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.zhang.box.R;
 import com.zhang.box.application.BaseApplication;
 import com.zhang.box.box.BoxAction;
+import com.zhang.box.box.BoxParams;
 import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.model.ADInfo;
 import com.zhang.box.client.model.RoadGoods;
@@ -43,6 +44,7 @@ import com.zhang.box.loading.ZLoadingDialog;
 import com.zhang.box.loading.Z_TYPE;
 import com.zhang.box.service.HeartService;
 import com.zhang.box.util.FileUtils;
+import com.zhang.box.util.SharedPreferencesUtil;
 import com.zhang.box.util.ToastTools;
 
 import java.io.File;
@@ -348,8 +350,8 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 //刷新商品
                 adPresenter.initGoodsData(adbannerGoodsGv);
             }
-        }else{
-            if (state != RoadInfo.ROAD_STATE_DATA_ERROR){
+        } else {
+            if (state != RoadInfo.ROAD_STATE_DATA_ERROR) {
                 Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
                 intent.putExtra("roadGoods", roadGoods);
                 intent.putExtra("result", 2);
@@ -370,7 +372,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
             case 2:
-                adPresenter.initGoodsData(adbannerGoodsGv);
+//                adPresenter.initGoodsData(adbannerGoodsGv);
                 break;
         }
 
@@ -573,6 +575,11 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             adVideoView.seekTo(per);
             adVideoView.start();
             videoPlay = true;
+        }
+        String updateDb = SharedPreferencesUtil.getString(mContext, BoxParams.UPDATE_DB);
+        if (updateDb.equals("true")) {
+            adPresenter.initGoodsData(adbannerGoodsGv);
+            SharedPreferencesUtil.putString(mContext, BoxParams.UPDATE_DB, "false");
         }
         super.onResume();
     }

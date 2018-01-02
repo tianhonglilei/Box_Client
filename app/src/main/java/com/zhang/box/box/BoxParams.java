@@ -22,6 +22,7 @@ public class BoxParams {
     public static final String COMPANY = "company";
     public static final String DOOR_STATE = "door_state";
     public static final String ERROR_MSG = "error_msg";
+    public static final String UPDATE_DB = "update_db";
     private String avmSetInfo;
 
     public BoxParams() {
