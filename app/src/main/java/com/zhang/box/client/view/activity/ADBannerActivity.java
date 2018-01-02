@@ -370,6 +370,12 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        String updateDb = SharedPreferencesUtil.getString(mContext, BoxParams.UPDATE_DB);
+        Log.e(TAG, updateDb);
+        if (updateDb.equals("true")) {
+            adPresenter.initGoodsData(adbannerGoodsGv);
+            SharedPreferencesUtil.putString(mContext, BoxParams.UPDATE_DB, "false");
+        }
         switch (resultCode) {
             case 2:
 //                adPresenter.initGoodsData(adbannerGoodsGv);
@@ -576,12 +582,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             adVideoView.start();
             videoPlay = true;
         }
-        String updateDb = SharedPreferencesUtil.getString(mContext, BoxParams.UPDATE_DB);
-        Log.e(TAG, updateDb);
-        if (updateDb.equals("true")) {
-            adPresenter.initGoodsData(adbannerGoodsGv);
-            SharedPreferencesUtil.putString(mContext, BoxParams.UPDATE_DB, "false");
-        }
+
         super.onResume();
     }
 
