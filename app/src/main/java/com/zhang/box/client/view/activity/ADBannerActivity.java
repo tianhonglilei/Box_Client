@@ -577,7 +577,6 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             videoPlay = true;
         }
         String updateDb = SharedPreferencesUtil.getString(mContext, BoxParams.UPDATE_DB);
-        Log.e(TAG, updateDb);
         if (updateDb.equals("true")) {
             adPresenter.initGoodsData(adbannerGoodsGv);
             SharedPreferencesUtil.putString(mContext, BoxParams.UPDATE_DB, "false");

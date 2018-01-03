@@ -166,8 +166,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     MediaPlayer mediaPlayer = null;
     AssetManager assetManager = null;
 
-    boolean qrCodeIsShow = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -232,14 +230,12 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                     payTxtGoodsPriceCount.setText("" + Double.parseDouble(payTxtGoodsPrice.getText().toString()));
                     if (checkPay == Constants.PAY_TYPE_WX) {
                         if (bitmapWxPayOne == null) {
-                            cancelRequest();
                             payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
                         } else {
                             showQRCode(bitmapWxPayOne);
                         }
                     } else {
                         if (bitmapAliPayOne == null) {
-                            cancelRequest();
                             payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
                         } else {
                             showQRCode(bitmapAliPayOne);
@@ -256,14 +252,12 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                     payTxtGoodsPriceCount.setText("" + Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 2);
                     if (checkPay == Constants.PAY_TYPE_WX) {
                         if (bitmapWxPayTwo == null) {
-                            cancelRequest();
                             payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
                         } else {
                             showQRCode(bitmapWxPayTwo);
                         }
                     } else {
                         if (bitmapAliPayTwo == null) {
-                            cancelRequest();
                             payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
                         } else {
                             showQRCode(bitmapAliPayTwo);
@@ -276,7 +270,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         payRbgrpQrcode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                cancelRequest();
                 if (checkedId == R.id.pay_rb_wechat) {
                     checkPay = Constants.PAY_TYPE_WX;
                     payQRCodeUrl = Constants.WX_GET_QR_URL;
@@ -418,9 +411,9 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 break;
             case R.id.pay_btn_paysure:
                 payBtnPaysure.setClickable(false);
-                if (qrCodeIsShow) {
-                    payPresenter.chengePayRequest(checkNum, checkPay);
-                }
+
+//                    payPresenter.chengePayRequest(checkNum, checkPay);
+
                 paySureCountTimer = new CountDownTimer(5000, 1000) {
                     @Override
                     public void onTick(long millisUntilFinished) {
@@ -444,7 +437,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             paySureCountTimer = null;
         }
         payPresenter.cancelOrder();
-        cancelRequest();
         PayActivity.this.finish();
     }
 
@@ -518,7 +510,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 }
             }
             payImgQrcode.setImageBitmap(bitmap);
-            qrCodeIsShow = true;
             payImgQrcode.setClickable(false);
             payBtnPaysure.setClickable(true);
             if (!countTimeStart) {
@@ -527,7 +518,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         } else {
             payTxtQrcodeLoading.setText("生成失败,点击刷新二维码");
             payImgQrcode.setClickable(true);
-            qrCodeIsShow = false;
         }
 
     }
@@ -539,12 +529,35 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         if (payPresenter == null) {
             payPresenter = new PayPresenterImpl(mContext, this, handler);
         }
-        payPresenter.chengePayRequest(checkNum, checkPay);
+        if (bitmapWxPayOne != null) {
+            payPresenter.chengePayRequest(1, Constants.PAY_TYPE_WX);
+        }
+        if (bitmapWxPayTwo != null) {
+            payPresenter.chengePayRequest(2, Constants.PAY_TYPE_WX);
+        }
+        if (bitmapAliPayOne != null) {
+            payPresenter.chengePayRequest(1, Constants.PAY_TYPE_ALI);
+        }
+        if (bitmapAliPayTwo != null) {
+            payPresenter.chengePayRequest(2, Constants.PAY_TYPE_ALI);
+        }
+
     }
 
     @Override
     public void cancelRequest() {
-        qrCodeIsShow = false;
+        if (bitmapWxPayOne != null) {
+            bitmapWxPayOne = null;
+        }
+        if (bitmapWxPayTwo != null) {
+            bitmapWxPayTwo = null;
+        }
+        if (bitmapAliPayOne != null) {
+            bitmapAliPayOne = null;
+        }
+        if (bitmapAliPayTwo != null) {
+            bitmapAliPayTwo = null;
+        }
     }
 
     @Override
@@ -679,7 +692,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             public void onTick(long millisUntilFinished) {
                 long time = millisUntilFinished / 1000;
                 countTimeStart = true;
-                if (qrCodeIsShow == true) {
+                if (time % 2 == 0) {
                     requestTimerStart();
                 }
                 if (dialogShow) {
