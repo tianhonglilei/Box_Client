@@ -147,7 +147,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         setContentView(R.layout.client_adbanner_activity);
         ButterKnife.bind(this);
         appContext = getApplicationContext();
-        BaseApplication.addActivityToList(this);
+//        BaseApplication.addActivityToList(this);
 
         showDialog("加载中...");
         //初始化部分对象

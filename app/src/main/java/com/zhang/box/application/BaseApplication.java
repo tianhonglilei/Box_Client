@@ -45,7 +45,7 @@ public class BaseApplication extends Application {
         if (mInstance == null) {
             mInstance = this;
         }
-        activityList = new ArrayList<>();
+//        activityList = new ArrayList<>();
         //初始化SDK配置文件
         initSDKiniFile();
         //初始化开机动画
@@ -172,19 +172,19 @@ public class BaseApplication extends Application {
         }
     }
 
-    private static List<Activity> activityList;
+//    private static List<Activity> activityList;
 
-    public static void addActivityToList(Activity activity) {
-        activityList.add(activity);
-    }
+//    public static void addActivityToList(Activity activity) {
+//        activityList.add(activity);
+//    }
 
     public static void exitAllActivity() {
-        for (Activity activity :
-                activityList) {
-            if (activity != null) {
-                activity.finish();
-            }
-        }
+//        for (Activity activity :
+//                activityList) {
+//            if (activity != null) {
+//                activity.finish();
+//            }
+//        }
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
     }

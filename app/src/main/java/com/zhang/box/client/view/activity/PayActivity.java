@@ -22,7 +22,6 @@ import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -33,7 +32,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.zhang.box.R;
-import com.zhang.box.application.BaseApplication;
 import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxParams;
 import com.zhang.box.box.BoxSetting;
@@ -53,8 +51,6 @@ import com.zhang.box.loading.Z_TYPE;
 import com.zhang.box.util.SharedPreferencesUtil;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -169,7 +165,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_pay_activity);
         ButterKnife.bind(this);
-        BaseApplication.addActivityToList(this);
+//        BaseApplication.addActivityToList(this);
         mContext = this;
         dataIntent = this.getIntent();
         roadGoods = dataIntent.getParcelableExtra("roadGoods");
@@ -591,12 +587,8 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                     countDownTimer.cancel();
                     countDownTimer = null;
                 }
-                if (paySureCountTimer != null) {
-                    paySureCountTimer.cancel();
-                    paySureCountTimer = null;
-                }
                 PayActivity.this.setResult(2);
-                PayActivity.this.finish();
+                returnAndFinish();
             }
         });
 

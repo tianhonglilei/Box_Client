@@ -110,7 +110,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_more_goods_activity);
         ButterKnife.bind(this);
-        BaseApplication.addActivityToList(this);
+//        BaseApplication.addActivityToList(this);
         mContext = this;
         dataIntent = this.getIntent();
         Glide.with(mContext).load(R.drawable.more_goods_up).into(moreGoodsUpGif);

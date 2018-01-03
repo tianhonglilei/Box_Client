@@ -61,7 +61,7 @@ public class ManagerNavgationActivity extends FragmentActivity {
         setContentView(R.layout.activity_manager_navgation);
         ButterKnife.bind(this);
         mContext = this;
-        BaseApplication.addActivityToList(this);
+//        BaseApplication.addActivityToList(this);
         managerHeadTxtImei.setText(BoxAction.getBoxIdFromSP(mContext));
 
         initView();
