@@ -21,6 +21,7 @@ import com.common.controls.dialog.DialogUtil;
 import com.common.controls.dialog.ICommonDialog;
 import com.zhang.box.R;
 import com.zhang.box.box.BoxAction;
+import com.zhang.box.box.BoxParams;
 import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.model.Goods;
 import com.zhang.box.client.model.RoadGoods;
@@ -32,6 +33,7 @@ import com.zhang.box.manager.adapter.NavGoodsAdapter;
 import com.zhang.box.manager.presenter.NavGoodsPresenter;
 import com.zhang.box.manager.presenter.impl.NavGoodsPresenterImpl;
 import com.zhang.box.manager.view.NavGoodsFragmentView;
+import com.zhang.box.util.SharedPreferencesUtil;
 
 import java.util.List;
 
@@ -189,14 +191,15 @@ public class NavGoodsFragment extends Fragment implements NavGoodsFragmentView,V
 
     @Override
     public void fullProgress(int count, Long nowRoad ,int success,int fail) {
-        if (loadingDialog != null){
-            loadingDialog.setHintText("货道总数："+count+"，货道："+nowRoad+"，成功："+ success + "，失败：" + fail);
+//        if (loadingDialog != null){
+//            loadingDialog.setHintText("货道总数："+count+"，货道："+nowRoad+"，成功："+ success + "，失败：" + fail);
             if (count == success + fail){
                 Toast.makeText(mContext, "补货完成", Toast.LENGTH_SHORT).show();
                 navGoodsPresenter.refreshAllRoadNum();
+                SharedPreferencesUtil.putString(mContext, BoxParams.UPDATE_DB, "true");
                 loadingDialog.dismiss();
             }
-        }
+//        }
     }
 
     /**

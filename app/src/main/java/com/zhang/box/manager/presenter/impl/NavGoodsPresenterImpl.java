@@ -197,6 +197,7 @@ public class NavGoodsPresenterImpl implements NavGoodsPresenter {
                             roadBeanService.updateRoadNum(roadGoods.getRoadGoodsId(), Integer.parseInt(addGoods.getHuodao_num()), Integer.parseInt(addGoods.getHuodao_max()));
                             refreshGoodsNum(roadGoods, position);
                             Toast.makeText(mContext, "补货完成", Toast.LENGTH_SHORT).show();
+                            SharedPreferencesUtil.putString(mContext, BoxParams.UPDATE_DB, "true");
                         } else {
                             Toast.makeText(mContext, "补货失败,请重新尝试" + msg, Toast.LENGTH_SHORT).show();
                         }
