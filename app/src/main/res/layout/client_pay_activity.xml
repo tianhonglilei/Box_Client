@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#fbfbfb">
 
     <FrameLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -16,6 +16,7 @@
             android:weightSum="3">
 
             <RelativeLayout
+
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2">
@@ -370,27 +371,26 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
-                <Button
-                    android:id="@+id/pay_btn_paysure"
-                    android:layout_width="150dp"
-                    android:layout_height="40dp"
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="123dp"
-                    android:text="支付完成"
-                    android:textColor="@color/colorWhiteTxt"
-                    android:textSize="26sp"
-                    android:background="@drawable/manager_login_btn_selector"/>
+                    android:text="点创智能微超"
+                    android:textColor="@color/colorMoreTxtTwoOne"
+                    android:textSize="36sp" />
 
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/pay_btn_paysure"
+                    android:layout_below="@+id/textView3"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:text="提示：扫码支付完成3秒内未出货，请点击 ↑ 此按钮"
+                    android:text="提示：请勿在支付时切换二维码"
                     android:textColor="@color/colorDemoLogo"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
 
                 <FrameLayout
                     android:id="@+id/pay_fl_qrcode"
@@ -495,7 +495,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
                         android:layout_toRightOf="@+id/pay_txt_return"
-                        android:text="100s"
+                        android:text="80s"
                         android:textColor="#ffffff"
                         android:textSize="30sp" />
 

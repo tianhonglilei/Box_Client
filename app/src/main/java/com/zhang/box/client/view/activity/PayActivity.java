@@ -133,8 +133,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     TextView payTxtReturnTime;
     @BindView(R.id.date_img_signal)
     ImageView dateImgSignal;
-    @BindView(R.id.pay_btn_paysure)
-    Button payBtnPaysure;
     private Bitmap bitmapWxPayOne, bitmapWxPayTwo, bitmapAliPayOne, bitmapAliPayTwo;
 
     //支付和数量的选择按钮
@@ -208,8 +206,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         initCountDownTimer();
 
 
-        payBtnPaysure.setOnClickListener(this);
-        payBtnPaysure.setClickable(false);
 
     }
 
@@ -409,24 +405,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             case R.id.pay_img_qrcode:
                 payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
                 break;
-            case R.id.pay_btn_paysure:
-                payBtnPaysure.setClickable(false);
-
-//                    payPresenter.chengePayRequest(checkNum, checkPay);
-
-                paySureCountTimer = new CountDownTimer(5000, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        payBtnPaysure.setText("支付完成" + millisUntilFinished / 1000 + "S");
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        payBtnPaysure.setText("支付完成");
-                        payBtnPaysure.setClickable(true);
-                    }
-                }.start();
-                break;
         }
     }
 
@@ -511,7 +489,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             }
             payImgQrcode.setImageBitmap(bitmap);
             payImgQrcode.setClickable(false);
-            payBtnPaysure.setClickable(true);
             if (!countTimeStart) {
                 initCountDownTimer();
             }
