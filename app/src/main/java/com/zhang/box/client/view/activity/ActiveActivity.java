@@ -177,8 +177,10 @@ public class ActiveActivity extends Activity implements View.OnClickListener, Ac
     @Override
     public void hiddenDialog() {
         if (dialog != null) {
-            dialog.cancel();
-            dialog = null;
+            if (!this.isFinishing() && !this.isDestroyed()) {
+                dialog.cancel();
+                dialog = null;
+            }
         }
     }
 

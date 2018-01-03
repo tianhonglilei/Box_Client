@@ -169,6 +169,9 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         mContext = this;
         dataIntent = this.getIntent();
         roadGoods = dataIntent.getParcelableExtra("roadGoods");
+        if (roadGoods==null){
+            returnAndFinish();
+        }
         payPresenter = new PayPresenterImpl(this, this, handler);
         initLayoutRadioButton();
         initFont();
@@ -576,7 +579,9 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             @Override
             public void onFinish() {
                 if (window != null) {
-                    window.dismiss();
+                    if (!PayActivity.this.isFinishing() && !PayActivity.this.isDestroyed()) {
+                        window.dismiss();
+                    }
                 }
             }
         }.start();
