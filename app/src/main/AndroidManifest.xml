@@ -41,7 +41,6 @@
         <activity
             android:name=".client.view.activity.ADBannerActivity"
             android:screenOrientation="landscape"
-            android:alwaysRetainTaskState="true"
             />
         <activity
             android:name=".client.view.activity.MoreGoodsActivity"

@@ -223,7 +223,7 @@ public class PayPresenterImpl implements PayPresenter {
                 tradeno = tradeno2;
             }
         }
-        Log.e("PayPresenterImpl:" + payType + "-" + num, tradeno);
+//        Log.e("PayPresenterImpl:" , payType + "-" + num + tradeno);
         params = ParamsUtils.getPayResponseParams(tradeno, payType);
         requestParams = new RequestParams(params);
         getPayResponse(payType, num);

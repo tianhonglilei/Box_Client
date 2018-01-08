@@ -502,6 +502,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
      * 轮询支付接口
      */
     private void requestTimerStart() {
+        countTimeStart = true;
         if (payPresenter == null) {
             payPresenter = new PayPresenterImpl(mContext, this, handler);
         }
@@ -665,7 +666,6 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
             @Override
             public void onTick(long millisUntilFinished) {
                 long time = millisUntilFinished / 1000;
-                countTimeStart = true;
                 if (time % 2 == 0) {
                     requestTimerStart();
                 }
