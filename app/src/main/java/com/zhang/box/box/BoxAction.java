@@ -87,6 +87,9 @@ public class BoxAction {
         return SharedPreferencesUtil.getString(context, BoxParams.BOX_ID);
     }
 
+    public static String getBoxAvmVersion(){
+        return MainHandler.getVMCVersion();
+    }
 
     public static int getOutGoodsState() {
         String result = MainHandler.getTranResult();

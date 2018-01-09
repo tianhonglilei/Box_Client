@@ -110,10 +110,12 @@ public class HeartPresenterImpl implements HeartPresenter {
             String subHuodaoInfo = huodaoInfo.substring(0, 1);
             stringBuilder.append(i + "|" + subHuodaoInfo + "|");
         }
-        String door = BoxAction.getAVMRunning() ? "0" : "1";
-        if (door.equals("1")) {
+//        String door = BoxAction.getAVMRunning() ? "0" : "1";
+//        if (door.equals("1")) {
 //            disConnection();
-        }
+//        }
+        String door = BoxAction.getBoxAvmVersion();
+
         String msg = SharedPreferencesUtil.getString(mContext, BoxParams.ERROR_MSG);
         if (!msg.equals("")) {
             SharedPreferencesUtil.putString(mContext, BoxParams.ERROR_MSG, "");
