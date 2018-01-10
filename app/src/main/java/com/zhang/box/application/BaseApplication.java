@@ -45,7 +45,7 @@ public class BaseApplication extends Application {
         if (mInstance == null) {
             mInstance = this;
         }
-//        activityList = new ArrayList<>();
+        activityList = new ArrayList<>();
         //初始化SDK配置文件
         initSDKiniFile();
         //初始化开机动画
