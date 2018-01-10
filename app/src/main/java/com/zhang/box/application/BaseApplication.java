@@ -172,19 +172,21 @@ public class BaseApplication extends Application {
         }
     }
 
-//    private static List<Activity> activityList;
+    private static List<Activity> activityList;
 
-//    public static void addActivityToList(Activity activity) {
-//        activityList.add(activity);
-//    }
+    public static void addActivityToList(Activity activity) {
+        activityList.add(activity);
+    }
 
     public static void exitAllActivity() {
-//        for (Activity activity :
-//                activityList) {
-//            if (activity != null) {
-//                activity.finish();
-//            }
-//        }
+        for (Activity activity :
+                activityList) {
+            if (activity != null) {
+                if (!activity.isDestroyed()) {
+                    activity.finish();
+                }
+            }
+        }
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
     }

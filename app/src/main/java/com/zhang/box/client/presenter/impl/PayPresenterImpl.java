@@ -284,7 +284,7 @@ public class PayPresenterImpl implements PayPresenter {
     private void outGoodsAction(final int num, final String boxType, final String roadIndex) {
         payView.outGoodsCheck(num);
         if (boxType.equals(BoxSetting.BOX_TYPE_DRINK)) {
-            nextTime = 2000;
+            nextTime = 2500;
         } else {
             nextTime = 6000;
         }
