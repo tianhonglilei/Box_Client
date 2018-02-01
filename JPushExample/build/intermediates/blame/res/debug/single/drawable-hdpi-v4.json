@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "E:\\BoxProject\\Box_Client\\JPushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\corners_bg.xml",
+        "source": "E:\\BoxProject\\Box_Client\\JPushExample\\res\\drawable-hdpi\\corners_bg.xml"
+    },
+    {
+        "merged": "E:\\BoxProject\\Box_Client\\JPushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\tiledstripes.xml",
+        "source": "E:\\BoxProject\\Box_Client\\JPushExample\\res\\drawable-hdpi\\tiledstripes.xml"
+    },
+    {
+        "merged": "E:\\BoxProject\\Box_Client\\JPushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\richpush_progressbar.xml",
+        "source": "E:\\BoxProject\\Box_Client\\JPushExample\\res\\drawable-hdpi\\richpush_progressbar.xml"
+    },
+    {
+        "merged": "E:\\BoxProject\\Box_Client\\JPushExample\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\richpush_btn_selector.xml",
+        "source": "E:\\BoxProject\\Box_Client\\JPushExample\\res\\drawable-hdpi\\richpush_btn_selector.xml"
+    }
+]
