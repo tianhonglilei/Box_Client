@@ -17,7 +17,8 @@ public class Constants {
     //默认文件地址
     public static final String DEMO_FILE_PATH = Environment.getExternalStorageDirectory().toString() + "/boxcontent";
 
-
+    //在线图片地址
+    public static final String ONLINE_FILE_PATH = MAIN_URL_ONE + "/dc/dcadmin/application/views/main/pic";
 
     //天气接口获取weather接口
     public static final String WEATHER_INFO_URL = "http://www.sojson.com/open/api/weather/json.shtml?city=%E5%8C%97%E4%BA%AC";
@@ -60,6 +61,11 @@ public class Constants {
     //补货接口
     public static final String GOODS_NUM_ADD = MAIN_URL_ONE + "/dc/boxapp/?c=app&m=buhuo";
 
+    //获取服务器所有商品
+    public static final String GET_ALL_GOODS_INFO = MAIN_URL_ONE + "/dc/boxapp/?c=app&m=get_goods_info";
+
+    //修改货道商品信息
+    public static final String UPDATE_ROAD_GOODS_INFO = MAIN_URL_ONE + "/dc/boxapp/?c=app&m=update_huodao_goods_info";
 
 
 }

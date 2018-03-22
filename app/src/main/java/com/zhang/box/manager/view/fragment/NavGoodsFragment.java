@@ -202,6 +202,8 @@ public class NavGoodsFragment extends Fragment implements NavGoodsFragmentView,V
 //        }
     }
 
+
+
     /**
      * 处理点击事件
      * @param v
@@ -237,8 +239,77 @@ public class NavGoodsFragment extends Fragment implements NavGoodsFragmentView,V
     }
 
 
+    private EditText editRoadIndex;
+    private EditText editRoadGoodsName;
+    private EditText editRoadGoodsPrice;
+    private EditText editRoadGoodsDiscountPrice;
+    private EditText editRoadGoodsMaxNum;
 
+    @Override
+    public void showUpdateGoodsDislog(RoadGoods roadGoods, int position) {
+        final RoadInfo roadInfo = roadGoods.getRoadInfo();
+        final Goods goods = roadGoods.getGoods();
+        final ICommonDialog inputDialog = CommonDialogFactory.createDialogByType(mContext, DialogUtil.DIALOG_TYPE_202);
+        View dialogView = inflater.inflate(R.layout.fragment_nav_goods_set_dialog, null);
+        editRoadIndex = (EditText) dialogView.findViewById(R.id.manager_goods_set_road_index_txt);
+        editRoadGoodsName = (EditText) dialogView.findViewById(R.id.manager_goods_set_name_txt);
+        editRoadGoodsPrice = (EditText) dialogView.findViewById(R.id.manager_goods_set_price_txt);
+        editRoadGoodsDiscountPrice = (EditText) dialogView.findViewById(R.id.manager_goods_set_discount_price_txt);
+        editRoadGoodsMaxNum = (EditText) dialogView.findViewById(R.id.manager_goods_set_max_num_txt);
 
+        inputDialog.setTitleText(roadInfo.getRoadIndex() + "货道" );
+        edit_max.setText("" + roadInfo.getRoadMaxNum());
+        inputDialog.setContentView(dialogView);
+        inputDialog.setOkBtnStyleType(DialogUtil.OK_BTN_SMALL_BLUE_BG_WHITE_TEXT);
+        inputDialog.setOkBtn(R.string.ok, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String now = edit_now.getText().toString();
+                String max = edit_max.getText().toString();
+                if (!TextUtils.isEmpty(now)){
+                    if (!TextUtils.isEmpty(max)){
+                        if (Integer.parseInt(max)>0){
+                            if (Integer.parseInt(now)<=Integer.parseInt(max)){
+                                roadInfo.setRoadNowNum(Integer.parseInt(now));
+                                roadInfo.setRoadMaxNum(Integer.parseInt(max));
+                                roadGoods.setRoadInfo(roadInfo);
+                                AddGoods addGoods = new AddGoods();
+                                addGoods.setHid(roadInfo.getRoadIndex().toString());
+                                addGoods.setMachineid(BoxAction.getBoxIdFromSP(mContext));
+                                addGoods.setPid(goods.getGoodsId().toString());
+                                addGoods.setHgid(roadInfo.getRoadBoxType());
+                                addGoods.setHuodao_num(now);
+                                addGoods.setHuodao_max(max);
+                                navGoodsPresenter.goodsOneToUrl(addGoods,roadGoods,position);
+                                inputDialog.dismiss();
+                            }else{
+                                Toast.makeText(mContext, "当前数不能大于最大数", Toast.LENGTH_SHORT).show();
+                                edit_now.setText("");
+                                edit_now.setFocusable(true);
+                            }
+                        }else{
+                            Toast.makeText(mContext, "最大数必须大于0", Toast.LENGTH_SHORT).show();
+                            edit_max.setText("");
+                            edit_max.setFocusable(true);
+                        }
+                    }else{
+                        Toast.makeText(mContext, "最大数不能为空", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(mContext, "当前数不能为空", Toast.LENGTH_SHORT).show();
+                }
+//                inputDialog.dismiss();
+            }
+        });
+        inputDialog.setCancelBtn(R.string.cancel, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputDialog.dismiss();
+            }
+        });
+        inputDialog.setCanceledOnTouchOutside(false);
+        inputDialog.show();
+    }
 
 
 

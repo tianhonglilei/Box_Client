@@ -90,6 +90,13 @@ public class NavGoodsPresenterImpl implements NavGoodsPresenter {
                     navGoodsFragmentView.showInputDialog(roadGoodsList.get(position), position);
                 }
             });
+            gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    return false;
+                }
+            });
         }
     }
 

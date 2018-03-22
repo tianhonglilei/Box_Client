@@ -104,7 +104,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
     }
 
 
-    int p1;
+    int p1 = -1;
 
     /**
      * 初始化选择机器
@@ -125,6 +125,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
                 navRoadClearBtn.setText(R.string.string_clear_this_road);
                 navRoadAdapter.setmDatas(roadGoodsList);
                 navRoadAdapter.notifyDataSetChanged();
+                p1 = -1;
             }
         });
         navRoadGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -178,7 +179,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
         switch (v.getId()) {
             case R.id.nav_road_btn_test:
                 //测试该货道
-                if (!index.equals("0")) {
+                if (!index.equals("0") && p1!=-1) {
                     navRoadPresenter.testRoad(boxType, index);
                 } else {
                     Toast.makeText(mContext, "请选择货道", Toast.LENGTH_SHORT).show();
@@ -186,7 +187,7 @@ public class NavRoadFragment extends Fragment implements NavRoadFragmentView, Vi
                 break;
             case R.id.nav_road_btn_clear:
                 //清空该货道
-                if (!index.equals("0")) {
+                if (!index.equals("0") && p1!=-1) {
                     showOkCancelDialog();
                 } else {
                     Toast.makeText(mContext, "请选择货道", Toast.LENGTH_SHORT).show();

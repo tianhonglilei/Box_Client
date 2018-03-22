@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="400dp"
+    android:background="@color/colorWhiteTxt"
+    >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingTop="30dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="30dp">
+
+        <SearchView
+            android:id="@+id/manager_goods_set_sv"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:iconifiedByDefault="true"
+            android:queryHint="请输入商品首字母"
+            android:background="@drawable/manager_goods_set_search_selector"
+            />
+        <TextView
+            android:id="@+id/manager_goods_set_note_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="列表为空，如需添加新商品请与技术人员联系"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:textColor="@color/colorDemoLogo"
+            android:paddingTop="20dp"
+            android:visibility="gone"
+            android:background="@color/colorDemoBg"/>
+
+        <ListView
+            android:id="@+id/manager_goods_set_lv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/manager_goods_set_search_lv_bg"
+            android:scrollbars="none"
+            android:layout_marginTop="10dp"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingTop="60dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp">
+
+        <ImageView
+            android:id="@+id/manager_goods_set_good_img"
+            android:layout_width="150dp"
+            android:layout_height="220dp"
+            app:srcCompat="@drawable/goods_xuebi"
+            android:paddingTop="25dp"
+            android:paddingBottom="25dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/manager_goods_set_img_bg"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="货道编号："
+            android:textColor="@color/colorGoodsDetailsSix"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/manager_goods_set_good_img"
+            android:id="@+id/textView16" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商品名称："
+            android:textColor="@color/colorGoodsDetailsSix"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/manager_goods_set_good_img"
+            android:layout_marginTop="50dp"
+            android:id="@+id/textView18" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商品价格："
+            android:textColor="@color/colorGoodsDetailsSix"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/manager_goods_set_good_img"
+            android:layout_marginTop="100dp"
+            android:id="@+id/textView19" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="活动价格："
+            android:textColor="@color/colorGoodsDetailsSix"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/manager_goods_set_good_img"
+            android:layout_marginTop="150dp"
+            android:id="@+id/textView20" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="最大数量："
+            android:textColor="@color/colorGoodsDetailsSix"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/manager_goods_set_good_img"
+            android:layout_marginTop="200dp"
+            android:id="@+id/textView21" />
+
+        <EditText
+            android:id="@+id/manager_goods_set_road_index_txt"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignBaseline="@+id/textView16"
+            android:layout_alignBottom="@+id/textView16"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/textView16"
+            android:ems="10"
+            android:textSize="20sp"
+            android:text="20"
+            android:gravity="center"
+            />
+
+        <EditText
+            android:id="@+id/manager_goods_set_name_txt"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:text="雪碧"
+            android:textSize="20sp"
+            android:layout_alignBaseline="@+id/textView18"
+            android:layout_alignBottom="@+id/textView18"
+            android:layout_alignStart="@+id/manager_goods_set_road_index_txt"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/manager_goods_set_price_txt"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:inputType="number"
+            android:text="5"
+            android:textSize="20sp"
+            android:layout_alignBaseline="@+id/textView19"
+            android:layout_alignBottom="@+id/textView19"
+            android:layout_alignStart="@+id/manager_goods_set_name_txt"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/manager_goods_set_discount_price_txt"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:inputType="number"
+            android:text="3"
+            android:textSize="20sp"
+            android:layout_alignBaseline="@+id/textView20"
+            android:layout_alignBottom="@+id/textView20"
+            android:layout_alignStart="@+id/manager_goods_set_price_txt"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/manager_goods_set_max_num_txt"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignBaseline="@+id/textView21"
+            android:layout_alignBottom="@+id/textView21"
+            android:layout_alignStart="@+id/manager_goods_set_discount_price_txt"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="15"
+            android:textSize="20sp" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
