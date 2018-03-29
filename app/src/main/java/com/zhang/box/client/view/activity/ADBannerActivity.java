@@ -59,9 +59,6 @@ import com.zhang.box.client.model.MyWeather;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
-import gnu.io.UnsupportedCommOperationException;
 
 
 /**

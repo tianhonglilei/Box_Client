@@ -1,11 +1,14 @@
 package com.zhang.box.client.pos;
 
+import com.zhang.box.contants.Constants;
+
 import android_serialport_api.SerialPort;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -26,9 +29,42 @@ public class SerialTool {
         }
     }
 
+
     //私有化SerialTool类的构造方法，不允许其他类生成SerialTool对象
     private SerialTool() {
     }
+
+
+
+    public static SerialPort getSerialPort() throws SecurityException, IOException, InvalidParameterException {
+        if (Constants.serialPort == null) {
+            /* Read serial port parameters */
+
+            String path = "/dev/ttymxc3";//指定端口
+            int baudrate = 9600;//指定速率
+            /* Check parameters */
+            if ( (path.length() == 0) || (baudrate == -1)) {
+                throw new InvalidParameterException();
+            }
+
+            /* Open the serial port */
+            Constants.serialPort = new SerialPort(new File(path), baudrate, 0);
+        }
+        return Constants.serialPort;
+    }
+
+    public void closeSerialPort() {
+        if (Constants.serialPort != null) {
+            Constants.serialPort.close();
+            Constants.serialPort = null;
+        }
+    }
+
+
+
+
+
+
 
     /**
      * 获取提供服务的SerialTool对象
