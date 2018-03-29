@@ -70,7 +70,7 @@ public class BaseApplication extends Application {
         exceptionHandler.init(this);
 
         //初始化pos机
-        initPos();
+//        initPos();
 
 
         /**

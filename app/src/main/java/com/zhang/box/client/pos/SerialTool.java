@@ -131,7 +131,6 @@ public class SerialTool {
 
         if (serialPort != null) {
             serialPort.close();
-            serialPort = null;
         }
     }
 
