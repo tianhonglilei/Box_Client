@@ -184,15 +184,18 @@ public class Demo {
 
     public static String printHexString(byte[] b) {
 
-        StringBuffer sbf = new StringBuffer();
-        for (int i = 0; i < b.length; i++) {
-            String hex = Integer.toHexString(b[i] & 0xFF);
-            if (hex.length() == 1) {
-                hex = '0' + hex;
-            }
-            sbf.append(hex.toUpperCase() + " ");
-        }
-        return sbf.toString().trim();
+        String strRead = new String(b);
+        strRead=String.copyValueOf(strRead.toCharArray(), 0, b.length);
+        return strRead;
+//        StringBuffer sbf = new StringBuffer();
+//        for (int i = 0; i < b.length; i++) {
+//            String hex = Integer.toHexString(b[i] & 0xFF);
+//            if (hex.length() == 1) {
+//                hex = '0' + hex;
+//            }
+//            sbf.append(hex.toUpperCase() + " ");
+//        }
+//        return sbf.toString().trim();
     }
 
     /**
