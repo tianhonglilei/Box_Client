@@ -45,6 +45,7 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ['src/main/jniLibs']
+            jni.srcDirs = []
         }
     }
 }
@@ -81,5 +82,4 @@ dependencies {
     compile files('libs/umeng-common-1.4.0.jar')
     compile files('libs/umerror_android_1.0.0.jar')
     compile files('libs/commons-lang3-3.7.jar')
-    compile files('libs/RXTXcomm.jar')
 }
