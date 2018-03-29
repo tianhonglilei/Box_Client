@@ -43,6 +43,7 @@ import com.zhang.box.client.model.RoadGoods;
 import com.zhang.box.client.model.RoadInfo;
 import com.zhang.box.client.pos.Demo;
 import com.zhang.box.client.pos.PosRequest;
+import com.zhang.box.client.pos.SerialPortActivity;
 import com.zhang.box.client.pos.SerialTool;
 import com.zhang.box.client.pos.TLVBody;
 import com.zhang.box.client.presenter.PayPresenter;
@@ -67,7 +68,7 @@ import java.util.TooManyListenersException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PayActivity extends Activity implements View.OnClickListener, PayView, OutGoodsListener {
+public class PayActivity extends SerialPortActivity implements View.OnClickListener, PayView, OutGoodsListener {
 
     private static final String TAG = "PayActivity";
 
@@ -199,7 +200,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
         //初始化商品信息
         initGoodsInfo();
-//        initRadioGroup();
+        initRadioGroup();
 
 
         //测试pos机出货 注释二维码访问网络接口
@@ -243,19 +244,19 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 if (checkedId == R.id.pay_rb_num_one) {
                     checkNum = 1;
                     payTxtGoodsPriceCount.setText("" + Double.parseDouble(payTxtGoodsPrice.getText().toString()));
-                    if (checkPay == Constants.PAY_TYPE_WX) {
-                        if (bitmapWxPayOne == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
-                        } else {
-                            showQRCode(bitmapWxPayOne);
-                        }
-                    } else {
-                        if (bitmapAliPayOne == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
-                        } else {
-                            showQRCode(bitmapAliPayOne);
-                        }
-                    }
+//                    if (checkPay == Constants.PAY_TYPE_WX) {
+//                        if (bitmapWxPayOne == null) {
+//                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
+//                        } else {
+//                            showQRCode(bitmapWxPayOne);
+//                        }
+//                    } else {
+//                        if (bitmapAliPayOne == null) {
+//                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
+//                        } else {
+//                            showQRCode(bitmapAliPayOne);
+//                        }
+//                    }
                 } else {
                     if (roadInfo.getRoadNowNum() < 2) {
                         payRbNumTwo.setClickable(false);
@@ -265,19 +266,19 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                     }
                     checkNum = 2;
                     payTxtGoodsPriceCount.setText("" + Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 2);
-                    if (checkPay == Constants.PAY_TYPE_WX) {
-                        if (bitmapWxPayTwo == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
-                        } else {
-                            showQRCode(bitmapWxPayTwo);
-                        }
-                    } else {
-                        if (bitmapAliPayTwo == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
-                        } else {
-                            showQRCode(bitmapAliPayTwo);
-                        }
-                    }
+//                    if (checkPay == Constants.PAY_TYPE_WX) {
+//                        if (bitmapWxPayTwo == null) {
+//                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
+//                        } else {
+//                            showQRCode(bitmapWxPayTwo);
+//                        }
+//                    } else {
+//                        if (bitmapAliPayTwo == null) {
+//                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
+//                        } else {
+//                            showQRCode(bitmapAliPayTwo);
+//                        }
+//                    }
                 }
 
             }
@@ -288,35 +289,35 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
                 if (checkedId == R.id.pay_rb_wechat) {
                     checkPay = Constants.PAY_TYPE_WX;
                     payQRCodeUrl = Constants.WX_GET_QR_URL;
-                    if (checkNum == 1) {
-                        if (bitmapWxPayOne == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
-                        } else {
-                            showQRCode(bitmapWxPayOne);
-                        }
-                    } else {
-                        if (bitmapWxPayTwo == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
-                        } else {
-                            showQRCode(bitmapWxPayTwo);
-                        }
-                    }
+//                    if (checkNum == 1) {
+//                        if (bitmapWxPayOne == null) {
+//                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
+//                        } else {
+//                            showQRCode(bitmapWxPayOne);
+//                        }
+//                    } else {
+//                        if (bitmapWxPayTwo == null) {
+//                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
+//                        } else {
+//                            showQRCode(bitmapWxPayTwo);
+//                        }
+//                    }
                 } else {
                     checkPay = Constants.PAY_TYPE_ALI;
                     payQRCodeUrl = Constants.ALI_GET_QR_URL;
-                    if (checkNum == 1) {
-                        if (bitmapAliPayOne == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
-                        } else {
-                            showQRCode(bitmapAliPayOne);
-                        }
-                    } else {
-                        if (bitmapAliPayTwo == null) {
-                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
-                        } else {
-                            showQRCode(bitmapAliPayTwo);
-                        }
-                    }
+//                    if (checkNum == 1) {
+//                        if (bitmapAliPayOne == null) {
+//                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
+//                        } else {
+//                            showQRCode(bitmapAliPayOne);
+//                        }
+//                    } else {
+//                        if (bitmapAliPayTwo == null) {
+//                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
+//                        } else {
+//                            showQRCode(bitmapAliPayTwo);
+//                        }
+//                    }
                 }
             }
         });
@@ -847,17 +848,17 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     //pos  模块
 
     private void initPos() {
-                    String bpsStr = "9600";
-                        int bps = Integer.parseInt(bpsStr);
-                        //发送数据
-                        String message = "020034313030310001043030320010323031383031313831343233333230313030340001310313";
-                        try {
-                            Log.e(TAG, "initPos: " + "正准备向" + "发送测试数据...");
-                            SerialTool.sendToPort(Constants.serialPort, Demo.hex2byte(message));
+        String bpsStr = "9600";
+        int bps = Integer.parseInt(bpsStr);
+        //发送数据
+        String message = "020034313030310001043030320010323031383031313831343233333230313030340001310313";
+        try {
+            Log.e(TAG, "initPos: " + "正准备向" + "发送测试数据...");
+            SerialTool.sendToPort(Constants.serialPort, Demo.hex2byte(message));
 //                            send(4,1);
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 
 
@@ -899,5 +900,45 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         }
     }
 
+    /**
+     * 接受pos机返回数据
+     *
+     * @param data
+     * @param size
+     */
+    @Override
+    protected void onDataReceived(byte[] data, int size) {
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        String responseData = Demo.printHexString(data);
+        responseData = responseData.replace(" ", "");
+        if (responseData.equals("020007323030310001040302")) {
+            Log.e(TAG, "onDataReceived: " + "收到POS响应，已找到POS机端口");
+            return;
+        }
+        Log.e(TAG, "onDataReceived: " + "响应加密：" + responseData);
+        PosRequest posRequest = PosRequest.decRequest(responseData);
+        String srt3 = posRequest.toString();
+        Log.e(TAG, "onDataReceived: " + "响应解密：" + srt3);
+
+        for (int i = 0; i < posRequest.getTlvBody().size(); i++) {
+            TLVBody thisTLV = posRequest.getTlvBody().get(i);
+            if (thisTLV.getTitle().equals("002")) {
+            }
+            if (thisTLV.getTitle().equals("039")) {
+                if (thisTLV.getContent().equals("00")) {
+                    //成功
+                    payPresenter.outGoodsAction(num,roadInfo.getRoadBoxType(),roadInfo.getRoadIndex().toString());
+                } else {
+                    //失败
+                }
+            }
+        }
+
+    }
 
 }

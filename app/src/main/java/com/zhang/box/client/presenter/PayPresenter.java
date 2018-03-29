@@ -22,4 +22,6 @@ public interface PayPresenter {
     void chengePayRequest(int num,int payType);
 
     void cancelRequest();
+
+    void outGoodsAction(final int num, final String boxType, final String roadIndex);
 }
