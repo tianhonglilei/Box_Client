@@ -437,7 +437,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         payPresenter.cancelOrder();
         PayActivity.this.finish();
         //关闭串口
-//        SerialTool.closePort(Constants.serialPort);
+        SerialTool.closePort(Constants.serialPort);
     }
 
 
@@ -855,7 +855,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         try {
             Log.e(TAG, "initPos: " + "正准备向" + "发送测试数据...");
             SerialTool.sendToPort(Constants.serialPort, Demo.hex2byte(message));
-//                            send(4,1);
+            send(1,(new Double(Double.parseDouble(payTxtGoodsPrice.getText().toString())).intValue()*100));
         } catch (IOException e1) {
             e1.printStackTrace();
         }
