@@ -15,6 +15,10 @@ public class SerialTool {
     private static SerialTool serialTool = null;
 
     static {
+
+        //加载jni下的C文件库
+        System.loadLibrary("serial_port");
+
         //在该类被ClassLoader加载时就初始化一个SerialTool对象
         if (serialTool == null) {
             serialTool = new SerialTool();

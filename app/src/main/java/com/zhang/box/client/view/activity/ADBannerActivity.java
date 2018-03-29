@@ -32,8 +32,6 @@ import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.model.ADInfo;
 import com.zhang.box.client.model.RoadGoods;
 import com.zhang.box.client.model.RoadInfo;
-import com.zhang.box.client.pos.Demo;
-import com.zhang.box.client.pos.SerialTool;
 import com.zhang.box.client.presenter.ADBannerPresenter;
 import com.zhang.box.client.presenter.WeatherPresenter;
 import com.zhang.box.client.presenter.impl.ADBannerPresenterImpl;
