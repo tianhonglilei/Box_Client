@@ -204,7 +204,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
 
         //初始化商品信息
         initGoodsInfo();
-        initRadioGroup();
+//        initRadioGroup();
 
 
         //测试pos机出货 注释二维码访问网络接口
