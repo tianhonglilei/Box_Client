@@ -185,7 +185,6 @@ public class Demo {
     public static String printHexString(byte[] b) {
 
         String strRead = new String(b);
-        strRead=String.copyValueOf(strRead.toCharArray(), 0, b.length);
         return strRead;
 //        StringBuffer sbf = new StringBuffer();
 //        for (int i = 0; i < b.length; i++) {
