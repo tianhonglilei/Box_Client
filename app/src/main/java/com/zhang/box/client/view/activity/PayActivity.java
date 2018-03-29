@@ -900,6 +900,9 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         }
     }
 
+
+    String useDataStr = "";
+
     /**
      * 接受pos机返回数据
      *
@@ -914,8 +917,27 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         String responseData = Demo.printHexString(data);
         responseData = responseData.replace(" ", "");
+        for (int i = 0; i < responseData.length(); i++) {
+            if (responseData.charAt(i) == '2') {
+                if (responseData.indexOf(i + 6) < responseData.length()) {
+                    if (responseData.indexOf(i - 1) == 0) {
+                        String lenStr = responseData.substring(i + 2, i + 6);
+                        int len = Integer.parseInt(lenStr, 16);
+                        Log.e(TAG, "onDataReceived: 报文长度" + len);
+                        useDataStr = responseData.substring(i - 1, i + 2 + 4 + len + 4);
+                        parseDataStr(useDataStr);
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    private void parseDataStr(String responseData) {
         if (responseData.equals("020007323030310001040302")) {
             Log.e(TAG, "onDataReceived: " + "收到POS响应，已找到POS机端口");
             return;
@@ -932,13 +954,12 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
             if (thisTLV.getTitle().equals("039")) {
                 if (thisTLV.getContent().equals("00")) {
                     //成功
-                    payPresenter.outGoodsAction(num,roadInfo.getRoadBoxType(),roadInfo.getRoadIndex().toString());
+                    payPresenter.outGoodsAction(num, roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString());
                 } else {
                     //失败
                 }
             }
         }
-
     }
 
 }

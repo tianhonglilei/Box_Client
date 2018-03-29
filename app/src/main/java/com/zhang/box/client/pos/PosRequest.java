@@ -213,6 +213,14 @@ public class PosRequest {
         posRequest.setLEN(data.substring(2, 6));
         posRequest.setTYPE(data.substring(6, 8));
 
+        int length = Integer.parseInt(posRequest.getLEN());
+        length = length * 2 + 10;
+
+        data = data.substring(0, length);
+
+        //数据初始位置
+
+
         //数据初始位置
         int index = 8;
         //结束符位置
