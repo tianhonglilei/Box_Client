@@ -2,7 +2,8 @@ package com.zhang.box.contants;
 
 import android.os.Environment;
 
-import gnu.io.SerialPort;
+import android_serialport_api.SerialPort;
+
 
 /**
  * Created by lilei on 2017/10/19.

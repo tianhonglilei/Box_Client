@@ -66,11 +66,6 @@ import java.util.TooManyListenersException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
-import gnu.io.UnsupportedCommOperationException;
 
 public class PayActivity extends Activity implements View.OnClickListener, PayView, OutGoodsListener {
 
@@ -441,7 +436,7 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
         payPresenter.cancelOrder();
         PayActivity.this.finish();
         //关闭串口
-        SerialTool.closePort(Constants.serialPort);
+//        SerialTool.closePort(Constants.serialPort);
     }
 
 
@@ -854,132 +849,132 @@ public class PayActivity extends Activity implements View.OnClickListener, PayVi
     private static int posPort = -1;
 
     private void initPos() {
-        commList = SerialTool.findPort();
-        if (commList == null || commList.size() < 1) {
-            Log.e(TAG, "initPos: "+"没有搜索到有效串口！");
-        } else {
-            for (int i = 0; i < commList.size(); i++) {
-                if (posPort == -1) {
-                    //遍历可用端口 查询是否是POS机
-                    //串口名称
-                    String commName = commList.get(i);
-                    //波特率
+//        commList = SerialTool.findPort();
+//        if (commList == null || commList.size() < 1) {
+//            Log.e(TAG, "initPos: "+"没有搜索到有效串口！");
+//        } else {
+//            for (int i = 0; i < commList.size(); i++) {
+//                if (posPort == -1) {
+//                    //遍历可用端口 查询是否是POS机
+//                    //串口名称
+//                    String commName = commList.get(i);
+//                    //波特率
                     String bpsStr = "9600";
-                    //检查串口名称是否获取正确
-                    if (commName == null || commName.equals("")) {
-                        Log.e(TAG, "initPos: " + "没有搜索到有效串口！");
-                    } else {
-
-                        //串口名、波特率均获取正确时
+//                    //检查串口名称是否获取正确
+//                    if (commName == null || commName.equals("")) {
+//                        Log.e(TAG, "initPos: " + "没有搜索到有效串口！");
+//                    } else {
+//
+//                        //串口名、波特率均获取正确时
                         int bps = Integer.parseInt(bpsStr);
-                        try {
+//                        try {
                             //获取指定端口名及波特率的串口对象
-                            Constants.serialPort = SerialTool.openPort(commName, bps);
-                            SerialTool.addListener(Constants.serialPort, new Demo.SerialListener(i));
-                        } catch (UnsupportedCommOperationException | PortInUseException | NoSuchPortException | TooManyListenersException e1) {
-                            e1.printStackTrace();
-                        }
+                            Constants.serialPort = SerialTool.openPort("", bps);
+//                            SerialTool.addListener(Constants.serialPort, new Demo.SerialListener(i));
+//                        } catch (UnsupportedCommOperationException | PortInUseException | NoSuchPortException | TooManyListenersException e1) {
+//                            e1.printStackTrace();
+//                        }
 
                         //发送数据
                         String message = "020034313030310001043030320010323031383031313831343233333230313030340001310313";
                         try {
-                            Log.e(TAG, "initPos: " + "正准备向" + commName + "发送测试数据...");
+                            Log.e(TAG, "initPos: " + "正准备向" + "发送测试数据...");
                             SerialTool.sendToPort(Constants.serialPort, Demo.hex2byte(message));
 //                            send(4,1);
                         } catch (IOException e1) {
                             e1.printStackTrace();
                         }
-                    }
-
-                }
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+//                    }
+//
+//                }
+//                try {
+//                    Thread.sleep(2000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
     }
 
-    public static class SerialListener implements SerialPortEventListener {
+//    public static class SerialListener implements SerialPortEventListener {
+//
+//        /**
+//         * 处理监控到的串口事件
+//         */
+//        private int i;
+//
+//        public SerialListener(int i) {
+//            this.i = i;
+//        }
+//
+//        public void serialEvent(SerialPortEvent serialPortEvent) {
+//
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            switch (serialPortEvent.getEventType()) {
+//                case SerialPortEvent.BI: // 10 通讯中断
+////                    JOptionPane.showMessageDialog(null, "与串口设备通讯中断", "错误", JOptionPane.INFORMATION_MESSAGE);
+//                    break;
+//                case SerialPortEvent.OE: // 7 溢位（溢出）错误
+//                    break;
+//                case SerialPortEvent.FE: // 9 帧错误
+//                    break;
+//                case SerialPortEvent.PE: // 8 奇偶校验错误
+//                    break;
+//                case SerialPortEvent.CD: // 6 载波检测
+//                    break;
+//                case SerialPortEvent.CTS: // 3 清除待发送数据
+//                    break;
+//                case SerialPortEvent.DSR: // 4 待发送数据准备好了
+//                    break;
+//                case SerialPortEvent.RI: // 5 振铃指示
+//                    break;
+//                case SerialPortEvent.OUTPUT_BUFFER_EMPTY: // 2 输出缓冲区已清空
+//                    break;
+//                case SerialPortEvent.DATA_AVAILABLE: // 1 串口存在可用数据
+//                    byte[] data;
+//                    try {
+//                        data = SerialTool.readFromPort(Constants.serialPort);
+//                        String responseData = Demo.printHexString(data);
+//                        responseData = responseData.replace(" ", "");
+//
+//                        if (responseData.equals("020007323030310001040302")) {
+//                            Log.e(TAG, "serialEvent: +收到POS响应，已找到POS机端口");
+//                            posPort = i;
+//                            return;
+//                        }
+//
+//                        Log.e(TAG, "serialEvent: " + "响应加密：" + responseData);
+//                        PosRequest posRequest = PosRequest.decRequest(responseData);
+//                        String srt3 = posRequest.toString();
+//                        Log.e(TAG, "serialEvent: " + "响应解密：" + srt3);
+//
+//                        for (int i = 0; i < posRequest.getTlvBody().size(); i++) {
+//                            TLVBody thisTLV = posRequest.getTlvBody().get(i);
+//                            if (thisTLV.getTitle().equals("002")) {
+//                            }
+//                            if (thisTLV.getTitle().equals("039")) {
+//                                if (thisTLV.getContent().equals("00")) {
+//                                    //成功
+//                                } else {
+//                                    //失败
+//                                }
+//                            }
+//                        }
+//
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    break;
+//                default:
+//                    break;
+//            }
+//        }
 
-        /**
-         * 处理监控到的串口事件
-         */
-        private int i;
-
-        public SerialListener(int i) {
-            this.i = i;
-        }
-
-        public void serialEvent(SerialPortEvent serialPortEvent) {
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            switch (serialPortEvent.getEventType()) {
-                case SerialPortEvent.BI: // 10 通讯中断
-//                    JOptionPane.showMessageDialog(null, "与串口设备通讯中断", "错误", JOptionPane.INFORMATION_MESSAGE);
-                    break;
-                case SerialPortEvent.OE: // 7 溢位（溢出）错误
-                    break;
-                case SerialPortEvent.FE: // 9 帧错误
-                    break;
-                case SerialPortEvent.PE: // 8 奇偶校验错误
-                    break;
-                case SerialPortEvent.CD: // 6 载波检测
-                    break;
-                case SerialPortEvent.CTS: // 3 清除待发送数据
-                    break;
-                case SerialPortEvent.DSR: // 4 待发送数据准备好了
-                    break;
-                case SerialPortEvent.RI: // 5 振铃指示
-                    break;
-                case SerialPortEvent.OUTPUT_BUFFER_EMPTY: // 2 输出缓冲区已清空
-                    break;
-                case SerialPortEvent.DATA_AVAILABLE: // 1 串口存在可用数据
-                    byte[] data;
-                    try {
-                        data = SerialTool.readFromPort(Constants.serialPort);
-                        String responseData = Demo.printHexString(data);
-                        responseData = responseData.replace(" ", "");
-
-                        if (responseData.equals("020007323030310001040302")) {
-                            Log.e(TAG, "serialEvent: +收到POS响应，已找到POS机端口");
-                            posPort = i;
-                            return;
-                        }
-
-                        Log.e(TAG, "serialEvent: " + "响应加密：" + responseData);
-                        PosRequest posRequest = PosRequest.decRequest(responseData);
-                        String srt3 = posRequest.toString();
-                        Log.e(TAG, "serialEvent: " + "响应解密：" + srt3);
-
-                        for (int i = 0; i < posRequest.getTlvBody().size(); i++) {
-                            TLVBody thisTLV = posRequest.getTlvBody().get(i);
-                            if (thisTLV.getTitle().equals("002")) {
-                            }
-                            if (thisTLV.getTitle().equals("039")) {
-                                if (thisTLV.getContent().equals("00")) {
-                                    //成功
-                                } else {
-                                    //失败
-                                }
-                            }
-                        }
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-    }
+//    }
 
     /**
      * 发送消息
