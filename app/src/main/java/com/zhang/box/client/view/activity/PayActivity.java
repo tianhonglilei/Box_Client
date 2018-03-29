@@ -855,7 +855,8 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         try {
             Log.e(TAG, "initPos: " + "正准备向" + "发送测试数据...");
             SerialTool.sendToPort(Constants.serialPort, Demo.hex2byte(message));
-            send(1,(new Double(Double.parseDouble(payTxtGoodsPrice.getText().toString())).intValue()*100));
+            int money = (new Double(Double.parseDouble(payTxtGoodsPrice.getText().toString())).intValue() * 100);
+            send(1, money);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -917,7 +918,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        Log.e(TAG, "onDataReceived: " + data);
         String responseData = Demo.printHexString(data);
         responseData = responseData.replace(" ", "");
         for (int i = 0; i < responseData.length(); i++) {
