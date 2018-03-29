@@ -2,6 +2,8 @@ package com.zhang.box.contants;
 
 import android.os.Environment;
 
+import gnu.io.SerialPort;
+
 /**
  * Created by lilei on 2017/10/19.
  */
@@ -60,6 +62,8 @@ public class Constants {
     //补货接口
     public static final String GOODS_NUM_ADD = MAIN_URL_ONE + "/dc/boxapp/?c=app&m=buhuo";
 
+
+    public static SerialPort serialPort;   //保存串口对象
 
 
 }

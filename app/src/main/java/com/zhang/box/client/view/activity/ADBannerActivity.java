@@ -32,6 +32,8 @@ import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.model.ADInfo;
 import com.zhang.box.client.model.RoadGoods;
 import com.zhang.box.client.model.RoadInfo;
+import com.zhang.box.client.pos.Demo;
+import com.zhang.box.client.pos.SerialTool;
 import com.zhang.box.client.presenter.ADBannerPresenter;
 import com.zhang.box.client.presenter.WeatherPresenter;
 import com.zhang.box.client.presenter.impl.ADBannerPresenterImpl;
@@ -48,14 +50,20 @@ import com.zhang.box.util.SharedPreferencesUtil;
 import com.zhang.box.util.ToastTools;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.TooManyListenersException;
 
 
 import com.zhang.box.client.model.MyWeather;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
+import gnu.io.UnsupportedCommOperationException;
 
 
 /**
@@ -140,6 +148,8 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     //检测中控机连接广播
     AVMRunningBroadcastReceiver avmRunningBroadcastReceiver;
 
+    
+    
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -165,7 +175,11 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
 
         startHeartService();
 
+
+        
     }
+
+
 
 
     /**
@@ -537,6 +551,8 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             homeTxtWeatherTemp.setText(myWeather.getWeather() + " " + myWeather.getTemp());
         }
     }
+
+    
 
 
     @Override

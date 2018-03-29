@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fbfbfb">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <RelativeLayout
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+
+                <LinearLayout
+                    android:id="@+id/pay_tl_goods_details"
+                    android:layout_width="307dp"
+                    android:layout_height="420dp"
+                    android:layout_marginStart="75dp"
+                    android:layout_marginTop="140dp"
+                    android:background="@color/colorbebebe"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="260dp"
+                        android:layout_height="65dp"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="90dp"
+                            android:layout_height="3dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/pay_details_title_line_left"
+                            android:text="" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="65dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text=" 产品详情 "
+                            android:textColor="@color/colorGoodsDetailsThreeSeven"
+                            android:textSize="20sp" />
+
+                        <TextView
+                            android:layout_width="90dp"
+                            android:layout_height="3dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/pay_details_title_line_right"
+                            android:text="" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="260dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/shape_goods_details_bottom_border"
+                        android:gravity="center_vertical"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="项目"
+                            android:textColor="@color/colorGoodsDetailsSix"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="每100ml"
+                            android:textColor="@color/colorGoodsDetailsSix"
+                            android:textSize="20dp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="NRV%"
+                            android:textColor="@color/colorGoodsDetailsSix"
+                            android:textSize="20dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="260dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/shape_goods_details_bottom_border"
+                        android:gravity="center_vertical"
+                        android:weightSum="3">
+
+                        <TextView
+                            style="@style/style_txt_pay_goods_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="能量" />
+
+                        <TextView
+                            android:id="@+id/pay_percent_energy1"
+                            style="@style/style_txt_pay_goods_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="0" />
+
+                        <TextView
+                            android:id="@+id/pay_percent_energy2"
+                            style="@style/style_txt_pay_goods_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="260dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/shape_goods_details_bottom_border"
+                        android:gravity="center_vertical"
+                        android:weightSum="3">
+
+                        <TextView
+                            style="@style/style_txt_pay_goods_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="蛋白质" />
+
+                        <TextView
+                            android:id="@+id/pay_percent_protein1"
+                            style="@style/style_txt_pay_goods_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="0" />
+
+                        <TextView
+                            android:id="@+id/pay_percent_protein2"
+                            style="@style/style_txt_pay_goods_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="260dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/shape_goods_details_bottom_border"
+                        android:gravity="center_vertical"
+                        android:weightSum="3">
+
+                        <TextView
+                            style="@style/style_txt_pay_goods_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="脂肪" />
+
+                        <TextView
+                            android:id="@+id/pay_percent_fat1"
+                            style="@style/style_txt_pay_goods_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="0" />
+
+                        <TextView
+                            android:id="@+id/pay_percent_fat2"
+                            style="@style/style_txt_pay_goods_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="260dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/shape_goods_details_bottom_border"
+                        android:gravity="center_vertical"
+                        android:weightSum="3">
+
+                        <TextView
+                            style="@style/style_txt_pay_goods_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="碳水化合物" />
+
+                        <TextView
+                            android:id="@+id/pay_percent_cwater1"
+                            style="@style/style_txt_pay_goods_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="0" />
+
+                        <TextView
+                            android:id="@+id/pay_percent_cwater2"
+                            style="@style/style_txt_pay_goods_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="0" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="260dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/shape_goods_details_bottom_border"
+                        android:gravity="center_vertical"
+                        android:weightSum="3">
+
+                        <TextView
+                            style="@style/style_txt_pay_goods_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="钠" />
+
+                        <TextView
+                            android:id="@+id/pay_percent_na1"
+                            style="@style/style_txt_pay_goods_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="0" />
+
+                        <TextView
+                            android:id="@+id/pay_percent_na2"
+                            style="@style/style_txt_pay_goods_details"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="0" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/pay_txt_goods_details_memo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/colorGoodsDetailsMemoOne"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout2"
+                    android:layout_width="330dp"
+                    android:layout_height="420dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/pay_tl_goods_details"
+                    android:layout_marginEnd="65dp"
+
+
+                    android:background="@android:color/transparent">
+
+                    <ImageView
+                        android:id="@+id/pay_img_goods"
+                        android:layout_width="match_parent"
+                        android:layout_height="310dp" />
+
+                    <TextView
+                        android:id="@+id/pay_txt_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/pay_img_goods"
+                        android:layout_marginTop="17dp"
+                        android:text="数量："
+                        android:textColor="@color/colorGaryFiveTwo"
+                        android:textSize="20sp" />
+
+                    <RadioGroup
+                        android:id="@+id/pay_rbgrp_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/pay_txt_num"
+                        android:layout_toRightOf="@+id/pay_txt_num"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/pay_rb_num_one"
+                            android:layout_width="47dp"
+                            android:layout_height="31dp"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/pay_num_one_check_selector"
+                            android:button="@null"
+                            android:checked="true" />
+
+                        <RadioButton
+                            android:id="@+id/pay_rb_num_two"
+                            android:layout_width="47dp"
+                            android:layout_height="31dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="3dp"
+                            android:background="@drawable/pay_num_two_check_selector"
+                            android:button="@null" />
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/pay_lbl_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_alignBaseline="@+id/pay_txt_num"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@+id/pay_rbgrp_num"
+                        android:text="单价："
+                        android:textColor="@color/colorGaryFiveTwo"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/pay_txt_rmb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/pay_lbl_price"
+                        android:layout_marginTop="17dp"
+                        android:layout_toRightOf="@+id/pay_lbl_price"
+                        android:text="¥ "
+                        android:textColor="@color/colorDemoLogo"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/pay_txt_goods_price"
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/pay_lbl_price"
+                        android:layout_toRightOf="@+id/pay_txt_rmb"
+                        android:text=""
+                        android:textColor="@color/colorDemoLogo"
+                        android:textSize="40sp"
+                        android:maxLines="1"/>
+
+                    <TextView
+                        android:id="@+id/pay_txt_goods_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="38dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:text=""
+                        android:textColor="@color/colorMoreTxtTwoOne"
+                        android:textSize="33sp" />
+
+                    <ImageView
+                        android:id="@+id/pay_img_wd"
+                        android:layout_width="50dp"
+                        android:layout_height="30dp"
+                        android:layout_alignTop="@+id/pay_txt_goods_name"
+                        android:layout_toRightOf="@+id/pay_txt_goods_name"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/logo_hot"
+                        android:visibility="invisible" />
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="123dp"
+                    android:text="点创智能微超"
+                    android:textColor="@color/colorMoreTxtTwoOne"
+                    android:textSize="36sp" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView3"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:text="提示：请勿在支付时切换二维码"
+                    android:textColor="@color/colorDemoLogo"
+                    android:textSize="20sp" />
+
+                <FrameLayout
+                    android:id="@+id/pay_fl_qrcode"
+                    android:layout_width="163dp"
+                    android:layout_height="163dp"
+                    android:layout_below="@+id/textView4"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp">
+
+                    <ImageView
+                        android:id="@+id/pay_img_qrcode"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/pay_demo_qrcode"
+                        android:clickable="true"
+                        />
+
+                    <TextView
+                        android:id="@+id/pay_txt_qrcode_loading"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="120dp"
+                        android:gravity="center_horizontal"
+                        android:text="二维码正在生成..."
+                        android:textColor="#000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <com.zhang.box.loading.ZLoadingView
+                        android:id="@+id/pay_qrcode_loading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:z_color="@color/colorDemoLogo" />
+
+                </FrameLayout>
+
+
+                <TextView
+                    android:id="@+id/pay_lbl_count_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/pay_fl_qrcode"
+                    android:layout_marginLeft="130dp"
+                    android:layout_marginTop="15dp"
+                    android:text="支付金额："
+                    android:textColor="@color/colorMoreTxtTwoOne"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/pay_txt_count_rmb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/pay_lbl_count_money"
+                    android:layout_toRightOf="@+id/pay_lbl_count_money"
+                    android:text="¥ "
+                    android:textColor="@color/colorDemoLogo"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/pay_txt_goods_price_count"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/pay_lbl_count_money"
+                    android:layout_toRightOf="@+id/pay_txt_count_rmb"
+                    android:text=""
+                    android:textColor="@color/colorDemoLogo"
+                    android:textSize="30sp" />
+
+
+                <RelativeLayout
+                    android:id="@+id/pay_rl_return"
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/pay_return_rl_selector"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="29dp"
+                        android:layout_toLeftOf="@+id/pay_txt_return"
+                        android:src="@drawable/pay_ic_return" />
+
+                    <TextView
+                        android:id="@+id/pay_txt_return"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="25dp"
+                        android:text="返回"
+                        android:textColor="#ffffff"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/pay_txt_return_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="25dp"
+                        android:layout_toRightOf="@+id/pay_txt_return"
+                        android:text="80s"
+                        android:textColor="#ffffff"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imageView5"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="2dp"
+                        android:letterSpacing="0"
+                        android:text="(支付成功前请勿返回)"
+                        android:textColor="#ffffff"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <RadioGroup
+                    android:id="@+id/pay_rbgrp_qrcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="85dp"
+                    android:layout_below="@+id/pay_fl_qrcode"
+                    android:layout_marginTop="50dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <RadioButton
+                        android:id="@+id/pay_rb_wechat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:checked="true"
+                        android:drawablePadding="15dp"
+                        android:drawableTop="@drawable/pay_wechat_img_selector"
+                        android:gravity="center"
+                        android:text="微信支付"
+                        android:textColor="@drawable/pay_rb_txt_check_color_selector"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:id="@+id/pay_rb_ali"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawablePadding="15dp"
+                        android:drawableTop="@drawable/pay_ali_img_selector"
+                        android:gravity="center"
+                        android:text="支付宝支付"
+                        android:textColor="@drawable/pay_rb_txt_check_color_selector"
+                        android:textSize="16sp" />
+                </RadioGroup>
+
+
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        <include
+            layout="@layout/client_logo_date"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"></include>
+    </FrameLayout>
+</LinearLayout>
