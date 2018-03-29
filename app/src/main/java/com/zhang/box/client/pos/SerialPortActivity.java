@@ -38,7 +38,7 @@ public abstract class SerialPortActivity extends Activity {
             while (!isInterrupted()) {
                 int size;
                 try {
-                    byte[] buffer = new byte[256];
+                    byte[] buffer = new byte[128];
                     if (mInputStream == null) {
                         return;
                     }
