@@ -13,10 +13,14 @@ import com.avm.serialport_142.MainHandler;
 import com.squareup.leakcanary.LeakCanary;
 
 import java.io.File;
+import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.zhang.box.box.BoxSetting;
+import com.zhang.box.client.pos.Demo;
+import com.zhang.box.client.pos.SerialTool;
 import com.zhang.box.client.view.activity.ActiveActivity;
 import com.zhang.box.contants.Constants;
 import com.zhang.box.db.DaoMaster;
@@ -27,6 +31,8 @@ import com.zhang.box.loading.Z_TYPE;
 import com.zhang.box.service.HeartService;
 import com.zhang.box.util.ExceptionHandler;
 import com.zhang.box.util.FileUtils;
+
+import android_serialport_api.SerialPort;
 
 /**
  * Created by lilei on 2017/10/30.
@@ -63,6 +69,9 @@ public class BaseApplication extends Application {
         ExceptionHandler exceptionHandler = ExceptionHandler.getInstance();
         exceptionHandler.init(this);
 
+        //初始化pos机
+        initPos();
+
 
         /**
          * 初始化common库
@@ -90,6 +99,23 @@ public class BaseApplication extends Application {
 
 
     }
+
+    private void initPos() {
+        try {
+            SerialTool.getSerialPort();
+            //发送数据
+            String message = "020034313030310001043030320010323031383031313831343233333230313030340001310313";
+            try {
+                System.out.println("正准备向" + "发送测试数据...");
+                SerialTool.sendToPort(Constants.serialPort, Demo.hex2byte(message));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void initStartImg() {
         String systemPath = Environment.getRootDirectory().getPath() + "/media/";
