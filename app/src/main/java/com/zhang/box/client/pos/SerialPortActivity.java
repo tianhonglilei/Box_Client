@@ -36,6 +36,11 @@ public abstract class SerialPortActivity extends Activity {
         public void run() {
             super.run();
             while (!isInterrupted()) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 int size;
                 try {
                     byte[] buffer = new byte[128];
