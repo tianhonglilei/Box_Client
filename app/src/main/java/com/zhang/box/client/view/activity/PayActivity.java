@@ -918,8 +918,9 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Log.e(TAG, "onDataReceived: " + data);
+
         String responseData = Demo.printHexString(data);
+        Log.e(TAG, "onDataReceived: " + responseData);
         responseData = responseData.replace(" ", "");
         for (int i = 0; i < responseData.length(); i++) {
             if (responseData.charAt(i) == '2') {
