@@ -145,9 +145,11 @@ public class SerialTool {
 
         OutputStream out = null;
         out = serialPort.b();
-        out.write(order);
-        out.flush();
-        out.close();
+        if (out !=null) {
+            out.write(order);
+            out.flush();
+            out.close();
+        }
     }
 
     /**

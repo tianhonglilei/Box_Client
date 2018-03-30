@@ -266,6 +266,12 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                     }
                     checkNum = 2;
                     payTxtGoodsPriceCount.setText("" + Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 2);
+
+
+                    int money = (new Double(Double.parseDouble(payTxtGoodsPrice.getText().toString())).intValue() * 100);
+                    send(1, money);
+
+
 //                    if (checkPay == Constants.PAY_TYPE_WX) {
 //                        if (bitmapWxPayTwo == null) {
 //                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
@@ -853,8 +859,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         try {
             Log.e(TAG, "initPos: " + "正准备向" + "发送测试数据...");
             SerialTool.sendToPort(Constants.serialPort, Demo.hex2byte(message));
-            int money = (new Double(Double.parseDouble(payTxtGoodsPrice.getText().toString())).intValue() * 100);
-            send(1, money);
+
         } catch (IOException e1) {
             e1.printStackTrace();
         }
