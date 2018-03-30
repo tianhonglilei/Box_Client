@@ -83,8 +83,8 @@ public abstract class SerialPortActivity extends Activity {
         tool = SerialTool.getSerialTool();
         try {
             mSerialPort = SerialTool.getSerialPort();
-            mOutputStream = Constants.serialPort.b();
-            mInputStream = Constants.serialPort.a();
+            mOutputStream = mSerialPort.b();
+            mInputStream = mSerialPort.a();
 
             /* Create a receiving thread */
             mReadThread = new ReadThread();
@@ -118,7 +118,7 @@ public abstract class SerialPortActivity extends Activity {
         }
         if (mReadThread != null)
             mReadThread.interrupt();
-        tool.closeSerialPort();
+        tool.closeSerialPort(mSerialPort);
         mSerialPort = null;
         super.onDestroy();
     }

@@ -858,7 +858,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         String message = "020034313030310001043030320010323031383031313831343233333230313030340001310313";
         try {
             Log.e(TAG, "initPos: " + "正准备向" + "发送测试数据...");
-            SerialTool.sendToPort(Constants.serialPort, Demo.hex2byte(message));
+            SerialTool.sendToPort(Demo.hex2byte(message));
 
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -898,7 +898,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         pr.setTlvBody(tlvList);
 
         try {
-            SerialTool.sendToPort(Constants.serialPort, Demo.hex2byte(pr.toHex().toUpperCase(Locale.SIMPLIFIED_CHINESE)));
+            SerialTool.sendToPort( Demo.hex2byte(pr.toHex().toUpperCase(Locale.SIMPLIFIED_CHINESE)));
         } catch (Exception e) {
             e.printStackTrace();
         }
