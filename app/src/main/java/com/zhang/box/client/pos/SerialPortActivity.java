@@ -35,6 +35,11 @@ public abstract class SerialPortActivity extends Activity {
         @Override
         public void run() {
             super.run();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             int bufflenth = 0; //获取buffer里的数据长度
             try {
                 bufflenth = mInputStream.available();
@@ -43,12 +48,7 @@ public abstract class SerialPortActivity extends Activity {
             }
             byte[] buffer = new byte[bufflenth];
             while (!isInterrupted()) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                int size = -1;
+                int size;
                 try {
                     if (mInputStream == null) {
                         return;
