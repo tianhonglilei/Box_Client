@@ -913,12 +913,6 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     @Override
     protected void onDataReceived(byte[] data, int size) {
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         String responseData = Demo.printHexString(data);
         Log.e(TAG, "onDataReceived: " + responseData);
         responseData = responseData.replace(" ", "");
