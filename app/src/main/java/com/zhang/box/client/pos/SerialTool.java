@@ -34,36 +34,29 @@ public class SerialTool {
     private SerialTool() {
     }
 
-
-
+    public static SerialPort serialPort;
     public static SerialPort getSerialPort() throws SecurityException, IOException, InvalidParameterException {
-        if (Constants.serialPort == null) {
             /* Read serial port parameters */
 
             String path = "/dev/ttymxc3";//指定端口
             int baudrate = 9600;//指定速率
             /* Check parameters */
-            if ( (path.length() == 0) || (baudrate == -1)) {
+            if ((path.length() == 0) || (baudrate == -1)) {
                 throw new InvalidParameterException();
             }
 
             /* Open the serial port */
-            Constants.serialPort = new SerialPort(new File(path), baudrate, 0);
-        }
-        return Constants.serialPort;
+            serialPort = new SerialPort(new File(path), baudrate, 0);
+
+        return serialPort;
     }
 
-    public void closeSerialPort() {
-        if (Constants.serialPort != null) {
-            Constants.serialPort.close();
-            Constants.serialPort = null;
+    public void closeSerialPort(SerialPort serialPort) {
+        if (serialPort != null) {
+            serialPort.close();
+            serialPort = null;
         }
     }
-
-
-
-
-
 
 
     /**
@@ -105,7 +98,7 @@ public class SerialTool {
      * @param baudrate 波特率
      * @return 串口对象
      */
-    public static final SerialPort openPort(String portName, int baudrate)  {
+    public static final SerialPort openPort(String portName, int baudrate) {
 
         //通过端口名识别端口
 //        CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
@@ -115,7 +108,7 @@ public class SerialTool {
         //判断是不是串口
 //        if (commPort instanceof SerialPort) {
 //            SerialPort serialPort = (SerialPort) commPort;
-        SerialPort serialPort = new SerialPort(new File("/dev/ttymxc3"), baudrate,
+        serialPort = new SerialPort(new File("/dev/ttymxc3"), baudrate,
                 0);
         //设置一下串口的波特率等参数
 //        serialPort.setSerialPortParams(baudrate, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
@@ -137,17 +130,19 @@ public class SerialTool {
     /**
      * 往串口发送数据
      *
-     * @param serialPort 串口对象
      * @param order      待发送数据
      * @throws IOException
      */
-    public static void sendToPort(SerialPort serialPort, byte[] order) throws IOException {
+    public static void sendToPort( byte[] order) throws IOException {
 
         OutputStream out = null;
-        out = serialPort.b();
-        out.write(order);
-        out.flush();
-        out.close();
+        if (serialPort!= null) {
+            out = serialPort.b();
+            out.write(order);
+            out.flush();
+            out.close();
+        }
+
     }
 
     /**

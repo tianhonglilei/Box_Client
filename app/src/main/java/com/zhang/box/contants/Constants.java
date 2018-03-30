@@ -64,7 +64,6 @@ public class Constants {
     public static final String GOODS_NUM_ADD = MAIN_URL_ONE + "/dc/boxapp/?c=app&m=buhuo";
 
 
-    public static SerialPort serialPort;   //保存串口对象
 
 
 }

@@ -94,7 +94,7 @@ public class Demo {
         pr.setTlvBody(tlvList);
 
         try {
-            SerialTool.sendToPort(serialPort, hex2byte(pr.toHex().toUpperCase(Locale.SIMPLIFIED_CHINESE)));
+            SerialTool.sendToPort(hex2byte(pr.toHex().toUpperCase(Locale.SIMPLIFIED_CHINESE)));
         } catch (IOException e) {
 
             e.printStackTrace();

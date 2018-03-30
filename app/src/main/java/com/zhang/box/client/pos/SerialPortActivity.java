@@ -35,8 +35,13 @@ public abstract class SerialPortActivity extends Activity {
         @Override
         public void run() {
             super.run();
-//            int bufflenth = mInputStream.available(); //获取buffer里的数据长度
-            byte[] buffer = new byte[256];
+            int bufflenth = 0; //获取buffer里的数据长度
+            try {
+                bufflenth = mInputStream.available();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            byte[] buffer = new byte[bufflenth];
             while (!isInterrupted()) {
                 try {
                     Thread.sleep(1000);
@@ -78,8 +83,8 @@ public abstract class SerialPortActivity extends Activity {
         tool = SerialTool.getSerialTool();
         try {
             mSerialPort = SerialTool.getSerialPort();
-            mOutputStream = Constants.serialPort.b();
-            mInputStream = Constants.serialPort.a();
+            mOutputStream = mSerialPort.b();
+            mInputStream = mSerialPort.a();
 
             /* Create a receiving thread */
             mReadThread = new ReadThread();
@@ -113,7 +118,7 @@ public abstract class SerialPortActivity extends Activity {
         }
         if (mReadThread != null)
             mReadThread.interrupt();
-        tool.closeSerialPort();
+        tool.closeSerialPort(mSerialPort);
         mSerialPort = null;
         super.onDestroy();
     }

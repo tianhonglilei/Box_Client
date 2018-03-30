@@ -266,6 +266,12 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                     }
                     checkNum = 2;
                     payTxtGoodsPriceCount.setText("" + Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 2);
+
+
+                    int money = (new Double(Double.parseDouble(payTxtGoodsPrice.getText().toString())).intValue() * 100);
+                    send(1, money);
+
+
 //                    if (checkPay == Constants.PAY_TYPE_WX) {
 //                        if (bitmapWxPayTwo == null) {
 //                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
@@ -852,9 +858,8 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         String message = "020034313030310001043030320010323031383031313831343233333230313030340001310313";
         try {
             Log.e(TAG, "initPos: " + "正准备向" + "发送测试数据...");
-            SerialTool.sendToPort(Constants.serialPort, Demo.hex2byte(message));
-            int money = (new Double(Double.parseDouble(payTxtGoodsPrice.getText().toString())).intValue() * 100);
-            send(1, money);
+            SerialTool.sendToPort(Demo.hex2byte(message));
+
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -893,7 +898,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         pr.setTlvBody(tlvList);
 
         try {
-            SerialTool.sendToPort(Constants.serialPort, Demo.hex2byte(pr.toHex().toUpperCase(Locale.SIMPLIFIED_CHINESE)));
+            SerialTool.sendToPort( Demo.hex2byte(pr.toHex().toUpperCase(Locale.SIMPLIFIED_CHINESE)));
         } catch (Exception e) {
             e.printStackTrace();
         }

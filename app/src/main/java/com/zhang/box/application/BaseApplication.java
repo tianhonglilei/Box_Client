@@ -100,21 +100,6 @@ public class BaseApplication extends Application {
 
     }
 
-    private void initPos() {
-        try {
-            SerialTool.getSerialPort();
-            //发送数据
-            String message = "020034313030310001043030320010323031383031313831343233333230313030340001310313";
-            try {
-                System.out.println("正准备向" + "发送测试数据...");
-                SerialTool.sendToPort(Constants.serialPort, Demo.hex2byte(message));
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 
     private void initStartImg() {
