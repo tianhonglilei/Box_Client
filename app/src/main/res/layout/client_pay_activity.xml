@@ -359,7 +359,7 @@
 
                     <TextView
                         android:id="@+id/pay_txt_goods_price"
-                        android:layout_width="30dp"
+                        android:layout_width="35dp"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/pay_lbl_price"
                         android:layout_toRightOf="@+id/pay_txt_left_slash"
@@ -514,7 +514,7 @@
 
                 <TextView
                     android:id="@+id/pay_txt_goods_price_count"
-                    android:layout_width="40dp"
+                    android:layout_width="45dp"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/pay_lbl_count_money"
                     android:layout_toRightOf="@+id/pay_txt_slash"
