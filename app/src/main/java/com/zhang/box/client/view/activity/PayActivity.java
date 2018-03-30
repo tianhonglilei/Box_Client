@@ -436,8 +436,6 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         }
         payPresenter.cancelOrder();
         PayActivity.this.finish();
-        //关闭串口
-        SerialTool.closePort(Constants.serialPort);
     }
 
 
