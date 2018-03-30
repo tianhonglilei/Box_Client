@@ -7,13 +7,18 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.zhang.box.R;
 import com.zhang.box.client.model.Goods;
 import com.zhang.box.client.model.RoadGoods;
 import com.zhang.box.client.model.RoadInfo;
+import com.zhang.box.contants.Constants;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +35,11 @@ public class ShowCardActivity extends Activity implements View.OnClickListener {
     private RoadGoods roadGoods;
     private RoadInfo roadInfo;
     private Goods goods;
+    //商品信息
+    @BindView(R.id.pay_img_goods)
+    ImageView payImgGoods;
+    @BindView(R.id.pay_txt_goods_name)
+    TextView payTxtGoodsName;
 
     @BindView(R.id.pay_txt_return_time)
     TextView payTxtReturnTime;
@@ -53,11 +63,23 @@ public class ShowCardActivity extends Activity implements View.OnClickListener {
         }
 
         initCountDownTimer();
+        initGoodsInfo();
 
         payRlReturn.setOnClickListener(this);
 
     }
 
+
+    /**
+     * 初始化商品信息
+     */
+    public void initGoodsInfo() {
+        roadInfo = roadGoods.getRoadInfo();
+        goods = roadGoods.getGoods();
+        File file = new File(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsBImgName());
+        Glide.with(this).load(file).into(payImgGoods);
+        payTxtGoodsName.setText(goods.getGoodsName());
+    }
 
 
     private void initCountDownTimer() {

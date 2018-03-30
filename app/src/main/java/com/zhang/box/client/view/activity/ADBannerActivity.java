@@ -359,7 +359,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 //刷新商品
                 adPresenter.initGoodsData(adbannerGoodsGv);
             }
-        } else {
+        } else if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_FOOD)){
             if (state != RoadInfo.ROAD_STATE_DATA_ERROR) {
                 Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
                 intent.putExtra("roadGoods", roadGoods);
@@ -373,6 +373,13 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 //刷新商品
                 adPresenter.initGoodsData(adbannerGoodsGv);
             }
+        }else{
+            Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
+            intent.putExtra("roadGoods", roadGoods);
+            intent.putExtra("result", 1);
+            intentDateWeather(intent);
+            startActivityForResult(intent, requestCode);
+            adVideoView.pause();
         }
     }
 

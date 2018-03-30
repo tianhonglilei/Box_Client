@@ -212,7 +212,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                         //刷新商品
                         moreGoodsPresenter.initAllGoods(moreGoodsGv);
                     }
-                }else{
+                }else if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_FOOD)){
                     if (state != RoadInfo.ROAD_STATE_DATA_ERROR) {
                         Intent intent = new Intent(MoreGoodsActivity.this, PayActivity.class);
                         intent.putExtra("temp", moreWeatherWdNum.getText().toString());
@@ -228,6 +228,17 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                         ToastTools.showShort(mContext, "该商品已售罄，请选购其他商品");
                         //刷新商品
                         moreGoodsPresenter.initAllGoods(moreGoodsGv);
+                    }
+                }else{
+                    Intent intent = new Intent(MoreGoodsActivity.this, PayActivity.class);
+                    intent.putExtra("temp", moreWeatherWdNum.getText().toString());
+                    intent.putExtra("weather", moreWeatherTxt.getText().toString());
+                    intent.putExtra("roadGoods", roadGoods);
+                    startActivityForResult(intent, resultCode);
+                    telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
+                    if (isRegister) {
+                        unregisterReceiver(openDoorBroadcastReceiver);
+                        isRegister = false;
                     }
                 }
 

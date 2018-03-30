@@ -32,8 +32,12 @@ public class RoadBizImpl implements RoadBiz {
             roadInfo.setRoadMaxNum(bean.getMax());
             roadInfo.setRoadNowNum(bean.getHuodao_num());
             int hgType = Integer.parseInt(bean.getHuogui_num());
+
             if (hgType == 9) {
                 roadInfo.setRoadBoxType(BoxSetting.BOX_TYPE_FOOD);
+                roadInfo.setRoadState(RoadInfo.ROAD_STATE_NORMAL);
+            } else if (roadInfo.getRoadIndex() % 2 == 1) {
+                roadInfo.setRoadBoxType(BoxSetting.BOX_TYPE_CARD);
                 roadInfo.setRoadState(RoadInfo.ROAD_STATE_NORMAL);
             } else {
                 roadInfo.setRoadBoxType(BoxSetting.BOX_TYPE_DRINK);

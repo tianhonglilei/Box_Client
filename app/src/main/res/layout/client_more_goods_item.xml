@@ -6,37 +6,69 @@
     android:background="@drawable/more_goods_gv_item_bg_one_selector">
 
 
-
-
     <TextView
-        android:id="@+id/more_goods_item_txt_price"
-        android:layout_width="50dp"
-        android:layout_height="34dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="30sp"
+        android:id="@+id/more_goods_item_score"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/more_goods_item_price"
+        android:layout_toLeftOf="@+id/more_goods_item_jifen"
+        style="@style/MyFontNotPadding"
+        android:text="----"
         android:textColor="@color/colorDemoLogo"
-        android:gravity="center"
-        android:layout_marginBottom="10dp"
-        android:text="--" />
+        android:textSize="22sp" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/more_goods_item_jifen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/more_goods_item_price"
+        android:layout_toLeftOf="@+id/more_goods_item_slash"
+        style="@style/MyFontNotPadding"
+        android:text="积分"
+        android:textColor="@color/colorDemoLogo"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/more_goods_item_slash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/more_goods_item_price"
+        android:layout_toLeftOf="@+id/more_goods_item_price"
+        style="@style/MyFontNotPadding"
+        android:text="/"
+        android:textColor="@color/colorMoreTxtTwoOne"
+        android:textSize="22sp" />
+
+
+    <TextView
+        android:id="@+id/more_goods_item_ico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/more_goods_item_txt_price"
-        android:textSize="15sp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        style="@style/MyFontNotPadding"
+        android:text="元"
         android:textColor="@color/colorDemoLogo"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:text="¥" />
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/more_goods_item_price"
+        android:layout_width="45dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/more_goods_item_ico"
+        android:layout_toLeftOf="@+id/more_goods_item_ico"
+        style="@style/MyFontNotPadding"
+        android:text="---"
+        android:textColor="@color/colorDemoLogo"
+        android:textSize="22sp" />
+
 
     <TextView
         android:id="@+id/more_goods_item_txt_memo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/more_goods_item_txt_price"
+        android:layout_above="@+id/more_goods_item_price"
         android:layout_centerHorizontal="true"
         android:textSize="14sp"
         android:textColor="#b1b1b1"

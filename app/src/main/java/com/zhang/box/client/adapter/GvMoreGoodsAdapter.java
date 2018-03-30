@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.zhang.box.R;
+import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.model.Goods;
 import com.zhang.box.client.model.RoadGoods;
 import com.zhang.box.contants.Constants;
@@ -43,8 +44,11 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
         ((TextView) viewHolder.getView(R.id.more_goods_item_txt_memo)).setText(goods.getGoodsMemo());
         ((TextView) viewHolder.getView(R.id.more_goods_item_txt_price)).setText("" + goods.getGoodsPrice());
 
+        TextView score = viewHolder.getView(R.id.more_goods_item_score);
+        score.setText("" + (int) (goods.getGoodsPrice() * 550));
+
         goodsSaleState(viewHolder, goods.getGoodsSaleState(), goods, goodsImg);
-        goodsWd( goods.getGoodsWd(), (ImageView) viewHolder.getView(R.id.more_goods_item_img_wd));
+        goodsWd(goods.getGoodsWd(), (ImageView) viewHolder.getView(R.id.more_goods_item_img_wd));
         goodsType(viewHolder, goods.getGoodsType(), goodsImg);
     }
 
@@ -54,7 +58,7 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
      * @param viewHolder
      * @param state
      */
-    public void goodsSaleState(MyViewHolder viewHolder, int state, Goods goods,ImageView goodsImg) {
+    public void goodsSaleState(MyViewHolder viewHolder, int state, Goods goods, ImageView goodsImg) {
 
         saleStateView = viewHolder.getView(R.id.more_goods_item_rl_sale_state);
         TextView txtPrice = ((TextView) viewHolder.getView(R.id.more_goods_item_txt_price));
@@ -117,7 +121,7 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
      * @param wd
      * @param imageView
      */
-    public void goodsWd( int wd, ImageView imageView) {
+    public void goodsWd(int wd, ImageView imageView) {
         if (wd == Goods.GOODS_WD_COLD) {
             imageView.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(R.mipmap.logo_cold).into(imageView);

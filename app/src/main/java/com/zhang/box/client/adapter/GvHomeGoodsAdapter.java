@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.zhang.box.R;
+import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.model.Goods;
 import com.zhang.box.client.model.RoadGoods;
 
@@ -39,20 +40,38 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<RoadGoods> {
     @Override
     protected void convert(RoadGoods roadGoods, MyViewHolder viewHolder, int position) {
         RoadInfo roadInfo = roadGoods.getRoadInfo();
-        if (roadInfo.getRoadState() == RoadInfo.ROAD_STATE_ERROR){
-            ((ADBannerActivity)mContext).setRefreshGoods(true);
+        if (roadInfo.getRoadState() == RoadInfo.ROAD_STATE_ERROR) {
+            ((ADBannerActivity) mContext).setRefreshGoods(true);
         }
         Goods goods = roadGoods.getGoods();
         ImageView goodsImg = viewHolder.getView(R.id.adbanner_b_item_img);
         ImageView wdImg = viewHolder.getView(R.id.adbanner_b_item_img_wd);
         saleStateView = viewHolder.getView(R.id.adbanner_b_item_rl_sale_state);
         TextView price = viewHolder.getView(R.id.adbanner_b_item_price);
-        price.setText(""+goods.getGoodsPrice());
+        TextView rmbIco = viewHolder.getView(R.id.adbanner_b_item_ico);
+        TextView score = viewHolder.getView(R.id.adbanner_b_item_score);
+        TextView slash = viewHolder.getView(R.id.adbanner_b_item_slash);
+        TextView jifen = viewHolder.getView(R.id.adbanner_b_item_jifen);
+        if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_CARD)) {
+            price.setVisibility(View.INVISIBLE);
+            rmbIco.setVisibility(View.INVISIBLE);
+            score.setVisibility(View.INVISIBLE);
+            slash.setVisibility(View.INVISIBLE);
+            jifen.setVisibility(View.INVISIBLE);
+        } else {
+            price.setVisibility(View.VISIBLE);
+            rmbIco.setVisibility(View.VISIBLE);
+            score.setVisibility(View.VISIBLE);
+            slash.setVisibility(View.VISIBLE);
+            jifen.setVisibility(View.VISIBLE);
+        }
+        price.setText("" + goods.getGoodsPrice());
+        score.setText("" + (int) (goods.getGoodsPrice() * 550));
         int state = goods.getGoodsSaleState();
         int wd = goods.getGoodsWd();
-        if(state == Goods.SALE_STATE_DISCOUNT) {
+        if (state == Goods.SALE_STATE_DISCOUNT) {
             //删除线
-            ((TextView)viewHolder.getView(R.id.adbanner_b_item_price)).getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
+            ((TextView) viewHolder.getView(R.id.adbanner_b_item_price)).getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             saleStateView.setVisibility(View.VISIBLE);
             saleStateView.setBackgroundResource(R.drawable.shape_sale_state_discount);
             viewHolder.getView(R.id.adbanner_b_item_txt_sale_out).setVisibility(View.INVISIBLE);
@@ -61,27 +80,27 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<RoadGoods> {
             viewHolder.getView(R.id.adbanner_b_item_txt_discount_price).setVisibility(View.VISIBLE);
             ((TextView) viewHolder.getView(R.id.adbanner_b_item_txt_discount_price)).setText("" + goods.getGoodsDiscountPrice());
             Glide.with(mContext)
-                    .load(new File(Constants.DEMO_FILE_PATH+"/"+goods.getGoodsSImgName()))
+                    .load(new File(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName()))
                     .into(goodsImg);
-        }else if(state == Goods.SALE_STATE_OUT){
+        } else if (state == Goods.SALE_STATE_OUT) {
             saleStateView.setVisibility(View.VISIBLE);
             saleStateView.setBackgroundResource(R.drawable.shape_sale_state_off);
-            ((TextView)viewHolder.getView(R.id.adbanner_b_item_price)).getPaint().setFlags(0);
+            ((TextView) viewHolder.getView(R.id.adbanner_b_item_price)).getPaint().setFlags(0);
             viewHolder.getView(R.id.adbanner_b_item_txt_sale_out).setVisibility(View.VISIBLE);
             viewHolder.getView(R.id.adbanner_b_item_txt_sale).setVisibility(View.INVISIBLE);
             viewHolder.getView(R.id.adbanner_b_item_discount_rmb).setVisibility(View.INVISIBLE);
             viewHolder.getView(R.id.adbanner_b_item_txt_discount_price).setVisibility(View.INVISIBLE);
             ((TextView) viewHolder.getView(R.id.adbanner_b_item_txt_discount_price)).setText("" + goods.getGoodsDiscountPrice());
             Glide.with(mContext)
-                    .load(new File(Constants.DEMO_FILE_PATH+"/"+goods.getGoodsOutImgName()))
+                    .load(new File(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsOutImgName()))
                     .into(goodsImg);
-        }else if (state == Goods.SALE_STATE_NORMAL){
+        } else if (state == Goods.SALE_STATE_NORMAL) {
             saleStateView.setVisibility(View.INVISIBLE);
             Glide.with(mContext)
-                    .load(new File(Constants.DEMO_FILE_PATH+"/"+goods.getGoodsSImgName()))
+                    .load(new File(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName()))
                     .into(goodsImg);
         }
-        switch (wd){
+        switch (wd) {
             case Goods.GOODS_WD_COLD:
                 viewHolder.getView(R.id.adbanner_b_item_img_wd).setVisibility(View.VISIBLE);
                 Glide.with(mContext).load(R.mipmap.logo_cold).into(wdImg);
@@ -101,9 +120,9 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<RoadGoods> {
                 break;
         }
 
-        if(position%2==0){
+        if (position % 2 == 0) {
             viewHolder.getView(R.id.adbanner_b_item_bg_rl).setBackgroundResource(R.drawable.more_goods_gv_item_bg_one_selector);
-        }else{
+        } else {
             viewHolder.getView(R.id.adbanner_b_item_bg_rl).setBackgroundResource(R.drawable.more_goods_gv_item_bg_two_selector);
         }
 

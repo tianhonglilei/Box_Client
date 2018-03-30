@@ -14,38 +14,72 @@
         android:layout_marginTop="10dp"
         android:scaleType="centerInside" />
 
+
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/adbanner_b_item_score"
+        android:layout_width="38dp"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/adbanner_b_item_price"
+        android:layout_toLeftOf="@+id/adbanner_b_item_jifen"
+        style="@style/MyFontNotPadding"
+        android:text="----"
+        android:textColor="@color/colorDemoLogo"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/adbanner_b_item_jifen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/adbanner_b_item_price"
+        android:layout_toLeftOf="@+id/adbanner_b_item_slash"
+        style="@style/MyFontNotPadding"
+        android:text="积分"
+        android:textColor="@color/colorDemoLogo"
+        android:textSize="10sp" />
+    <TextView
+        android:id="@+id/adbanner_b_item_slash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/adbanner_b_item_price"
         android:layout_toLeftOf="@+id/adbanner_b_item_price"
-        android:layout_marginRight="2dp"
         style="@style/MyFontNotPadding"
-        android:text="¥"
+        android:text="/"
+        android:textColor="@color/colorMoreTxtTwoOne"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:id="@+id/adbanner_b_item_ico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/adbanner_b_item_img"
+        android:layout_below="@+id/adbanner_b_item_img"
+        android:layout_marginTop="15dp"
+        style="@style/MyFontNotPadding"
+        android:text="元"
         android:textColor="@color/colorDemoLogo"
-        android:textSize="18sp" />
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/adbanner_b_item_price"
-        android:layout_width="48dp"
-        android:layout_height="32dp"
-        android:layout_alignRight="@+id/adbanner_b_item_img"
-        android:layout_below="@+id/adbanner_b_item_img"
-        android:layout_marginTop="6dp"
+        android:layout_width="28dp"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@+id/adbanner_b_item_ico"
+        android:layout_toLeftOf="@+id/adbanner_b_item_ico"
         style="@style/MyFontNotPadding"
-        android:text="--"
+        android:text="---"
         android:textColor="@color/colorDemoLogo"
-        android:textSize="30sp" />
+        android:textSize="16sp" />
 
     <ImageView
         android:id="@+id/adbanner_b_item_img_wd"
-        android:layout_width="40dp"
+        android:layout_width="35dp"
         android:layout_height="26dp"
-        android:layout_alignBottom="@+id/textView"
+        android:layout_alignBottom="@+id/adbanner_b_item_ico"
         android:layout_alignStart="@+id/adbanner_b_item_img"
         android:scaleType="centerCrop"
-        android:src="@mipmap/logo_hot"/>
+        android:src="@mipmap/logo_hot"
+        android:visibility="gone"/>
 
     <RelativeLayout
         android:id="@+id/adbanner_b_item_rl_sale_state"
