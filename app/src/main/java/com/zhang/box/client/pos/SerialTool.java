@@ -140,7 +140,7 @@ public class SerialTool {
             out = serialPort.b();
             out.write(order);
             out.flush();
-            out.close();
+//            out.close();
         }
 
     }
@@ -167,10 +167,10 @@ public class SerialTool {
         } catch (IOException e) {
             throw e;
         } finally {
-            if (in != null) {
-                in.close();
-                in = null;
-            }
+//            if (in != null) {
+//                in.close();
+//                in = null;
+//            }
         }
         return bytes;
     }

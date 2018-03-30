@@ -167,7 +167,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
 
     GoodsBroadcastReceiver goodsBroadcastReceiver;
     //出货数量
-    private int num;
+    private int num = 1;
 
     private PopupWindow window;
 
@@ -463,6 +463,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     @Override
     public void hiddenDialog() {
         dialogShow = false;
+        if (dialog!=null)
         dialog.cancel();
     }
 
@@ -919,19 +920,20 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         String responseData = Demo.printHexString(data);
         Log.e(TAG, "onDataReceived: " + responseData);
         responseData = responseData.replace(" ", "");
-        for (int i = 0; i < responseData.length(); i++) {
-            if (responseData.charAt(i) == '2') {
-                if (responseData.indexOf(i + 6) < responseData.length()) {
-                    if (responseData.indexOf(i - 1) == 0) {
-                        String lenStr = responseData.substring(i + 2, i + 6);
-                        int len = Integer.parseInt(lenStr, 16);
-                        Log.e(TAG, "onDataReceived: 报文长度" + len);
-                        useDataStr = responseData.substring(i - 1, i + 2 + 4 + len + 4);
-                        parseDataStr(useDataStr);
-                    }
-                }
-            }
-        }
+        parseDataStr(responseData);
+//        for (int i = 0; i < responseData.length(); i++) {
+//            if (responseData.charAt(i) == '2') {
+//                if (responseData.indexOf(i + 6) < responseData.length()) {
+//                    if (responseData.indexOf(i - 1) == 0) {
+//                        String lenStr = responseData.substring(i + 2, i + 6);
+//                        int len = Integer.parseInt(lenStr, 16);
+//                        Log.e(TAG, "onDataReceived: 报文长度" + len);
+//                        useDataStr = responseData.substring(i - 1, i + 2 + 4 + len + 4);
+//                        parseDataStr(useDataStr);
+//                    }
+//                }
+//            }
+//        }
 
 
     }
@@ -939,6 +941,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     private void parseDataStr(String responseData) {
         if (responseData.equals("020007323030310001040302")) {
             Log.e(TAG, "onDataReceived: " + "收到POS响应，已找到POS机端口");
+            send(1,1);
             return;
         }
         Log.e(TAG, "onDataReceived: " + "响应加密：" + responseData);
@@ -953,6 +956,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
             if (thisTLV.getTitle().equals("039")) {
                 if (thisTLV.getContent().equals("00")) {
                     //成功
+                    Log.e("CCCCCCCCCCCCCCCCCCCCCCCCC","成功"+num + roadInfo.getRoadBoxType() + roadInfo.getRoadIndex().toString());
                     payPresenter.outGoodsAction(num, roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString());
                 } else {
                     //失败

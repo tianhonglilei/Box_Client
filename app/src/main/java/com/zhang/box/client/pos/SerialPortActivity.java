@@ -16,6 +16,8 @@ import android.app.Application;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.zhang.box.R;
 import com.zhang.box.contants.Constants;
@@ -30,38 +32,56 @@ public abstract class SerialPortActivity extends Activity {
     private InputStream mInputStream;
     private ReadThread mReadThread;
 
+
     private class ReadThread extends Thread {
 
         @Override
         public void run() {
             super.run();
+
+            byte[] test = null;
             try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            int bufflenth = 0; //获取buffer里的数据长度
-            try {
-                bufflenth = mInputStream.available();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            byte[] buffer = new byte[bufflenth];
-            while (!isInterrupted()) {
-                int size;
-                try {
-                    if (mInputStream == null) {
-                        return;
+                while(true) {
+                    if(mSerialPort==null){
+                        mSerialPort = SerialTool.getSerialPort();
                     }
-                    size = mInputStream.read(buffer);
-                    if (size > 0) {
-                        onDataReceived(buffer, size);
+                    Log.e("aaaaaaaaaaaaaa","aaaaaaaaaaaaaa");
+                    Thread.currentThread().sleep(500);
+                    test = SerialTool.readFromPort(mSerialPort);
+                    if(test!=null){
+                        PosRequest posRequest = PosRequest.decRequest(Demo.printHexString(test));
+                        String srt3 = posRequest.toString();
+
+                        Log.e("ddddddddddddddddddddd", srt3);
+                        onDataReceived(test,test.length);
+                        test = null;
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+//            int bufflenth = 0; //获取buffer里的数据长度
+//            try {
+//                bufflenth = mInputStream.available();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            byte[] buffer = new byte[bufflenth];
+//            while (!isInterrupted()) {
+//                int size;
+//                try {
+//                    if (mInputStream == null) {
+//                        return;
+//                    }
+//                    size = mInputStream.read(buffer);
+//                    if (size > 0) {
+//                        onDataReceived(buffer, size);
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                    return;
+//                }
+//            }
         }
     }
 
@@ -102,23 +122,23 @@ public abstract class SerialPortActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        if (mOutputStream!=null){
-            try {
-                mOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        if (mInputStream !=null){
-            try {
-                mInputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        if (mReadThread != null)
-            mReadThread.interrupt();
-        tool.closeSerialPort(mSerialPort);
+//        if (mOutputStream!=null){
+//            try {
+//                mOutputStream.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        if (mInputStream !=null){
+//            try {
+//                mInputStream.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        if (mReadThread != null)
+        Log.e("ssssssssssssssssssss","DDDDDDDDDDDDDDDDDDDDDDDDDDD");
+//        tool.closeSerialPort(mSerialPort);
         mSerialPort = null;
         super.onDestroy();
     }
