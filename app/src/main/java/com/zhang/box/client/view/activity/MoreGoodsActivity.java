@@ -118,7 +118,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         initControl();
 
         moreGoodsPresenter.initAllGoods(moreGoodsGv);
-        haveFoods();
+//        haveFoods();
 
         initGoodsGridView();
 

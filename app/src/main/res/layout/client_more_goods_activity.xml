@@ -90,7 +90,7 @@
                     android:background="@drawable/more_nav_selector"
                     android:button="@null"
                     android:drawableLeft="@mipmap/more_goods_left"
-                    android:text="零食"
+                    android:text="信用卡"
                     style="@style/style_txt_more_nav"
                     android:drawablePadding="50dp"
                     android:paddingLeft="37dp"

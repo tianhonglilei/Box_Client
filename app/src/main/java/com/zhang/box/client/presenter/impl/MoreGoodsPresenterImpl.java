@@ -5,6 +5,7 @@ import android.widget.GridView;
 
 import com.zhang.box.R;
 import com.zhang.box.box.BoxParams;
+import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.biz.GoodsBiz;
 import com.zhang.box.client.biz.RoadBiz;
 import com.zhang.box.client.biz.impl.GoodsBizImpl;
@@ -33,7 +34,7 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
 
     private List<RoadGoods> goodsList;
     private List<RoadGoods> drinks = new ArrayList<>();
-    private List<RoadGoods> foods = new ArrayList<>();
+    private List<RoadGoods> cards = new ArrayList<>();
 
     private Context mContext;
     private GridView gridView;
@@ -72,7 +73,7 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
         } else if (nav == 1) {
             gvMoreGoodsAdapter.setmDatas(drinks);
         } else if (nav == 2) {
-            gvMoreGoodsAdapter.setmDatas(foods);
+            gvMoreGoodsAdapter.setmDatas(cards);
         } else {
         }
         gvMoreGoodsAdapter.notifyDataSetChanged();
@@ -81,16 +82,16 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
 
     public void getFoodAndDrink() {
         drinks.clear();
-        foods.clear();
+        cards.clear();
         for (RoadGoods roadGoods :
                 goodsList) {
-            if (roadGoods.getGoods().getGoodsType() == Goods.GOODS_TYPE_DRINK) {
+            if (roadGoods.getRoadInfo().getRoadBoxType().equals(BoxSetting.BOX_TYPE_DRINK)) {
                 drinks.add(roadGoods);
             } else {
-                foods.add(roadGoods);
+                cards.add(roadGoods);
             }
         }
-        if (foods.size() == 0){
+        if (cards.size() == 0){
             SharedPreferencesUtil.putString(mContext, BoxParams.HAVE_FOOD, "false");
         }else{
             SharedPreferencesUtil.putString(mContext, BoxParams.HAVE_FOOD, "true");
