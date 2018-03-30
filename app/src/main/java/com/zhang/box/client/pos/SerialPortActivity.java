@@ -48,11 +48,6 @@ public abstract class SerialPortActivity extends Activity {
                     }
                     int bufflenth = mInputStream.available(); //获取buffer里的数据长度
                     byte[] buffer = new byte[bufflenth];
-                    while (bufflenth != 0) {
-                        buffer = new byte[bufflenth]; //初始化byte数组为buffer中数据的长度
-                        mInputStream.read(buffer);
-                        bufflenth = mInputStream.available();
-                    }
                     size = mInputStream.read(buffer);
                     if (size > 0) {
                         onDataReceived(buffer, size);
