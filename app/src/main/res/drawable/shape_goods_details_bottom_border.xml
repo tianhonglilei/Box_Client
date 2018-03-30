@@ -4,7 +4,7 @@
     <item>
         <shape>
             <!--    边框颜色 -->
-            <solid android:color="@color/colorDemoLogo"/>
+            <solid android:color="@color/colorXingYeBank"/>
         </shape>
     </item>
     <!-- 给View的上 左  右设置8dp的边框 -->

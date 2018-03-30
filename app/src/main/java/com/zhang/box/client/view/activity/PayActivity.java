@@ -131,6 +131,11 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     TextView payTxtGoodsPrice;
     @BindView(R.id.pay_txt_goods_price_count)
     TextView payTxtGoodsPriceCount;
+    @BindView(R.id.pay_txt_count_rmb)
+    TextView payTxtJiFen;
+    @BindView(R.id.pay_txt_left_score)
+    TextView payTxtLeftScore;
+
     //二维码
     @BindView(R.id.pay_img_qrcode)
     ImageView payImgQrcode;
@@ -403,6 +408,9 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
             }
         }
         payTxtGoodsPrice.setText("" + price);
+        payTxtGoodsPriceCount.setText("" + price);
+        payTxtLeftScore.setText("" + price * 550);
+        payTxtJiFen.setText("" + price * 550);
         initRadioNum();
         payTxtGoodsPriceCount.setText("" + price);
         payTxtGoodsDetailsMemo.setText(goods.getGoodsMemo());
@@ -463,8 +471,8 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     @Override
     public void hiddenDialog() {
         dialogShow = false;
-        if (dialog!=null)
-        dialog.cancel();
+        if (dialog != null)
+            dialog.cancel();
     }
 
     @Override
@@ -899,7 +907,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         pr.setTlvBody(tlvList);
 
         try {
-            SerialTool.sendToPort( Demo.hex2byte(pr.toHex().toUpperCase(Locale.SIMPLIFIED_CHINESE)));
+            SerialTool.sendToPort(Demo.hex2byte(pr.toHex().toUpperCase(Locale.SIMPLIFIED_CHINESE)));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -941,7 +949,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     private void parseDataStr(String responseData) {
         if (responseData.equals("020007323030310001040302")) {
             Log.e(TAG, "onDataReceived: " + "收到POS响应，已找到POS机端口");
-            send(1,1);
+            send(1, 1);
             return;
         }
         Log.e(TAG, "onDataReceived: " + "响应加密：" + responseData);
@@ -956,7 +964,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
             if (thisTLV.getTitle().equals("039")) {
                 if (thisTLV.getContent().equals("00")) {
                     //成功
-                    Log.e("CCCCCCCCCCCCCCCCCCCCCCCCC","成功"+num + roadInfo.getRoadBoxType() + roadInfo.getRoadIndex().toString());
+                    Log.e("CCCCCCCCCCCCCCCCCCCCCCCCC", "成功" + num + roadInfo.getRoadBoxType() + roadInfo.getRoadIndex().toString());
                     payPresenter.outGoodsAction(num, roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString());
                 } else {
                     //失败

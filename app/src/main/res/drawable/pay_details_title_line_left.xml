@@ -3,7 +3,7 @@
 
     <gradient
 
-    android:startColor="@color/colorDemoLogo"
+    android:startColor="@color/colorXingYeBank"
 
     android:endColor="@color/colorbebebe"
 

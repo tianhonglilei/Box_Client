@@ -38,16 +38,6 @@
         android:textColor="@color/colorMoreTxtTwoOne"
         android:textSize="14sp"/>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="85dp"
-        android:layout_height="40dp"
-        android:layout_alignLeft="@+id/date_img_signal"
-        android:layout_below="@+id/date_img_signal"
-        android:layout_marginTop="6dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/dc_logo" />
-
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="216dp"
@@ -67,7 +57,7 @@
             android:gravity="center"
             android:format24Hour="kk:mm"
             android:format12Hour="hh:mm"
-            android:textColor="@color/colorDemoLogo"
+            android:textColor="@color/colorXingYeBank"
             android:textSize="44sp"/>
 
         <TextClock

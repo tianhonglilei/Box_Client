@@ -53,6 +53,7 @@
                             android:textSize="20sp" />
 
                         <TextView
+                            android:id="@+id/textView22"
                             android:layout_width="90dp"
                             android:layout_height="3dp"
                             android:layout_gravity="center_vertical"
@@ -256,7 +257,7 @@
 
                 <RelativeLayout
                     android:id="@+id/relativeLayout2"
-                    android:layout_width="330dp"
+                    android:layout_width="380dp"
                     android:layout_height="420dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignTop="@+id/pay_tl_goods_details"
@@ -304,7 +305,9 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="3dp"
                             android:background="@drawable/pay_num_two_check_selector"
-                            android:button="@null" />
+                            android:button="@null"
+                            android:visibility="gone"
+                            />
                     </RadioGroup>
 
                     <TextView
@@ -313,33 +316,68 @@
                         android:layout_height="wrap_content"
 
                         android:layout_alignBaseline="@+id/pay_txt_num"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/pay_rbgrp_num"
                         android:text="单价："
                         android:textColor="@color/colorGaryFiveTwo"
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/pay_txt_rmb"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/pay_txt_left_score"
+                        android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/pay_lbl_price"
                         android:layout_marginTop="17dp"
                         android:layout_toRightOf="@+id/pay_lbl_price"
-                        android:text="¥ "
+                        android:text=""
+                        android:textColor="@color/colorDemoLogo"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:id="@+id/pay_txt_left_jifen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/pay_lbl_price"
+                        android:layout_marginTop="17dp"
+                        android:layout_toRightOf="@+id/pay_txt_left_score"
+                        android:text="积分"
                         android:textColor="@color/colorDemoLogo"
                         android:textSize="20sp" />
 
                     <TextView
-                        android:id="@+id/pay_txt_goods_price"
-                        android:layout_width="75dp"
+                        android:id="@+id/pay_txt_left_slash"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/pay_lbl_price"
-                        android:layout_toRightOf="@+id/pay_txt_rmb"
+                        android:layout_marginTop="17dp"
+                        android:layout_toRightOf="@+id/pay_txt_left_jifen"
+                        android:text="/"
+                        android:textColor="@color/colorMoreTxtTwoOne"
+                        android:textSize="25sp" />
+
+
+
+                    <TextView
+                        android:id="@+id/pay_txt_goods_price"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/pay_lbl_price"
+                        android:layout_toRightOf="@+id/pay_txt_left_slash"
                         android:text=""
                         android:textColor="@color/colorDemoLogo"
-                        android:textSize="40sp"
+                        android:textSize="25sp"
                         android:maxLines="1"/>
+
+                    <TextView
+                        android:id="@+id/pay_txt_left_yuan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/pay_lbl_price"
+                        android:layout_marginTop="17dp"
+                        android:layout_toRightOf="@+id/pay_txt_goods_price"
+                        android:text="元"
+                        android:textColor="@color/colorDemoLogo"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/pay_txt_goods_name"
@@ -377,8 +415,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="123dp"
-                    android:text="点创智能微超"
-                    android:textColor="@color/colorMoreTxtTwoOne"
+                    android:text="兴业银行"
+                    android:textColor="@color/colorXingYeBank"
                     android:textSize="36sp" />
 
                 <TextView
@@ -388,8 +426,8 @@
                     android:layout_below="@+id/textView3"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
-                    android:text="提示：请勿在支付时切换二维码"
-                    android:textColor="@color/colorDemoLogo"
+                    android:text="支持支付方式"
+                    android:textColor="@color/colorMoreTxtTwoOne"
                     android:textSize="20sp" />
 
                 <FrameLayout
@@ -398,7 +436,9 @@
                     android:layout_height="163dp"
                     android:layout_below="@+id/textView4"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp">
+                    android:layout_marginTop="30dp"
+                    android:visibility="gone"
+                    >
 
                     <ImageView
                         android:id="@+id/pay_img_qrcode"
@@ -433,8 +473,8 @@
                     android:id="@+id/pay_lbl_count_money"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/pay_fl_qrcode"
-                    android:layout_marginLeft="130dp"
+                    android:layout_below="@+id/pay_rbgrp_qrcode"
+                    android:layout_marginLeft="50dp"
                     android:layout_marginTop="15dp"
                     android:text="支付金额："
                     android:textColor="@color/colorMoreTxtTwoOne"
@@ -442,23 +482,55 @@
 
                 <TextView
                     android:id="@+id/pay_txt_count_rmb"
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/pay_lbl_count_money"
                     android:layout_toRightOf="@+id/pay_lbl_count_money"
-                    android:text="¥ "
+                    android:text=""
+                    android:textColor="@color/colorDemoLogo"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/pay_txt_jifen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/pay_lbl_count_money"
+                    android:layout_toRightOf="@+id/pay_txt_count_rmb"
+                    android:text="积分"
                     android:textColor="@color/colorDemoLogo"
                     android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/pay_txt_slash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/pay_lbl_count_money"
+                    android:layout_toRightOf="@+id/pay_txt_jifen"
+                    android:text="/"
+                    android:textColor="@color/colorMoreTxtTwoOne"
+                    android:textSize="30sp" />
+
+
 
                 <TextView
                     android:id="@+id/pay_txt_goods_price_count"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/pay_lbl_count_money"
-                    android:layout_toRightOf="@+id/pay_txt_count_rmb"
+                    android:layout_toRightOf="@+id/pay_txt_slash"
                     android:text=""
                     android:textColor="@color/colorDemoLogo"
                     android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/pay_txt_yuan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/pay_lbl_count_money"
+                    android:layout_toRightOf="@+id/pay_txt_goods_price_count"
+                    android:text="元"
+                    android:textColor="@color/colorDemoLogo"
+                    android:textSize="20sp" />
 
 
                 <RelativeLayout
@@ -516,7 +588,7 @@
                 <RadioGroup
                     android:id="@+id/pay_rbgrp_qrcode"
                     android:layout_width="match_parent"
-                    android:layout_height="85dp"
+                    android:layout_height="200dp"
                     android:layout_below="@+id/pay_fl_qrcode"
                     android:layout_marginTop="50dp"
                     android:orientation="horizontal"
@@ -532,7 +604,7 @@
                         android:drawablePadding="15dp"
                         android:drawableTop="@drawable/pay_wechat_img_selector"
                         android:gravity="center"
-                        android:text="微信支付"
+                        android:text="积分支付"
                         android:textColor="@drawable/pay_rb_txt_check_color_selector"
                         android:textSize="16sp" />
 
@@ -545,7 +617,7 @@
                         android:drawablePadding="15dp"
                         android:drawableTop="@drawable/pay_ali_img_selector"
                         android:gravity="center"
-                        android:text="支付宝支付"
+                        android:text="刷卡支付"
                         android:textColor="@drawable/pay_rb_txt_check_color_selector"
                         android:textSize="16sp" />
                 </RadioGroup>
