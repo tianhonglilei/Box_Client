@@ -230,7 +230,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                         moreGoodsPresenter.initAllGoods(moreGoodsGv);
                     }
                 }else{
-                    Intent intent = new Intent(MoreGoodsActivity.this, PayActivity.class);
+                    Intent intent = new Intent(MoreGoodsActivity.this, ShowCardActivity.class);
                     intent.putExtra("temp", moreWeatherWdNum.getText().toString());
                     intent.putExtra("weather", moreWeatherTxt.getText().toString());
                     intent.putExtra("roadGoods", roadGoods);

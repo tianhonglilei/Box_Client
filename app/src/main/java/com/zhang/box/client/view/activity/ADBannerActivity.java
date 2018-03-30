@@ -374,7 +374,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 adPresenter.initGoodsData(adbannerGoodsGv);
             }
         }else{
-            Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
+            Intent intent = new Intent(ADBannerActivity.this, ShowCardActivity.class);
             intent.putExtra("roadGoods", roadGoods);
             intent.putExtra("result", 1);
             intentDateWeather(intent);

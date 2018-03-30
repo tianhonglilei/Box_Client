@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/more_goods_item_txt_price"
-        android:layout_toLeftOf="@+id/more_goods_item_price"
+        android:layout_toLeftOf="@+id/more_goods_item_txt_price"
         style="@style/MyFontNotPadding"
         android:text="/"
         android:textColor="@color/colorMoreTxtTwoOne"

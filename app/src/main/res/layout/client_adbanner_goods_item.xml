@@ -29,7 +29,7 @@
     <TextView
         android:id="@+id/adbanner_b_item_jifen"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="16dp"
         android:layout_alignBottom="@+id/adbanner_b_item_price"
         android:layout_toLeftOf="@+id/adbanner_b_item_slash"
         style="@style/MyFontNotPadding"
@@ -51,7 +51,7 @@
     <TextView
         android:id="@+id/adbanner_b_item_ico"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="16dp"
         android:layout_alignRight="@+id/adbanner_b_item_img"
         android:layout_below="@+id/adbanner_b_item_img"
         android:layout_marginTop="15dp"
@@ -62,7 +62,7 @@
 
     <TextView
         android:id="@+id/adbanner_b_item_price"
-        android:layout_width="28dp"
+        android:layout_width="26dp"
         android:layout_height="20dp"
         android:layout_alignBottom="@+id/adbanner_b_item_ico"
         android:layout_toLeftOf="@+id/adbanner_b_item_ico"
