@@ -293,6 +293,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                     }
                     checkNum = 2;
                     payTxtGoodsPriceCount.setText("" + Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 2);
+                    payTxtJiFen.setText("" + (int)(Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 2 *550));
 
 
 //                    if (checkPay == Constants.PAY_TYPE_WX) {

@@ -277,7 +277,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/pay_img_goods"
                         android:layout_marginTop="17dp"
-                        android:text="数量："
+                        android:text="数量:"
                         android:textColor="@color/colorGaryFiveTwo"
                         android:textSize="20sp" />
 
@@ -302,11 +302,10 @@
                             android:id="@+id/pay_rb_num_two"
                             android:layout_width="47dp"
                             android:layout_height="31dp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="8dp"
                             android:layout_marginTop="3dp"
                             android:background="@drawable/pay_num_two_check_selector"
                             android:button="@null"
-                            android:visibility="gone"
                             />
                     </RadioGroup>
 
@@ -318,7 +317,7 @@
                         android:layout_alignBaseline="@+id/pay_txt_num"
                         android:layout_marginLeft="10dp"
                         android:layout_toRightOf="@+id/pay_rbgrp_num"
-                        android:text="单价："
+                        android:text="单价:"
                         android:textColor="@color/colorGaryFiveTwo"
                         android:textSize="20sp" />
 
@@ -342,7 +341,7 @@
                         android:layout_toRightOf="@+id/pay_txt_left_score"
                         android:text="积分"
                         android:textColor="@color/colorDemoLogo"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/pay_txt_left_slash"
@@ -377,7 +376,7 @@
                         android:layout_toRightOf="@+id/pay_txt_goods_price"
                         android:text="元"
                         android:textColor="@color/colorDemoLogo"
-                        android:textSize="20sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/pay_txt_goods_name"
