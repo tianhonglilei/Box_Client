@@ -187,7 +187,8 @@ public class PayPresenterImpl implements PayPresenter {
         } else {
             payView.showPopwindow(false, orderNum, outNum);
         }
-        sendOrder(orderNum, outNum);
+//        sendOrder(orderNum, outNum);
+//        updateDBNum(Long.parseLong(orderInfo.getId()),outNum);
     }
 
 
@@ -360,11 +361,11 @@ public class PayPresenterImpl implements PayPresenter {
                 }
             }
         }));
-        updateDBNum(outNum);
+
     }
 
-    private void updateDBNum(int num) {
-        roadBeanService.updateRoadNum(Long.parseLong(orderInfo.getId()), num);
+    public void updateDBNum(Long rid, int num) {
+        roadBeanService.updateRoadNum(rid, num);
         SharedPreferencesUtil.putString(mContext, BoxParams.UPDATE_DB, "true");
     }
 

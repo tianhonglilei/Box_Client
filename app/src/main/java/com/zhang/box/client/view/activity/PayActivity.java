@@ -654,10 +654,10 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
 
     @Override
     public void showCardPayNoticePop() {
-        if (selectPayDialog!=null){
+        if (selectPayDialog != null) {
             selectPayDialog.dismiss();
         }
-        if (waitDialog!=null) {
+        if (waitDialog != null) {
             waitDialog.show();
         }
 
@@ -1058,6 +1058,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                     Log.e("CCCCCCCCCCCCCCCCCCCCCCCCC", "成功" + num + roadInfo.getRoadBoxType() + roadInfo.getRoadIndex().toString());
                     showDialog("出货中...");
                     payPresenter.outGoodsAction(num, roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString());
+                    payPresenter.updateDBNum(roadGoods.getRoadGoodsId(), num);
                 } else {
                     //失败
                     waitDialog.dismiss();

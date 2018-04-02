@@ -24,4 +24,6 @@ public interface PayPresenter {
     void cancelRequest();
 
     void outGoodsAction(final int num, final String boxType, final String roadIndex);
+
+    void updateDBNum(Long rid, int num);
 }
