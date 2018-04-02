@@ -48,6 +48,16 @@ public class ShowCardActivity extends Activity implements View.OnClickListener {
     @BindView(R.id.pay_rl_return)
     RelativeLayout payRlReturn;
 
+    //天气和时间
+    @BindView(R.id.more_weather_time)
+    TextView moreWeatherTime;
+    @BindView(R.id.more_weather_date)
+    TextView moreWeatherDate;
+    @BindView(R.id.more_weather_txt)
+    TextView moreWeatherTxt;
+    @BindView(R.id.more_weather_wd_num)
+    TextView moreWeatherWdNum;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +74,10 @@ public class ShowCardActivity extends Activity implements View.OnClickListener {
 
         initCountDownTimer();
         initGoodsInfo();
+        initDateAndWeather();
 
         payRlReturn.setOnClickListener(this);
+
 
     }
 
@@ -79,6 +91,16 @@ public class ShowCardActivity extends Activity implements View.OnClickListener {
         File file = new File(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsBImgName());
         Glide.with(this).load(file).into(payImgGoods);
         payTxtGoodsName.setText(goods.getGoodsName());
+    }
+
+    /**
+     * 初始化天气
+     */
+    private void initDateAndWeather() {
+        if (dataIntent != null) {
+            moreWeatherTxt.setText(dataIntent.getStringExtra("weather"));
+            moreWeatherWdNum.setText(dataIntent.getStringExtra("temp"));
+        }
     }
 
 
