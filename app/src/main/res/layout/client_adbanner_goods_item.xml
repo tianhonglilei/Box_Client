@@ -73,13 +73,14 @@
 
     <TextView
         android:id="@+id/adbanner_b_item_txt_card_name"
-        android:layout_width="38dp"
+        android:layout_width="100dp"
         android:layout_height="20dp"
         android:layout_alignBottom="@+id/adbanner_b_item_ico"
         android:layout_centerHorizontal="true"
         android:textColor="@color/colorXingYeBank"
         android:textSize="16sp"
         android:visibility="invisible"
+        android:gravity="center"
         />
 
     <ImageView
