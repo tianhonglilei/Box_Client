@@ -1086,17 +1086,10 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                 if (thisTLV.getContent().equals("00")) {
                     //成功
                     Log.e("CCCCCCCCCCCCCCCCCCCCCCCCC", "成功" + num + roadInfo.getRoadBoxType() + roadInfo.getRoadIndex().toString());
-                    if (waitDialog!=null) {
-                        waitDialog.dismiss();
-                        countDownTimer.start();
-                    }
+
                     showDialog("出货中...");
                     payPresenter.outGoodsAction(num, roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString());
                     payPresenter.updateDBNum(roadGoods.getRoadGoodsId(), num);
-                    if (countDownTimer != null) {
-                        countDownTimer.cancel();
-                        countDownTimer = null;
-                    }
                 } else {
                     //失败
                     Log.e("CCCCCCCCSSSSSSSSSS","失败失败");
