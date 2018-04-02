@@ -107,8 +107,8 @@ public abstract class SerialPortActivity extends Activity {
             mInputStream = mSerialPort.a();
 
             /* Create a receiving thread */
-            mReadThread = new ReadThread();
-            mReadThread.start();
+//            mReadThread = new ReadThread();
+//            mReadThread.start();
         } catch (SecurityException e) {
             DisplayError(R.string.error_security);
         } catch (IOException e) {

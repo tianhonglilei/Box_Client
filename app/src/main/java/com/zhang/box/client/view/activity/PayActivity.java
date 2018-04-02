@@ -612,14 +612,12 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                         send(2, score);
                         selectPayDialog.dismiss();
                         showCardPayNoticePop();
-                        countDownTimer.cancel();
                         break;
                     case R.id.pay_select_dialog_btn_money:
                         //金额支付
                         int money = (int)(Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 100);
                         send(1, money);
                         showCardPayNoticePop();
-                        countDownTimer.cancel();
                         break;
                     case R.id.pay_select_dialog_btn_cancel:
                         //取消
@@ -793,8 +791,10 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     boolean countTimeStart = false;
     long showTime = 0;
 
+    byte[] test = null;
     private void initCountDownTimer() {
-        countDownTimer = new CountDownTimer(100000, 1000) {
+
+        countDownTimer = new CountDownTimer(120000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long time = millisUntilFinished / 1000;
@@ -816,6 +816,24 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                     payTxtReturnTime.setTextColor(Color.WHITE);
                 }
                 payTxtReturnTime.setText(time + "S");
+                try{
+                    if(mSerialPort==null){
+                        mSerialPort = SerialTool.getSerialPort();
+                    }
+                    Log.e("aaaaaaaaaaaaaa","aaaaaaaaaaaaaa");
+                    test = SerialTool.readFromPort(mSerialPort);
+                    if(test!=null){
+                        PosRequest posRequest = PosRequest.decRequest(Demo.printHexString(test));
+                        String srt3 = posRequest.toString();
+
+                        Log.e("ddddddddddddddddddddd", srt3);
+                        onDataReceived(test,test.length);
+                        test = null;
+                    }
+                }catch (Exception e){
+
+                }
+
 
             }
 
@@ -1075,6 +1093,10 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                     showDialog("出货中...");
                     payPresenter.outGoodsAction(num, roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString());
                     payPresenter.updateDBNum(roadGoods.getRoadGoodsId(), num);
+                    if (countDownTimer != null) {
+                        countDownTimer.cancel();
+                        countDownTimer = null;
+                    }
                 } else {
                     //失败
                     Log.e("CCCCCCCCSSSSSSSSSS","失败失败");

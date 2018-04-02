@@ -147,7 +147,7 @@ public class HeartService extends Service implements HeartView {
     public void startLiveActivity() {
         Intent intent = this.getPackageManager().getLaunchIntentForPackage(
                 LIVE_SERVICE_PACKAGE_NAME);
-        startActivity(intent);
+//        startActivity(intent);
     }
 
 
