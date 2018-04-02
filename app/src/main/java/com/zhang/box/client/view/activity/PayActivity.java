@@ -608,13 +608,16 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                 switch (view.getId()) {
                     case R.id.pay_select_dialog_btn_score:
                         //积分支付
-                        int score = (new Double(Double.parseDouble(payTxtGoodsPrice.getText().toString())).intValue() * 100);
+                        int score = (new Double(Double.parseDouble(payTxtLeftScore.getText().toString())).intValue());
                         send(2, score);
+                        selectPayDialog.dismiss();
+                        showCardPayNoticePop();
                         break;
                     case R.id.pay_select_dialog_btn_money:
                         //金额支付
-                        int money = (new Double(Double.parseDouble(payTxtLeftScore.getText().toString())).intValue());
+                        int money = (new Double(Double.parseDouble(payTxtGoodsPrice.getText().toString())).intValue() * 100);
                         send(1, money);
+                        showCardPayNoticePop();
                         break;
                     case R.id.pay_select_dialog_btn_cancel:
                         //取消
