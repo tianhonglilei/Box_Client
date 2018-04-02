@@ -794,7 +794,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     byte[] test = null;
     private void initCountDownTimer() {
 
-        countDownTimer = new CountDownTimer(120000, 1000) {
+        countDownTimer = new CountDownTimer(180000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long time = millisUntilFinished / 1000;
