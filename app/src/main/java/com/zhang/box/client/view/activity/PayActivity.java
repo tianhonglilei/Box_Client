@@ -1064,7 +1064,6 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     protected void disConnect() {
         if (waitDialog!=null&&waitDialog.isShowing()) {
             waitDialog.dismiss();
-            countDownTimer.start();
         }
     }
 
@@ -1088,7 +1087,6 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                     Log.e("CCCCCCCCCCCCCCCCCCCCCCCCC", "成功" + num + roadInfo.getRoadBoxType() + roadInfo.getRoadIndex().toString());
                     if (waitDialog!=null) {
                         waitDialog.dismiss();
-                        countDownTimer.start();
                     }
                     showDialog("出货中...");
                     payPresenter.outGoodsAction(num, roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString());
@@ -1102,7 +1100,6 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                     Log.e("CCCCCCCCSSSSSSSSSS","失败失败");
                     if (waitDialog!=null) {
                         waitDialog.dismiss();
-                        countDownTimer.start();
                     }
                 }
             }
