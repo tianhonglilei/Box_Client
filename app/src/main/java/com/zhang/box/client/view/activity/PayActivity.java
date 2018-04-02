@@ -271,6 +271,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                 if (checkedId == R.id.pay_rb_num_one) {
                     checkNum = 1;
                     payTxtGoodsPriceCount.setText("" + Double.parseDouble(payTxtGoodsPrice.getText().toString()));
+                    payTxtJiFen.setText("" + (int)(Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 550));
 //                    if (checkPay == Constants.PAY_TYPE_WX) {
 //                        if (bitmapWxPayOne == null) {
 //                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
