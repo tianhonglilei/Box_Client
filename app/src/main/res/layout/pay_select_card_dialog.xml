@@ -83,7 +83,7 @@
         android:layout_marginTop="12dp"
         android:textSize="10sp"
         android:text="积分支付：会扣除信用卡内对应的积分进行支付"
-        android:textColor="@color/colorGaryFiveTwo"
+        android:textColor="@color/colorDemoLogo"
         android:layout_below="@+id/imageView"
         android:layout_alignStart="@+id/pay_select_dialog_btn_score" />
 
@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:textSize="10sp"
         android:text="金额支付：会扣除卡内对应的金额进行支付"
-        android:textColor="@color/colorGaryFiveTwo"
+        android:textColor="@color/colorDemoLogo"
         android:layout_alignBaseline="@+id/textView2"
         android:layout_alignBottom="@+id/textView2"
         android:layout_alignEnd="@+id/pay_select_dialog_btn_cancel" />
