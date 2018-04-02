@@ -120,6 +120,11 @@ public abstract class SerialPortActivity extends Activity {
 
     protected abstract void onDataReceived(final byte[] buffer, final int size);
 
+    /**
+     * 断开连接
+     */
+    protected abstract void disConnect();
+
     @Override
     protected void onDestroy() {
 //        if (mOutputStream!=null){
@@ -138,8 +143,12 @@ public abstract class SerialPortActivity extends Activity {
 //        }
 //        if (mReadThread != null)
         Log.e("ssssssssssssssssssss","DDDDDDDDDDDDDDDDDDDDDDDDDDD");
+        disConnect();
 //        tool.closeSerialPort(mSerialPort);
         mSerialPort = null;
         super.onDestroy();
+
     }
+
+
 }
