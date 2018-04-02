@@ -20,13 +20,13 @@
     <TextView
         android:id="@+id/more_goods_item_jifen"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="24dp"
         android:layout_alignBottom="@+id/more_goods_item_txt_price"
         android:layout_toLeftOf="@+id/more_goods_item_slash"
         style="@style/MyFontNotPadding"
         android:text="积分"
         android:textColor="@color/colorDemoLogo"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
     <TextView
         android:id="@+id/more_goods_item_slash"
         android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
     <TextView
         android:id="@+id/more_goods_item_ico"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="24dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="5dp"
@@ -50,7 +50,7 @@
         style="@style/MyFontNotPadding"
         android:text="元"
         android:textColor="@color/colorDemoLogo"
-        android:textSize="16sp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/more_goods_item_txt_price"
