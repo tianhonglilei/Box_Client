@@ -1090,7 +1090,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                         waitDialog.dismiss();
                     }
                     showDialog("出货中...");
-                    payPresenter.outGoodsAction(num, roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString());
+                    payPresenter.outGoodsAction(checkNum, roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString());
                     payPresenter.updateDBNum(roadGoods.getRoadGoodsId(), num);
                 } else {
                     //失败
