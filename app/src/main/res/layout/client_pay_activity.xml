@@ -622,6 +622,17 @@
                         android:textSize="16sp" />
                 </RadioGroup>
 
+                <Button
+                    android:id="@+id/pay_btn_start_pay"
+                    android:layout_width="180dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/pay_txt_goods_price_count"
+                    android:layout_marginTop="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/manager_login_btn_selector"
+                    android:text="开始支付"
+                    android:textColor="@color/colorWhiteTxt"
+                    android:textSize="28sp" />
 
             </RelativeLayout>
         </LinearLayout>

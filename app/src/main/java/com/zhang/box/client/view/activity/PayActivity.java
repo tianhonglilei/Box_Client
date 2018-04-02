@@ -1,6 +1,5 @@
 package com.zhang.box.client.view.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -20,9 +19,13 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -32,6 +35,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.common.controls.dialog.CommonDialogFactory;
+import com.common.controls.dialog.DialogUtil;
+import com.common.controls.dialog.ICommonDialog;
 import com.zhang.box.R;
 import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxParams;
@@ -41,6 +47,7 @@ import com.zhang.box.client.model.Goods;
 import com.zhang.box.client.model.PercentInfo;
 import com.zhang.box.client.model.RoadGoods;
 import com.zhang.box.client.model.RoadInfo;
+import com.zhang.box.client.model.paramsmodel.AddGoods;
 import com.zhang.box.client.pos.Demo;
 import com.zhang.box.client.pos.PosRequest;
 import com.zhang.box.client.pos.SerialPortActivity;
@@ -51,6 +58,7 @@ import com.zhang.box.client.presenter.impl.PayPresenterImpl;
 import com.zhang.box.client.receiver.GoodsBroadcastReceiver;
 import com.zhang.box.client.view.PayView;
 import com.zhang.box.contants.Constants;
+import com.zhang.box.dialog.CustomDialog;
 import com.zhang.box.loading.ZLoadingDialog;
 import com.zhang.box.loading.ZLoadingView;
 import com.zhang.box.loading.Z_TYPE;
@@ -63,7 +71,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TooManyListenersException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -149,6 +156,11 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     TextView payTxtReturnTime;
     @BindView(R.id.date_img_signal)
     ImageView dateImgSignal;
+
+    //开始支付
+    @BindView(R.id.pay_btn_start_pay)
+    Button payBtnStartPay;
+
     private Bitmap bitmapWxPayOne, bitmapWxPayTwo, bitmapAliPayOne, bitmapAliPayTwo;
 
     //支付和数量的选择按钮
@@ -179,6 +191,12 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     //语音提示
     MediaPlayer mediaPlayer = null;
     AssetManager assetManager = null;
+
+    //支付选择弹窗
+    View selectPayDialogView;
+    View.OnClickListener listener;
+    CustomDialog selectPayDialog, waitDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,9 +246,13 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
 
         initCountDownTimer();
 
+        payBtnStartPay.setOnClickListener(this);
 
         //初始化pos机
         initPos();
+
+        //初始化选择支付弹窗
+        showPayChoiceDialog();
 
     }
 
@@ -271,10 +293,6 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                     }
                     checkNum = 2;
                     payTxtGoodsPriceCount.setText("" + Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 2);
-
-
-                    int money = (new Double(Double.parseDouble(payTxtGoodsPrice.getText().toString())).intValue() * 100);
-                    send(1, money);
 
 
 //                    if (checkPay == Constants.PAY_TYPE_WX) {
@@ -409,8 +427,8 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         }
         payTxtGoodsPrice.setText("" + price);
         payTxtGoodsPriceCount.setText("" + price);
-        payTxtLeftScore.setText("" + (int)(price * 550));
-        payTxtJiFen.setText("" + (int)(price * 550));
+        payTxtLeftScore.setText("" + (int) (price * 550));
+        payTxtJiFen.setText("" + (int) (price * 550));
         initRadioNum();
         payTxtGoodsPriceCount.setText("" + price);
         payTxtGoodsDetailsMemo.setText(goods.getGoodsMemo());
@@ -439,7 +457,15 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
             case R.id.pay_img_qrcode:
                 payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
                 break;
+            case R.id.pay_btn_start_pay:
+                startXingyeCardPay();
+                break;
         }
+    }
+
+    private void startXingyeCardPay() {
+        selectPayDialog.show();
+
     }
 
 
@@ -571,6 +597,71 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         if (bitmapAliPayTwo != null) {
             bitmapAliPayTwo = null;
         }
+    }
+
+    @Override
+    public void showPayChoiceDialog() {
+
+        listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.pay_select_dialog_btn_score:
+                        //积分支付
+                        int score = (new Double(Double.parseDouble(payTxtGoodsPrice.getText().toString())).intValue() * 100);
+                        send(2, score);
+                        break;
+                    case R.id.pay_select_dialog_btn_money:
+                        //金额支付
+                        int money = (new Double(Double.parseDouble(payTxtLeftScore.getText().toString())).intValue());
+                        send(1, money);
+                        break;
+                    case R.id.pay_select_dialog_btn_cancel:
+                        //取消
+                        selectPayDialog.dismiss();
+                        break;
+                }
+            }
+        };
+
+        //选择支付弹窗
+        CustomDialog.Builder selectbuilder = new CustomDialog.Builder(this);
+        selectPayDialog = selectbuilder
+                .style(R.style.Dialog)
+                .heightDimenRes(350)
+                .widthDimenRes(500)
+                .cancelTouchout(false)
+                .view(R.layout.pay_select_card_dialog)
+                .addViewOnclick(R.id.pay_select_dialog_btn_score, listener)
+                .addViewOnclick(R.id.pay_select_dialog_btn_money, listener)
+                .addViewOnclick(R.id.pay_select_dialog_btn_cancel, listener)
+                .build();
+        countDownTimer.cancel();
+
+        //支付提示弹窗
+        CustomDialog.Builder waitbuilder = new CustomDialog.Builder(this);
+        waitDialog = waitbuilder
+                .style(R.style.Dialog)
+                .heightDimenRes(350)
+                .widthDimenRes(500)
+                .cancelTouchout(false)
+                .view(R.layout.pay_pay_wait_dialog)
+                .build();
+
+
+    }
+
+
+    @Override
+    public void showCardPayNoticePop() {
+        if (selectPayDialog!=null){
+            selectPayDialog.dismiss();
+        }
+        if (waitDialog!=null) {
+            waitDialog.show();
+        }
+
+
     }
 
     @Override
@@ -949,7 +1040,6 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     private void parseDataStr(String responseData) {
         if (responseData.equals("020007323030310001040302")) {
             Log.e(TAG, "onDataReceived: " + "收到POS响应，已找到POS机端口");
-            send(1, 1);
             return;
         }
         Log.e(TAG, "onDataReceived: " + "响应加密：" + responseData);
@@ -964,10 +1054,13 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
             if (thisTLV.getTitle().equals("039")) {
                 if (thisTLV.getContent().equals("00")) {
                     //成功
+                    waitDialog.dismiss();
                     Log.e("CCCCCCCCCCCCCCCCCCCCCCCCC", "成功" + num + roadInfo.getRoadBoxType() + roadInfo.getRoadIndex().toString());
+                    showDialog("出货中...");
                     payPresenter.outGoodsAction(num, roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString());
                 } else {
                     //失败
+                    waitDialog.dismiss();
                 }
             }
         }

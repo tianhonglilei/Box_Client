@@ -11,6 +11,7 @@ import com.zhang.box.R;
 import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.model.Goods;
 import com.zhang.box.client.model.RoadGoods;
+import com.zhang.box.client.model.RoadInfo;
 import com.zhang.box.contants.Constants;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
     @Override
     protected void convert(RoadGoods roadGoods, MyViewHolder viewHolder, int position) {
         Goods goods = roadGoods.getGoods();
+        RoadInfo roadInfo = roadGoods.getRoadInfo();
         ImageView goodsImg = viewHolder.getView(R.id.more_goods_item_img_goods);
         if (goods.getGoodsTaste() != null && !goods.getGoodsTaste().equals("")) {
             ((TextView) viewHolder.getView(R.id.more_goods_item_txt_name)).setText(goods.getGoodsName() + " (" + goods.getGoodsTaste() + ")");
@@ -42,14 +44,33 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
         }
 
         ((TextView) viewHolder.getView(R.id.more_goods_item_txt_memo)).setText(goods.getGoodsMemo());
-        ((TextView) viewHolder.getView(R.id.more_goods_item_txt_price)).setText("" + goods.getGoodsPrice());
-
+        TextView price = ((TextView) viewHolder.getView(R.id.more_goods_item_txt_price));
+        price.setText("" + goods.getGoodsPrice());
         TextView score = viewHolder.getView(R.id.more_goods_item_score);
+        TextView rmbIco = viewHolder.getView(R.id.more_goods_item_ico);
+        TextView slash = viewHolder.getView(R.id.more_goods_item_slash);
+        TextView jifen = viewHolder.getView(R.id.more_goods_item_jifen);
+
         score.setText("" + (int) (goods.getGoodsPrice() * 550));
 
         goodsSaleState(viewHolder, goods.getGoodsSaleState(), goods, goodsImg);
         goodsWd(goods.getGoodsWd(), (ImageView) viewHolder.getView(R.id.more_goods_item_img_wd));
         goodsType(viewHolder, goods.getGoodsType(), goodsImg);
+
+        if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_CARD)) {
+            price.setVisibility(View.INVISIBLE);
+            rmbIco.setVisibility(View.INVISIBLE);
+            score.setVisibility(View.INVISIBLE);
+            slash.setVisibility(View.INVISIBLE);
+            jifen.setVisibility(View.INVISIBLE);
+        } else {
+            price.setVisibility(View.VISIBLE);
+            rmbIco.setVisibility(View.VISIBLE);
+            score.setVisibility(View.VISIBLE);
+            slash.setVisibility(View.VISIBLE);
+            jifen.setVisibility(View.VISIBLE);
+        }
+
     }
 
     /**

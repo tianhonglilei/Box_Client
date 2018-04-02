@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="500dp"
+    android:layout_height="350dp"
+    android:layout_centerVertical="true"
+    android:layout_centerHorizontal="true"
+    android:background="@drawable/pay_dialog_bg"
+    >
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="请选择支付方式"
+        android:textSize="40sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorMoreTxtTwoOne"/>
+
+    <Button
+        android:id="@+id/pay_select_dialog_btn_score"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/manager_login_btn_selector"
+        android:text="积分支付"
+        android:textColor="@color/colorWhiteTxt"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/pay_select_dialog_btn_money"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/manager_login_btn_selector"
+        android:text="金额支付"
+        android:textColor="@color/colorWhiteTxt"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/pay_select_dialog_btn_cancel"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/manager_login_btn_selector"
+        android:text="取 消"
+        android:textColor="@color/colorWhiteTxt"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/pay_card_score"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="80dp"
+        />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/pay_card_money"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="80dp"
+        />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textSize="10sp"
+        android:text="积分支付：会扣除信用卡内对应的积分进行支付"
+        android:textColor="@color/colorGaryFiveTwo"
+        android:layout_below="@+id/imageView"
+        android:layout_alignStart="@+id/pay_select_dialog_btn_score" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:text="金额支付：会扣除卡内对应的金额进行支付"
+        android:textColor="@color/colorGaryFiveTwo"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignEnd="@+id/pay_select_dialog_btn_cancel" />
+
+</RelativeLayout>

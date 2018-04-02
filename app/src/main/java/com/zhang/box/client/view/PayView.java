@@ -44,4 +44,11 @@ public interface PayView  extends BaseView{
     void cancelRequest();
 
 
+    /**
+     * 弹出选择刷卡还是积分消费
+     */
+    void showPayChoiceDialog();
+
+    void showCardPayNoticePop();
+
 }
