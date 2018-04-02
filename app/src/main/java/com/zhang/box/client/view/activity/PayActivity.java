@@ -1077,6 +1077,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                     payPresenter.updateDBNum(roadGoods.getRoadGoodsId(), num);
                 } else {
                     //失败
+                    Log.e("CCCCCCCCSSSSSSSSSS","失败失败");
                     if (waitDialog!=null) {
                         waitDialog.dismiss();
                         countDownTimer.start();
