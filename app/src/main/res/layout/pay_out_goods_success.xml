@@ -33,7 +33,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
             android:text="@string/dialog_txt_info_success"
-            android:textColor="@color/colorGoodsDetailsSix"
+            android:textColor="@color/colorXingYeBank"
             android:textSize="20sp" />
 
         <ImageView
@@ -53,7 +53,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="60dp"
             android:text="3S"
-            android:textColor="@color/colorDemoLogo"
+            android:textColor="@color/colorXingYeBank"
             android:textSize="32sp"
             />
 

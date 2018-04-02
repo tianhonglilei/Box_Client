@@ -44,7 +44,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:text="@string/dialog_txt_info_fail"
-            android:textColor="@color/colorDemoLogo"
+            android:textColor="@color/colorXingYeBank"
             android:textSize="14sp" />
 
         <ImageView
