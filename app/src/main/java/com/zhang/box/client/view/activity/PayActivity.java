@@ -628,8 +628,8 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         CustomDialog.Builder selectbuilder = new CustomDialog.Builder(this);
         selectPayDialog = selectbuilder
                 .style(R.style.Dialog)
-                .heightDimenRes(350)
-                .widthDimenRes(500)
+                .heightDimenRes(R.dimen.payDialogHeight)
+                .widthDimenRes(R.dimen.payDialogWidth)
                 .cancelTouchout(false)
                 .view(R.layout.pay_select_card_dialog)
                 .addViewOnclick(R.id.pay_select_dialog_btn_score, listener)
@@ -642,8 +642,8 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         CustomDialog.Builder waitbuilder = new CustomDialog.Builder(this);
         waitDialog = waitbuilder
                 .style(R.style.Dialog)
-                .heightDimenRes(350)
-                .widthDimenRes(500)
+                .heightDimenRes(R.dimen.payDialogHeight)
+                .widthDimenRes(R.dimen.payDialogWidth)
                 .cancelTouchout(false)
                 .view(R.layout.pay_pay_wait_dialog)
                 .build();
