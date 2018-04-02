@@ -612,12 +612,14 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                         send(2, score);
                         selectPayDialog.dismiss();
                         showCardPayNoticePop();
+                        countDownTimer.cancel();
                         break;
                     case R.id.pay_select_dialog_btn_money:
                         //金额支付
                         int money = (int)(Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 100);
                         send(1, money);
                         showCardPayNoticePop();
+                        countDownTimer.cancel();
                         break;
                     case R.id.pay_select_dialog_btn_cancel:
                         //取消
@@ -639,7 +641,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                 .addViewOnclick(R.id.pay_select_dialog_btn_money, listener)
                 .addViewOnclick(R.id.pay_select_dialog_btn_cancel, listener)
                 .build();
-        countDownTimer.cancel();
+
 
         //支付提示弹窗
         CustomDialog.Builder waitbuilder = new CustomDialog.Builder(this);
@@ -1044,6 +1046,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     protected void disConnect() {
         if (waitDialog!=null&&waitDialog.isShowing()) {
             waitDialog.dismiss();
+            countDownTimer.start();
         }
     }
 
@@ -1064,14 +1067,20 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
             if (thisTLV.getTitle().equals("039")) {
                 if (thisTLV.getContent().equals("00")) {
                     //成功
-                    waitDialog.dismiss();
                     Log.e("CCCCCCCCCCCCCCCCCCCCCCCCC", "成功" + num + roadInfo.getRoadBoxType() + roadInfo.getRoadIndex().toString());
+                    if (waitDialog!=null) {
+                        waitDialog.dismiss();
+                        countDownTimer.start();
+                    }
                     showDialog("出货中...");
                     payPresenter.outGoodsAction(num, roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString());
                     payPresenter.updateDBNum(roadGoods.getRoadGoodsId(), num);
                 } else {
                     //失败
-                    waitDialog.dismiss();
+                    if (waitDialog!=null) {
+                        waitDialog.dismiss();
+                        countDownTimer.start();
+                    }
                 }
             }
         }
