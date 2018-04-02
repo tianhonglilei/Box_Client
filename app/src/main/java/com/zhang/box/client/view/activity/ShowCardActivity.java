@@ -13,10 +13,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.zhang.box.R;
+import com.zhang.box.box.BoxParams;
 import com.zhang.box.client.model.Goods;
 import com.zhang.box.client.model.RoadGoods;
 import com.zhang.box.client.model.RoadInfo;
 import com.zhang.box.contants.Constants;
+import com.zhang.box.util.SharedPreferencesUtil;
 
 import java.io.File;
 
@@ -57,6 +59,9 @@ public class ShowCardActivity extends Activity implements View.OnClickListener {
     TextView moreWeatherTxt;
     @BindView(R.id.more_weather_wd_num)
     TextView moreWeatherWdNum;
+    //机器编号
+    @BindView(R.id.more_imei_num)
+    TextView moreImeiNum;
 
 
     @Override
@@ -75,6 +80,9 @@ public class ShowCardActivity extends Activity implements View.OnClickListener {
         initCountDownTimer();
         initGoodsInfo();
         initDateAndWeather();
+
+        //显示机器号
+        moreImeiNum.setText(SharedPreferencesUtil.getString(mContext, BoxParams.BOX_ID));
 
         payRlReturn.setOnClickListener(this);
 

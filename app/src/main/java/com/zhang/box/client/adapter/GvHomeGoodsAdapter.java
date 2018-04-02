@@ -52,21 +52,25 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<RoadGoods> {
         TextView score = viewHolder.getView(R.id.adbanner_b_item_score);
         TextView slash = viewHolder.getView(R.id.adbanner_b_item_slash);
         TextView jifen = viewHolder.getView(R.id.adbanner_b_item_jifen);
+        TextView cardName = viewHolder.getView(R.id.adbanner_b_item_txt_card_name);
         if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_CARD)) {
             price.setVisibility(View.INVISIBLE);
             rmbIco.setVisibility(View.INVISIBLE);
             score.setVisibility(View.INVISIBLE);
             slash.setVisibility(View.INVISIBLE);
             jifen.setVisibility(View.INVISIBLE);
+            cardName.setVisibility(View.VISIBLE);
         } else {
             price.setVisibility(View.VISIBLE);
             rmbIco.setVisibility(View.VISIBLE);
             score.setVisibility(View.VISIBLE);
             slash.setVisibility(View.VISIBLE);
             jifen.setVisibility(View.VISIBLE);
+            cardName.setVisibility(View.INVISIBLE);
         }
         price.setText("" + goods.getGoodsPrice());
         score.setText("" + (int) (goods.getGoodsPrice() * 550));
+        cardName.setText("" + goods.getGoodsName());
         int state = goods.getGoodsSaleState();
         int wd = goods.getGoodsWd();
         if (state == Goods.SALE_STATE_DISCOUNT) {
