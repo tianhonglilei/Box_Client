@@ -246,7 +246,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         });
     }
 
-    private int resultRefresh = 0;
+    public static int resultRefresh = 0;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -329,6 +329,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         }
         MoreGoodsActivity.this.setResult(resultRefresh);
         MoreGoodsActivity.this.finish();
+        System.gc();
     }
 
     @Override

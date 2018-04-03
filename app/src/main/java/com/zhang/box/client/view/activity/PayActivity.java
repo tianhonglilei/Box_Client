@@ -478,6 +478,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         }
         payPresenter.cancelOrder();
         PayActivity.this.finish();
+        System.gc();
     }
 
 
@@ -841,7 +842,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
 
             @Override
             public void onFinish() {
-                finish();
+                returnAndFinish();
             }
         }.start();
     }

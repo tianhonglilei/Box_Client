@@ -129,6 +129,7 @@ public class ShowCardActivity extends Activity implements View.OnClickListener {
 
     private void returnAndFinish() {
         ShowCardActivity.this.finish();
+        System.gc();
     }
 
 
