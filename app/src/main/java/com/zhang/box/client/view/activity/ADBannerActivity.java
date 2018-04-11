@@ -600,7 +600,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
         String updateDb = SharedPreferencesUtil.getString(mContext, BoxParams.UPDATE_DB);
         if (updateDb.equals("true")) {
             adPresenter.initGoodsData(adbannerGoodsGv);
-            SharedPreferencesUtil.putString(mContext, BoxParams.UPDATE_DB, "false");
+//            SharedPreferencesUtil.putString(mContext, BoxParams.UPDATE_DB, "false");
         }
         super.onResume();
     }

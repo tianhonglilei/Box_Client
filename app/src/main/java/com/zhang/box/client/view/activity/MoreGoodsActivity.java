@@ -364,6 +364,12 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             initCountDownTimer();
             moreGoodsRbtnGroup.check(R.id.more_goods_nav_rb_allgoods);
         }
+        String updateDb = SharedPreferencesUtil.getString(mContext, BoxParams.UPDATE_DB);
+        if (updateDb.equals("true")) {
+            moreGoodsPresenter.initAllGoods(moreGoodsGv);
+            initGoodsGridView();
+            SharedPreferencesUtil.putString(mContext, BoxParams.UPDATE_DB, "false");
+        }
 
     }
 
