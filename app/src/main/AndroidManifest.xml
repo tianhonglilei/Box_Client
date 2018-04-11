@@ -41,7 +41,6 @@
             android:name=".client.view.activity.ADBannerActivity"
             android:screenOrientation="landscape"
             android:launchMode="singleTask"
-            android:alwaysRetainTaskState="true"
             />
         <activity
             android:name=".client.view.activity.MoreGoodsActivity"
@@ -59,7 +58,8 @@
         <activity
             android:name=".client.view.activity.ActiveActivity"
             android:screenOrientation="landscape"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:alwaysRetainTaskState="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
