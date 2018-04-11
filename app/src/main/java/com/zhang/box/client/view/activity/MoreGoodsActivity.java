@@ -133,9 +133,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
         initAnimation();
 
-        initDoorReceiver();
 
-        initCountDownTimer();
 
     }
 
@@ -147,7 +145,9 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
      * 初始化开门广播
      */
     private void initDoorReceiver() {
-        openDoorBroadcastReceiver = new OpenDoorBroadcastReceiver();
+        if (openDoorBroadcastReceiver == null) {
+            openDoorBroadcastReceiver = new OpenDoorBroadcastReceiver();
+        }
         IntentFilter filter = new IntentFilter();
         filter.addAction(BoxAction.OPEN_DOOR_ACTION);
         openDoorBroadcastReceiver.setOpenDoorListener(this);
@@ -330,15 +330,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         if (telephonyManager != null) {
             telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
         }
-        moreGoodsPresenter.finish();
-        if (moreGoodsPresenter!= null){
-            moreGoodsPresenter = null;
-        }
-        if (mContext != null){
-            mContext = null;
-        }
         MoreGoodsActivity.this.setResult(2);
-        MoreGoodsActivity.this.finish();
         System.gc();
     }
 
@@ -359,6 +351,8 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             initCountDownTimer();
             moreGoodsRbtnGroup.check(R.id.more_goods_nav_rb_allgoods);
         }
+        initDoorReceiver();
+        initCountDownTimer();
     }
 
     @Override
