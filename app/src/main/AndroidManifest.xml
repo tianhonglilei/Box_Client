@@ -40,12 +40,13 @@
         <activity
             android:name=".client.view.activity.ADBannerActivity"
             android:screenOrientation="landscape"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             />
         <activity
             android:name=".client.view.activity.MoreGoodsActivity"
             android:screenOrientation="landscape"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleInstance"
+            />
         <activity
             android:name=".client.view.activity.PayActivity"
             android:screenOrientation="landscape" />
@@ -58,7 +59,6 @@
         <activity
             android:name=".client.view.activity.ActiveActivity"
             android:screenOrientation="landscape"
-            android:launchMode="singleTask"
             android:alwaysRetainTaskState="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
