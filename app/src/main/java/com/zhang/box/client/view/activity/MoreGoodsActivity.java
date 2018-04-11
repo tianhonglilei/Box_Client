@@ -132,10 +132,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
         initSignListener();
 
-        initAnimation();
 
-        initDoorReceiver();
-        initCountDownTimer();
 
     }
 
@@ -370,6 +367,9 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             initGoodsGridView();
             SharedPreferencesUtil.putString(mContext, BoxParams.UPDATE_DB, "false");
         }
+        initAnimation();
+        initDoorReceiver();
+        initCountDownTimer();
 
     }
 
@@ -503,6 +503,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
      * 初始化动画
      */
     private void initAnimation() {
+        moreGoodsGv.smoothScrollToPosition(0);
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
