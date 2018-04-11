@@ -103,13 +103,13 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
                     c_num++;
                 }else{
                     if (d_num < drinks.size()) {
-                        goodsList.add(cards.get(d_num));
+                        goodsList.add(drinks.get(d_num));
                         d_num++;
                     }
                 }
             }else {
                 if (d_num < drinks.size()) {
-                    goodsList.add(cards.get(d_num));
+                    goodsList.add(drinks.get(d_num));
                     d_num++;
                 }else{
                     if (c_num < cards.size()) {

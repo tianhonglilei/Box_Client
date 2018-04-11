@@ -162,13 +162,13 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
                     c_num++;
                 }else{
                     if (d_num < drinks.size()) {
-                        roadGoodsMainList.add(cards.get(d_num));
+                        roadGoodsMainList.add(drinks.get(d_num));
                         d_num++;
                     }
                 }
             }else {
                 if (d_num < drinks.size()) {
-                    roadGoodsMainList.add(cards.get(d_num));
+                    roadGoodsMainList.add(drinks.get(d_num));
                     d_num++;
                 }else{
                     if (c_num < cards.size()) {
