@@ -406,16 +406,25 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         goods = roadGoods.getGoods();
         payTxtGoodsDetailsMemo.setText(goods.getGoodsMemo());
         File file = new File(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsBImgName());
-        Glide.with(this).load(file).into(payImgGoods);
+        Glide.with(this)
+                .load(file)
+                .skipMemoryCache(true)
+                .into(payImgGoods);
         payTxtGoodsName.setText(goods.getGoodsName());
         switch (goods.getGoodsWd()) {
             case Goods.GOODS_WD_COLD:
                 payImgWd.setVisibility(View.VISIBLE);
-                Glide.with(mContext).load(R.mipmap.logo_cold).into(payImgWd);
+                Glide.with(mContext)
+                        .load(R.mipmap.logo_cold)
+                        .skipMemoryCache(true)
+                        .into(payImgWd);
                 break;
             case Goods.GOODS_WD_HOT:
                 payImgWd.setVisibility(View.VISIBLE);
-                Glide.with(mContext).load(R.mipmap.logo_hot).into(payImgWd);
+                Glide.with(mContext)
+                        .load(R.mipmap.logo_hot)
+                        .skipMemoryCache(true)
+                        .into(payImgWd);
                 break;
             case Goods.GOODS_WD_NORMAL:
                 payImgWd.setVisibility(View.INVISIBLE);

@@ -113,7 +113,10 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         BaseApplication.addActivityToList(this);
         mContext = this;
         dataIntent = this.getIntent();
-        Glide.with(mContext).load(R.drawable.more_goods_up).into(moreGoodsUpGif);
+        Glide.with(mContext)
+                .load(R.drawable.more_goods_up)
+                .skipMemoryCache(true)
+                .into(moreGoodsUpGif);
 
         initControl();
 

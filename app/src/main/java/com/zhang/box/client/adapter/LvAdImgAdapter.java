@@ -35,6 +35,7 @@ public class LvAdImgAdapter extends MyBaseAdapter<ADInfo> {
 //        }
         Glide.with(mContext)
                 .load(file)
+                .skipMemoryCache(true)
                 .into(img);
     }
 

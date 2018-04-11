@@ -41,7 +41,10 @@ public class NavGoodsAdapter extends MyBaseAdapter<RoadGoods> {
         }
         ((TextView) viewHolder.getView(R.id.nav_goods_gv_item_name)).setText(name);
         ImageView goodsImg = viewHolder.getView(R.id.nav_goods_gv_item_img);
-        Glide.with(mContext).load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName()).into(goodsImg);
+        Glide.with(mContext)
+                .load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName())
+                .skipMemoryCache(true)
+                .into(goodsImg);
     }
 
 

@@ -110,11 +110,17 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<RoadGoods> {
         switch (wd) {
             case Goods.GOODS_WD_COLD:
                 viewHolder.getView(R.id.adbanner_b_item_img_wd).setVisibility(View.VISIBLE);
-                Glide.with(mContext).load(R.mipmap.logo_cold).into(wdImg);
+                Glide.with(mContext)
+                        .load(R.mipmap.logo_cold)
+                        .skipMemoryCache(true)
+                        .into(wdImg);
                 break;
             case Goods.GOODS_WD_HOT:
                 viewHolder.getView(R.id.adbanner_b_item_img_wd).setVisibility(View.VISIBLE);
-                Glide.with(mContext).load(R.mipmap.logo_hot).into(wdImg);
+                Glide.with(mContext)
+                        .load(R.mipmap.logo_hot)
+                        .skipMemoryCache(true)
+                        .into(wdImg);
                 break;
             case Goods.GOODS_WD_NORMAL:
                 viewHolder.getView(R.id.adbanner_b_item_img_wd).setVisibility(View.INVISIBLE);

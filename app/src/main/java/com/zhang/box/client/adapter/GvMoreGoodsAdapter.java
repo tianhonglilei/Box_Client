@@ -93,7 +93,10 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
             viewHolder.getView(R.id.more_goods_item_discount_rmb).setVisibility(View.VISIBLE);
             viewHolder.getView(R.id.more_goods_item_txt_discount_price).setVisibility(View.VISIBLE);
             ((TextView) viewHolder.getView(R.id.more_goods_item_txt_discount_price)).setText("" + goods.getGoodsDiscountPrice());
-            Glide.with(mContext).load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName()).skipMemoryCache(true).into(goodsImg);
+            Glide.with(mContext)
+                    .load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName())
+                    .skipMemoryCache(true)
+                    .into(goodsImg);
         } else if (state == Goods.SALE_STATE_OUT) {//售罄
             txtPrice.getPaint().setFlags(0);
             saleStateView.setVisibility(View.VISIBLE);
@@ -102,9 +105,15 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
             viewHolder.getView(R.id.more_goods_item_txt_sale).setVisibility(View.INVISIBLE);
             viewHolder.getView(R.id.more_goods_item_discount_rmb).setVisibility(View.INVISIBLE);
             viewHolder.getView(R.id.more_goods_item_txt_discount_price).setVisibility(View.INVISIBLE);
-            Glide.with(mContext).load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsOutImgName()).skipMemoryCache(true).into(goodsImg);
+            Glide.with(mContext)
+                    .load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsOutImgName())
+                    .skipMemoryCache(true)
+                    .into(goodsImg);
         } else {
-            Glide.with(mContext).load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName()).skipMemoryCache(true).into(goodsImg);
+            Glide.with(mContext)
+                    .load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName())
+                    .skipMemoryCache(true)
+                    .into(goodsImg);
             saleStateView.setVisibility(View.INVISIBLE);
             txtPrice.getPaint().setFlags(0);
         }
@@ -145,10 +154,16 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
     public void goodsWd(int wd, ImageView imageView) {
         if (wd == Goods.GOODS_WD_COLD) {
             imageView.setVisibility(View.VISIBLE);
-            Glide.with(mContext).load(R.mipmap.logo_cold).into(imageView);
+            Glide.with(mContext)
+                    .load(R.mipmap.logo_cold)
+                    .skipMemoryCache(true)
+                    .into(imageView);
         } else if (wd == Goods.GOODS_WD_HOT) {
             imageView.setVisibility(View.VISIBLE);
-            Glide.with(mContext).load(R.mipmap.logo_hot).into(imageView);
+            Glide.with(mContext)
+                    .load(R.mipmap.logo_hot)
+                    .skipMemoryCache(true)
+                    .into(imageView);
         } else {
             imageView.setVisibility(View.INVISIBLE);
         }

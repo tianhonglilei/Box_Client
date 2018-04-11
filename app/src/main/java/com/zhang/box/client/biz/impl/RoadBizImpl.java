@@ -36,29 +36,14 @@ public class RoadBizImpl implements RoadBiz {
             if (hgType == 9) {
                 roadInfo.setRoadBoxType(BoxSetting.BOX_TYPE_FOOD);
                 roadInfo.setRoadState(RoadInfo.ROAD_STATE_NORMAL);
-            }else{
+            } else {
                 roadInfo.setRoadBoxType(BoxSetting.BOX_TYPE_DRINK);
                 //货道状态和开关
                 roadInfo.setRoadState(BoxAction.getRoadState(roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString()));
             }
-            if (roadInfo.getRoadNowNum() <= 0) {
-                roadInfo.setRoadOpen(RoadInfo.ROAD_CLOSE);
-            } else {
-                roadInfo.setRoadOpen(RoadInfo.ROAD_OPEN);
-            }
-            if (roadInfo.getRoadOpen() == RoadInfo.ROAD_OPEN
-                    && roadInfo.getRoadState() == RoadInfo.ROAD_STATE_NORMAL) {
-                double price = (double) bean.getPrice() / 100;
-                double disPrice = (double) bean.getWeixin() / 100;
-                if (price > disPrice) {
-                    goods.setGoodsSaleState(Goods.SALE_STATE_DISCOUNT);
-                    goods.setGoodsDiscountPrice(disPrice);
-                } else {
-                    goods.setGoodsSaleState(Goods.SALE_STATE_NORMAL);
-                }
-            } else {
-                goods.setGoodsSaleState(Goods.SALE_STATE_OUT);
-            }
+
+
+
             goods.setGoodsPrice((double) bean.getPrice() / 100);
             goodsBean = bean.getGoodsBean();
             if (goodsBean != null) {
@@ -92,6 +77,28 @@ public class RoadBizImpl implements RoadBiz {
                 roadGoods.setRoadInfo(roadInfo);
                 roadGoods.setGoods(goods);
                 roadGoodsList.add(roadGoods);
+            }
+            if (roadInfo.getRoadNowNum() <= 0 && goods.getGoodsType() != Goods.GOODS_TYPE_OTHER) {
+                roadInfo.setRoadOpen(RoadInfo.ROAD_CLOSE);
+            } else {
+                roadInfo.setRoadOpen(RoadInfo.ROAD_OPEN);
+            }
+            if (roadInfo.getRoadOpen() == RoadInfo.ROAD_OPEN
+                    && roadInfo.getRoadState() == RoadInfo.ROAD_STATE_NORMAL) {
+                double price = (double) bean.getPrice() / 100;
+                double disPrice = (double) bean.getWeixin() / 100;
+                if (price > disPrice) {
+                    goods.setGoodsSaleState(Goods.SALE_STATE_DISCOUNT);
+                    goods.setGoodsDiscountPrice(disPrice);
+                } else {
+                    goods.setGoodsSaleState(Goods.SALE_STATE_NORMAL);
+                }
+            } else {
+                goods.setGoodsSaleState(Goods.SALE_STATE_OUT);
+            }
+            if (goods.getGoodsType() == Goods.GOODS_TYPE_OTHER){
+                roadInfo.setRoadState(RoadInfo.ROAD_STATE_NORMAL);
+                goods.setGoodsSaleState(Goods.SALE_STATE_NORMAL);
             }
 
         }

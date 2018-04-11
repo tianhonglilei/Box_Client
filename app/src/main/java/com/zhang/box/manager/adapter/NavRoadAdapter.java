@@ -31,6 +31,9 @@ public class NavRoadAdapter extends MyBaseAdapter<RoadGoods> {
         Goods goods = roadGoods.getGoods();
         ((TextView)viewHolder.getView(R.id.nav_road_gv_item_road_num)).setText(""+ roadGoods.getRoadInfo().getRoadIndex());
         ImageView goodsImg = viewHolder.getView(R.id.nav_road_gv_item_img);
-        Glide.with(mContext).load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName()).into(goodsImg);
+        Glide.with(mContext)
+                .load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName())
+                .skipMemoryCache(true)
+                .into(goodsImg);
     }
 }

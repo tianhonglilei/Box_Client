@@ -97,7 +97,10 @@ public class ShowCardActivity extends Activity implements View.OnClickListener {
         roadInfo = roadGoods.getRoadInfo();
         goods = roadGoods.getGoods();
         File file = new File(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsBImgName());
-        Glide.with(this).load(file).into(payImgGoods);
+        Glide.with(this)
+                .load(file)
+                .skipMemoryCache(true)
+                .into(payImgGoods);
         payTxtGoodsName.setText(goods.getGoodsName());
     }
 

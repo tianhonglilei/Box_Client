@@ -439,6 +439,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
             Glide.with(appContext)
                     .load(file)
                     .error(R.drawable.ad_test_img1)
+                    .skipMemoryCache(true)
                     .into(adImageView);
             showImg();
             videoPlay = false;
