@@ -330,7 +330,14 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         if (telephonyManager != null) {
             telephonyManager.listen(phoneStateListener, PhoneStateListener.LISTEN_NONE);
         }
-        MoreGoodsActivity.this.setResult(resultRefresh);
+        moreGoodsPresenter.finish();
+        if (moreGoodsPresenter!= null){
+            moreGoodsPresenter = null;
+        }
+        if (mContext != null){
+            mContext = null;
+        }
+        MoreGoodsActivity.this.setResult(2);
         MoreGoodsActivity.this.finish();
         System.gc();
     }

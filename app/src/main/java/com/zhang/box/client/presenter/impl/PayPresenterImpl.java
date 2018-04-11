@@ -369,5 +369,14 @@ public class PayPresenterImpl implements PayPresenter {
         SharedPreferencesUtil.putString(mContext, BoxParams.UPDATE_DB, "true");
     }
 
+    @Override
+    public void finish() {
+        mContext =  null;
+        payView = null;
+        percentBeanService = null;
+        percentBiz = null;
+
+    }
+
 
 }

@@ -33,9 +33,9 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
     private GvMoreGoodsAdapter gvMoreGoodsAdapter;
 
     private List<RoadGoods> goodsList;
-    private List<RoadGoods> drinks = new ArrayList<>();
-    private List<RoadGoods> foods = new ArrayList<>();
-    private List<RoadGoods> cards = new ArrayList<>();
+    private List<RoadGoods> drinks;
+    private List<RoadGoods> foods;
+    private List<RoadGoods> cards;
 
     private Context mContext;
     private GridView gridView;
@@ -50,10 +50,11 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
         this.moreGoodsView = moreGoodsView;
         this.mContext = mContext;
         goodsBiz = new GoodsBizImpl();
-
         roadBeanService = new RoadBeanService(mContext, RoadBean.class);
         roadBiz = new RoadBizImpl();
-
+        drinks = new ArrayList<>();
+        foods = new ArrayList<>();
+        cards = new ArrayList<>();
     }
 
     @Override
@@ -80,6 +81,18 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
         gvMoreGoodsAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void finish() {
+        goodsList = null;
+        drinks = null;
+        foods = null;
+        cards = null;
+        moreGoodsView = null;
+        mContext = null;
+        goodsBiz = null;
+        roadBeanService = null;
+    }
+
 
     public void getFoodAndDrink() {
         drinks.clear();
@@ -88,30 +101,30 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
                 goodsList) {
             if (roadGoods.getGoods().getGoodsType() == Goods.GOODS_TYPE_DRINK) {
                 drinks.add(roadGoods);
-            } else if (roadGoods.getGoods().getGoodsType() == Goods.GOODS_TYPE_FOOD){
+            } else if (roadGoods.getGoods().getGoodsType() == Goods.GOODS_TYPE_FOOD) {
                 foods.add(roadGoods);
-            }else{
+            } else {
                 cards.add(roadGoods);
             }
         }
-        int c_num = 0,d_num = 0;
+        int c_num = 0, d_num = 0;
         goodsList.clear();
         for (int i = 0; i < drinks.size() + cards.size(); i++) {
-            if (i % 2 == 0){
+            if (i % 2 == 0) {
                 if (c_num < cards.size()) {
                     goodsList.add(cards.get(c_num));
                     c_num++;
-                }else{
+                } else {
                     if (d_num < drinks.size()) {
                         goodsList.add(drinks.get(d_num));
                         d_num++;
                     }
                 }
-            }else {
+            } else {
                 if (d_num < drinks.size()) {
                     goodsList.add(drinks.get(d_num));
                     d_num++;
-                }else{
+                } else {
                     if (c_num < cards.size()) {
                         goodsList.add(cards.get(c_num));
                         c_num++;
@@ -120,9 +133,9 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
             }
         }
 
-        if (cards.size() == 0){
+        if (cards.size() == 0) {
             SharedPreferencesUtil.putString(mContext, BoxParams.HAVE_FOOD, "false");
-        }else{
+        } else {
             SharedPreferencesUtil.putString(mContext, BoxParams.HAVE_FOOD, "true");
         }
 

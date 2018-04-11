@@ -488,6 +488,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         }
         payPresenter.cancelOrder();
         PayActivity.this.finish();
+        payPresenter.finish();
         if (payPresenter != null) {
             payPresenter = null;
         }

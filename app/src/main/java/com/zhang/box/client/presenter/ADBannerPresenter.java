@@ -30,4 +30,6 @@ public interface ADBannerPresenter {
      */
     void deleteAdShow(int position);
 
+
+
 }

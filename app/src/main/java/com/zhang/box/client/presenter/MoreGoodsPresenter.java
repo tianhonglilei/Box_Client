@@ -14,4 +14,6 @@ public interface MoreGoodsPresenter {
     //商品导航
     void checkNav(int nav);
 
+    void finish();
+
 }
