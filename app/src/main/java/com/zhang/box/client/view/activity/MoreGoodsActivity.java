@@ -503,7 +503,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
      * 初始化动画
      */
     private void initAnimation() {
-        moreGoodsGv.smoothScrollToPosition(0);
+        moreGoodsGv.scrollTo(0,0);
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
