@@ -53,7 +53,7 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<RoadGoods> {
         TextView slash = viewHolder.getView(R.id.adbanner_b_item_slash);
         TextView jifen = viewHolder.getView(R.id.adbanner_b_item_jifen);
         TextView cardName = viewHolder.getView(R.id.adbanner_b_item_txt_card_name);
-        if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_CARD)) {
+        if (goods.getGoodsType() == Goods.GOODS_TYPE_OTHER) {
             price.setVisibility(View.INVISIBLE);
             rmbIco.setVisibility(View.INVISIBLE);
             score.setVisibility(View.INVISIBLE);

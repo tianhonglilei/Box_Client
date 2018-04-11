@@ -13,7 +13,6 @@ public class BoxSetting {
     //货柜类型
     public static final String BOX_TYPE_DRINK = "11";//饮料机
     public static final String BOX_TYPE_FOOD = "09";//弹簧机
-    public static final String BOX_TYPE_CARD = "-1";//银行卡展示
 
     //测试机器号
     public static final String BOX_TEST_ID = "93006709";

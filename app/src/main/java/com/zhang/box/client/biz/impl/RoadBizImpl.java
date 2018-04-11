@@ -36,11 +36,7 @@ public class RoadBizImpl implements RoadBiz {
             if (hgType == 9) {
                 roadInfo.setRoadBoxType(BoxSetting.BOX_TYPE_FOOD);
                 roadInfo.setRoadState(RoadInfo.ROAD_STATE_NORMAL);
-            }
-            if (roadInfo.getRoadIndex() % 2 == 1) {
-                roadInfo.setRoadBoxType(BoxSetting.BOX_TYPE_CARD);
-                roadInfo.setRoadState(RoadInfo.ROAD_STATE_NORMAL);
-            } else {
+            }else{
                 roadInfo.setRoadBoxType(BoxSetting.BOX_TYPE_DRINK);
                 //货道状态和开关
                 roadInfo.setRoadState(BoxAction.getRoadState(roadInfo.getRoadBoxType(), roadInfo.getRoadIndex().toString()));

@@ -57,7 +57,7 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
         goodsWd(goods.getGoodsWd(), (ImageView) viewHolder.getView(R.id.more_goods_item_img_wd));
         goodsType(viewHolder, goods.getGoodsType(), goodsImg);
 
-        if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_CARD)) {
+        if (goods.getGoodsType() == Goods.GOODS_TYPE_OTHER) {
             price.setVisibility(View.INVISIBLE);
             rmbIco.setVisibility(View.INVISIBLE);
             score.setVisibility(View.INVISIBLE);

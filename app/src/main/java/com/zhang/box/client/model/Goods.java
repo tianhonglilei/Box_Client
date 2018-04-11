@@ -14,9 +14,10 @@ public class Goods implements Parcelable {
     public static final int SALE_STATE_DISCOUNT = 1;
     public static final int SALE_STATE_OUT = 2;
 
-    //商品类型0饮料1信用卡
+    //商品类型1饮料2食物3其他
     public static final int GOODS_TYPE_DRINK = 1;
     public static final int GOODS_TYPE_FOOD = 2;
+    public static final int GOODS_TYPE_OTHER = 3;
 
     //商品温度0正常1制冷2制热
     public static final int GOODS_WD_NORMAL = 2;
