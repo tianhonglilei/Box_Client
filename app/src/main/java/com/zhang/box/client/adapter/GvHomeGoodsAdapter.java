@@ -85,6 +85,7 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<RoadGoods> {
             ((TextView) viewHolder.getView(R.id.adbanner_b_item_txt_discount_price)).setText("" + goods.getGoodsDiscountPrice());
             Glide.with(mContext)
                     .load(new File(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName()))
+                    .skipMemoryCache(true)
                     .into(goodsImg);
         } else if (state == Goods.SALE_STATE_OUT) {
             saleStateView.setVisibility(View.VISIBLE);
@@ -97,11 +98,13 @@ public class GvHomeGoodsAdapter extends MyBaseAdapter<RoadGoods> {
             ((TextView) viewHolder.getView(R.id.adbanner_b_item_txt_discount_price)).setText("" + goods.getGoodsDiscountPrice());
             Glide.with(mContext)
                     .load(new File(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsOutImgName()))
+                    .skipMemoryCache(true)
                     .into(goodsImg);
         } else if (state == Goods.SALE_STATE_NORMAL) {
             saleStateView.setVisibility(View.INVISIBLE);
             Glide.with(mContext)
                     .load(new File(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName()))
+                    .skipMemoryCache(true)
                     .into(goodsImg);
         }
         switch (wd) {
