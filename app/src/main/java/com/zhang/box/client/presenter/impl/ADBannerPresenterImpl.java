@@ -139,6 +139,7 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
 
     public void getRoadInfoFromDB() {
         List<RoadBean> roadBeanList = roadBeanService.queryAllRoadBean();
+        roadGoodsMainList = new ArrayList<>();
         String leftState = SharedPreferencesUtil.getString(mContext, BoxParams.LEFT_STATE);
         String rightState = SharedPreferencesUtil.getString(mContext, BoxParams.RIGHT_STATE);
         List<RoadGoods> roadGoodsList = roadBiz.parseRoadBeanToRoadGoods(roadBeanList, leftState, rightState);
