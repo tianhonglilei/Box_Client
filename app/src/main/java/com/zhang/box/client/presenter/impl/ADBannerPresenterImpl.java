@@ -142,8 +142,41 @@ public class ADBannerPresenterImpl implements ADBannerPresenter, OnADBannerLoadL
         String leftState = SharedPreferencesUtil.getString(mContext, BoxParams.LEFT_STATE);
         String rightState = SharedPreferencesUtil.getString(mContext, BoxParams.RIGHT_STATE);
         List<RoadGoods> roadGoodsList = roadBiz.parseRoadBeanToRoadGoods(roadBeanList, leftState, rightState);
-
-        roadGoodsMainList = roadGoodsList;
+        List<RoadGoods> cards = new ArrayList<>();
+        List<RoadGoods> drinks = new ArrayList<>();
+        for (RoadGoods roadGoods :
+                roadGoodsList) {
+            int type = roadGoods.getGoods().getGoodsType();
+            if (type == Goods.GOODS_TYPE_DRINK){
+                drinks.add(roadGoods);
+            }else if (type == Goods.GOODS_TYPE_OTHER){
+                cards.add(roadGoods);
+            }
+        }
+        int c_num = 0,d_num = 0;
+        for (int i = 0; i < roadGoodsList.size(); i++) {
+            if (i % 2 == 0){
+                if (c_num < cards.size()) {
+                    roadGoodsMainList.add(cards.get(c_num));
+                    c_num++;
+                }else{
+                    if (d_num < drinks.size()) {
+                        roadGoodsMainList.add(cards.get(d_num));
+                        d_num++;
+                    }
+                }
+            }else {
+                if (d_num < drinks.size()) {
+                    roadGoodsMainList.add(cards.get(d_num));
+                    d_num++;
+                }else{
+                    if (c_num < cards.size()) {
+                        roadGoodsMainList.add(cards.get(c_num));
+                        c_num++;
+                    }
+                }
+            }
+        }
 
 //        getMainShowGoods(roadGoodsList);
     }

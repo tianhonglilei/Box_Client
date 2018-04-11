@@ -34,6 +34,7 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
 
     private List<RoadGoods> goodsList;
     private List<RoadGoods> drinks = new ArrayList<>();
+    private List<RoadGoods> foods = new ArrayList<>();
     private List<RoadGoods> cards = new ArrayList<>();
 
     private Context mContext;
@@ -85,12 +86,40 @@ public class MoreGoodsPresenterImpl implements MoreGoodsPresenter {
         cards.clear();
         for (RoadGoods roadGoods :
                 goodsList) {
-            if (roadGoods.getRoadInfo().getRoadBoxType().equals(BoxSetting.BOX_TYPE_DRINK)) {
+            if (roadGoods.getGoods().getGoodsType() == Goods.GOODS_TYPE_DRINK) {
                 drinks.add(roadGoods);
-            } else {
+            } else if (roadGoods.getGoods().getGoodsType() == Goods.GOODS_TYPE_FOOD){
+                foods.add(roadGoods);
+            }else{
                 cards.add(roadGoods);
             }
         }
+        int c_num = 0,d_num = 0;
+        goodsList.clear();
+        for (int i = 0; i < drinks.size() + cards.size(); i++) {
+            if (i % 2 == 0){
+                if (c_num < cards.size()) {
+                    goodsList.add(cards.get(c_num));
+                    c_num++;
+                }else{
+                    if (d_num < drinks.size()) {
+                        goodsList.add(cards.get(d_num));
+                        d_num++;
+                    }
+                }
+            }else {
+                if (d_num < drinks.size()) {
+                    goodsList.add(cards.get(d_num));
+                    d_num++;
+                }else{
+                    if (c_num < cards.size()) {
+                        goodsList.add(cards.get(c_num));
+                        c_num++;
+                    }
+                }
+            }
+        }
+
         if (cards.size() == 0){
             SharedPreferencesUtil.putString(mContext, BoxParams.HAVE_FOOD, "false");
         }else{

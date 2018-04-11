@@ -30,6 +30,7 @@ import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxParams;
 import com.zhang.box.box.BoxSetting;
 import com.zhang.box.client.model.ADInfo;
+import com.zhang.box.client.model.Goods;
 import com.zhang.box.client.model.RoadGoods;
 import com.zhang.box.client.model.RoadInfo;
 import com.zhang.box.client.presenter.ADBannerPresenter;
@@ -343,9 +344,10 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
     public void navigateToPay(RoadGoods roadGoods) {
         int requestCode = 0;
         RoadInfo roadInfo = roadGoods.getRoadInfo();
+        Goods goods = roadGoods.getGoods();
         Long index = roadInfo.getRoadIndex();
         int state = BoxAction.getRoadState(roadInfo.getRoadBoxType(), index + "");
-        if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_DRINK)) {
+        if (goods.getGoodsType() == Goods.GOODS_TYPE_DRINK) {
             if (state == RoadInfo.ROAD_STATE_NORMAL) {
                 Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
                 intent.putExtra("roadGoods", roadGoods);
@@ -359,7 +361,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 //刷新商品
                 adPresenter.initGoodsData(adbannerGoodsGv);
             }
-        } else if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_FOOD)){
+        } else if (goods.getGoodsType() == Goods.GOODS_TYPE_FOOD){
             if (state != RoadInfo.ROAD_STATE_DATA_ERROR) {
                 Intent intent = new Intent(ADBannerActivity.this, PayActivity.class);
                 intent.putExtra("roadGoods", roadGoods);
@@ -373,7 +375,7 @@ public class ADBannerActivity extends Activity implements ADBannerView, View.OnC
                 //刷新商品
                 adPresenter.initGoodsData(adbannerGoodsGv);
             }
-        }else{
+        }else if (goods.getGoodsType() == Goods.GOODS_TYPE_OTHER){
             Intent intent = new Intent(ADBannerActivity.this, ShowCardActivity.class);
             intent.putExtra("roadGoods", roadGoods);
             intent.putExtra("result", 1);

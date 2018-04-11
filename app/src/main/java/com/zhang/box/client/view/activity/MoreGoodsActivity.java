@@ -198,7 +198,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                 RoadInfo roadInfo = roadGoods.getRoadInfo();
                 Long index = roadInfo.getRoadIndex();
                 int state = BoxAction.getRoadState(roadInfo.getRoadBoxType(), index + "");
-                if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_DRINK)) {
+                if (goods.getGoodsType() == Goods.GOODS_TYPE_DRINK) {
                     if (state == RoadInfo.ROAD_STATE_NORMAL) {
                         Intent intent = new Intent(MoreGoodsActivity.this, PayActivity.class);
                         intent.putExtra("temp", moreWeatherWdNum.getText().toString());
@@ -215,7 +215,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                         //刷新商品
                         moreGoodsPresenter.initAllGoods(moreGoodsGv);
                     }
-                }else if (roadInfo.getRoadBoxType().equals(BoxSetting.BOX_TYPE_FOOD)){
+                }else if (goods.getGoodsType() == Goods.GOODS_TYPE_FOOD){
                     if (state != RoadInfo.ROAD_STATE_DATA_ERROR) {
                         Intent intent = new Intent(MoreGoodsActivity.this, PayActivity.class);
                         intent.putExtra("temp", moreWeatherWdNum.getText().toString());
@@ -232,7 +232,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                         //刷新商品
                         moreGoodsPresenter.initAllGoods(moreGoodsGv);
                     }
-                }else{
+                }else if (goods.getGoodsType() == Goods.GOODS_TYPE_OTHER){
                     Intent intent = new Intent(MoreGoodsActivity.this, ShowCardActivity.class);
                     intent.putExtra("temp", moreWeatherWdNum.getText().toString());
                     intent.putExtra("weather", moreWeatherTxt.getText().toString());
