@@ -14,6 +14,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -134,7 +135,6 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
         initAnimation();
 
 
-
     }
 
 
@@ -215,7 +215,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                         //刷新商品
                         moreGoodsPresenter.initAllGoods(moreGoodsGv);
                     }
-                }else if (goods.getGoodsType() == Goods.GOODS_TYPE_FOOD){
+                } else if (goods.getGoodsType() == Goods.GOODS_TYPE_FOOD) {
                     if (state != RoadInfo.ROAD_STATE_DATA_ERROR) {
                         Intent intent = new Intent(MoreGoodsActivity.this, PayActivity.class);
                         intent.putExtra("temp", moreWeatherWdNum.getText().toString());
@@ -232,7 +232,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
                         //刷新商品
                         moreGoodsPresenter.initAllGoods(moreGoodsGv);
                     }
-                }else if (goods.getGoodsType() == Goods.GOODS_TYPE_OTHER){
+                } else if (goods.getGoodsType() == Goods.GOODS_TYPE_OTHER) {
                     Intent intent = new Intent(MoreGoodsActivity.this, ShowCardActivity.class);
                     intent.putExtra("temp", moreWeatherWdNum.getText().toString());
                     intent.putExtra("weather", moreWeatherTxt.getText().toString());
@@ -257,7 +257,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 //        Log.e("MoreGoodsActivity", "requestCode:" + requestCode + "--resultCode:" + resultCode);
 //        initDoorReceiver();
 //        initCountDownTimer();
-        if (requestCode == 2){
+        if (requestCode == 2) {
             resultRefresh = 2;
         }
         switch (resultCode) {
@@ -310,13 +310,24 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
         switch (v.getId()) {
             case R.id.more_goods_nav_rl_return:
-                returnAndFinish();
+//                returnAndFinish();
+                onKeyDown(KeyEvent.KEYCODE_BACK, null);
                 break;
             case R.id.more_imei_num:
 //                Intent intent = new Intent(MoreGoodsActivity.this, ManagerNavgationActivity.class);
 //                startActivity(intent);
                 break;
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        returnAndFinish();
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void returnAndFinish() {
@@ -388,7 +399,8 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
             @Override
             public void onFinish() {
-                returnAndFinish();
+//                returnAndFinish();
+                onKeyDown(KeyEvent.KEYCODE_BACK, null);
             }
         }.start();
     }
