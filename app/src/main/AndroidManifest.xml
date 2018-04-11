@@ -45,7 +45,8 @@
             />
         <activity
             android:name=".client.view.activity.MoreGoodsActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".client.view.activity.PayActivity"
             android:screenOrientation="landscape" />

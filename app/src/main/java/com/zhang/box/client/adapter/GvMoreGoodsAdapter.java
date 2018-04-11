@@ -93,7 +93,7 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
             viewHolder.getView(R.id.more_goods_item_discount_rmb).setVisibility(View.VISIBLE);
             viewHolder.getView(R.id.more_goods_item_txt_discount_price).setVisibility(View.VISIBLE);
             ((TextView) viewHolder.getView(R.id.more_goods_item_txt_discount_price)).setText("" + goods.getGoodsDiscountPrice());
-            Glide.with(mContext).load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName()).into(goodsImg);
+            Glide.with(mContext).load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName()).dontAnimate().into(goodsImg);
         } else if (state == Goods.SALE_STATE_OUT) {//售罄
             txtPrice.getPaint().setFlags(0);
             saleStateView.setVisibility(View.VISIBLE);
@@ -102,9 +102,9 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
             viewHolder.getView(R.id.more_goods_item_txt_sale).setVisibility(View.INVISIBLE);
             viewHolder.getView(R.id.more_goods_item_discount_rmb).setVisibility(View.INVISIBLE);
             viewHolder.getView(R.id.more_goods_item_txt_discount_price).setVisibility(View.INVISIBLE);
-            Glide.with(mContext).load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsOutImgName()).into(goodsImg);
+            Glide.with(mContext).load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsOutImgName()).dontAnimate().into(goodsImg);
         } else {
-            Glide.with(mContext).load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName()).into(goodsImg);
+            Glide.with(mContext).load(Constants.DEMO_FILE_PATH + "/" + goods.getGoodsSImgName()).dontAnimate().into(goodsImg);
             saleStateView.setVisibility(View.INVISIBLE);
             txtPrice.getPaint().setFlags(0);
         }

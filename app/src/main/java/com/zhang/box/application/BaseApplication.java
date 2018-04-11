@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.avm.serialport_142.MainHandler;
@@ -72,6 +73,9 @@ public class BaseApplication extends Application {
         //初始化pos机
 //        initPos();
 
+        //查看最大使用内存
+        int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        Log.d("TAG", "Max memory is " + maxMemory + "KB");
 
         /**
          * 初始化common库
