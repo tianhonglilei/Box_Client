@@ -134,6 +134,8 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
 
         initAnimation();
 
+        initDoorReceiver();
+        initCountDownTimer();
 
     }
 
@@ -362,10 +364,7 @@ public class MoreGoodsActivity extends Activity implements View.OnClickListener,
             initCountDownTimer();
             moreGoodsRbtnGroup.check(R.id.more_goods_nav_rb_allgoods);
         }
-        moreGoodsPresenter.initAllGoods(moreGoodsGv);
-        initGoodsGridView();
-        initDoorReceiver();
-        initCountDownTimer();
+
     }
 
     @Override
