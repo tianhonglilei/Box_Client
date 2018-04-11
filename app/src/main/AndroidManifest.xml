@@ -39,7 +39,10 @@
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         <activity
             android:name=".client.view.activity.ADBannerActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:launchMode="singleTask"
+
+            />
         <activity
             android:name=".client.view.activity.MoreGoodsActivity"
             android:screenOrientation="landscape" />
@@ -54,10 +57,11 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".client.view.activity.ActiveActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:alwaysRetainTaskState="true"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

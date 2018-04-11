@@ -39,6 +39,7 @@ import com.common.controls.dialog.CommonDialogFactory;
 import com.common.controls.dialog.DialogUtil;
 import com.common.controls.dialog.ICommonDialog;
 import com.zhang.box.R;
+import com.zhang.box.application.BaseApplication;
 import com.zhang.box.box.BoxAction;
 import com.zhang.box.box.BoxParams;
 import com.zhang.box.box.BoxSetting;
@@ -203,7 +204,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_pay_activity);
         ButterKnife.bind(this);
-//        BaseApplication.addActivityToList(this);
+        BaseApplication.addActivityToList(this);
         mContext = this;
         dataIntent = this.getIntent();
         roadGoods = dataIntent.getParcelableExtra("roadGoods");
@@ -271,7 +272,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                 if (checkedId == R.id.pay_rb_num_one) {
                     checkNum = 1;
                     payTxtGoodsPriceCount.setText("" + Double.parseDouble(payTxtGoodsPrice.getText().toString()));
-                    payTxtJiFen.setText("" + (int)(Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 550));
+                    payTxtJiFen.setText("" + (int) (Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 550));
 //                    if (checkPay == Constants.PAY_TYPE_WX) {
 //                        if (bitmapWxPayOne == null) {
 //                            payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
@@ -294,7 +295,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                     }
                     checkNum = 2;
                     payTxtGoodsPriceCount.setText("" + Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 2);
-                    payTxtJiFen.setText("" + (int)(Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 2 *550));
+                    payTxtJiFen.setText("" + (int) (Double.parseDouble(payTxtGoodsPrice.getText().toString()) * 2 * 550));
 
 
 //                    if (checkPay == Constants.PAY_TYPE_WX) {
@@ -478,6 +479,12 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
         }
         payPresenter.cancelOrder();
         PayActivity.this.finish();
+        if (payPresenter != null) {
+            payPresenter = null;
+        }
+        if (mContext != null){
+            mContext = null;
+        }
         System.gc();
     }
 
@@ -611,14 +618,14 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                 switch (view.getId()) {
                     case R.id.pay_select_dialog_btn_score:
                         //积分支付
-                        int score = (int)(Double.parseDouble(payTxtGoodsPriceCount.getText().toString()) * 100);
+                        int score = (int) (Double.parseDouble(payTxtGoodsPriceCount.getText().toString()) * 100);
                         send(2, score);
                         selectPayDialog.dismiss();
                         showCardPayNoticePop();
                         break;
                     case R.id.pay_select_dialog_btn_money:
                         //金额支付
-                        int money = (int)(Double.parseDouble(payTxtGoodsPriceCount.getText().toString()) * 100);
+                        int money = (int) (Double.parseDouble(payTxtGoodsPriceCount.getText().toString()) * 100);
                         send(1, money);
                         showCardPayNoticePop();
                         break;
@@ -795,6 +802,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     long showTime = 0;
 
     byte[] test = null;
+
     private void initCountDownTimer() {
 
         countDownTimer = new CountDownTimer(180000, 1000) {
@@ -819,21 +827,21 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                     payTxtReturnTime.setTextColor(Color.WHITE);
                 }
                 payTxtReturnTime.setText(time + "S");
-                try{
-                    if(mSerialPort==null){
+                try {
+                    if (mSerialPort == null) {
                         mSerialPort = SerialTool.getSerialPort();
                     }
-                    Log.e("aaaaaaaaaaaaaa","aaaaaaaaaaaaaa");
+                    Log.e("aaaaaaaaaaaaaa", "aaaaaaaaaaaaaa");
                     test = SerialTool.readFromPort(mSerialPort);
-                    if(test!=null){
+                    if (test != null) {
                         PosRequest posRequest = PosRequest.decRequest(Demo.printHexString(test));
                         String srt3 = posRequest.toString();
 
                         Log.e("ddddddddddddddddddddd", srt3);
-                        onDataReceived(test,test.length);
+                        onDataReceived(test, test.length);
                         test = null;
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -1065,7 +1073,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
 
     @Override
     protected void disConnect() {
-        if (waitDialog!=null&&waitDialog.isShowing()) {
+        if (waitDialog != null && waitDialog.isShowing()) {
             waitDialog.dismiss();
         }
     }
@@ -1088,7 +1096,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                 if (thisTLV.getContent().equals("00")) {
                     //成功
                     Log.e("CCCCCCCCCCCCCCCCCCCCCCCCC", "成功" + num + roadInfo.getRoadBoxType() + roadInfo.getRoadIndex().toString());
-                    if (waitDialog!=null) {
+                    if (waitDialog != null) {
                         waitDialog.dismiss();
                     }
                     showDialog("出货中...");
@@ -1096,8 +1104,8 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                     payPresenter.updateDBNum(roadGoods.getRoadGoodsId(), num);
                 } else {
                     //失败
-                    Log.e("CCCCCCCCSSSSSSSSSS","失败失败");
-                    if (waitDialog!=null) {
+                    Log.e("CCCCCCCCSSSSSSSSSS", "失败失败");
+                    if (waitDialog != null) {
                         waitDialog.dismiss();
                     }
                 }
