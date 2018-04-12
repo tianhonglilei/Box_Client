@@ -105,13 +105,8 @@ public class ShowCardActivity extends Activity implements View.OnClickListener {
                 .skipMemoryCache(true)
                 .into(payImgGoods);
         payTxtGoodsName.setText(goods.getGoodsName());
-        String[] memos = goods.getGoodsMemo().split("\n");
-        StringBuilder sb_memo = new StringBuilder();
-        for (int i = 0; i < memos.length; i++) {
-            sb_memo.append(memos[i] + "\n");
-        }
-        Log.e(TAG, "sb_memo:" + sb_memo);
-//        showCardMemo.setText(sb_memo.toString());
+        String memo = goods.getGoodsMemo().replace("\\n","\n");
+        showCardMemo.setText(memo);
     }
 
     /**
