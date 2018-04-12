@@ -3,7 +3,6 @@ package com.zhang.box.client.view.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -28,6 +27,9 @@ import butterknife.ButterKnife;
 public class ShowCardActivity extends Activity implements View.OnClickListener {
 
     private static final String TAG = "ShowCardActivity";
+
+    @BindView(R.id.show_card_memo)
+    TextView showCardMemo;
 
     private Context mContext;
     private Intent dataIntent;
@@ -102,6 +104,7 @@ public class ShowCardActivity extends Activity implements View.OnClickListener {
                 .skipMemoryCache(true)
                 .into(payImgGoods);
         payTxtGoodsName.setText(goods.getGoodsName());
+        showCardMemo.setText(""+ goods.getGoodsMemo());
     }
 
     /**
