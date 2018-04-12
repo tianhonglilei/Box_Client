@@ -50,7 +50,7 @@
                         android:layout_marginRight="15dp"
                         android:layout_marginTop="10dp"
                         android:gravity="center_vertical"
-                        android:text=""
+                        android:text="淘宝天猫满118立减18\n淘票票满20立减10\n最低6积分兑星巴克\n淘宝购物给积分\n每个账单月首笔取现免手续费"
                         android:lineSpacingMultiplier="1.5"
                         android:textColor="#010101"
                         android:textSize="18sp" />

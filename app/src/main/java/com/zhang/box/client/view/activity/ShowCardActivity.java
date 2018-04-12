@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -105,11 +106,12 @@ public class ShowCardActivity extends Activity implements View.OnClickListener {
                 .into(payImgGoods);
         payTxtGoodsName.setText(goods.getGoodsName());
         String[] memos = goods.getGoodsMemo().split("\n");
-        StringBuffer sb_memo = new StringBuffer();
+        StringBuilder sb_memo = new StringBuilder();
         for (int i = 0; i < memos.length; i++) {
             sb_memo.append(memos[i] + "\n");
         }
-        showCardMemo.setText(sb_memo.toString());
+        Log.e(TAG, "sb_memo:" + sb_memo);
+//        showCardMemo.setText(sb_memo.toString());
     }
 
     /**
