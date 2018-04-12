@@ -43,13 +43,15 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
             ((TextView) viewHolder.getView(R.id.more_goods_item_txt_name)).setText(goods.getGoodsName());
         }
 
-        ((TextView) viewHolder.getView(R.id.more_goods_item_txt_memo)).setText(goods.getGoodsMemo());
-        TextView price = ((TextView) viewHolder.getView(R.id.more_goods_item_txt_price));
+        TextView memo = viewHolder.getView(R.id.more_goods_item_txt_memo);
+        TextView price = viewHolder.getView(R.id.more_goods_item_txt_price);
         price.setText("" + goods.getGoodsPrice());
         TextView score = viewHolder.getView(R.id.more_goods_item_score);
         TextView rmbIco = viewHolder.getView(R.id.more_goods_item_ico);
         TextView slash = viewHolder.getView(R.id.more_goods_item_slash);
         TextView jifen = viewHolder.getView(R.id.more_goods_item_jifen);
+
+        memo.setText("" + goods.getGoodsMemo());
 
         score.setText("" + (int) (goods.getGoodsPrice() * 550));
 
@@ -63,12 +65,14 @@ public class GvMoreGoodsAdapter extends MyBaseAdapter<RoadGoods> {
             score.setVisibility(View.INVISIBLE);
             slash.setVisibility(View.INVISIBLE);
             jifen.setVisibility(View.INVISIBLE);
+            memo.setVisibility(View.INVISIBLE);
         } else {
             price.setVisibility(View.VISIBLE);
             rmbIco.setVisibility(View.VISIBLE);
             score.setVisibility(View.VISIBLE);
             slash.setVisibility(View.VISIBLE);
             jifen.setVisibility(View.VISIBLE);
+            memo.setVisibility(View.VISIBLE);
         }
 
     }
