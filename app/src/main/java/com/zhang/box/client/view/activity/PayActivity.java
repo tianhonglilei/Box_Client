@@ -198,6 +198,9 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     View.OnClickListener listener;
     CustomDialog selectPayDialog, waitDialog;
 
+    //pos机通信
+    boolean connectionPos = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -470,7 +473,11 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
                 payPresenter.getQRCode(payQRCodeUrl, Double.parseDouble(payTxtGoodsPriceCount.getText().toString()), checkPay, checkNum, roadGoods);
                 break;
             case R.id.pay_btn_start_pay:
-                startXingyeCardPay();
+                if (connectionPos) {
+                    startXingyeCardPay();
+                }else{
+                    Toast.makeText(mContext, "未检测到pos机", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
@@ -1091,6 +1098,7 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
     private void parseDataStr(String responseData) {
         if (responseData.equals("020007323030310001040302")) {
             Log.e(TAG, "onDataReceived: " + "收到POS响应，已找到POS机端口");
+            connectionPos = true;
             return;
         }
         Log.e(TAG, "onDataReceived: " + "响应加密：" + responseData);
