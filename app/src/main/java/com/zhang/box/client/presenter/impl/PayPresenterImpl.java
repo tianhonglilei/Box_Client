@@ -375,7 +375,6 @@ public class PayPresenterImpl implements PayPresenter {
         payView = null;
         percentBeanService = null;
         percentBiz = null;
-
     }
 
 

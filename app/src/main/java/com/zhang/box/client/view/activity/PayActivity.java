@@ -493,16 +493,16 @@ public class PayActivity extends SerialPortActivity implements View.OnClickListe
             paySureCountTimer.cancel();
             paySureCountTimer = null;
         }
-        payPresenter.cancelOrder();
-        PayActivity.this.finish();
-        payPresenter.finish();
         if (payPresenter != null) {
+            payPresenter.cancelOrder();
+            payPresenter.finish();
             payPresenter = null;
         }
         if (mContext != null){
             mContext = null;
         }
         System.gc();
+        PayActivity.this.finish();
     }
 
 
